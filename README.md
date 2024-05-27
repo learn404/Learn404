@@ -1,6 +1,6 @@
 # Learn404
 
-Bienvenue sur **Learn404** ! Ce projet est un site web proposant des formations de développement web destinées aux débutants. Le site est construit avec React pour le frontend et Node.js pour le backend.
+Bienvenue sur **Learn404** ! Ce projet est un site web proposant des formations de développement web destinées aux débutants. Le site est construit avec Nextjs, et Tailwind CSS.
 
 ## Table des matières
 
@@ -20,7 +20,7 @@ Learn404 est conçu pour offrir des cours et des tutoriels interactifs sur les b
 - **Cours interactifs** : Apprenez en pratiquant avec des exemples et des exercices en temps réel.
 - **Suivi de progression** : Gardez une trace de votre avancement dans les cours.
 - **Communauté d'entraide** : Participez à des forums et discutez avec d'autres apprenants.
-- **Technologies modernes** : Développé avec React pour une expérience utilisateur fluide et Node.js pour une gestion efficace du backend.
+- **Technologies modernes** : Développé avec Nextjs pour une expérience utilisateur fluide et Node.js pour une gestion efficace du backend.
 
 
 ## Contribuer
