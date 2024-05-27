@@ -12,10 +12,10 @@ export default function Header() {
         <div>
           <ul className="flex items-center gap-5">
             <li>
-              <a href="#">Home</a>
+              <a href="#">Fonctionnalités</a>
             </li>
             <li>
-              <a href="#">About</a>
+              <a href="#">¨Prix</a>
             </li>
           </ul>
         </div>
