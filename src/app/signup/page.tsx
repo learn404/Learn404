@@ -6,6 +6,7 @@ import { FormEvent } from "react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
 
 interface FormData {
   name: string;
@@ -157,13 +158,9 @@ export default function Signup() {
                 />
               </div>
             </div>
-
-            <button
-              className=" mt-10 mx-auto rounded-md bg-indigo-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 flex justify-center items-center "
-              type="submit"
-            >
-              Rejoins la formation
-            </button>
+            <div className="flex justify-center mt-10 w-full">
+              <PrimaryButton>Rejoins la WaitList</PrimaryButton>
+            </div>
 
             {/*
               CONNECTEZ VOUS
