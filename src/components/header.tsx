@@ -2,11 +2,22 @@
 
 import Image from "next/image";
 import { LogIn, LogOut } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import SecondaryButton from "@/components/buttons/SecondaryButton";
 
 export default function Header() {
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsConnected(!!token);
+  }, []);
+
+  const Logout = () => {
+    localStorage.removeItem("token");
+    setIsConnected(false);
+  };
 
   return (
     <header className="p-8 m-auto w-full">
@@ -31,27 +42,21 @@ export default function Header() {
         <div className="flex items-center gap-2">
           {isConnected ? (
             <>
-              <button className="rounded-lg border backdrop-blur border-gray-400 text-white px-5 py-1 flex items-center gap-2 hover:bg-gray-400 hover:bg-opacity-50 transition-all dureation-300 ease-in-out">
+              <SecondaryButton redirectTo="/lesson">
                 <span className="text-sm md:text-base font-medium">Lesson</span>
-              </button>
-              <button
-                className="rounded-lg border backdrop-blur border-gray-400 text-white px-5 py-1 flex items-center gap-2 hover:bg-gray-400 hover:bg-opacity-50 transition-all dureation-300 ease-in-out"
-                onClick={() => setIsConnected(false)}
-              >
+              </SecondaryButton>
+              <SecondaryButton onClick={Logout}>
                 <LogOut size={20} />
                 <span className="hidden md:block font-medium">
                   Se déconnecter
                 </span>
-              </button>
+              </SecondaryButton>
             </>
           ) : (
-            <button
-              className="rounded-lg border backdrop-blur border-gray-400 text-white px-5 py-1 flex items-center gap-2 hover:bg-gray-400 hover:bg-opacity-50 transition-all dureation-300 ease-in-out"
-              onClick={() => setIsConnected(true)}
-            >
+            <SecondaryButton redirectTo="/login">
               <LogIn size={20} />
               <span className="hidden md:block font-medium">Se connecter</span>
-            </button>
+            </SecondaryButton>
           )}
         </div>
       </nav>
