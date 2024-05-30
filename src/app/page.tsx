@@ -1,7 +1,14 @@
+"use client";
+
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
+
 export default function Home() {
   return (
     <div>
-      <h1>Home</h1>
+      <Header />
+      <h1> Home</h1>
+      <Footer />
     </div>
   );
 }
