@@ -1,11 +1,18 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+
+interface UserRequest {
+  firstname: string;
+  name: string;
+  password: string;
+  email: string;
+}
 
 export async function POST(request: Request) {
   try {
-    const { firstname, name, email, password } = await request.json();
+    const { firstname, name, password, email }: UserRequest =
+      await request.json();
 
     const checkUser = await prisma.user.findUnique({
       where: { email },
@@ -20,25 +27,16 @@ export async function POST(request: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
-        firstName: firstname,
-        name: name,
         email: email,
+        name: firstname + " " + name,
         password: hashedPassword,
       },
     });
 
-    const token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET!,
-      {
-        expiresIn: "12h",
-      },
-    );
-
     return NextResponse.json(
-      { message: "User created successfully", token },
+      { message: "User created successfully" },
 
       { status: 200 },
     );
