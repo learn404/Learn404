@@ -16,9 +16,8 @@ interface FormData {
 }
 
 async function submitForm(data: FormData) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  console.log(data);
-  const response = await fetch(`${API_URL}/auth/waitlist`, {
+  // console.log(data);
+  const response = await fetch("api/auth/waitlist", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
