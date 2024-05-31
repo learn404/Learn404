@@ -7,18 +7,6 @@ import Link from "next/link";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 
 export default function Header() {
-  const [isConnected, setIsConnected] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsConnected(!!token);
-  }, []);
-
-  const Logout = () => {
-    localStorage.removeItem("token");
-    setIsConnected(false);
-  };
-
   return (
     <header className="p-8 m-auto w-full">
       <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative">
@@ -40,24 +28,10 @@ export default function Header() {
           </ul>
         </div> */}
         <div className="flex items-center gap-2">
-          {isConnected ? (
-            <>
-              <SecondaryButton redirectTo="/lesson">
-                <span className="text-sm md:text-base font-medium">Lesson</span>
-              </SecondaryButton>
-              <SecondaryButton onClick={Logout}>
-                <LogOut size={20} />
-                <span className="hidden md:block font-medium">
-                  Se déconnecter
-                </span>
-              </SecondaryButton>
-            </>
-          ) : (
-            <SecondaryButton redirectTo="/login">
-              <LogIn size={20} />
-              <span className="hidden md:block font-medium">Se connecter</span>
-            </SecondaryButton>
-          )}
+          <SecondaryButton redirectTo="/login">
+            <LogIn size={20} />
+            <span className="hidden md:block font-medium">Se connecter</span>
+          </SecondaryButton>
         </div>
       </nav>
     </header>
