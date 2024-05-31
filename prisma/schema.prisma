@@ -83,3 +83,11 @@ model Authenticator {
 
   @@id([userId, credentialID])
 }
+
+model Waitlist {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  firstName String
+  name      String
+  createdAt DateTime @default(now())
+}
