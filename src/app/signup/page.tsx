@@ -2,7 +2,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import Form from "./Form";
+import SignupForm from "./Form";
 import { LoginButton } from "@/components/buttons/auth/AuthButton";
 import Link from "next/link";
 
@@ -36,7 +36,7 @@ export default async function Signup() {
           <p className="text-center text-gray-300 p-2">
             Remplis le formulaire ci-dessous pour t'inscrire à la formation
           </p>
-          <Form />
+          <SignupForm />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="327"
