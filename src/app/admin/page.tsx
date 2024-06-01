@@ -1,7 +1,10 @@
 import PrimaryButton from "@/components/buttons/PrimaryButton";
-import UserTable from "./Table";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
+
+import HeaderDashboard from "@/components/layout//headerDashboard/headerDashboard";
+import UserTable from "./Table";
 
 export default async function AdminDashboard() {
   const session = await auth();
@@ -15,12 +18,13 @@ export default async function AdminDashboard() {
     },
   });
 
-  if (!adminCheck?.Admin) {
-    return <h1>Not Authorized</h1>;
+  if (!adminCheck?.Admin || !session || !adminCheck) {
+    return redirect("/");
   }
 
   return (
     <div>
+      <HeaderDashboard />
       <h1>Admin Dashboard</h1>
       <PrimaryButton redirectTo="/">Home</PrimaryButton>
 

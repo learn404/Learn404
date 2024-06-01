@@ -4,6 +4,7 @@ import { LogoutButton } from "@/components/buttons/auth/AuthButton";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
+import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 
 export default async function Dashboard() {
   const session = await auth();
@@ -24,14 +25,17 @@ export default async function Dashboard() {
   const user = session?.user;
 
   return (
-    <main className="max-w-7xl mx-auto my-12 space-y-5 container">
-      <h1 className="text-2xl font-semibold">
-        Welcome back, {user?.name || user?.email}
-      </h1>
-      {adminCheck?.Admin && (
-        <PrimaryButton redirectTo="/admin">Admin Dashboard</PrimaryButton>
-      )}
-      <LogoutButton />
-    </main>
+    <>
+      <HeaderDashboard />
+      <main className="max-w-7xl mx-auto my-12 space-y-5 container">
+        <h1 className="text-2xl font-semibold">
+          Welcome back, {user?.name || user?.email}
+        </h1>
+        {adminCheck?.Admin && (
+          <PrimaryButton redirectTo="/admin">Admin Dashboard</PrimaryButton>
+        )}
+        <LogoutButton />
+      </main>
+    </>
   );
 }

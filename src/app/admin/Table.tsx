@@ -1,35 +1,25 @@
-"use client";
-import { useEffect, useState } from "react";
+import prisma from "@/lib/prisma";
 import { User } from "lucide-react";
 
-async function getUsers() {
-  const res = await fetch("/api/admin/getusers");
-  const data = await res.json();
-  return data.users;
+async function getServerSideProps() {
+  const res = await prisma.user.findMany();
+  const users = res.map((user) => ({
+    id: user?.id,
+    name: user?.name,
+    email: user?.email,
+    Admin: user?.Admin,
+  }));
+  return users;
 }
-
 interface User {
-  id: number;
-  name: string;
-  email: string;
+  id: number | string;
+  name: string | null;
+  email: string | null;
   Admin: boolean;
 }
 
-export default function UserTable() {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedUsers = await getUsers();
-        setUsers(fetchedUsers);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+export default async function UserTable() {
+  const users = await getServerSideProps();
 
   return (
     <>
@@ -82,7 +72,7 @@ function TableRow({ user }: { user: User }) {
         {user.Admin ? "Admin" : "User"}
       </td>
       <td className="px-2 py-1.5 md:px-6 md:py-3 text-right">
-        <a href="#" className="font-medium text-blue-600  hover:underline">
+        <a href="#" className="font-medium text-blue-600 hover:underline">
           Edit
         </a>
       </td>
