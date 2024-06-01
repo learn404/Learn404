@@ -1,11 +1,9 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { EyeIcon, EyeOff } from "lucide-react";
-import Link from "next/link";
 
 interface FormData {
   name: string;
@@ -93,18 +91,7 @@ export default function Form() {
 
   return (
     <>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={true}
-        theme="light"
-      />
-      <form className="p-4" onSubmit={handleFormSubmit}>
+      <form className="mt-4 mx-4" onSubmit={handleFormSubmit}>
         <div className="flex flex-col md:flex-row w-full gap-4">
           <div className="flex flex-col text-left md:w-1/2">
             <label className="font-medium mb-1">Nom</label>
@@ -170,41 +157,9 @@ export default function Form() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center mt-10 w-full">
-          <PrimaryButton>Rejoins l'équipe</PrimaryButton>
+        <div className="flex justify-center mt-5 w-full">
+          <PrimaryButton>Rejoins la formation</PrimaryButton>
         </div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="327"
-          height="3"
-          viewBox="0 0 327 3"
-          fill="none"
-          className="my-4"
-        >
-          <path
-            d="M1.49689 0.5C0.944611 0.5 0.496887 0.947715 0.496887 1.5C0.496887 2.05228 0.944611 2.5 1.49689 2.5V0.5ZM326.503 0.5L1.49689 0.5V2.5L326.503 2.5V0.5Z"
-            fill="url(#paint0_linear_3232_81)"
-          />
-          <defs>
-            <linearGradient
-              id="paint0_linear_3232_81"
-              x1="337.481"
-              y1="79.1317"
-              x2="345.557"
-              y2="18.0362"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#ECECEC" />
-              <stop offset="1" stopColor="#ECECEC" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
-        <p className="text-center font-medium">
-          Tu as déjà un compte ?{" "}
-          <Link href="/login" className="text-indigo-800">
-            Connectes toi
-          </Link>
-        </p>
       </form>
     </>
   );

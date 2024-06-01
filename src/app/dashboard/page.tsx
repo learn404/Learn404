@@ -1,10 +1,20 @@
 import React from "react";
 import { redirect } from "next/navigation";
-import { LogoutButton } from "@/components/buttons/auth/loginButton";
+import { LogoutButton } from "@/components/buttons/auth/AuthButton";
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
 export default async function Dashboard() {
   const session = await auth();
+
+  const adminCheck = await prisma.user.findFirst({
+    where: {
+      email: session?.user?.email,
+    },
+    select: {
+      Admin: true,
+    },
+  });
 
   if (!session) {
     redirect("/login");

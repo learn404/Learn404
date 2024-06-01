@@ -4,6 +4,7 @@ import Link from "next/link";
 import LoginForm from "./Form";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { LoginButton } from "@/components/buttons/auth/AuthButton";
 
 export default async function LoginPage() {
   const session = await auth();
@@ -27,8 +28,8 @@ export default async function LoginPage() {
           alt="background"
         />
       </div>
-      <main className="flex justify-center items-center p-5 relative z-50">
-        <div className="bg-black bg-opacity-20 rounded-lg border border-gray-100 p-5 md:p-16 mt-0 md:mt-5 backdrop-blur-xl shadow-custom-shadow">
+      <main className="flex justify-center items-center p-5 relative z-500">
+        <div className="bg-black bg-opacity-20 rounded-lg border border-gray-100 p-14 md:p-16 mt-0 md:mt-5 backdrop-blur-xl shadow-custom-shadow">
           <h1 className="font-bold text-4xl md:text-5xl text-center">
             Connexion
           </h1>
@@ -88,10 +89,13 @@ export default async function LoginPage() {
               </linearGradient>
             </defs>
           </svg>
+          <div className="mx-auto my-5 flex justify-center items-center">
+            <LoginButton />
+          </div>
           <p className="text-center font-medium">
-            Tu n'as pas encore de compte ?{" "}
+            Tu n'as pas encore de compte ?{"  "}
             <Link href="/signup" className="text-indigo-800">
-              Inscrive toi
+              Inscris-toi !
             </Link>
           </p>
         </div>

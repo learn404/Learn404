@@ -73,17 +73,7 @@ export default function Signup() {
   return (
     <div className="">
       <Header />
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={true}
-        theme="light"
-      />
+
       <div className="relative">
         <img
           className="absolute left-0 top-[10rem] select-none w-96 h-auto "

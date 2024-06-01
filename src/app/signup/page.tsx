@@ -3,7 +3,8 @@ import Footer from "@/components/layout/footer";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Form from "./Form";
-import { LoginButton } from "@/components/buttons/auth/loginButton";
+import { LoginButton } from "@/components/buttons/auth/AuthButton";
+import Link from "next/link";
 
 export default async function Signup() {
   const session = await auth();
@@ -28,7 +29,7 @@ export default async function Signup() {
         />
       </div>
       <main className="flex justify-center items-center p-5 relative z-50">
-        <div className="bg-black bg-opacity-20 rounded-lg border border-gray-100 p-5 md:p-16 mt-0 md:mt-5 backdrop-blur-xl shadow-custom-shadow">
+        <div className="bg-black bg-opacity-20 rounded-lg border border-gray-100 p-14 md:p-16 mt-0 md:mt-5 backdrop-blur-xl shadow-custom-shadow">
           <h1 className="font-bold text-4xl md:text-5xl text-center">
             Rejoins la formation
           </h1>
@@ -36,7 +37,41 @@ export default async function Signup() {
             Remplis le formulaire ci-dessous pour t'inscrire à la formation
           </p>
           <Form />
-          <LoginButton />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="327"
+            height="3"
+            viewBox="0 0 327 3"
+            fill="none"
+            className="my-5"
+          >
+            <path
+              d="M1.49689 0.5C0.944611 0.5 0.496887 0.947715 0.496887 1.5C0.496887 2.05228 0.944611 2.5 1.49689 2.5V0.5ZM326.503 0.5L1.49689 0.5V2.5L326.503 2.5V0.5Z"
+              fill="url(#paint0_linear_3232_81)"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear_3232_81"
+                x1="337.481"
+                y1="79.1317"
+                x2="345.557"
+                y2="18.0362"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#ECECEC" />
+                <stop offset="1" stopColor="#ECECEC" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div className="mx-auto my-5 flex justify-center items-center">
+            <LoginButton />
+          </div>
+          <p className="text-center font-medium ">
+            Tu as déjà un compte ?{" "}
+            <Link href="/login" className="text-indigo-800">
+              Connectes toi !
+            </Link>
+          </p>
         </div>
       </main>
       <Footer />

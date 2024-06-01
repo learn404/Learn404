@@ -5,7 +5,7 @@ import React from "react";
 interface Props {
   children?: React.ReactNode;
   type?: "button" | "submit" | "reset";
-  redirectTo?: string; // Ajout de la prop redirectTo
+  redirectTo?: string;
   onClick?: () => void;
 }
 
