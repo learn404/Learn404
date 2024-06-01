@@ -2,11 +2,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Correct import
 import { FormEvent } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
 interface FormData {
   email: string;
@@ -48,17 +47,6 @@ export default function LoginForm() {
 
   return (
     <>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={true}
-        theme="light"
-      />
       <form className="p-4" onSubmit={handleFormSubmit}>
         <div className="mt-8 flex flex-col gap-4">
           <div className="flex-col flex">

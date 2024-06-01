@@ -8,17 +8,16 @@ generator client {
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  username      String?         @unique
-  email         String?         @unique
+  username      String?   @unique
+  email         String?   @unique
   emailVerified DateTime?
   password      String?
   image         String?
   Session       Session[]
   Account       Account?
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  Admin         Boolean   @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -58,30 +57,6 @@ model Session {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
-}
-
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-// Optional for WebAuthn support
-model Authenticator {
-  credentialID         String  @unique
-  userId               String
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([userId, credentialID])
 }
 
 model Waitlist {

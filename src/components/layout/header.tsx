@@ -1,12 +1,25 @@
-"use client";
-
 import Image from "next/image";
 import { LogIn, LogOut } from "lucide-react";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
+import { auth } from "@/lib/auth";
+import PrimaryButton from "../buttons/PrimaryButton";
+import { LogoutButton } from "../buttons/auth/AuthButton";
+import prisma from "@/lib/prisma";
 
-export default function Header() {
+export default async function Header() {
+  const session = await auth();
+  console.log(session);
+
+  const adminCheck = await prisma.user.findFirst({
+    where: {
+      email: session?.user?.email,
+    },
+    select: {
+      Admin: true,
+    },
+  });
+
   return (
     <header className="p-8 m-auto w-full">
       <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative">
@@ -17,21 +30,25 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
-          <ul className="flex items-center gap-5 text-gray-600">
-            <li>
-              <a href="#">Fonctionnalités</a>
-            </li>
-            <li>
-              <a href="#">Prix</a>
-            </li>
-          </ul>
-        </div> */}
         <div className="flex items-center gap-2">
-          <SecondaryButton redirectTo="/login">
-            <LogIn size={20} />
-            <span className="hidden md:block font-medium">Se connecter</span>
-          </SecondaryButton>
+          {session ? (
+            <>
+              <PrimaryButton redirectTo="/dashboard" type="button">
+                <span className="hidden md:block font-medium">Dashboard</span>
+              </PrimaryButton>
+              {adminCheck?.Admin && (
+                <PrimaryButton redirectTo="/admin" type="button">
+                  <span className="hidden md:block font-medium">Admin</span>
+                </PrimaryButton>
+              )}
+              <LogoutButton />
+            </>
+          ) : (
+            <SecondaryButton redirectTo="/login" type="button">
+              <LogIn size={20} />
+              <span className="hidden md:block font-medium">Se connecter</span>
+            </SecondaryButton>
+          )}
         </div>
       </nav>
     </header>
