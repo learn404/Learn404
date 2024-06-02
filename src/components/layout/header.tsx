@@ -1,7 +1,7 @@
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { LogIn, Play } from "lucide-react";
+import { LogIn, LayoutDashboard, Shield } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import PrimaryButton from "../buttons/PrimaryButton";
@@ -18,14 +18,14 @@ export default async function Header() {
       },
       select: {
         admin: true,
-      }
+      },
     });
+    console.log(adminCheck);
   }
 
   return (
-    <header className="p-8 m-auto w-full">
-      <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative gap-x-6">
-        <div className="flex items-center justify-center gap-8 md:gap-16">
+    <header className="p-4 m-auto w-full">
+      <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative">
         <Link href="/">
           <div className="flex items-center gap-5">
             <Image src="/img/logo.png" alt="logo" width={30} height={30} />
@@ -44,10 +44,12 @@ export default async function Header() {
             <>
               <PrimaryButton redirectTo="/dashboard" type="button">
                 <span className="hidden md:block font-medium">Dashboard</span>
+                <LayoutDashboard size={20} className="block md:hidden" />
               </PrimaryButton>
               {adminCheck?.admin && (
                 <PrimaryButton redirectTo="/admin" type="button">
                   <span className="hidden md:block font-medium">Admin</span>
+                  <Shield size={20} className="block md:hidden" />
                 </PrimaryButton>
               )}
               <LogoutButton />

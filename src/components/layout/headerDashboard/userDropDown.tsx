@@ -2,16 +2,19 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LogoutButton } from "@/components/buttons/auth/AuthButton";
+import { signOut } from "next-auth/react";
+import { LogOut } from "lucide-react";
 
 interface HeaderDashboardProps {
   isAvatar: boolean;
+  isAdmin: boolean;
   session: any;
 }
 
 export default function UserDropdown({
   isAvatar,
   session,
+  isAdmin,
 }: HeaderDashboardProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -41,7 +44,7 @@ export default function UserDropdown({
       {isDropdownOpen && (
         <div
           id="userDropdown"
-          className="absolute right-0 mt-2 z-10 bg-gray-950 divide-y divide-gray-100 rounded-lg shadow w-44"
+          className="absolute right-0 mt-2 z-50 bg-bg-primary divide-y divide-gray-100 rounded-lg shadow w-44 border border-white/10 "
         >
           <div className="px-4 py-3 text-sm text-white">
             <div>{session?.user?.name ?? "User"}</div>
@@ -56,7 +59,7 @@ export default function UserDropdown({
             <li>
               <Link
                 href="/dashboard"
-                className="block px-4 py-2 hover:bg-white/10"
+                className="block px-4 py-2 hover:bg-white/10 rounded-lg mx-2"
               >
                 Dashboard
               </Link>
@@ -64,7 +67,7 @@ export default function UserDropdown({
             <li>
               <Link
                 href="/settings"
-                className="block px-4 py-2 hover:bg-white/10"
+                className="block px-4 py-2 hover:bg-white/10 rounded-lg mx-2"
               >
                 Settings
               </Link>
@@ -72,14 +75,30 @@ export default function UserDropdown({
             <li>
               <Link
                 href="/earnings"
-                className="block px-4 py-2 hover:bg-white/10"
+                className="block px-4 py-2 hover:bg-white/10 rounded-lg mx-2"
               >
                 Earnings
               </Link>
             </li>
+            {isAdmin && (
+              <li>
+                <Link
+                  href="/admin"
+                  className="block px-4 py-2 hover:bg-white/10 rounded-lg mx-2"
+                >
+                  Admin
+                </Link>
+              </li>
+            )}
           </ul>
-          <div className="py-1">
-            <LogoutButton />
+          <div className="py-1 flex justify-center">
+            <button
+              onClick={() => signOut()}
+              className="px-4 py-2 hover:bg-white/10 flex items-center gap-2 text-sm font-medium rounded-lg mx-2 w-max text-left"
+            >
+              <LogOut size={15} />
+              <span className="text-sm text-center">Déconnexion</span>
+            </button>
           </div>
         </div>
       )}
