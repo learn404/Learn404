@@ -18,7 +18,7 @@ export const LogoutButton = () => {
   return (
     <SecondaryButton onClick={() => signOut()}>
       <LogOut size={20} />
-      <span className="hidden md:block font-medium">Se déconnecter</span>
+      <span className="hidden lg:block font-medium">Se déconnecter</span>
     </SecondaryButton>
   );
 };
