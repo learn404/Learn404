@@ -1,24 +1,26 @@
-import Image from "next/image";
-import { LogIn, LogOut } from "lucide-react";
-import Link from "next/link";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+import { LogIn } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import PrimaryButton from "../buttons/PrimaryButton";
 import { LogoutButton } from "../buttons/auth/AuthButton";
-import prisma from "@/lib/prisma";
 
 export default async function Header() {
   const session = await auth();
-  console.log(session);
+  let adminCheck;
 
-  const adminCheck = await prisma.user.findFirst({
-    where: {
-      email: session?.user?.email,
-    },
-    select: {
-      Admin: true,
-    },
-  });
+  if (session) {
+    adminCheck = await prisma.user.findFirst({
+      where: {
+        email: session?.user?.email,
+      },
+      select: {
+        admin: true,
+      }
+    });
+  }
 
   return (
     <header className="p-8 m-auto w-full">
@@ -36,7 +38,7 @@ export default async function Header() {
               <PrimaryButton redirectTo="/dashboard" type="button">
                 <span className="hidden md:block font-medium">Dashboard</span>
               </PrimaryButton>
-              {adminCheck?.Admin && (
+              {adminCheck?.admin && (
                 <PrimaryButton redirectTo="/admin" type="button">
                   <span className="hidden md:block font-medium">Admin</span>
                 </PrimaryButton>

@@ -1,26 +1,28 @@
-import React from "react";
-import { redirect } from "next/navigation";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { LogoutButton } from "@/components/buttons/auth/AuthButton";
+import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import PrimaryButton from "@/components/buttons/PrimaryButton";
-import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
+import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
   const session = await auth();
-
+  console.log("Session:", session);
+  
+  
+  if (!session) {
+    redirect("/login");
+  }
+  
   const adminCheck = await prisma.user.findFirst({
     where: {
       email: session?.user?.email,
     },
     select: {
-      Admin: true,
+      admin: true,
     },
   });
 
-  if (!session) {
-    redirect("/login");
-  }
 
   const user = session?.user;
 
@@ -31,7 +33,7 @@ export default async function Dashboard() {
         <h1 className="text-2xl font-semibold">
           Welcome back, {user?.name || user?.email}
         </h1>
-        {adminCheck?.Admin && (
+        {adminCheck?.admin && (
           <PrimaryButton redirectTo="/admin">Admin Dashboard</PrimaryButton>
         )}
         <LogoutButton />
