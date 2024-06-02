@@ -5,7 +5,7 @@ import SecondaryButton from "../buttons/SecondaryButton"
 export default function HeroSection() {
 
   return (
-    <div className="mx-auto max-w-[960px] py-[75px] flex items-center justify-center flex-col gap-20 text-center">
+    <div className="mx-auto max-w-[960px] py-[50px] flex items-center justify-center flex-col gap-20 text-center">
       <div className="flex flex-col items-center justify-center gap-7">
         <div className="flex items-center gap-3 py-1 px-4 border-2 border-torea-800 bg-torea-950 rounded-full">
           <span className="text-xs text-torea-100">Une bibliothèque grandissante !</span>
