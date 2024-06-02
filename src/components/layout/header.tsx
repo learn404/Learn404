@@ -1,7 +1,7 @@
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { LogIn, LayoutDashboard, Shield } from "lucide-react";
+import { LogIn, LayoutDashboard, Shield, BugPlay } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import PrimaryButton from "../buttons/PrimaryButton";
@@ -9,10 +9,10 @@ import { LogoutButton } from "../buttons/auth/AuthButton";
 
 export default async function Header() {
   const session = await auth();
-  let adminCheck;
+  let isAdmin = false;
 
   if (session) {
-    adminCheck = await prisma.user.findFirst({
+    const checkAdmin = await prisma.user.findFirst({
       where: {
         email: session?.user?.email,
       },
@@ -20,7 +20,9 @@ export default async function Header() {
         admin: true,
       },
     });
-    console.log(adminCheck);
+    if (checkAdmin) {
+      isAdmin = checkAdmin.admin;
+    }
   }
 
   return (
@@ -29,14 +31,30 @@ export default async function Header() {
         <Link href="/">
           <div className="flex items-center gap-5">
             <Image src="/img/logo.png" alt="logo" width={30} height={30} />
-            <h3 className="hidden md:block text-xl font-semibold text-torea-50">Learn404</h3>
+            <h3 className="hidden md:block text-xl font-semibold text-torea-50">
+              Learn404
+            </h3>
           </div>
         </Link>
-        <div className="flex items-center justify-center gap-6 md:gap-12">
-          <Link href="/" className="text-torea-50 hover:text-torea-200 duration-200">Fonctionnalités</Link>
-          <Link href="/" className="text-torea-50 hover:text-torea-200 duration-200">Prix</Link>
-          <Link href="/" className="text-torea-50 hover:text-torea-200 duration-200">A propos</Link>
-        </div>
+        <div className="hidden lg:flex items-center justify-center gap-6 md:gap-12">
+          <Link
+            href="/"
+            className="text-torea-50 hover:text-torea-200 duration-200"
+          >
+            Fonctionnalités
+          </Link>
+          <Link
+            href="/"
+            className="text-torea-50 hover:text-torea-200 duration-200"
+          >
+            Prix
+          </Link>
+          <Link
+            href="/"
+            className="text-torea-50 hover:text-torea-200 duration-200"
+          >
+            A propos
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
@@ -46,7 +64,7 @@ export default async function Header() {
                 <span className="hidden md:block font-medium">Dashboard</span>
                 <LayoutDashboard size={20} className="block md:hidden" />
               </PrimaryButton>
-              {adminCheck?.admin && (
+              {isAdmin && (
                 <PrimaryButton redirectTo="/admin" type="button">
                   <span className="hidden md:block font-medium">Admin</span>
                   <Shield size={20} className="block md:hidden" />
@@ -57,12 +75,14 @@ export default async function Header() {
           ) : (
             <>
               <PrimaryButton redirectTo="/waitlist" type="button">
-                <Play size={20} />
+                <BugPlay size={20} />
                 <span className="hidden md:block font-medium">Acheter</span>
               </PrimaryButton>
               <SecondaryButton redirectTo="/login" type="button">
                 <LogIn size={20} />
-                <span className="hidden md:block font-medium">Se connecter</span>
+                <span className="hidden md:block font-medium">
+                  Se connecter
+                </span>
               </SecondaryButton>
             </>
           )}
