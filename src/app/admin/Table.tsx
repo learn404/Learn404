@@ -7,7 +7,7 @@ async function getServerSideProps() {
     id: user?.id,
     name: user?.name,
     email: user?.email,
-    Admin: user?.Admin,
+    Admin: user?.admin,
   }));
   return users;
 }

@@ -14,11 +14,11 @@ export default async function AdminDashboard() {
       email: session?.user?.email,
     },
     select: {
-      Admin: true,
+      admin: true,
     },
   });
 
-  if (!adminCheck?.Admin || !session || !adminCheck) {
+  if (!adminCheck?.admin || !session || !adminCheck) {
     return redirect("/");
   }
 
