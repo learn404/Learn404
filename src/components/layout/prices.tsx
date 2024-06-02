@@ -12,7 +12,7 @@ export default function PricesSection() {
             <p>Unlock the power of data with our cutting-edge analytics product. Get instant insights with our </p>
             <div>
               <span className="text-5xl font-semibold mr-2">5€</span>
-              <span className="text-torea-100/75">paiement unique</span>
+              <span className=" text-gray-400 ">paiement unique</span>
             </div>
             <svg
             xmlns="http://www.w3.org/2000/svg"

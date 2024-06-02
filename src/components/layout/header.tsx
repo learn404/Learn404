@@ -28,33 +28,35 @@ export default async function Header() {
   return (
     <header className="p-4 m-auto w-full">
       <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative">
-        <Link href="/">
-          <div className="flex items-center gap-5">
-            <Image src="/img/logo.png" alt="logo" width={30} height={30} />
-            <h3 className="hidden md:block text-xl font-semibold text-torea-50">
-              Learn404
-            </h3>
+        <div className="flex items-center justify-start gap-20">
+          <Link href="/">
+            <div className="flex items-center gap-5">
+              <Image src="/img/logo.png" alt="logo" width={30} height={30} />
+              <h3 className="hidden md:block text-xl font-semibold text-torea-50">
+                Learn404
+              </h3>
+            </div>
+          </Link>
+          <div className="hidden lg:flex items-center justify-center gap-6 md:gap-12">
+            <Link
+              href="/"
+              className="text-torea-50 hover:text-torea-200 duration-200"
+            >
+              Fonctionnalités
+            </Link>
+            <Link
+              href="/"
+              className="text-torea-50 hover:text-torea-200 duration-200"
+            >
+              Prix
+            </Link>
+            <Link
+              href="/"
+              className="text-torea-50 hover:text-torea-200 duration-200"
+            >
+              A propos
+            </Link>
           </div>
-        </Link>
-        <div className="hidden lg:flex items-center justify-center gap-6 md:gap-12">
-          <Link
-            href="/"
-            className="text-torea-50 hover:text-torea-200 duration-200"
-          >
-            Fonctionnalités
-          </Link>
-          <Link
-            href="/"
-            className="text-torea-50 hover:text-torea-200 duration-200"
-          >
-            Prix
-          </Link>
-          <Link
-            href="/"
-            className="text-torea-50 hover:text-torea-200 duration-200"
-          >
-            A propos
-          </Link>
         </div>
 
         <div className="flex items-center gap-2">
