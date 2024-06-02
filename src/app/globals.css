@@ -46,3 +46,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;   
 }
+
+.cardLinear {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%);
+}

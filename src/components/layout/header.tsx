@@ -1,7 +1,7 @@
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { LogIn, LayoutDashboard, Shield, BugPlay } from "lucide-react";
+import { LayoutDashboard, LogIn, Play, Shield } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import PrimaryButton from "../buttons/PrimaryButton";
@@ -75,7 +75,7 @@ export default async function Header() {
           ) : (
             <>
               <PrimaryButton redirectTo="/waitlist" type="button">
-                <BugPlay size={20} />
+                <Play size={20} />
                 <span className="hidden md:block font-medium">Acheter</span>
               </PrimaryButton>
               <SecondaryButton redirectTo="/login" type="button">
