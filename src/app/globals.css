@@ -35,3 +35,14 @@ body {
 .animation {
     border: 1px solid #000;
 }
+
+/* header:has(.header_Navlink:hover) .header_Navlink:not(:hover) {
+    color: rgba(238, 242, 255, .7);
+} */
+
+.titleStyle {
+    background: linear-gradient(146deg, #EEF2FF 20.35%, #312D82 128.73%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;   
+}

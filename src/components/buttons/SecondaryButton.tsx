@@ -9,7 +9,7 @@ interface Props {
   onClick?: () => void;
 }
 
-export default function PrimaryButton({
+export default function SecondaryButton({
   children,
   type = "submit",
   redirectTo,

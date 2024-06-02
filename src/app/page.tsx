@@ -1,11 +1,12 @@
-import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+import Main from "@/components/layout/main";
 
 export default function Home() {
   return (
     <div>
       <Header />
-      <h1> Home</h1>
+      <Main></Main>
       <Footer />
     </div>
   );
