@@ -26,6 +26,8 @@ const config: Config = {
       boxShadow: {
         "custom-shadow":
           "0px -5px 20px 0px rgba(233, 223, 255, 0.30), 0px -2px 60px 0px rgba(187, 155, 255, 0.15), 0px 0.5px 0px 0px rgba(255, 255, 255, 0.50) inset",
+        "pricing-shadow": 
+          "0px -2px 10px 0px rgba(233, 223, 255, 0.30), 0px -2px 40px 0px rgba(187, 155, 255, 0.15), 0px 0.5px 0px 0px rgba(255, 255, 255, 0.50) inset",
       },
       backgroundColor: {
         "bg-primary": "#02030C",
@@ -39,6 +41,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      // background: {
+      //   "card-linear": "linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%)",
+      // }
     },
   },
   plugins: [],
