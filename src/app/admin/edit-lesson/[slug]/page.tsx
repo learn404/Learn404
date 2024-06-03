@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const categoryLesson = await prisma.categories.findMany({
     where: {
-      id: lesson[0]?.category_id,
+      id: lesson[0]?.categoryId,
     },
     select: {
       id: true,
@@ -128,7 +128,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       name="about"
                       rows={3}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      defaultValue={lesson[0]?.description}
+                      defaultValue={lesson[0]?.description || ""}
                     />
                   </div>
                   <p className="mt-3 text-sm leading-6 text-gray-400">
@@ -159,7 +159,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       type="url"
                       name="repository_url"
                       id="repository_url"
-                      placeholder={lesson[0]?.repository_url}
+                      placeholder={lesson[0]?.repository_url || ""}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -177,7 +177,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       type="url"
                       name="video_url"
                       id="video_url"
-                      placeholder={lesson[0]?.video_url}
+                      placeholder={lesson[0]?.video_url || ""}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>

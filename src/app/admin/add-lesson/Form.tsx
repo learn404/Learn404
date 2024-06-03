@@ -31,27 +31,18 @@ export default async function AddLessonForm({
 
     const title = formData.get("title")?.toString();
     const categoryId = formData.get("category")?.toString();
-    const about = formData.get("about")?.toString();
-    const video_url = formData.get("video_url")?.toString();
-    const repository_url = formData.get("repository_url")?.toString();
+    const about = formData.get("about")?.toString() || undefined;
+    const video_url = formData.get("video_url")?.toString() || undefined;
+    const repository_url =
+      formData.get("repository_url")?.toString() || undefined;
     const draft = formData.get("draft") === "on";
     const newLesson = formData.get("newLesson") === "on";
 
-    if (!title) {
+    if (!title || !categoryId) {
       throw new Error("Title and category are required");
     }
 
     const slug_title = title.replace(/\s+/g, "-").toLowerCase();
-
-    console.log(
-      title,
-      categoryId,
-      about,
-      video_url,
-      repository_url,
-      draft,
-      newLesson,
-    );
 
     const checkLessonExist = await prisma.lessons.findFirst({
       where: {
@@ -65,13 +56,13 @@ export default async function AddLessonForm({
 
     const addLesson = await prisma.lessons.create({
       data: {
-        title: slug_title,
-        categoryId,
-        description: about,
-        video_url,
-        repository_url,
-        draft,
-        newLesson,
+        title: slug_title ?? "",
+        categoryId: categoryId ?? "",
+        description: about ?? "",
+        video_url: video_url ?? "",
+        repository_url: repository_url ?? "",
+        draft: draft ?? false,
+        newLesson: newLesson ?? false,
       },
     });
 
