@@ -68,7 +68,23 @@ model Waitlist {
 }
 
 model Categories {
-  id        String   @id @default(cuid())
-  name      String   @unique
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  Lessons   Lessons[]
+}
+
+model Lessons {
+  id             String     @id @default(cuid())
+  title          String
+  Categories     Categories @relation(fields: [categoryId], references: [id])
+  categoryId     String
+  description    String?
+  video_url      String?
+  repository_url String?
+
+  draft     Boolean  @default(true)
+  newLesson Boolean  @default(true)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
