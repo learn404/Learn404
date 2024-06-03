@@ -2,24 +2,7 @@ import PrimaryButton from "@/components/buttons/PrimaryButton";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
-
-interface Category {
-  id: number;
-  name: string;
-}
-async function getServerSideProps() {
-  const res = await prisma.Categories.findMany({
-    select: {
-      id: true,
-      name: true,
-    },
-  });
-  const categories = res.map((category: any) => ({
-    id: category?.id,
-    name: category?.name.toUpperCase(),
-  }));
-  return categories;
-}
+import { redirect } from "next/navigation";
 
 interface AddLessonFormProps {
   isAdmin: boolean;
@@ -27,15 +10,79 @@ interface AddLessonFormProps {
   session: any;
 }
 
+// Fetch categories from the database
+async function getServerSideProps() {
+  const res = await prisma.categories.findMany();
+  const categories = res.map((category) => ({
+    id: category?.id,
+    name: category?.name.toUpperCase(),
+  }));
+  return categories;
+}
+
 export default async function AddLessonForm({
   session,
-  isAdmin,
   isAvatar,
 }: AddLessonFormProps) {
-  const options = await getServerSideProps();
+  const categories = await getServerSideProps();
+
+  async function addLesson(formData: FormData) {
+    "use server";
+
+    const title = formData.get("title")?.toString();
+    const categoryId = formData.get("category")?.toString();
+    const about = formData.get("about")?.toString();
+    const video_url = formData.get("video_url")?.toString();
+    const repository_url = formData.get("repository_url")?.toString();
+    const draft = formData.get("draft") === "on";
+    const newLesson = formData.get("newLesson") === "on";
+
+    if (!title) {
+      throw new Error("Title and category are required");
+    }
+
+    const slug_title = title.replace(/\s+/g, "-").toLowerCase();
+
+    console.log(
+      title,
+      categoryId,
+      about,
+      video_url,
+      repository_url,
+      draft,
+      newLesson,
+    );
+
+    const checkLessonExist = await prisma.lessons.findFirst({
+      where: {
+        title: slug_title,
+      },
+    });
+
+    if (checkLessonExist) {
+      throw new Error("Lesson already exists");
+    }
+
+    const addLesson = await prisma.lessons.create({
+      data: {
+        title: slug_title,
+        categoryId,
+        description: about,
+        video_url,
+        repository_url,
+        draft,
+        newLesson,
+      },
+    });
+
+    console.log(addLesson);
+
+    redirect("/admin");
+  }
+
   return (
     <>
-      <form className="p-8">
+      <form className="p-8" action={addLesson}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-100">
@@ -62,9 +109,9 @@ export default async function AddLessonForm({
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
                     <option value="">Choisir une catégorie</option>
-                    {options.map((option: Category) => (
-                      <option key={option.id} value={option.id}>
-                        {option.name}
+                    {categories.map((category: any) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
                       </option>
                     ))}
                   </select>
@@ -200,15 +247,15 @@ export default async function AddLessonForm({
                   <div className="relative flex gap-x-3">
                     <div className="flex h-6 items-center">
                       <input
-                        id="new"
-                        name="new"
+                        id="newLesson"
+                        name="newLesson"
                         type="checkbox"
                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                       />
                     </div>
                     <div className="text-sm leading-6">
                       <label
-                        htmlFor="new"
+                        htmlFor="newLesson"
                         className="font-medium text-gray-100"
                       >
                         Nouveau
