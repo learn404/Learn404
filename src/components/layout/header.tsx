@@ -39,13 +39,13 @@ export default async function Header() {
           </Link>
           <div className="hidden lg:flex items-center justify-center gap-6 md:gap-12">
             <Link
-              href="/"
+              href="/#fonctionnality"
               className="text-torea-50 hover:text-torea-200 duration-200"
             >
               Fonctionnalités
             </Link>
             <Link
-              href="/"
+              href="/#prices"
               className="text-torea-50 hover:text-torea-200 duration-200"
             >
               Prix
@@ -78,7 +78,7 @@ export default async function Header() {
             <>
               <PrimaryButton redirectTo="/waitlist" type="button">
                 <Play size={20} />
-                <span className="hidden md:block font-medium">Acheter</span>
+                <span className="md:block font-medium">Acheter</span>
               </PrimaryButton>
               <SecondaryButton redirectTo="/login" type="button">
                 <LogIn size={20} />

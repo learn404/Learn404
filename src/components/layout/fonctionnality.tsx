@@ -3,16 +3,16 @@ import { CodeXml, LineChart, ListVideo } from "lucide-react";
 export default function FonctionnalitySection() {
 
   return (
-    <div className="flex flex-col items-center justify-center w-full gap-10 py-[6.25rem]">
+    <div className="flex flex-col items-center justify-center w-full gap-10 py-[6.25rem] px-4" id="fonctionnality">
       <div className=" flex flex-col items-center justify-center  gap-6 text-center max-w-md  ">
         <h2 className=" text-5xl font-semibold titleStyle" >Fonctionnalités</h2>
         <p className="text-lg text-torea-50">Tu craqueras peut-être devant le panel de fonctionnalités à disposition dans la formation.</p>
       </div>
 
       <div className="max-w-6xl flex flex-col gap-5">
-        <div className="flex gap-6">
+        <div className="flex gap-6 flex-wrap">
 
-          <div className="flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
+          <div className="flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF]">
                 <LineChart />
@@ -26,7 +26,7 @@ export default function FonctionnalitySection() {
             <span className="underline text-torea-200 cursor-pointer">View dashboard</span>
           </div> 
 
-          <div className=" flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 max-w-xl cardLinear">
+          <div className=" flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#9C32CC]">
                 <ListVideo />
@@ -41,8 +41,8 @@ export default function FonctionnalitySection() {
           </div> 
         </div>
 
-          <div className=" flex items-center justify-between border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
-            <div className="flex flex-col items-start justify-between gap-8 max-w-md">
+          <div className=" flex items-center justify-between flex-wrap border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
+            <div className="flex flex-col items-start justify-between gap-8 lg:max-w-md">
               <div className="flex flex-col gap-5">
                 <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#CB2CAE]">
                   <CodeXml />
@@ -56,7 +56,7 @@ export default function FonctionnalitySection() {
               </div>
               <span className=" underline text-torea-200 cursor-pointer">View code collaboration</span>
             </div>
-            <img src="./img/Card_img.png" alt="code image" />
+            <img src="./img/Card_img.png" alt="code image" className="hidden lg:block" />
           </div> 
       </div>
     </div>
