@@ -16,6 +16,11 @@
     }
 }
 
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
 body {
     color: rgb(var(--foreground-rgb));
     background: linear-gradient(
@@ -24,6 +29,8 @@ body {
             rgb(var(--background-end-rgb))
         )
         rgb(var(--background-start-rgb));
+    overflow-x: hidden;
+    
 }
 
 @layer utilities {
@@ -34,4 +41,23 @@ body {
 
 .animation {
     border: 1px solid #000;
+}
+
+/* header:has(.header_Navlink:hover) .header_Navlink:not(:hover) {
+    color: rgba(238, 242, 255, .7);
+} */
+
+.titleStyle {
+    background: linear-gradient(146deg, #EEF2FF 20.35%, #312D82 128.73%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;   
+}
+
+.cardLinear {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%);
+}
+
+.lineLinear {
+    background: linear-gradient(to right, rgba(236, 236, 236, 1) 0%, rgba(236, 236, 236, 0) 70%);
 }
