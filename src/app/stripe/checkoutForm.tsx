@@ -1,3 +1,5 @@
+'use client';
+
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripePaymentElementChangeEvent } from "@stripe/stripe-js";
 import { FormEvent, useState } from "react";
@@ -43,7 +45,7 @@ export default function CheckoutForm(props: { layout: "tabs" | "accordion" | "au
     if (event.complete) {
       setFormCompleted(true);
     } else {
-      setFormCompleted(false);
+      if (isFormCompleted) setFormCompleted(false);
     }
   }
 
@@ -51,7 +53,7 @@ export default function CheckoutForm(props: { layout: "tabs" | "accordion" | "au
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement  onChange={handleStripeChange}/>
       <div className="mt-4 flex items-center justify-end gap-2">
-        <button className="px-8 py-3.5 rounded-full border-2 border-gray-400 font-semibold text-gray-400 hover:text-torea-100 hover:border-torea-100 focus:text-torea-100 focus:border-torea-100 outline-none">
+        <button className="px-8 py-3.5 rounded-full border-2 border-gray-400 font-semibold text-gray-400 hover:text-gray-300 hover:border-gray-300 focus:text-gray-300 focus:border-gray-300 outline-none">
           Previous
         </button>
         <button disabled={isLoading || !isFormCompleted} id="submit" className="bg-torea-800 border-2 border-torea-800 px-8 py-3.5 rounded-full 
@@ -61,7 +63,7 @@ export default function CheckoutForm(props: { layout: "tabs" | "accordion" | "au
             {isLoading ? (
               "Loading..."
             ) : (
-              "Confirm payment 5.99€"     
+              "Confirm payment EUR 5.99"     
             )}
           </span>
         </button>

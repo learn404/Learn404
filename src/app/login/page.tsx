@@ -1,10 +1,10 @@
-import Header from "@/components/layout/header";
-import Footer from "@/components/layout/footer";
-import Link from "next/link";
-import LoginForm from "./Form";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { LoginButton } from "@/components/buttons/auth/AuthButton";
+import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+import { auth } from "@/lib/auth";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import LoginForm from "./Form";
 
 export default async function LoginPage() {
   const session = await auth();
@@ -94,7 +94,7 @@ export default async function LoginPage() {
           </div>
           <p className="text-center font-medium">
             Tu n'as pas encore de compte ?{"  "}
-            <Link href="/signup" className="text-indigo-800">
+            <Link href="/join" className="text-indigo-800">
               Inscris-toi !
             </Link>
           </p>
