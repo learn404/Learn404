@@ -76,7 +76,7 @@ export default async function Header() {
             </>
           ) : (
             <>
-              <PrimaryButton redirectTo="/waitlist" type="button">
+              <PrimaryButton redirectTo="https://buy.stripe.com/test_6oE5m3bOhfccg6YaEE" type="button">
                 <Play size={20} />
                 <span className="md:block font-medium">Acheter</span>
               </PrimaryButton>
