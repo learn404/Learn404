@@ -11,9 +11,8 @@ export async function POST(req: NextRequest) {
     
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 500,
+      amount: 599,
       currency: "eur",
-      // payment_method_types : ['card']
       // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
       automatic_payment_methods: {
         enabled: true,
