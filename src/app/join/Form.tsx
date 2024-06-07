@@ -1,9 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { toast } from "react-toastify";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { EyeIcon, EyeOff } from "lucide-react";
+import { FormEvent, useState } from "react";
+import { toast } from "react-toastify";
 
 interface FormData {
   name: string;
@@ -116,7 +116,7 @@ export default function Form() {
             />
           </div>
         </div>
-        <div className="mt-8 flex flex-col gap-4">
+        <div className="mt-6 flex flex-col gap-6">
           <div className="flex-col flex">
             <label className="font-medium mb-1">Email</label>
             <input
@@ -157,7 +157,7 @@ export default function Form() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center mt-5 w-full">
+        <div className="flex justify-center mt-10 w-full">
           <PrimaryButton>Rejoins la formation</PrimaryButton>
         </div>
       </form>

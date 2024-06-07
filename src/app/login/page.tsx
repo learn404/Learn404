@@ -93,8 +93,8 @@ export default async function LoginPage() {
             <LoginButton />
           </div>
           <p className="text-center font-medium">
-            Tu n'as pas encore de compte ?{"  "}
-            <Link href="/join" className="text-indigo-800">
+            Tu n'as pas encore de compte ?
+            <Link href="/join" className="ml-2 text-indigo-800">
               Inscris-toi !
             </Link>
           </p>

@@ -5,7 +5,7 @@ import { StripePaymentElementChangeEvent } from "@stripe/stripe-js";
 import { FormEvent, useState } from "react";
 
 
-export default function CheckoutForm(props: { layout: "tabs" | "accordion" | "auto" }) {
+export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -20,9 +20,9 @@ export default function CheckoutForm(props: { layout: "tabs" | "accordion" | "au
     if (!stripe || !elements) return;
     setLoading(true);
 
-    const { error, paymentIntent } = await stripe.confirmPayment({
+    const { error } = await stripe.confirmPayment({
       elements,
-      redirect: "if_required",
+      redirect: "always",
       confirmParams: {
         return_url: `${window.location.origin}/completion`
       }
@@ -31,13 +31,7 @@ export default function CheckoutForm(props: { layout: "tabs" | "accordion" | "au
     if (error) {
       setMessage(error.message as string);
       setLoading(false);
-    } else if (paymentIntent && paymentIntent.status === "succeeded") {
-      setMessage("Payment successful");
-      setLoading(false);
-    } else {
-      setMessage("Unexpected error");
-      setLoading(false);
-    }
+    }  
 
   }
 
@@ -48,11 +42,12 @@ export default function CheckoutForm(props: { layout: "tabs" | "accordion" | "au
       if (isFormCompleted) setFormCompleted(false);
     }
   }
-
+  
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement  onChange={handleStripeChange}/>
-      <div className="mt-4 flex items-center justify-end gap-2">
+      <PaymentElement  onChange={handleStripeChange} />
+        {message && <div className="my-2 text-red-500">{message}</div>}
+      <div className="mt-4 flex items-center justify-end gap-2 ">
         <button className="px-8 py-3.5 rounded-full border-2 border-gray-400 font-semibold text-gray-400 hover:text-gray-300 hover:border-gray-300 focus:text-gray-300 focus:border-gray-300 outline-none">
           Previous
         </button>
@@ -68,7 +63,6 @@ export default function CheckoutForm(props: { layout: "tabs" | "accordion" | "au
           </span>
         </button>
       </div>
-      {message && <div>{message}</div>}
     </form>
   )
 }

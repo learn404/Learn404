@@ -1,10 +1,9 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation"; // Correct import
-import { FormEvent } from "react";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation"; // Correct import
+import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 interface FormData {
@@ -47,8 +46,8 @@ export default function LoginForm() {
 
   return (
     <>
-      <form className="p-4" onSubmit={handleFormSubmit}>
-        <div className="mt-8 flex flex-col gap-4">
+      <form className="px-4" onSubmit={handleFormSubmit}>
+        <div className="mt-6 flex flex-col gap-6">
           <div className="flex-col flex">
             <label className="font-medium mb-1">Email</label>
             <input

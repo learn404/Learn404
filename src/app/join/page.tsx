@@ -1,12 +1,13 @@
-import Header from "@/components/layout/header";
+import { LoginButton } from "@/components/buttons/auth/AuthButton";
 import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
 import { auth } from "@/lib/auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import SignupForm from "./Form";
-import { LoginButton } from "@/components/buttons/auth/AuthButton";
-import Link from "next/link";
 
 export default async function Signup() {
+
   const session = await auth();
   console.log(session);
   if (session) {
@@ -67,8 +68,8 @@ export default async function Signup() {
             <LoginButton />
           </div>
           <p className="text-center font-medium ">
-            Tu as déjà un compte ?{" "}
-            <Link href="/login" className="text-indigo-800">
+            Tu as déjà un compte ?
+            <Link href="/login" className="ml-2 text-indigo-800">
               Connectes toi !
             </Link>
           </p>
