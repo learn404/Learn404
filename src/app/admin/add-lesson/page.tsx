@@ -1,8 +1,8 @@
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
-import AddLessonForm from "./Form";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import AddLessonForm from "./Form";
 
 export default async function AddLesson() {
   const session = await auth();
@@ -34,9 +34,18 @@ export default async function AddLesson() {
     redirect("/dashboard");
   }
 
+  const sessionData = {
+    user: {
+      name: session?.user?.name as string,
+      email: session?.user?.email as string,
+      image: session?.user?.image as string,
+    },
+    expires: session?.expires as string,
+  }
+
   return (
     <>
-      <HeaderDashboard />
+      <HeaderDashboard session={sessionData}/>
       <main className="px-8">
         <AddLessonForm
           isAdmin={isAdmin}

@@ -1,10 +1,10 @@
 import PrimaryButton from "@/components/buttons/PrimaryButton";
-import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
-import UserTable from "./UserTable";
-import LessonTable from "./LessonTable";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
+import LessonTable from "./LessonTable";
+import UserTable from "./UserTable";
 
 export default async function AdminDashboard() {
   const session = await auth();
@@ -20,14 +20,23 @@ export default async function AdminDashboard() {
       admin: true,
     },
   });
-  console.log(adminCheck);
+
   if (!adminCheck?.admin || !session || !adminCheck) {
     return redirect("/");
   }
 
+  const sessionData = {
+    user: {
+      name: session?.user?.name as string,
+      email: session?.user?.email as string,
+      image: session?.user?.image as string,
+    },
+    expires: session?.expires as string,
+  }
+
   return (
     <div>
-      <HeaderDashboard />
+      <HeaderDashboard session={sessionData}/>
       <main className="px-4">
         <h1 className="py-8 text-2xl font-bold">Admin Dashboard</h1>
         <PrimaryButton redirectTo="/admin/add-lesson">Add Lesson</PrimaryButton>

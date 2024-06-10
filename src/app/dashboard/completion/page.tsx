@@ -1,13 +1,12 @@
-
-import PaymentBox from "@/app/stripe/PaymentBox";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import { auth } from "@/lib/auth";
-
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function Dashboard() {
-  const session = await auth();
+export default async function Completion() {
 
+  const session = await auth();
+  
   if (!session) {
     redirect("/login");
   }
@@ -22,11 +21,12 @@ export default async function Dashboard() {
   }
 
   return (
-    <>
+    <div>
       <HeaderDashboard session={sessionData}/>
-      <main className="max-w-7xl mx-auto my-12 space-y-5 container">
-        <PaymentBox userEmail={session.user?.email!} />
-      </main>
-    </>
-  );
-}
+      <h1>Votre achat a bel et bien été pris en compte, vous avez maintenant accès à votre dashboard</h1>
+      <Link href={"/dashboard"}>
+        Dashboard
+      </Link>
+    </div>
+  )
+} 

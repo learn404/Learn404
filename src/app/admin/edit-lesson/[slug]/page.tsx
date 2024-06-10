@@ -1,9 +1,9 @@
-import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
-import { redirect } from "next/navigation";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 async function getServerSideProps() {
   const res = await prisma.categories.findMany();
@@ -51,9 +51,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return redirect("/");
   }
 
+  const sessionData = {
+    user: {
+      name: session?.user?.name as string,
+      email: session?.user?.email as string,
+      image: session?.user?.image as string,
+    },
+    expires: session?.expires as string,
+  }
+
   return (
     <>
-      <HeaderDashboard />
+      <HeaderDashboard session={sessionData}/>
       <div>
         <form className="p-8">
           <div className="space-y-12">

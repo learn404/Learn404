@@ -2,11 +2,17 @@
 
 import { Elements } from "@stripe/react-stripe-js";
 import { Appearance, Stripe, loadStripe } from "@stripe/stripe-js";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { getStripePublishableKey } from "../api/config/route";
 import CheckoutForm from "./checkoutForm";
 
-export default function PaymentBox() {
+export const EmailContext = createContext<string | null>(null);
+
+interface PaymentBoxProps {
+  userEmail: string;
+}
+
+export default function PaymentBox({ userEmail }: PaymentBoxProps) {
   
   const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null);
   const [isLoadingFirst, setLoadingFirst] = useState<boolean>(true);
@@ -91,9 +97,11 @@ export default function PaymentBox() {
           </div> 
         )}
         { stripePromise && clientSecret && (
-          <Elements stripe={stripePromise} options={options}>
-            <CheckoutForm />
-          </Elements>
+          <EmailContext.Provider value={userEmail}>
+            <Elements stripe={stripePromise} options={options}>
+              <CheckoutForm />
+            </Elements>
+          </EmailContext.Provider>
         )}
       </div>
   );

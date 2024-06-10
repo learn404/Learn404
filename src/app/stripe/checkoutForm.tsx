@@ -2,12 +2,14 @@
 
 import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripePaymentElementChangeEvent } from "@stripe/stripe-js";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import { EmailContext } from "./PaymentBox";
 
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const userEmail = useContext(EmailContext);  
 
   const [message, setMessage] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -24,7 +26,12 @@ export default function CheckoutForm() {
       elements,
       redirect: "always",
       confirmParams: {
-        return_url: `${window.location.origin}/completion`
+        return_url: `${window.location.origin}/dashboard/completion`,
+        payment_method_data: {
+          billing_details: {
+            email: userEmail,
+          }
+        }
       }
     })
 

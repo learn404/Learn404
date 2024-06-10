@@ -1,19 +1,27 @@
+import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
-import { auth } from "@/lib/auth";
 import UserDropdown from "./userDropDown";
-import { redirect } from "next/navigation";
-import prisma from "@/lib/prisma";
 
-export default async function HeaderDashboard() {
-  const session = await auth();
-  if (!session) {
-    redirect("/login");
-  }
+type sessionData = {
+  user: {
+    name: string | null,
+    email: string | null,
+    image: string | null,
+  },
+  expires: string | null,
+}
 
+interface HeaderDashboardProps {
+  session: sessionData;
+}
+
+export default async function HeaderDashboard({session}: HeaderDashboardProps) {
   let isAvatar = false;
   let isAdmin = false;
-
+  
+  console.log("SESSION: ", session);
+  
   if (session) {
     isAvatar = session?.user?.image ? true : false;
 

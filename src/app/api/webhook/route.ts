@@ -1,3 +1,4 @@
+import prisma from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
@@ -20,11 +21,22 @@ export async function POST(req: NextRequest) {
 
     if (event.type === "charge.succeeded") {
       // Add user to database
-      console.log("AJOUTER L'UTILISATEUR DANS LA BASE DE DONNEES");
+      console.log(`Stripe webhook received: ${event.type} at ${datetime}`);
+      
+      const userEmail = event.data.object.billing_details.email as string;
+      console.log("USER EMAIL: ", userEmail);
+
+      await prisma.user.update({
+        where: {
+          email: userEmail,
+        },
+        data: {
+          isMember: true,
+        }
+      })
+  
     }
 
-    console.log(`Stripe webhook received: ${event.type} at ${datetime}`);
-    
     return NextResponse.json({ event: event.type, status: 200 })
   } catch (error: any) {
     return NextResponse.json({ error: error.message, status: 500 });
