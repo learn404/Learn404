@@ -1,4 +1,4 @@
-import { LoginButton } from "@/components/buttons/auth/AuthButton";
+import { LoginGithubButton } from "@/components/buttons/auth/AuthButton";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import { auth } from "@/lib/auth";
@@ -65,7 +65,7 @@ export default async function Signup() {
             </defs>
           </svg>
           <div className="mx-auto my-5 flex justify-center items-center">
-            <LoginButton />
+            <LoginGithubButton />
           </div>
           <p className="text-center font-medium ">
             Tu as déjà un compte ?

@@ -1,15 +1,24 @@
 // components/buttons/auth/loginButton.js
 "use client";
 
-import { signIn, signOut } from "next-auth/react";
 import { Github, LogOut } from "lucide-react";
+import { signIn, signOut } from "next-auth/react";
 import SecondaryButton from "../SecondaryButton";
 
-export const LoginButton = () => {
+export const LoginGithubButton = () => {
   return (
     <SecondaryButton onClick={() => signIn("github")}>
       <Github size={20} />
-      Connexion avec Github
+      with Github
+    </SecondaryButton>
+  );
+};
+
+export const LoginGoogleButton = () => {
+  return (
+    <SecondaryButton onClick={() => signIn("github")}>
+      <img src="/img/google.svg" alt="google icon" />
+      with Google
     </SecondaryButton>
   );
 };

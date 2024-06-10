@@ -1,7 +1,6 @@
-import PrimaryButton from "@/components/buttons/PrimaryButton";
-
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
 import { redirect } from "next/navigation";
 
@@ -11,8 +10,21 @@ export default async function Dashboard() {
   if (!session) {
     redirect("/login");
   }
+  
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session?.user?.email as string,
+    },
+    select: {
+      name: true,
+      email: true,
+      isMember: true,
+    }
+  })
 
-  const user = session?.user;
+  if (!user?.isMember) {
+    redirect("/dashboard/subscriptions/");
+  }
 
   return (
     <>
