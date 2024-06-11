@@ -12,9 +12,10 @@ interface PaymentBoxProps {
   userEmail: string;
 }
 
+let stripePromise: Promise<Stripe | null>;
+
 export default function PaymentBox({ userEmail }: PaymentBoxProps) {
   
-  const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null);
   const [isLoadingFirst, setLoadingFirst] = useState<boolean>(true);
   const [clientSecret, setClientSecret] = useState<string>("");
 
@@ -24,7 +25,7 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
       // Utilisation d'un composant serveur pour récupérer la clé publique de Stripe
       const result = await getStripePublishableKey();
       const { publishableKey } = result;      
-      setStripePromise(loadStripe(publishableKey!));
+      stripePromise = loadStripe(publishableKey!);
     };
   
     fetchData();

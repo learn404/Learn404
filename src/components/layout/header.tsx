@@ -40,19 +40,19 @@ export default async function Header() {
           <div className="hidden lg:flex items-center justify-center gap-6 md:gap-12">
             <Link
               href="/#fonctionnality"
-              className="text-torea-50 hover:text-torea-200 duration-200"
+              className="text-gray-400 hover:text-torea-50 duration-200"
             >
               Fonctionnalités
             </Link>
             <Link
               href="/#prices"
-              className="text-torea-50 hover:text-torea-200 duration-200"
+              className="text-gray-400 hover:text-torea-50 duration-200"
             >
               Prix
             </Link>
             <Link
               href="/"
-              className="text-torea-50 hover:text-torea-200 duration-200"
+              className="text-gray-400 hover:text-torea-50 duration-200"
             >
               A propos
             </Link>
@@ -80,7 +80,7 @@ export default async function Header() {
                 <Play size={20} />
                 <span className="md:block font-medium">Acheter</span>
               </PrimaryButton>
-              <SecondaryButton redirectTo="/login" type="button">
+              <SecondaryButton redirectTo="/join" type="button">
                 <LogIn size={20} />
                 <span className="hidden md:block font-medium">
                   Se connecter

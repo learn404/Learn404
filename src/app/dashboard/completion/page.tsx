@@ -2,6 +2,8 @@ import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import ParamsComponent from "./paramsComponent";
+
 
 export default async function Completion() {
 
@@ -27,6 +29,7 @@ export default async function Completion() {
       <Link href={"/dashboard"}>
         Dashboard
       </Link>
+      <ParamsComponent />
     </div>
   )
 } 

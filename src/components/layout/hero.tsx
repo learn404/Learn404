@@ -22,7 +22,7 @@ export default function HeroSection() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <PrimaryButton redirectTo="/waitlist" type="button">
+          <PrimaryButton redirectTo="/join" type="button">
             <span className="md:block font-medium">
               Rejoindre l'aventure
             </span>

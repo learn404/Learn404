@@ -19,9 +19,7 @@ interface HeaderDashboardProps {
 export default async function HeaderDashboard({session}: HeaderDashboardProps) {
   let isAvatar = false;
   let isAdmin = false;
-  
-  console.log("SESSION: ", session);
-  
+    
   if (session) {
     isAvatar = session?.user?.image ? true : false;
 

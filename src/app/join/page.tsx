@@ -1,15 +1,14 @@
-import { LoginGithubButton } from "@/components/buttons/auth/AuthButton";
+import { LoginGithubButton, LoginGoogleButton } from "@/components/buttons/auth/AuthButton";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import { auth } from "@/lib/auth";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import SignupForm from "./Form";
 
-export default async function Signup() {
+export default async function Join() {
 
   const session = await auth();
   console.log(session);
+
   if (session) {
     redirect("/dashboard");
   }
@@ -29,50 +28,18 @@ export default async function Signup() {
           alt="background"
         />
       </div>
-      <main className="flex justify-center items-center p-5 relative z-50">
-        <div className="bg-black bg-opacity-20 rounded-lg border border-gray-100 p-14 md:p-16 mt-0 md:mt-5 backdrop-blur-xl shadow-custom-shadow">
-          <h1 className="font-bold text-4xl md:text-5xl text-center">
-            Rejoins la formation
-          </h1>
-          <p className="text-center text-gray-300 p-2">
-            Remplis le formulaire ci-dessous pour t'inscrire à la formation
-          </p>
-          <SignupForm />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="327"
-            height="3"
-            viewBox="0 0 327 3"
-            fill="none"
-            className="my-5"
-          >
-            <path
-              d="M1.49689 0.5C0.944611 0.5 0.496887 0.947715 0.496887 1.5C0.496887 2.05228 0.944611 2.5 1.49689 2.5V0.5ZM326.503 0.5L1.49689 0.5V2.5L326.503 2.5V0.5Z"
-              fill="url(#paint0_linear_3232_81)"
-            />
-            <defs>
-              <linearGradient
-                id="paint0_linear_3232_81"
-                x1="337.481"
-                y1="79.1317"
-                x2="345.557"
-                y2="18.0362"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#ECECEC" />
-                <stop offset="1" stopColor="#ECECEC" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <div className="mx-auto my-5 flex justify-center items-center">
+      <main className="flex justify-center items-center p-5 py-15 relative z-50">
+        <div>
+          <img src="/img/Card_img.png" alt="" className="h-[500px]" />
+        </div>
+        <div className="flex flex-col items-start max-w-md">
+          <h2 className="text-5xl font-medium">
+            <span className="text-torea-300">Sign in</span> or <span className="text-torea-300">Sign up</span> to continue
+          </h2>
+          <div className="flex items-center justify-center gap-3 mt-8">
+            <LoginGoogleButton />
             <LoginGithubButton />
           </div>
-          <p className="text-center font-medium ">
-            Tu as déjà un compte ?
-            <Link href="/login" className="ml-2 text-indigo-800">
-              Connectes toi !
-            </Link>
-          </p>
         </div>
       </main>
       <Footer />

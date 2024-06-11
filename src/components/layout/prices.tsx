@@ -42,7 +42,7 @@ export default function PricesSection() {
                 <Check /> Soutenir le projet
               </span>
             </div>
-            <PrimaryButton redirectTo="/waitlist">
+            <PrimaryButton redirectTo="/join">
               Acheter la formation
             </PrimaryButton>
           </div>
