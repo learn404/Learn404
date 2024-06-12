@@ -85,10 +85,9 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
   }
 
   return (
-      <div className="max-w-lg mx-auto my-20 text-center">
-        <h1 className="mb-4 font-semibold text-2xl text-gray-300">Payment method</h1>
+      <div className="max-w-md w-full">
         { isLoadingFirst && (
-          <div>
+          <div className="text-center">
             <span className="text-lg text-gray-400">Loading</span>
             <div className="flex items-center justify-center gap-2 mt-2">
               <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fast"></div>

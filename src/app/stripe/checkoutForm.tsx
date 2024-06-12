@@ -55,9 +55,6 @@ export default function CheckoutForm() {
       <PaymentElement  onChange={handleStripeChange} />
         {message && <div className="my-2 text-red-500">{message}</div>}
       <div className="mt-4 flex items-center justify-end gap-2 ">
-        <button className="px-8 py-3.5 rounded-full border-2 border-gray-400 font-semibold text-gray-400 hover:text-gray-300 hover:border-gray-300 focus:text-gray-300 focus:border-gray-300 outline-none">
-          Previous
-        </button>
         <button disabled={isLoading || !isFormCompleted} id="submit" className="bg-torea-800 border-2 border-torea-800 px-8 py-3.5 rounded-full 
           font-semibold text-torea-50 enabled:hover:bg-indigo-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
            focus-visible:outline-indigo-500 disabled:cursor-not-allowed disabled:bg-torea-800/50 disabled:border-torea-800/50 disabled:text-gray-500">
