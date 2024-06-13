@@ -39,7 +39,7 @@ export default async function HeaderDashboard({session}: HeaderDashboardProps) {
 
   return (
     <header className="p-4 m-auto w-full">
-      <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative">
+      <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative -mt-1">
         <Link href="/">
           <div className="flex items-center gap-5">
             <Image src="/img/logo.png" alt="logo" width={30} height={30} />

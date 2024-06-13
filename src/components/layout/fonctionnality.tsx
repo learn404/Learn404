@@ -19,7 +19,7 @@ export default function FonctionnalitySection() {
         <div className="flex gap-6 flex-wrap">
           <div className="flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
             <div className="flex flex-col gap-5">
-              <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF]">
+              <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF] shadow-xl shadow-[#6128DF]/50">
                 <LineChart />
               </div>
               <h3 className="text-3xl font-medium">Analytics Dashboard</h3>
@@ -37,7 +37,7 @@ export default function FonctionnalitySection() {
 
           <div className=" flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
             <div className="flex flex-col gap-5">
-              <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#9C32CC]">
+              <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#9C32CC] shadow-xl shadow-[#9C32CC]/50">
                 <ListVideo />
               </div>
               <h3 className="text-3xl font-medium">Formats des cours</h3>
@@ -56,7 +56,7 @@ export default function FonctionnalitySection() {
         <div className=" flex items-center justify-between flex-wrap border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
           <div className="flex flex-col items-start justify-between gap-8 lg:max-w-md">
             <div className="flex flex-col gap-5">
-              <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#CB2CAE]">
+              <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#CB2CAE] shadow-xl shadow-[#CB2CAE]/50">
                 <CodeXml />
               </div>
               <h3 className="text-3xl font-medium">Code collaboration</h3>
