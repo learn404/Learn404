@@ -16,7 +16,7 @@ export const LoginGithubButton = () => {
 
 export const LoginGoogleButton = () => {
   return (
-    <SecondaryButton onClick={() => signIn("github")}>
+    <SecondaryButton onClick={() => signIn("google")}>
       <img src="/img/google.svg" alt="google icon" />
       with Google
     </SecondaryButton>
