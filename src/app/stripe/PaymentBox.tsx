@@ -3,7 +3,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { Appearance, Stripe, loadStripe } from "@stripe/stripe-js";
 import { createContext, useEffect, useState } from "react";
-import { getStripePublishableKey } from "../api/config/route";
+import { getStripePublishableKey } from "../api/config/publishableKey";
 import CheckoutForm from "./checkoutForm";
 import email from "next-auth/providers/email";
 
