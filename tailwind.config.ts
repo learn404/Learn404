@@ -41,8 +41,14 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      keyframes: {
+        popup: {
+          "0%": { opacity: "0", transform: "translate(-50%, -20%)" },
+          "100%": { opacity: "1", transform: "translate(-50%, -50%)" },
+        },
+      },
       animation: {
-        "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "popup": "popup 0.3s ease-in-out", 
       }
     },
   },

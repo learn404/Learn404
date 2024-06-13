@@ -11,8 +11,7 @@ export default function PopupResponse(response: PopupResponseProps) {
   
 
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-gray-900 border-[1px] border-gray-700 flex flex-col justify-center items-center z-50 py-16 px-20 rounded-xl ">
-      {response.success ? (
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 origin-center bg-gray-950 border-[1px] border-gray-700 flex flex-col justify-center items-center z-50 py-16 px-20 rounded-xl animate-popup">      {response.success ? (
         <Check width={100} height={100} color="#22c55e"/>
       ) : (
         <CircleX width={100} height={100} color="#ef4444"/>
