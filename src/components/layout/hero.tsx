@@ -10,11 +10,10 @@ export default function HeroSection() {
           <span className="text-xs text-torea-100">
             Une bibliothèque grandissante !
           </span>
-          {/* <TrendingUp width={16} color="#e6db5b"/> */}
-          <Sparkles width={16} color="#e6db5b" />
+          <Sparkles width={14} color="#e6db5b" />
         </div>
         <div className="flex flex-col items-center justify-center gap-6">
-          <h1 className="inline-block font-semibold text-5xl lg:text-7xl font- text-center titleStyle">
+          <h1 className="inline-block font-semibold text-4xl md:text-6xl lg:text-7xl font- text-center titleStyle">
             La banque de ressources qu'il te manque
           </h1>
           <span className="text-torea-50">
@@ -22,7 +21,7 @@ export default function HeroSection() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <PrimaryButton redirectTo="/waitlist" type="button">
+          <PrimaryButton redirectTo="/join" type="button">
             <span className="md:block font-medium">
               Rejoindre l'aventure
             </span>

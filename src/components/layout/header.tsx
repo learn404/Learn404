@@ -28,7 +28,7 @@ export default async function Header() {
   return (
     <header className="p-4 m-auto w-full">
       <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative">
-        <div className="flex items-center justify-start gap-20">
+        <div className="flex items-center justify-start gap-10 lg:gap-16">
           <Link href="/">
             <div className="flex items-center gap-5">
               <Image src="/img/logo.png" alt="logo" width={30} height={30} />
@@ -37,22 +37,22 @@ export default async function Header() {
               </h3>
             </div>
           </Link>
-          <div className="hidden lg:flex items-center justify-center gap-6 md:gap-12">
+          <div className="hidden lg:flex items-center justify-center gap-9">
             <Link
               href="/#fonctionnality"
-              className="text-torea-50 hover:text-torea-200 duration-200"
+              className="text-gray-400 hover:text-torea-50 duration-200"
             >
               Fonctionnalités
             </Link>
             <Link
               href="/#prices"
-              className="text-torea-50 hover:text-torea-200 duration-200"
+              className="text-gray-400 hover:text-torea-50 duration-200"
             >
               Prix
             </Link>
             <Link
               href="/"
-              className="text-torea-50 hover:text-torea-200 duration-200"
+              className="text-gray-400 hover:text-torea-50 duration-200"
             >
               A propos
             </Link>
@@ -63,8 +63,8 @@ export default async function Header() {
           {session ? (
             <>
               <PrimaryButton redirectTo="/dashboard" type="button">
-                <span className="hidden md:block font-medium">Dashboard</span>
-                <LayoutDashboard size={20} className="block md:hidden" />
+                <LayoutDashboard size={20} />
+                <span className="font-medium text-sm">Dashboard</span>
               </PrimaryButton>
               {isAdmin && (
                 <PrimaryButton redirectTo="/admin" type="button">
@@ -76,11 +76,11 @@ export default async function Header() {
             </>
           ) : (
             <>
-              <PrimaryButton redirectTo="/waitlist" type="button">
+              <PrimaryButton redirectTo="/join" type="button">
                 <Play size={20} />
                 <span className="md:block font-medium">Acheter</span>
               </PrimaryButton>
-              <SecondaryButton redirectTo="/login" type="button">
+              <SecondaryButton redirectTo="/join" type="button">
                 <LogIn size={20} />
                 <span className="hidden md:block font-medium">
                   Se connecter

@@ -1,13 +1,13 @@
+import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { Camera, SquareUser } from "lucide-react";
 import Image from "next/image";
-import PrimaryButton from "@/components/buttons/PrimaryButton";
 
 export default function Footer() {
   const date = new Date();
   const year = date.getFullYear();
 
   return (
-    <div className="relative overflow-hidden py-16 md:py-24 lg:py-32">
+    <div className="relative overflow-hidden pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-20 lg:pb-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
           <div className="max-w-xl lg:max-w-lg">

@@ -41,11 +41,18 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      // background: {
-      //   "card-linear": "linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%)",
-      // }
+      keyframes: {
+        popup: {
+          "0%": { opacity: "0", transform: "translate(-50%, -20%)" },
+          "100%": { opacity: "1", transform: "translate(-50%, -50%)" },
+        },
+      },
+      animation: {
+        "popup": "popup 0.3s ease-in-out", 
+      }
     },
   },
   plugins: [],
 };
+
 export default config;

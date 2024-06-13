@@ -16,7 +16,8 @@ model User {
   password      String?
   image         String?
   Session       Session[]
-  Account       Account?
+  Account       Account?  
+  isMember      Boolean   @default(false)
   admin         Boolean   @default(false)
 
   createdAt DateTime @default(now())

@@ -1,0 +1,110 @@
+'use client';
+
+import { Elements } from "@stripe/react-stripe-js";
+import { Appearance, Stripe, loadStripe } from "@stripe/stripe-js";
+import { createContext, useEffect, useState } from "react";
+import { getStripePublishableKey } from "../api/config/route";
+import CheckoutForm from "./checkoutForm";
+import email from "next-auth/providers/email";
+
+export const EmailContext = createContext<string | null>(null);
+
+interface PaymentBoxProps {
+  userEmail: string;
+}
+
+let stripePromise: Promise<Stripe | null>;
+
+export default function PaymentBox({ userEmail }: PaymentBoxProps) {
+  
+  const [isLoadingFirst, setLoadingFirst] = useState<boolean>(true);
+  const [clientSecret, setClientSecret] = useState<string>("");
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      // Utilisation d'un composant serveur pour récupérer la clé publique de Stripe
+      const result = await getStripePublishableKey();
+      const { publishableKey } = result;      
+      stripePromise = loadStripe(publishableKey!);
+    };
+  
+    fetchData();
+
+  }, []);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const response = await fetch('/api/webhook/create-payment-intent', {
+        method: "POST",
+        body: JSON.stringify({email: userEmail!}),
+      });
+      const { clientSecret } = await response.json();
+
+      setClientSecret(clientSecret);
+      setLoadingFirst(false);
+    };
+
+    fetchData();
+
+  }, []);
+
+  const appearance : Appearance = {
+    theme: 'night',
+    labels: 'floating',
+    variables: {
+      colorPrimary: "#372fa3",
+      borderRadius: '8px',
+      fontFamily: ' "Inter", sans-serif',
+    },
+    rules: {
+      '.Block': {
+        boxShadow: "none",
+        padding: "12px 16px",
+      },
+      '.Tab:hover': {
+        borderColor: '#312d82'
+      },
+      '.Tab, .Input': {
+        backgroundColor: '#02030c',
+        borderColor: '#1e1b4b'
+      },
+      '.Input:focus': {
+        borderColor: '#312d82',
+        // boxShadow: 'none'
+      },
+      '.DropdownItem--highlight': {
+        backgroundColor: 'red',
+      }
+    }
+  }
+
+  const options = {
+    clientSecret,
+    appearance,
+  }
+
+  return (
+      <div className="max-w-md w-full">
+        { isLoadingFirst && (
+          <div className="text-center">
+            <span className="text-lg text-gray-400">Loading</span>
+            <div className="flex items-center justify-center gap-2 mt-2">
+              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fast"></div>
+              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fast loading2"></div>
+              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fast loading3"></div>
+            </div>
+          </div> 
+        )}
+        { stripePromise && clientSecret && (
+          <EmailContext.Provider value={userEmail}>
+            <Elements stripe={stripePromise} options={options}>
+              <CheckoutForm />
+            </Elements>
+          </EmailContext.Provider>
+        )}
+      </div>
+  );
+}
+

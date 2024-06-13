@@ -61,3 +61,11 @@ body {
 .lineLinear {
     background: linear-gradient(to right, rgba(236, 236, 236, 1) 0%, rgba(236, 236, 236, 0) 70%);
 }
+
+.loading2 {
+    animation-delay: 150ms;
+}
+
+.loading3 {
+    animation-delay: 300ms;
+}
