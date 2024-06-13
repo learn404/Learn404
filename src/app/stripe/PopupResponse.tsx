@@ -2,16 +2,16 @@ import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { Check, CircleX } from "lucide-react";
 
 interface PopupResponseProps {
+  type?: string;
   success?: string;
   error?: string;
-  boutonMessage?: string;
 }
 
 export default function PopupResponse(response: PopupResponseProps) {
   
 
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-gray-950 border-[1px] border-gray-800 flex flex-col justify-center items-center z-50 py-16 px-20 rounded-xl ">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-gray-900 border-[1px] border-gray-700 flex flex-col justify-center items-center z-50 py-16 px-20 rounded-xl ">
       {response.success ? (
         <Check width={100} height={100} color="#22c55e"/>
       ) : (
@@ -19,10 +19,10 @@ export default function PopupResponse(response: PopupResponseProps) {
       )}
       
       <div className="text-center max-w-96 mt-5 flex flex-col justify-center items-center gap-5">
-        <h3 className="text-4xl font-semibold">{response.boutonMessage}</h3>
+        <h3 className="text-4xl font-semibold">{response.type}</h3>
         <p>{response.success || response.error}</p>
         {response.success ? (
-          <PrimaryButton redirectTo="/dashboard">Dashboard</PrimaryButton>
+          <PrimaryButton redirectTo="/dashboard">Go to dashboard</PrimaryButton>
         ) : (
           <PrimaryButton onClick={() => window.location.reload()}>Retry</PrimaryButton>
         )}

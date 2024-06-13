@@ -5,6 +5,7 @@ import { Appearance, Stripe, loadStripe } from "@stripe/stripe-js";
 import { createContext, useEffect, useState } from "react";
 import { getStripePublishableKey } from "../api/config/route";
 import CheckoutForm from "./checkoutForm";
+import email from "next-auth/providers/email";
 
 export const EmailContext = createContext<string | null>(null);
 
@@ -37,7 +38,7 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
     const fetchData = async () => {
       const response = await fetch('/api/webhook/create-payment-intent', {
         method: "POST",
-        body: JSON.stringify({}),
+        body: JSON.stringify({email: userEmail!}),
       });
       const { clientSecret } = await response.json();
 

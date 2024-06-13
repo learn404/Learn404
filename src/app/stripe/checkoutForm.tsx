@@ -7,9 +7,9 @@ import { EmailContext } from "./PaymentBox";
 import PopupResponse from "./PopupResponse";
 
 type ResponsePayment = {
+  type?: string;
   success?: string;
   error?: string;
-  boutonMessage?: string;
 };
 
 export default function CheckoutForm() {
@@ -44,10 +44,11 @@ export default function CheckoutForm() {
 
     if (error) {
       setLoading(false);
-      setResponsePayment({ error: error.message, boutonMessage: "Error"});
+      setResponsePayment({ error: error.message, type: "Error"});
     } else {
       setLoading(false);
-      setResponsePayment({ success: "Your payment has been successfully processed. You can now access your dashboard.", boutonMessage: "Success" });
+      console.log(paymentIntent);
+      setResponsePayment({ success: "Your payment has been successfully processed. You can now access your dashboard.", type: "Success" });
     }
 
   }
@@ -77,7 +78,7 @@ export default function CheckoutForm() {
               {isLoading ? (
                 "Loading..."
               ) : responsePayment ? (
-                responsePayment?.boutonMessage     
+                responsePayment?.type     
               ) : (
                 "Confirm payment EUR 5.99"     
               )}
