@@ -4,17 +4,7 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 
-interface Meta {
-  title: string;
-  [key: string]: any;
-}
-
-interface PageContent {
-  meta: Meta;
-  content: string;
-}
-
-const getPageContent = async (slug: string): Promise<PageContent> => {
+const getPageContent = async (slug: string) => {
   const { meta, content } = await getPostBySlug(slug);
   return { meta, content };
 };
@@ -28,8 +18,14 @@ interface Params {
 export async function generateMetadata({
   params,
 }: Params): Promise<{ title: string }> {
-  const { meta } = await getPageContent(params.slug);
-  return { title: meta.title };
+  try {
+    const { meta } = await getPageContent(params.slug);
+    console.log(meta);
+    return { title: meta.slug || "" }; // Use meta directly as it's now treated as a string
+  } catch (error) {
+    console.error("Error fetching metadata:", error);
+    return { title: "" };
+  }
 }
 
 export default async function LessonPage({
@@ -40,7 +36,7 @@ export default async function LessonPage({
   const session = await auth();
 
   if (!session) {
-    redirect("/join");
+    redirect("/login");
   }
 
   const user = await prisma.user.findUnique({
