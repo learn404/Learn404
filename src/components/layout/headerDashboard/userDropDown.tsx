@@ -93,7 +93,7 @@ export default function UserDropdown({
           </ul>
           <div className="py-1 flex justify-center">
             <button
-              onClick={() => signOut()}
+              onClick={() => signOut({ callbackUrl: "/", redirect: true })}
               className="px-4 py-2 hover:bg-white/10 flex items-center gap-2 text-sm font-medium rounded-lg mx-2 w-max text-left"
             >
               <LogOut size={15} />
