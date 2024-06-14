@@ -8,9 +8,9 @@ export default async function Dashboard() {
   const session = await auth();
 
   if (!session) {
-    redirect("/login");
+    redirect("/join");
   }
-  
+
   const user = await prisma.user.findUnique({
     where: {
       email: session?.user?.email as string,
@@ -19,8 +19,8 @@ export default async function Dashboard() {
       name: true,
       email: true,
       isMember: true,
-    }
-  })
+    },
+  });
 
   if (!user?.isMember) {
     redirect("/dashboard/subscriptions/");
@@ -33,11 +33,11 @@ export default async function Dashboard() {
       image: session?.user?.image as string,
     },
     expires: session?.expires as string,
-  }
+  };
 
   return (
     <>
-      <HeaderDashboard session={sessionData}/>
+      <HeaderDashboard session={sessionData} />
       <main className="max-w-7xl mx-auto my-12 space-y-5 container">
         <h1 className="text-2xl font-semibold">
           Welcome back, {user?.name || user?.email}
