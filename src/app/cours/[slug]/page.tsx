@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
+import MuxPlayer from "@mux/mux-player-react";
 
 const getPageContent = async (slug: string) => {
   const { meta, content } = await getPostBySlug(slug);
@@ -47,6 +48,7 @@ export default async function LessonPage({
       name: true,
       email: true,
       isMember: true,
+      admin: true,
     },
   });
 
@@ -63,10 +65,48 @@ export default async function LessonPage({
     expires: session?.expires as string,
   };
 
+  const lessons = await prisma.lessons.findFirst({
+    where: {
+      title: params.slug,
+    },
+    select: {
+      id: true,
+      title: true,
+      draft: true,
+      video_url: true,
+    },
+  });
+
+  if (lessons?.draft && user?.admin === false) {
+    redirect("/dashboard");
+  }
+
+  if (!lessons) {
+    redirect("/dashboard");
+  }
+
   return (
     <>
       <HeaderDashboard session={sessionData} />
-      <section className="py-24 text-white">
+      <section className="py-24 text-white flex justify-center flex-col">
+        {/* https://drive.google.com/uc?id=ID_DU_FICHIER pour upload video sur google drive
+         */}
+
+        <h1 className="text-4xl font-bold text-center">{lessons.title}</h1>
+        {lessons.video_url ? (
+          <MuxPlayer
+            className="mx-auto max-w-7xl my-10"
+            playbackId={lessons.video_url}
+            accentColor="#fefefe"
+            metadata={{
+              video_id: lessons.id,
+              video_title: lessons.title,
+            }}
+          />
+        ) : (
+          <p>Video not available</p>
+        )}
+
         <div className="container py-4 prose prose-invert m-auto">
           {content}
         </div>
