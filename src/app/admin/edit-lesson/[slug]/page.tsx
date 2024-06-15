@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const categories = await getServerSideProps();
   const lesson = await prisma.lessons.findMany({
     where: {
-      title: params.slug,
+      slug: params.slug,
     },
   });
 
@@ -58,11 +58,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
       image: session?.user?.image as string,
     },
     expires: session?.expires as string,
-  }
+  };
 
   return (
     <>
-      <HeaderDashboard session={sessionData}/>
+      <HeaderDashboard session={sessionData} />
       <div>
         <form className="p-8">
           <div className="space-y-12">
@@ -110,9 +110,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   </label>
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                      <span className="flex select-none items-center pl-3 text-gray-400 sm:text-sm">
-                        learn404.com/cours/categorie/
-                      </span>
                       <input
                         type="text"
                         name="title"
@@ -179,14 +176,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     htmlFor="video_url"
                     className="block text-sm font-medium leading-6 text-gray-100"
                   >
-                    Lien de la vidéo
+                    PlaybackId
                   </label>
                   <div className="mt-2">
                     <input
-                      type="url"
-                      name="video_url"
-                      id="video_url"
-                      placeholder={lesson[0]?.video_url || ""}
+                      type="text"
+                      name="playback_id"
+                      id="playback_id"
+                      placeholder={lesson[0]?.playbackId || ""}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
