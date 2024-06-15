@@ -92,7 +92,6 @@ export default async function LessonPage({
         {/* https://drive.google.com/uc?id=ID_DU_FICHIER pour upload video sur google drive
          */}
 
-        <h1 className="text-4xl font-bold text-center">{lessons.title}</h1>
         {lessons.video_url ? (
           <MuxPlayer
             className="mx-auto max-w-7xl my-10"
@@ -104,10 +103,10 @@ export default async function LessonPage({
             }}
           />
         ) : (
-          <p>Video not available</p>
+          <p className="m-auto">Video not available</p>
         )}
 
-        <div className="container py-4 prose prose-invert m-auto">
+        <div className="container py-4 prose lg:prose-xl prose-invert m-auto">
           {content}
         </div>
       </section>
