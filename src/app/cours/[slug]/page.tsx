@@ -4,15 +4,18 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import MuxPlayer from "@mux/mux-player-react";
+import SecondaryButton from "@/components/buttons/SecondaryButton";
 
 const getPageContent = async (slug: string) => {
   const { meta, content } = await getPostBySlug(slug);
+
   return { meta, content };
 };
 
 interface Params {
   params: {
     slug: string;
+    title: string;
   };
 }
 
@@ -20,9 +23,15 @@ export async function generateMetadata({
   params,
 }: Params): Promise<{ title: string }> {
   try {
-    const { meta } = await getPageContent(params.slug);
-    console.log(meta);
-    return { title: meta.slug || "" }; // Use meta directly as it's now treated as a string
+    const title = await prisma.lessons.findFirst({
+      where: {
+        slug: params.slug,
+      },
+      select: {
+        title: true,
+      },
+    });
+    return { title: title?.title as string };
   } catch (error) {
     console.error("Error fetching metadata:", error);
     return { title: "" };
@@ -37,7 +46,7 @@ export default async function LessonPage({
   const session = await auth();
 
   if (!session) {
-    redirect("/login");
+    redirect("/join");
   }
 
   const user = await prisma.user.findUnique({
@@ -67,13 +76,23 @@ export default async function LessonPage({
 
   const lessons = await prisma.lessons.findFirst({
     where: {
-      title: params.slug,
+      slug: params.slug,
     },
     select: {
       id: true,
       title: true,
       draft: true,
-      video_url: true,
+      playbackId: true,
+      sort_number: true,
+    },
+  });
+
+  let nextLesson = await prisma.lessons.findFirst({
+    where: {
+      sort_number: (lessons?.sort_number as number) + 1,
+    },
+    select: {
+      slug: true,
     },
   });
 
@@ -87,29 +106,65 @@ export default async function LessonPage({
 
   return (
     <>
-      <HeaderDashboard session={sessionData} />
-      <section className="py-24 text-white flex justify-center flex-col">
+      <header className="z-50 relative">
+        <HeaderDashboard session={sessionData} />
+      </header>
+
+      <main className="text-white flex justify-center flex-col z-0">
         {/* https://drive.google.com/uc?id=ID_DU_FICHIER pour upload video sur google drive
          */}
 
-        {lessons.video_url ? (
-          <MuxPlayer
-            className="mx-auto max-w-7xl my-10"
-            playbackId={lessons.video_url}
-            accentColor="#fefefe"
-            metadata={{
-              video_id: lessons.id,
-              video_title: lessons.title,
-            }}
-          />
+        {lessons.playbackId ? (
+          <div className="mx-auto w-[75vw]">
+            <MuxPlayer
+              stream-type="on-demand"
+              autoPlay={false}
+              max-resolution="1080p"
+              preload="false"
+              playbackId={lessons.playbackId}
+              accentColor="#fefefe"
+              metadata={{
+                video_id: lessons.id,
+                video_title: lessons.title,
+              }}
+            />
+          </div>
         ) : (
           <p className="m-auto">Video not available</p>
         )}
-
-        <div className="container py-4 prose lg:prose-xl prose-invert m-auto">
+        <div className=" bg-indigo-800  max-w-xl px-24 py-12 gap-10 rounded-md mx-auto mb-10 border  border-white/10">
+          <h1 className="text-4xl text-center font-bold">{lessons.title}</h1>
+          <div className="flex justify-center items-center mt-10 gap-10">
+            <SecondaryButton type="button" redirectTo="/dashboard">
+              Dashboard
+            </SecondaryButton>
+            {!nextLesson?.slug ? (
+              ""
+            ) : (
+              <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
+                Next lesson
+              </SecondaryButton>
+            )}
+          </div>
+        </div>
+        <div className="py-4 prose lg:prose-xl prose-invert m-auto  prose-pre:border prose-pre:bg-white/10">
           {content}
         </div>
-      </section>
+        <div className=" bg-indigo-800 max-w-6xl px-24 py-12 gap-10 rounded-md mx-auto mb-10 border  border-white/10">
+          <div className="flex justify-center items-center mt-10 gap-10">
+            <SecondaryButton type="button" redirectTo="/dashboard">
+              Dashboard
+            </SecondaryButton>
+            {!nextLesson?.slug ? (
+              ""
+            ) : (
+              <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
+                Next lesson
+              </SecondaryButton>
+            )}
+          </div>
+        </div>
+      </main>
     </>
   );
 }

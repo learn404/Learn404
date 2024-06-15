@@ -49,7 +49,7 @@ export default async function AdminDashboard() {
           </div>
           <div className="md:col-span-5 md:col-start-8 bg-white/10 p-4 rounded-lg">
             <h2 className="p-2 font-semibold text-xl">Lessons</h2>
-            <div className="z-10  max-h-[40vh] overflow-y-auto shadow-md sm:rounded-lg">
+            <div className="z-10 max-h-[40vh] overflow-y-auto shadow-md sm:rounded-lg">
               <LessonTable />
             </div>
           </div>
