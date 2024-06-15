@@ -1,0 +1,140 @@
+# Les Classes en JavaScript : Structuration et Organisation du Code
+
+Les classes en JavaScript permettent de structurer et d'organiser le code en utilisant la programmation orientée objet (POO). Une classe définit les propriétés, aussi appelées variables, et les méthodes, ou fonctions, qui seront présentes dans les objets créés à partir de cette classe. Cela fonctionne comme un moule permettant de créer des instances d'objets ayant des caractéristiques et des comportements spécifiques.
+
+## Définir une Classe
+
+Une classe en JavaScript se compose de propriétés et de méthodes. Les propriétés sont des variables spécifiques à l'objet, tandis que les méthodes sont des fonctions définies pour manipuler ces propriétés. Voici un exemple simple de définition d'une classe :
+
+```javascript
+class Person {
+  // Définition de la classe Person
+  constructor(name, age) {
+    // Constructeur de la classe Person
+    this.name = name; // Initialisation de l'attribut name
+    this.age = age; // Initialisation de l'attribut age
+  }
+
+  greet() {
+    console.log(`Bonjour, je suis ${this.name} et j'ai ${this.age} ans.`);
+  }
+}
+
+const person1 = new Person("Alice", 30);
+const person2 = new Person("Bob", 25);
+
+person1.greet(); // Bonjour, je suis Alice et j'ai 30 ans.
+person2.greet(); // Bonjour, je suis Bob et j'ai 25 ans.
+```
+
+## Le Concept d'Instance d'Objet
+
+Une instance d'objet est une copie concrète de la classe avec ses propres valeurs. Par exemple, si nous avons une classe `Person` avec les propriétés `name` et `age`, nous pouvons créer des instances individuelles de cette classe pour différentes personnes. Dans cet exemple, `person1` et `person2` sont des instances distinctes de la classe `Person`, chacune ayant ses propres valeurs pour les propriétés `name` et `age`.
+
+## Le Rôle du Constructeur
+
+Le constructeur d’une classe en JavaScript sert à initialiser les propriétés d’un objet lors de sa création. C’est une méthode spéciale qui est automatiquement appelée lorsque vous créez une nouvelle instance de la classe. Dans le constructeur, nous définissons les propriétés de l’objet à l’aide du mot-clé `this`.
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+```
+
+Dans l’exemple précédent, le constructeur de la classe `Person` prend deux paramètres, `name` et `age`, et utilise le mot-clé `this` pour définir les propriétés `name` et `age` de l'objet en cours de création.
+
+## Le Concept d’Encapsulation
+
+L’encapsulation est un autre concept important lié aux classes. Elle consiste à regrouper des données et des méthodes qui les manipulent au sein d’une entité, appelée objet. Voici un exemple d’encapsulation dans une classe `Person` :
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  setName(newName) {
+    this.name = newName;
+  }
+
+  getAge() {
+    return this.age;
+  }
+
+  setAge(newAge) {
+    if (newAge >= 0) {
+      this.age = newAge;
+    }
+  }
+}
+
+const person = new Person("John", 30);
+console.log(person.getName()); // John
+console.log(person.getAge()); // 30
+
+person.setName("Jane");
+person.setAge(25);
+
+console.log(person.getName()); // Jane
+console.log(person.getAge()); // 25
+```
+
+## La Notion de Polymorphisme
+
+Le polymorphisme fait référence à la capacité d’un objet à prendre différentes formes ou à se comporter différemment en fonction du contexte. Cela signifie qu’un même nom ou une même méthode peut être utilisé pour effectuer des actions différentes en fonction des objets auxquels il s’applique.
+
+```javascript
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  introduce() {
+    console.log(`Bonjour, je m'appelle ${this.name}.`);
+  }
+}
+
+class Student extends Person {
+  constructor(name, grade) {
+    super(name);
+    this.grade = grade;
+  }
+
+  introduce() {
+    console.log(`Bonjour, je suis ${this.name} et je suis en ${this.grade}.`);
+  }
+}
+
+class Teacher extends Person {
+  constructor(name, subject) {
+    super(name);
+    this.subject = subject;
+  }
+
+  introduce() {
+    console.log(`Bonjour, je suis ${this.name} et j'enseigne les ${this.subject}.`);
+  }
+}
+
+const person1 = new Person("John");
+const person2 = new Student("Alice", 9);
+const person3 = new Teacher("Mr. Smith", "Mathematics");
+
+person1.introduce(); // Bonjour, je m'appelle John.
+person2.introduce(); // Bonjour, je suis Alice et je suis en 9.
+person3.introduce(); // Bonjour, je suis Mr. Smith et j'enseigne les Mathematics.
+```
+
+Le polymorphisme permet de traiter des objets de différentes classes héritant d’une classe de base de manière uniforme en utilisant une interface commune. Cela simplifie le code, favorise la réutilisabilité et permet une gestion plus générique des objets dans une hiérarchie de classes.
+
+Pour en savoir plus, vous pouvez consulter les ressources suivantes :
+- [MDN Web Docs sur les constructeurs en JavaScript](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Classes/constructor)
+- [POO Formation sur GitHub](https://github.com/learn404/POO-Formation)
