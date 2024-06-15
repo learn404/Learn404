@@ -8,6 +8,7 @@ async function getServerSideProps() {
     id: lesson?.id,
     title: lesson?.title,
     draft: lesson?.draft,
+    slug: lesson?.slug,
   }));
   return lessons;
 }
@@ -15,10 +16,13 @@ interface Lesson {
   id: string | null;
   title: string | null;
   draft: boolean | null;
+  slug: string | null;
 }
 
 export default async function LessonTable() {
   const lessons = await getServerSideProps();
+
+  console.log(lessons);
 
   return (
     <>
@@ -61,7 +65,7 @@ function TableRow({ lesson }: { lesson: Lesson }) {
       </td>
       <td className="px-2 md:px-6 py-3 text-right">
         <Link
-          href={`admin/edit-lesson/${lesson.title}`}
+          href={`admin/edit-lesson/${lesson.slug}`}
           className="font-medium text-blue-600 hover:underline"
         >
           Edit

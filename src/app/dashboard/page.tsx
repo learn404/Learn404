@@ -13,6 +13,11 @@ async function getServerSideProps() {
       description: true,
       draft: true,
       newLesson: true,
+      slug: true,
+      sort_number: true,
+    },
+    orderBy: {
+      sort_number: "asc",
     },
   });
   const lessons = res.map((lesson) => ({
@@ -21,6 +26,7 @@ async function getServerSideProps() {
     description: lesson.description,
     draft: lesson.draft,
     newLesson: lesson.newLesson,
+    slug: lesson.slug,
   }));
   return lessons;
 }
@@ -71,7 +77,7 @@ export default async function Dashboard() {
           {user.admin ? (
             <ul>
               {lessons.map((lesson) => (
-                <Link href={`/cours/${lesson.title}`} key={lesson.id}>
+                <Link href={`/cours/${lesson.slug}`} key={lesson.id}>
                   <li className="flex items-center justify-between p-4 bg-gray-800 rounded-md">
                     <h3 className="text-lg font-semibold text-white">
                       {lesson.title}

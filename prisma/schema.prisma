@@ -10,13 +10,11 @@ generator client {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  username      String?   @unique
   email         String?   @unique
   emailVerified DateTime?
-  password      String?
   image         String?
   Session       Session[]
-  Account       Account?  
+  Account       Account?
   isMember      Boolean   @default(false)
   admin         Boolean   @default(false)
 
@@ -78,11 +76,13 @@ model Categories {
 model Lessons {
   id             String     @id @default(cuid())
   title          String
+  slug           String
   Categories     Categories @relation(fields: [categoryId], references: [id])
   categoryId     String
   description    String?
-  video_url      String?
+  playbackId     String?
   repository_url String?
+  sort_number    Int        @default(0)
 
   draft     Boolean  @default(true)
   newLesson Boolean  @default(true)
