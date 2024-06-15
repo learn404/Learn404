@@ -185,7 +185,7 @@ export default async function AddLessonForm({
                   htmlFor="video_url"
                   className="block text-sm font-medium leading-6 text-gray-100"
                 >
-                  Lien de la vidéo
+                  PlaybackId
                 </label>
                 <div className="mt-2">
                   <input
