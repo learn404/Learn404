@@ -89,6 +89,9 @@ export default async function LessonPage({
     <>
       <HeaderDashboard session={sessionData} />
       <section className="py-24 text-white flex justify-center flex-col">
+        {/* https://drive.google.com/uc?id=ID_DU_FICHIER pour upload video sur google drive
+         */}
+
         <h1 className="text-4xl font-bold text-center">{lessons.title}</h1>
         {lessons.video_url ? (
           <MuxPlayer
