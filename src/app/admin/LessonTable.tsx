@@ -16,6 +16,7 @@ interface Lesson {
   id: string | null;
   title: string | null;
   draft: boolean | null;
+  slug: string | null;
 }
 
 export default async function LessonTable() {
