@@ -5,21 +5,23 @@ import UserDropdown from "./userDropDown";
 
 type sessionData = {
   user: {
-    name: string | null,
-    email: string | null,
-    image: string | null,
-  },
-  expires: string | null,
-}
+    name: string | null;
+    email: string | null;
+    image: string | null;
+  };
+  expires: string | null;
+};
 
 interface HeaderDashboardProps {
   session: sessionData;
 }
 
-export default async function HeaderDashboard({session}: HeaderDashboardProps) {
+export default async function HeaderDashboard({
+  session,
+}: HeaderDashboardProps) {
   let isAvatar = false;
   let isAdmin = false;
-    
+
   if (session) {
     isAvatar = session?.user?.image ? true : false;
 
@@ -38,7 +40,7 @@ export default async function HeaderDashboard({session}: HeaderDashboardProps) {
   }
 
   return (
-    <header className="p-4 m-auto w-full">
+    <header className="p-4 m-auto w-full z-50">
       <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative -mt-1">
         <Link href="/">
           <div className="flex items-center gap-5">

@@ -76,3 +76,11 @@ body {
 .loading3 {
     animation-delay: 300ms;
 }
+<<<<<<< Updated upstream
+=======
+
+.dropdown-container {
+    position: absolute; /* ou position: fixed */
+    z-index: 9999;
+}
+>>>>>>> Stashed changes

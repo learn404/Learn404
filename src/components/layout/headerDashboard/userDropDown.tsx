@@ -44,7 +44,7 @@ export default function UserDropdown({
       {isDropdownOpen && (
         <div
           id="userDropdown"
-          className="absolute right-0 mt-2 z-50 bg-bg-primary divide-y divide-gray-100 rounded-lg shadow w-44 border border-white/10 "
+          className="absolute dropdown-container right-0 mt-2 z-50 bg-bg-primary divide-y divide-gray-100 rounded-lg shadow w-44 border border-white/10 "
         >
           <div className="px-4 py-3 text-sm text-white">
             <div>{session?.user?.name ?? "User"}</div>
