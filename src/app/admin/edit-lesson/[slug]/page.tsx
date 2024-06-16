@@ -32,7 +32,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
     },
   });
 
-  console.log(lesson);
   const session = await auth();
   if (!session) {
     return redirect("/");
@@ -46,7 +45,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       admin: true,
     },
   });
-  console.log(adminCheck);
+
   if (!adminCheck?.admin || !session || !adminCheck) {
     return redirect("/");
   }
@@ -60,11 +59,69 @@ export default async function Page({ params }: { params: { slug: string } }) {
     expires: session?.expires as string,
   };
 
+  async function editLesson(formData: FormData) {
+    "use server";
+
+    const title = formData.get("title")?.toString();
+    const slug_title = formData
+      .get("slug_title")
+      ?.toString()
+      .replace(/\s+/g, "-");
+    const categoryId = formData.get("category")?.toString();
+    const about = formData.get("about")?.toString() || undefined;
+    const playbackId = formData.get("playback_id")?.toString() || undefined;
+    const repository_url =
+      formData.get("repository_url")?.toString() || undefined;
+    const draft = formData.get("draft") === "on";
+    const newLesson = formData.get("newLesson") === "on";
+
+    const existingLesson = await prisma.lessons.findFirst({
+      where: {
+        slug: params.slug,
+      },
+    });
+
+    if (!existingLesson) {
+      throw new Error("Le cours n'existe pas");
+    }
+
+    const updateData: { [key: string]: any } = {};
+    if (title && existingLesson.title !== title) updateData.title = title;
+    if (title && existingLesson.slug !== slug_title)
+      updateData.slug = slug_title;
+    if (categoryId && existingLesson.categoryId !== categoryId)
+      updateData.categoryId = categoryId;
+    if (about && existingLesson.description !== about)
+      updateData.description = about;
+    if (playbackId && existingLesson.playbackId !== playbackId)
+      updateData.playbackId = playbackId;
+    if (repository_url && existingLesson.repository_url !== repository_url)
+      updateData.repository_url = repository_url;
+    if (existingLesson.draft !== draft) updateData.draft = draft;
+    if (existingLesson.newLesson !== newLesson)
+      updateData.newLesson = newLesson;
+
+    if (Object.keys(updateData).length === 0) {
+      console.log("Pas de changement détecté");
+      return redirect("/admin");
+    }
+
+    const updateLesson = await prisma.lessons.update({
+      where: {
+        id: existingLesson.id,
+      },
+      data: updateData,
+    });
+
+    console.log("Le cours a été créé avec succès", updateLesson);
+
+    redirect("/admin");
+  }
   return (
     <>
       <HeaderDashboard session={sessionData} />
       <div>
-        <form className="p-8">
+        <form className="p-8" action={editLesson}>
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base font-semibold leading-7 text-gray-100">
@@ -116,6 +173,28 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         id="title"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder={lesson[0]?.title}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="sm:col-span-4">
+                  <label
+                    htmlFor="slug_title"
+                    className="block text-sm font-medium leading-6 text-gray-100"
+                  >
+                    Slug
+                  </label>
+                  <div className="mt-2">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                      <span className="flex select-none items-center pl-3 text-gray-400 sm:text-sm">
+                        learn404.com/cours/categorie/
+                      </span>
+                      <input
+                        type="text"
+                        name="slug_title"
+                        id="slug_title"
+                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        placeholder={lesson[0]?.slug}
                       />
                     </div>
                   </div>
@@ -255,7 +334,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="flex items-center  gap-x-6">
-            <SecondaryButton type="button">Supprimer le cours</SecondaryButton>
+            <SecondaryButton>Supprimer le cours</SecondaryButton>
             <PrimaryButton type="submit">Modifier le cours</PrimaryButton>
           </div>
         </form>

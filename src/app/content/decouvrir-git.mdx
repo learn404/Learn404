@@ -1,0 +1,201 @@
+---
+title : Découvrir Git
+slug : decouvrir-git
+date : 2021-09-01
+---
+
+Bienvenue dans ce cours sur Git, un outil essentiel pour tout développeur. Git est un système de contrôle de version distribué qui vous permet de suivre les modifications de vos fichiers et de collaborer efficacement avec d'autres développeurs.
+
+Que vous travailliez seul ou en équipe, Git vous aide à gérer et organiser votre code de manière structurée. Grâce à Git, vous pouvez :
+
+- Suivre l'historique des modifications de votre projet.
+- Travailler sur différentes fonctionnalités en parallèle grâce aux branches.
+- Collaborer avec d'autres développeurs sans risque de perdre ou d'écraser du code.
+
+Dans ce cours, nous allons explorer les bases de Git, de l'initialisation d'un projet à l'utilisation avancée des branches et des commits. À la fin de ce cours, vous serez capable de gérer vos projets avec Git de manière efficace et professionnelle.
+
+## 1. Initialiser un projet Git
+
+Lorsque vous démarrez un nouveau projet, la commande `git init` est votre premier pas dans le monde de Git.
+
+- **Initialisation du Projet :** `git init` crée un nouveau référentiel Git dans le dossier de votre projet, transformant ce dossier en un dépôt Git local où vous pourrez suivre les changements de vos fichiers.
+
+```bash
+git init
+```
+
+## 2. Gérer les branches avec Git
+
+Les branches dans Git permettent de travailler sur différentes versions de votre projet simultanément. Cela est particulièrement utile pour ajouter de nouvelles fonctionnalités ou corriger des bugs sans affecter la version principale de votre code.
+
+### Créer et lister des branches
+
+- **Lister les Branches :** La commande `git branch` affiche la liste de toutes les branches existantes dans votre dépôt.
+
+```bash
+git branch
+```
+
+- **Créer une Nouvelle Branche :** Utilisez `git checkout -b <nom_de_branche>` pour créer et basculer sur une nouvelle branche en une seule commande.
+
+```bash
+git checkout -b feature/ma-nouvelle-fonctionnalite
+```
+
+### Changer de branche
+
+- **Changer de Branche :** Utilisez `git checkout <nom_de_branche>` pour passer à une branche existante.
+
+```bash
+git checkout main
+```
+
+### Fusionner des branches
+
+- **Fusionner des Branches :** La commande `git merge <branche_source>` permet de fusionner les modifications d’une branche source dans votre branche courante.
+
+```bash
+git merge feature/ma-nouvelle-fonctionnalite
+```
+
+### Rebase de branche
+
+- **Rebase Interactif :** Utilisez `git rebase -i <commit_id>` pour réorganiser et combiner les commits, ce qui permet de créer un historique plus propre.
+
+```bash
+git rebase -i HEAD~3
+```
+
+### Synchroniser avec des branches distantes
+
+- **Envoyer des Commits :** Utilisez `git push <remote> <branche>` pour envoyer vos commits vers une branche distante.
+
+```bash
+git push origin main
+```
+
+- **Récupérer des Modifications :** Utilisez `git pull <remote> <branche>` pour récupérer les modifications depuis une branche distante.
+
+```bash
+git pull origin main
+```
+
+### Supprimer une branche
+
+- **Supprimer une Branche :** Utilisez `git branch -d <nom_de_branche>` pour supprimer une branche après avoir fusionné ou abandonné ses modifications.
+
+```bash
+git branch -d feature/ma-nouvelle-fonctionnalite
+```
+
+## 3. Enregistrer les modifications avec Git Commit
+
+Les commits sont des instantanés de votre projet. Ils vous permettent d'enregistrer l'état actuel de votre travail.
+
+### Ajouter des modifications
+
+- **Ajouter des Modifications :** Utilisez `git add .` pour préparer toutes les modifications du répertoire de travail pour le commit.
+
+```bash
+git add .
+```
+
+### Créer un commit
+
+- **Créer un Commit :** Utilisez `git commit -m "Message de Commit"` pour enregistrer les modifications préparées avec un message descriptif.
+
+```bash
+git commit -m "Ajoute la fonctionnalité X"
+```
+
+### Annuler un commit
+
+- **Annuler un Commit :** Utilisez `git revert <commit_id>` pour annuler les effets d’un commit spécifique tout en conservant l’historique.
+
+```bash
+git revert abc1234
+```
+
+### État du répertoire de travail
+
+- **État du Répertoire de Travail :** Utilisez `git status` pour voir les fichiers modifiés, ajoutés ou non suivis.
+
+```bash
+git status
+```
+
+### Historique des commits
+
+- **Historique des Commits :** Utilisez `git log` pour voir l’historique des commits, incluant les messages, auteurs et dates.
+
+```bash
+git log
+```
+
+## 4. Travailler en collaboration avec des branches
+
+Pour éviter des conflits dans le code, les branches permettent de travailler sur différentes fonctionnalités sans interférer avec le code principal.
+
+### Exemple d'utilisation des branches
+
+1. Créez une branche pour ajouter une nouvelle fonctionnalité.
+2. Développez la fonctionnalité sur cette branche.
+3. Une fois terminé, fusionnez la branche de fonctionnalité dans la branche principale (main).
+
+```bash
+git checkout -b feature/barre-de-navigation
+# Développez la fonctionnalité
+git add .
+git commit -m "Ajoute une barre de navigation"
+git checkout main
+git merge feature/barre-de-navigation
+```
+
+## 5. Fusionner des branches
+
+La fusion (**`git merge`**) combine les modifications de deux branches en une seule, facilitant l'intégration des nouvelles fonctionnalités ou corrections dans le code principal.
+
+```bash
+git merge feature/barre-de-navigation
+```
+
+## 6. GitHub, README, Pull Request
+
+### 6.1. GitHub
+
+GitHub est une plateforme de partage qui permet de partager, d’héberger des projets, de contribuer à des projets et de collaborer avec des équipes.
+
+### 6.2. Le fichier README
+
+Le fichier [README.md](http://readme.md/) est important pour présenter votre projet. Il inclut des informations essentielles, des instructions d’installation et d’utilisation.
+
+### 6.3. Pull Request (Demande de fusion)
+
+Une Pull Request permet de soumettre vos modifications sur la branche principale de votre projet. Cela facilite l’examen du code avant la fusion et encourage la collaboration et les discussions sur le code proposé.
+
+## 7. GitIgnore
+
+Le fichier `.gitignore` est un outil essentiel pour exclure certains fichiers et dossiers de la surveillance de Git. Cela est particulièrement utile pour éviter de suivre des fichiers générés automatiquement, des fichiers de configuration sensibles ou d’autres éléments non pertinents pour le dépôt.
+
+```
+# Exemple de fichier .gitignore
+node_modules/
+*.log
+.env
+```
+
+## 8. Outils graphiques : GitKraken et GitHub Desktop
+
+### GitKraken
+
+GitKraken est un outil graphique avancé pour gérer vos dépôts Git. Il est particulièrement utile pour les utilisateurs expérimentés et offre une visualisation sous forme d'arbre des branches et des commits. Il propose une version payante avec des fonctionnalités supplémentaires.
+
+- **Télécharger GitKraken :** [https://www.gitkraken.com/download](https://www.gitkraken.com/download)
+
+### GitHub Desktop
+
+GitHub Desktop est un outil graphique simple d’utilisation pour gérer vos dépôts Git et GitHub. Il est idéal pour les débutants.
+
+- **Télécharger GitHub Desktop :** [https://desktop.github.com/](https://desktop.github.com/)
+
+En suivant ce guide, vous serez en mesure de gérer vos projets avec Git de manière efficace, que ce soit pour des développements en solo ou en équipe. Bonne pratique !

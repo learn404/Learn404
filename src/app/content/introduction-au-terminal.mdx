@@ -1,0 +1,69 @@
+---
+title : Le Terminal
+slug : le-terminal
+date : 2021-09-01
+---
+
+Le terminal, ou invite de commandes, est un programme qui vous permet de taper des commandes pour effectuer diverses tâches sur votre ordinateur.
+
+<aside>
+❓ **Pourquoi en parler ?**
+
+Apprendre à utiliser le terminal est essentiel pour devenir développeur. Il permet d'être plus rapide et efficace. Dans notre cas, il sera utile pour installer des packages pour nos projets et surtout… pour les démarrer !
+</aside>
+
+## Utilisation du Terminal
+
+### Sous Windows
+Sur Windows, vous pouvez utiliser l'application "Invite de commandes". Un terminal est également disponible directement dans Visual Studio Code (VSCode), accessible via le raccourci `Ctrl + ù`.
+
+### Sous macOS
+Sur macOS, vous pouvez utiliser l'application "Terminal", qui se trouve dans le dossier Applications > Utilitaires. Vous pouvez également accéder au terminal depuis VSCode.
+
+## Commandes de base
+
+Voici les principales commandes à connaître pour le moment :
+
+- `mkdir nomDossier` : crée un dossier (make a directory)
+- `cd cheminDossier` : se déplace dans les dossiers (change directory)
+- `touch nomFichier` : crée un fichier
+- `ls` : liste les fichiers et dossiers dans le répertoire courant
+
+### Comment créer un fichier
+
+#### Sous Windows
+Pour créer un fichier sous Windows, vous pouvez utiliser la commande `type` :
+
+1. Ouvrez l'invite de commandes.
+2. Naviguez jusqu'au dossier où vous souhaitez créer le fichier en utilisant la commande `cd`.
+3. Utilisez la commande `type nul > nomFichier.ext` pour créer un fichier vide. Par exemple :
+   ```bash
+   type nul > exemple.txt
+   ```
+
+#### Sous macOS et Linux
+Pour créer un fichier sous macOS ou Linux, vous pouvez utiliser la commande `touch` :
+
+1. Ouvrez le terminal.
+2. Naviguez jusqu'au dossier où vous souhaitez créer le fichier en utilisant la commande `cd`.
+3. Utilisez la commande `touch nomFichier.ext` pour créer un fichier vide. Par exemple :
+   ```bash
+   touch exemple.txt
+   ```
+
+<aside>
+📎 **Quelques exemples d’utilisation :**
+
+- Créer un dossier “projet” : `mkdir projet`
+- Se déplacer dans le dossier “projet” : `cd projet`
+- Revenir en arrière d’un dossier : `cd ..`
+- Revenir en arrière de deux dossiers : `cd ../..`
+- Lister le contenu du dossier courant : `ls`
+- Créer un fichier vide nommé `index.html` :
+  - Sous Windows : `type nul > index.html`
+  - Sous macOS/Linux : `touch index.html`
+</aside>
+
+Sans plus attendre, passons à l’écriture de nos premières lignes de code dans le prochain cours sur l’HTML et le CSS !
+
+---

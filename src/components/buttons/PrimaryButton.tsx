@@ -27,7 +27,7 @@ export default function PrimaryButton({
     <button
       type={type}
       onClick={handleClick}
-      className="flex items-center justify-center gap-2 rounded-md bg-indigo-800 px-3.5 py-2.5 text-xs md:text-sm font-semibold text-white shadow-sm hover:bg-indigo-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+      className="flex items-center w-fit justify-center gap-2 rounded-md bg-indigo-800 px-3.5 py-2.5 text-xs md:text-sm font-semibold text-white shadow-sm hover:bg-indigo-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
     >
       {children}
     </button>
