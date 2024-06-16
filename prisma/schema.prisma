@@ -82,6 +82,7 @@ model Lessons {
   description    String?
   playbackId     String?
   repository_url String?
+  sort_number    Int        @default(0)
 
   draft     Boolean  @default(true)
   newLesson Boolean  @default(true)

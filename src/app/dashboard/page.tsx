@@ -14,6 +14,10 @@ async function getServerSideProps() {
       draft: true,
       newLesson: true,
       slug: true,
+      sort_number: true,
+    },
+    orderBy: {
+      sort_number: "asc",
     },
   });
   const lessons = res.map((lesson) => ({
