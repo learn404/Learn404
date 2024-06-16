@@ -5,8 +5,8 @@ import {
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default async function Join() {
   const session = await auth();
@@ -31,23 +31,23 @@ export default async function Join() {
           alt="background"
         />
       </div>
-      <main className="lg:flex justify-center items-center p-5 py-15 relative z-50 ">
+      <main className="flex flex-col-reverse justify-center items-start lg:flex-row lg:items-center px-12 lg:px-20 py-16 relative z-50 ">
         <div>
           <Image
             src="/img/Card_img.png"
             alt="card"
             width={750}
             height={750}
-            className=""
+            className="-ml-6 min-w-80 lg:ml-0"
           />
         </div>
 
-        <div className="flex flex-col items-start max-w-md mx-auto">
-          <h2 className="text-5xl font-medium">
+        <div className="flex flex-col items-start max-w-80 lg:max-w-md">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium">
             <span className="text-torea-300">Sign in</span> or{" "}
             <span className="text-torea-300">Sign up</span> to continue
           </h2>
-          <div className="flex items-center justify-center gap-3 mt-8">
+          <div className="flex items-center justify-center gap-3 mt-5 lg:mt-8">
             <LoginGoogleButton />
             <LoginGithubButton />
           </div>
