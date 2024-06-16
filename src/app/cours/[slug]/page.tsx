@@ -93,6 +93,7 @@ export default async function LessonPage({
     },
     select: {
       slug: true,
+
     },
   });
 
@@ -106,20 +107,24 @@ export default async function LessonPage({
 
   return (
     <>
+
       <header className="z-50 relative">
         <HeaderDashboard session={sessionData} />
       </header>
 
       <main className="text-white flex justify-center flex-col z-0">
+
         {/* https://drive.google.com/uc?id=ID_DU_FICHIER pour upload video sur google drive
          */}
 
         {lessons.playbackId ? (
+
           <div className="mx-auto w-[75vw]">
             <MuxPlayer
               stream-type="on-demand"
               autoPlay={false}
               max-resolution="1080p"
+
               preload="false"
               playbackId={lessons.playbackId}
               accentColor="#fefefe"

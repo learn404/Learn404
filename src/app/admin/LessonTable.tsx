@@ -7,6 +7,7 @@ async function getServerSideProps() {
   const lessons = res.map((lesson) => ({
     id: lesson?.id,
     title: lesson?.title,
+    slug: lesson?.slug,
     draft: lesson?.draft,
     slug: lesson?.slug,
   }));
