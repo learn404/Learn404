@@ -22,8 +22,6 @@ interface Lesson {
 export default async function LessonTable() {
   const lessons = await getServerSideProps();
 
-  console.log(lessons);
-
   return (
     <>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 overflow-hidden ">
