@@ -41,11 +41,11 @@ export default async function AddLesson() {
       image: session?.user?.image as string,
     },
     expires: session?.expires as string,
-  }
+  };
 
   return (
     <>
-      <HeaderDashboard session={sessionData}/>
+      <HeaderDashboard session={sessionData} />
       <main className="px-8">
         <AddLessonForm
           isAdmin={isAdmin}

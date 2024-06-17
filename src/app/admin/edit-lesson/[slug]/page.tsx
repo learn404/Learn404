@@ -4,6 +4,7 @@ import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import Mux from "@mux/mux-node";
 
 async function getServerSideProps() {
   const res = await prisma.categories.findMany();
@@ -69,7 +70,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       .replace(/\s+/g, "-");
     const categoryId = formData.get("category")?.toString();
     const about = formData.get("about")?.toString() || undefined;
-    const playbackId = formData.get("playback_id")?.toString() || undefined;
+    const video_url = formData.get("video_url")?.toString() || undefined;
     const repository_url =
       formData.get("repository_url")?.toString() || undefined;
     const draft = formData.get("draft") === "on";
@@ -80,6 +81,32 @@ export default async function Page({ params }: { params: { slug: string } }) {
         slug: params.slug,
       },
     });
+    console.log(video_url, "video_url");
+
+    let assetId: string | undefined;
+    let playbackIdFromMux: string | undefined;
+
+    if (video_url) {
+      const mux = new Mux({
+        tokenId: process.env.MUX_TOKEN_ID!,
+        tokenSecret: process.env.MUX_SECRET_KEY!,
+      });
+
+      const asset = await mux.video.assets.create({
+        input: [{ url: video_url }],
+        playback_policy: ["public"],
+        max_resolution_tier: "1080p",
+        encoding_tier: "baseline",
+      });
+
+      if (asset.playback_ids && asset.playback_ids.length > 0) {
+        playbackIdFromMux = asset.playback_ids[0].id;
+      } else {
+        throw new Error("Failed to create playback ID");
+      }
+
+      console.log(asset);
+    }
 
     if (!existingLesson) {
       throw new Error("Le cours n'existe pas");
@@ -93,8 +120,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       updateData.categoryId = categoryId;
     if (about && existingLesson.description !== about)
       updateData.description = about;
-    if (playbackId && existingLesson.playbackId !== playbackId)
-      updateData.playbackId = playbackId;
+    if (video_url !== "") updateData.playbackId = playbackIdFromMux;
     if (repository_url && existingLesson.repository_url !== repository_url)
       updateData.repository_url = repository_url;
     if (existingLesson.draft !== draft) updateData.draft = draft;
@@ -255,15 +281,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     htmlFor="video_url"
                     className="block text-sm font-medium leading-6 text-gray-100"
                   >
-                    PlaybackId
+                    Lien de la vidéo
                   </label>
                   <div className="mt-2">
                     <input
-                      type="text"
-                      name="playback_id"
-                      id="playback_id"
-                      placeholder={lesson[0]?.playbackId || ""}
+                      type="url"
+                      name="video_url"
+                      id="video_url"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder="https://drive.google.com/uc?id=ID_DU_FICHIER"
                     />
                   </div>
                 </div>

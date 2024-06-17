@@ -1,0 +1,817 @@
+# Introduction au Javascript
+
+Status: En cours
+
+# Introduction au Javascript
+
+<aside>
+📖 **Sommaire**
+
+1. [Qu’est-ce que Javascript ?](https://www.notion.so/Introduction-au-Javascript-139c8811c74b44eb9c099525ec72bbce?pvs=21)
+2. [Où exécuter du Javascript ?](https://www.notion.so/Introduction-au-Javascript-139c8811c74b44eb9c099525ec72bbce?pvs=21)
+3. [Les 5 types de data.](https://www.notion.so/Introduction-au-Javascript-139c8811c74b44eb9c099525ec72bbce?pvs=21)
+4. [Les variables](https://www.notion.so/Introduction-au-Javascript-139c8811c74b44eb9c099525ec72bbce?pvs=21)
+5. [Manipuler les variables](https://www.notion.so/Introduction-au-Javascript-139c8811c74b44eb9c099525ec72bbce?pvs=21)
+6. [Opération de comparaison](https://www.notion.so/Introduction-au-Javascript-139c8811c74b44eb9c099525ec72bbce?pvs=21)
+7. Exercices : Déclarer des variables, faire des calculs et comparer des valeurs.
+8. [Conditions](https://www.notion.so/Introduction-au-Javascript-139c8811c74b44eb9c099525ec72bbce?pvs=21)
+9. [Fonctions](https://www.notion.so/Introduction-au-Javascript-139c8811c74b44eb9c099525ec72bbce?pvs=21)
+10. Classes
+</aside>
+
+### Bonjour à tous et bienvenue dans le cours sur Javascript.
+
+## Qu’est-ce que Javascript ?
+
+On a vu précédemment 2 langages qui composent le web : l’HTML et le CSS.
+
+HTML est le langage qui permet de structurer une page web tandis que le CSS est le langage qui vient la styliser.
+
+<aside>
+📌 Javascript est le 3e langage du web. Il vient compléter l’HTML et le CSS en venant apporter de la logique. Il permet à un site internet d’être interactif et dynamique. 
+
+En prenant en compte que l’HTML et le CSS ne sont pas des langages de programmation, Javascript est **le seul langage de programmation** qui peut être utilisé **côté frontend**.
+
+Javascript est aujourd’hui utilisé dans la plupart des sites web, et est devenu la norme pour le développement d’applications web. 💻
+
+</aside>
+
+<aside>
+🤔 **Définition :** Frontend et Backend.
+
+- Le **Frontend** est tout ce qui est visible par l’utilisateur, tout ce avec quoi l’utilisateur interagit. Tous les fichiers du frontend sont accessibles dans le navigateur, lorsque vous arrivez sur une page web, ces fichiers sont chargés par votre navigateur pour être lus. 
+N’importe qui peut changer le code de ces fichiers, mais seul personne d’autre ne verra les changements car ce sont des copies propres à chaque utilisateur. En rechargeant la page après avoir modifié du code, les modifications seront effacées.
+- Le **Backend** est tout la logique qui n’est ni visible par l’utilisateur, ni accessible et ne peut être modifié. Il gère tout le traitement des données généralement entre le frontend et une base de données.
+
+Exemple : Lorsque vous cliquez sur un bouton pour liker un post, le frontend va faire appel au backend qui va s’exécuter pour mettre à jour le nombre de like dans la base de données. Une réponse va être renvoyée d’une backend vers le frontend pour ensuite exécuter l’animation du like. 
+
+</aside>
+
+Dans ce cours, nous n’allons pas encore écrire du code en backend. On va d’abord apprendre comment le langage fonctionne et comment l’exécuter en frontend.
+
+<aside>
+📎 Le Javascript côté frontend se nomme “pure javascript” ou “vanillaJS” .
+
+</aside>
+
+## Où exécuter du javascript ?
+
+L’endroit de base, le plus simple pour écrire du javascript est la console du navigateur.
+Pour y accéder : `click droit > inpect > console` .
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled.png)
+
+L’inconvénient, c’est que dans la console du navigateur, un seul code peut être exécuté à la fois et lorsque l’on rafraichit la page tout notre code disparait.
+
+C’est pour ça que l’on va écrire notre code javascript dans un éditeur de code nommé Visual Studio Code. 
+
+<aside>
+⚠️ Rappel : Il est important d’avoir suivi le cours d’installation des outils et celui sur l’HTML/CSS.
+
+</aside>
+
+Notre code javascript va s’exécuter sur une page web, c’est pour cette raison que l’on va d’abord devoir créer un fichier HTML.
+
+ 
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%201.png)
+
+On peut maintenant ajouter une nouvelle balise :
+
+```html
+<script>
+	// notre code javascript
+</script>
+```
+
+<aside>
+📌 Note : le texte `// notre code javascript` est un commentaire. Il est visible dans le code source de la page mais n’a aucune influence sur son contenu. Il peut servir de repère et de docs pour les développeurs.
+
+</aside>
+
+Notre balise `<script></script>`  peut s’ajouter soit dans le `head` soit dans le `body`.
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%202.png)
+
+Le problème avec cette manière d’écrire le javascript, c’est qu’il n’est pas recommandé d’avoir toute notre logique dans un seul fichier, qui plus est, mélangé avec le code HTML.
+
+C’est pour cette raison que l’on va créer un fichier `script.js` que l’on va ensuite lier à notre page HTML : 
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%203.png)
+
+On a ajouté un attribut `src` qui correspond au chemin de notre fichier javascript.
+
+Et comme on va écrire notre code dans notre nouveau fichier javascript, le contenu entre les 2 balises reste vide.
+
+Super ! Maintenant que l’on a lié notre fichier javascript à notre page HTML, on va pouvoir commencer à écrire du code 🙂
+
+## Les 5 types de data
+
+### Les nombres (Numbers)
+
+Le premier type de data que l’on retrouve sont les nombres.
+Il y a les nombres entiers (40, -5, 1, 10, …) et les nombres décimaux (1.0, 2.3, 41.9, …)
+
+- Les **nombres entiers** peuvent être utilisés pour le nombre de vues, le nombre de likes ou le nombre d’amis.
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%204.png)
+
+- Les **nombres décimaux** peuvent eux être utilisés pour une note ou des pourcentages.
+- 
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%205.png)
+
+### Les chaines de caractères (String)
+
+On retrouve ensuite les chaines de caractères.
+
+Un caractère est n’importe quelle touche de votre clavier : une lettre, un caractère spécial ou même un nombre !
+
+Une chaine de caractères est reconnaissable grâce à des guillemets (simples `‘` , doubles `“`  ou des backticks ``` ).
+
+```jsx
+44 // --> Number
+1.0 // --> Number
+'44' // --> String
+"j'aime coder" // --> String
+```
+
+### Les booléens (Boolean)
+
+Un **booléen** est un type de variable à deux états ( `false` et `true` )
+
+Le type de données booléen est principalement associé à des états conditionnels.
+
+- Est-ce que l’utilisateur est connecté ?
+- Est-il administrateur ?
+- Si l’utilisateur est connecté … ⇒ si c’est `true`
+- Si il n’est pas administrateur … ⇒ si c’est `false`
+
+### Les tableaux (Array)
+
+Les tableaux sont des listes d’éléments reconnaissables grâce à sa syntaxe : `[]` (crochets).
+
+Exemples de listes qu’on pourrait avoir : 
+
+- une liste d’amis
+- une liste de posts
+- une liste d’abonnés
+
+Il peut y avoir tout type de données dans un tableau et elles peuvent être mélangées.
+
+```jsx
+["ami1", "ami2", "ami3"] // --> Array
+["tab", "oui", 41] // --> Array
+[1, 43, 87, 23] // --> Array
+
+"['tab', 'oui', 41]" // --> String
+```
+
+Et si je souhaite accéder à une valeur dans le tableau ?
+
+—  Eh bien il suffit de l’appeler avec son **index**, l’index est l’emplacement d’un élément dans un tableau. 
+Pour accéder à la valeur `"ami2"` du premier tableau, il faut l’appeler comme ceci : `tableau[1]` . L’index est précisé entre crochets.
+
+<aside>
+📌 Pourquoi `[1]` alors que c’est le deuxième élément du tableau ?
+
+— Tout simplement parce que l’index commence à 0 !  
+
+Lorsque l’on regarde dans l’**outil de développeur** sur notre navigateur, on peut effectivement voir que le premier élément d’un tableau commence à l’index 0.
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%206.png)
+
+</aside>
+
+Le problème avec les tableaux, c’est que si l’on prend un commentaire sur Youtube par exemple, on doit pouvoir accéder à :
+
+- l’auteur
+- l’identifiant du commentaire
+- son contenu
+- l’identifiant du post où il a été publié
+- ect…
+
+Dans un tableau ça ressemblerait à ça :
+
+```jsx
+["Matteo", 9322323, "Très belle vidéo !", 1237933]
+```
+
+Mais on a un problème, il manque un nom à ces valeurs.
+
+- Comment sait-on quel identifiant est celui du commentaire ou du post ?
+- Puis, si on change l’ordre de la liste, ça casserait tout notre code étant donné que le seul moyen d’accéder à une valeur du tableau est de l’appeler par son index.
+
+### Les objets (Object)
+
+C’est pour cette raison que l’on a créé les **objets.**
+
+Un objet est un **groupe d’informations** reconnaissable grâce à sa syntaxe : `{}` (accolades) .
+
+L’objet d’un commentaire ressemblerait à ça :
+
+```jsx
+{
+	"authorName": "Matteo",
+	"commentId": 9322323,
+	"content": "Très belle vidéo !",
+	"postId": 1237933
+}
+```
+
+Chaque ligne de l’objet est composée d’une `clé` et de sa `valeur` .
+
+— Par exemple : `“authorName”` est une `clé`, sa `valeur` est `"Mattéo"` 
+
+La clé doit décrire sa valeur, c’est un peu le nom que l’on donne une valeur. 
+
+<aside>
+📌 Une valeur peut être de n’importe quel type.
+
+Elle peut être une chaine de caractères, un nombre, un booléen, un tableau ou même un objet !
+
+Pour un profil, on pourrait imaginer un objet comme celui-ci :
+
+```jsx
+{
+	"name": "Nicolas",
+	"email": "nicolas.example@gmail.com",
+	"age": 19,
+	"isAdmin": true,
+	"posts": [
+		{ postId: 1, "content": "premier post" },
+		{ postId: 2, "content": "deuxième post" },
+		{ postId: 3, "content": "troisième post" }
+	]
+}
+```
+
+- `name` et `email` sont des chaines de caractères
+- `age` est un nombre.
+- `isAdmin` est un booléen.
+- `posts` est un tableau (liste) d’objets.
+
+Pour accéder à une valeur on le fait grâce à sa clé : `objet.key` **ou** `object["key"]`.
+
+```jsx
+Exemples :
+
+objet.name       // "Nicolas"
+objet["name"]    // "Nicolas"
+
+objet.posts      // [{ postId: 1, "content": "premier post" }, ...]
+objet["posts"]   // [{ postId: 1, "content": "premier post" }, ...]
+
+objet.posts[0]      // { postId: 1, "content": "premier post" }
+objet["posts"][0]   // { postId: 1, "content": "premier post" }
+
+objet.posts[1].postId       // 2
+objet["posts"][1]["postId"] // 2
+
+```
+
+Plus tard, la structure de données qu’on recevra du backend sera similaire à celle de `posts` .
+
+</aside>
+
+## Les variables
+
+Le **concept de variables** est l’un des plus importants en programmation.
+
+Il permet d’attribuer d’attribuer une **valeur** à un **nom**.
+
+```jsx
+variableName = value
+```
+
+Jusqu’à maintenant, on avait différents types de données mais ces données n’étaient pas répertoriées, elles n’avaient aucun nom.
+
+<aside>
+📌 **Quelle utilité ?**
+
+Imaginez que sur la page de votre profil, vous ayez plusieurs fois votre nom affiché :
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%207.png)
+
+Puis un jour vous changez votre nom d’utilisateur… 😱
+
+Dans le code, Il faudrait alors changer le nom d’utilisateur 2 fois.
+
+Le problème est que le **même nom** est affiché plusieurs fois, alors pourquoi le changer plusieurs fois si c’est la même valeur qui est itéré plusieurs fois ?
+
+— Eh bien c’est là que viennent les variables !
+
+Le but est de seulement changer la **valeur** de la variable `nom` pour que toutes ses itérations changent sur la page ! On parle alors de références.
+
+</aside>
+
+### Déclarer une variable
+
+En javascript, nous devons préciser au langage que l’on déclare une variable.
+
+Cette déclaration se fait grâce à un mot clé placé devant le nom, il existe 3 mots clés :
+
+<aside>
+📌 Déclaration et assignation avec `let` :
+
+Le premier est “let”, c’est le moyen le plus simple de définir une variable dont la valeur peut changer en cours de route. 
+
+```jsx
+// On déclare une variable, on lui laisse une place dans la mémoire.
+let test; 
+
+// On déclare une variable et on lui assigne une valeur
+let nom = "Mattéo" // je déclare la variable
+
+nom = "Nicolas" // je PEUX changer sa valeur ✅
+```
+
+</aside>
+
+<aside>
+📌 Déclaration et assignation avec `const` :
+
+Le deuxième est “const”, il permet de déclarer une variable qui n’est pas modifiable.
+
+(”const” pour “constante”) 
+
+```jsx
+// On déclare une variable et on lui assigne une valeur
+const nom = "Mattéo";
+
+nom = "Nicolas" // je NE PEUX PAS changer sa valeur ❌
+// => TypeError: Assignement to constant variable.
+```
+
+Toutes les variables dont les valeurs ne sont pas réassignées devraient être déclarées avec `const` pour des raisons de performance et de simplicité de lecture du code.
+
+</aside>
+
+<aside>
+📌 Déclaration et assignation avec `var` :
+
+Le troisième est “var”, il est similaire à “let” mais ne **DEVRAIT PAS** être utilisé.
+
+"var" est déprécié depuis le passage à ES6 et devrait toujours être remplacé par un "let".
+
+```jsx
+// On déclare une variable, on lui laisse une place dans la mémoire.
+var test; 
+
+// On déclare une variable et on lui assigne une valeur
+var nom = "Mattéo" // je déclare la variable
+
+nom = "Nicolas" // je PEUX changer sa valeur ✅
+```
+
+</aside>
+
+La raison pour laquelle la déclaration avec `var` est dépréciée est parce que la portée d’une variable déclarée avec `var` peut avoir des comportements beaucoup plus imprévisibles et contre-intuitifs, ce qui peut créer ce qu'on appelle **des effets de bord**.
+
+En savoir plus : [javascript.info](https://fr.javascript.info/var)
+
+## Manipuler les variables
+
+Nous avons vu comment créer des variables, maintenant il est temps de voir comment les manipulations de base. 
+
+### Concaténation
+
+La première opération que l’on va voir est la concaténation qui signifie « attacher ensemble ».
+
+En javascript, on peut concaténer des chaines des caractères avec `+` :
+
+```jsx
+const string1 = "Hello, "
+const string2 = "World !"
+
+const result = string1 + string2
+console.log(result) // On affiche le résultat dans la console.
+
+// Output : "Hello, World !"
+```
+
+On peut même concaténer des chaines de caractères avec des nombre !
+
+```jsx
+const string1 = "Tu possèdes "
+const potionsNumber = 4
+const string2 = " potions."
+
+const result = string1 + potionsNumber + string2
+console.log(result) // On affiche le résultat dans la console.
+
+// Output : "Tu possèdes 4 potions."
+```
+
+### Littéraux de gabarits
+
+Une variable peut aussi être incrustée dans une chaine de caractères lorsque l’on utilise des **backticks**. On incruste la variable grâce à la syntaxe : `${variable}` .
+
+```jsx
+const potionsNumber = 4
+const result = `Tu possèdes ${potionsNumber} potions.`
+console.log(result) // On affiche le résultat dans la console.
+
+// Output : "Tu possèdes 4 potions."
+```
+
+### Calculs entre nombres
+
+En programmation, il est possible d’effectuer tout type d’opération mathématiques.
+Il est récurrent de devoir faire des calculs élémentaires dans notre code.
+
+```jsx
+// Addition
+5 + 5 // 10
+
+// Soustraction 
+16 - 6 // 10
+
+// Multiplication
+9 * 7 // 63
+
+// Division
+10 / 2 // 5
+
+// Puissance
+10**2 // 100
+
+// Priorité
+(10 + 2) * 4 // 48
+```
+
+## Opérations de comparaison
+
+Passons aux opérations de comparaison. Comme le nom l’indique, on va apprendre à comparer une valeur par rapport à une autre.
+Cela nous sera très utile par la suite pour effectuer des conditions en fonction du résultat.
+
+Voyons les différentes opérations de comparaison : 
+
+```jsx
+// Vérifier si une valeur ET son type sont égales à une autre ("===").
+4 === 4     //  true
+4 === 10    //  false
+10 === "10" //  false, le premier est un Number et le second un String.
+
+// Vérifier si juste la valeur est égale à une autre ("==")
+12 == 12    // true
+35 == "35"  // true
+35 == 48    // false
+
+// Vérifier si une valeur OU son type NE N'EST PAS égale à une autre ("!==").
+12 !== 12   // false
+34 !== "34" // true
+79 !== 97   // true
+
+// Vérifier si la valeur est N'EST PAS égale à une autre ("!=")
+25 != 25    // false
+89 != "89"  // false
+23 != 48    // true
+
+// En général, on utilisera plus souvent les opérations strictes === et !==.
+// On retrouve aussi les opérations qui vérifient si une valeur est plus grande 
+// ou non qu'une autre valeur :
+
+// Strictement inférieure :
+4 < 7  // true
+4 < 4  // false
+4 < 3  // false
+
+// Inférieure ou égale :
+4 <= 4  // true
+4 <= 7  // true
+4 <= 2  // false
+
+// Strictement supérieure :
+4 > 3   // true
+4 > 4  // false
+4 > 7  // false
+
+// Supérieure ou égale :
+4 >= 3   // true
+4 >= 4  // true
+4 >= 7  // false
+
+// Toutes les opérations ci-dessus peuvent comparer 2 valeurs ou plus !
+```
+
+Ces opérations que l’on voit en mathématiques vont nous permettre ensuite d’exécuter des parties de code en fonction du résultat. 
+On voit qu’à chaque opération, un booléen `true` ou `false` est retourné.
+
+## Conditions
+
+Maintenant que nous savons comparer 2 valeurs ou plus nous allons voir comment agir en fonction du résultat de la comparaison (si c’est `true` ou `false`)
+
+En javascript, pour écrire une condition, on met `if` + la condition entre parenthèses `()` .
+Les actions que doivent lire le programme sont entre accolades `{}` .  
+
+```jsx
+const number = 10;
+
+// Si le nombre est supérieur à 5
+	// alors on écrit "10 est strictement  supérieur ou égal à 5."
+// Sinon
+	// on écrit "10 est inférieur ou égal à 5."
+
+if (number > 5) {
+	console.log(number + " est strictement supérieur ou égal à 5.")
+} else {
+	console.log(number + " est inférieur ou égal à 5.")
+}
+
+// Output : "10 est strictement supérieur à 5."
+```
+
+Pour vérifier une condition on ajoute un block `else if` , on peut en ajouter autant qu’on veut :
+
+```jsx
+const number = 10;
+
+// Si le nombre est supérieur à 5
+	// alors on écrit "10 est strictement supérieur à 5."
+// Sinon si le nombre est égal à 5
+	// On écrit "10 est égal à 5."
+// Sinon
+	// on écrit "10 est strictement inférieur à 5."
+
+if (number > 5) {
+	console.log(number + " est strictement supérieur à 5.")
+} else if (number === 5) {
+	console.log(number + " est égal à 5.")
+} else {
+	console.log(number + " est strictement inférieur à 5.")
+}
+
+// Output : "10 est strictement supérieur à 5.
+```
+
+ 
+
+### Opérateurs logiques
+
+Parfois, on a envie de valider que quelque chose n’est pas.
+
+Par exemple vérifier que l’utilisateur n’est pas banni. 
+Pour cela, on ajoute ce qu’on appelle un “**NON Logique**”. Il suffit simplement d’ajouter un `!` devant la condition :  
+
+```jsx
+const isBanni = true;
+
+if (!isBanni) {
+	// Actions
+}
+```
+
+Il existe aussi un “**OU Logique**” `||` et un “**ET Logique**” `&&` :
+
+```jsx
+const isBanni = true
+const age = 18
+
+// Si l'utilisateur est banni OU que son âge est inférieur à 18 ans.
+if (isBanni || age < 18) {
+	// Actions
+} 
+
+// Si l'utilisateur n'est pas banni ET que son âge est supérieur ou égal à 18 ans.
+if (!isBanni && age >= 18) {
+	// Actions
+}
+```
+
+Le “**OU Logique”** vérifie si au moins 1 des valeurs est `true` .
+
+Le “**ET Logique”** vérifie si TOUTES les valeurs sont `true` .
+
+## Fonctions
+
+Passons à l’un des concepts les plus importants, que ce soit en javascript ou dans pleins d’autres langages : les fonctions.
+
+Pour comprendre pourquoi on utilise des fonctions, on va voir ensemble un exemple simple :
+
+<aside>
+📌 **Imaginez un programme qui permet de changer le nombres d’amis.**
+
+Bien évidemment on va simplifier le code ici pour que l’on puisse comprendre simplement le processus :
+
+```jsx
+// Initialisons d'abord 2 variables
+let numberOfFriends = 5;  // nombre d'amis
+const limitOfFriends = 10;  // une limite du nombre d'amis
+
+// Notre logique :
+if (numberOfFriend < limitOfFriends) {
+	console.log("Vous pouvez toujours ajouter des amis.")
+} else {
+	console.log("Vous ne pouvez plus ajouter d'amis".)
+}
+```
+
+Le code tel qu’il est, sera exécuté **une fois** : au lancement de la page.
+Mais comment faire si nous voulons l’utiliser à d’autres moments dans notre code, par exemple, lorsque j’ajoute où que je supprime un ami ?
+
+Là est le problème ! Nous n’avons **aucun** moyen de rappeler notre bout de code actuellement.
+
+C’est là qu’arrive **les fonctions.** Elles vont nous permettre de créer des blocs de code réutilisables.
+
+**Définition :** Une fonction est un bloc de code réutilisable désigné pour effectuer un tâche. Une fonction peut donc être exécutée plusieurs fois.
+
+</aside>
+
+<aside>
+📌 **Utiliser une fonction**
+
+Notre code peut maintenant être transformé en fonction, mais comment faire ?
+
+```jsx
+let numberOfFriends = 5;  // nombre d'amis
+const limitOfFriends = 10;  // une limite du nombre d'amis
+
+// On déclare notre fonction
+function verifyFriendsNumber() {
+	// Notre logique :
+	if (numberOfFriends < limitOfFriends) {
+		console.log("Vous pouvez toujours ajouter des amis.")
+	} else {
+		console.log("Vous ne pouvez plus ajouter d'amis.")
+	}
+		
+}
+```
+
+</aside>
+
+Pour déclarer une fonction, on utilise le mot clé `function` suivi de son nom (ici `“verifyFriendsNumber”`).
+On ajoute des parenthèses `()` juste après le nom puis on écrit notre bloc de code à l’intérieur d’accolades `{}` .
+
+Toutes les lignes de code qui se situent entre les accolades `{}` font partie de la fonction.
+
+Vous pouvez maintenant recopier le code ci-dessus et le lancer.
+—  . . . Rien ne d’affiche dans la console ? 
+—  C’est normal ! Nous avons déclaré notre fonction mais nous ne l’avons appelée nulle part 🙂
+
+Pour appeler une fonction c’est très simple ! Il suffit d’écrire le code ci-dessous à l’endroit où vous voulez appeler votre fonction. 
+
+```jsx
+// Appel de la fonction
+// La fonction d'exécutera à chaque fois qu'elle sera appelée.
+verifyFriendsNumber()
+```
+
+<aside>
+📎 **Le nom d’une fonction devrait toujours décrire ce qu’elle fait.**
+
+</aside>
+
+En ajoutant cette ligne à la fin de votre code, quelque chose apparait ✨ :
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%208.png)
+
+### Paramètres de fonction
+
+Vous vous êtes peut-être demandé en le voyant : à quoi servent les parenthèses ?
+— Et c’est une bonne question !
+
+Les parenthèses que l’on voit après le nom d’une fonction ou lorsqu’on l’appelle sont là pour y placer ce qu’on appelle des **paramètres de fonction**.
+
+Pour comprendre l’utilité des paramètres des fonctions, on va devoir expliquer quelques règles qui régissent en javascript.
+
+Lorsque l’on crée une variable à l’intérieur d’une fonction (avec `let` et `const`), la variable n’y est pas accessible en dehors.
+
+```jsx
+// On déclare notre fonction
+function myFunction() {
+	let myName = "Mattéo"
+}
+
+console.log(myName) // ReferenceError: myName is not defined
+```
+
+<aside>
+📎 **Grâce à Visual Studio Code, on peut le voir facilement :**
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%209.png)
+
+Ligne 3 : La variable “myName” est grisée pour dire qu’elle n’est jamais utilisé.
+Ligne 6 : Lorsqu’on survole la variable avec la souris, on voit que vscode ne voit pas quel type de valeur a la variable.
+
+</aside>
+
+Donc que se passe-t-il si l’on crée une variable dans une fonction pour une quelconque raison et qu’on souhaite ensuite l’utiliser dans une autre fonction ?
+
+— On ne pourra pas, à moins d’utiliser les **paramètres de fonction.
+
+Exemple d’utilisation :**
+
+```jsx
+// On déclare notre fonction createName
+function createName() {
+	let myName = "Mattéo"
+	displayName(myName)
+}
+
+// On déclare une fonction displayName
+// Elle prend en paramètre un argument "name"
+function displayName(name) {
+	console.log(name)
+}
+
+createName() // output : "Mattéo"
+
+// ATTENTION: ici, "name" est une variable qui peut être appelée indépendamment 
+// du nom de la variable que l'on utilise lorsqu'on appelle la fonction.
+```
+
+Et là c’est magique ✨ ! Nous avons pu passer une variable créée dans une fonction vers une autre fonction !
+
+Pour résumer ce que l’on vient de voir :
+
+- une variable créée dans une fonction peut maintenant être accessible dans une autre fonction grâce aux **paramètres de fonction.**
+- on peut appeler une fonction n’importe où, même dans une autre fonction !
+
+Avant de finir ce chapitre sur les fonctions, nous allons voir comment donner une valeur à nos fonctions.
+
+### Return
+
+Jusqu’à maintenant, nos fonctions exécutaient du code mais ne renvoyaient aucune valeur !
+En programmation, une fonction peut avoir une valeur si on retourne quelque chose de cette fonction :
+
+```jsx
+function sansValeur() {
+	console.log("Je n'ai pas de valeur.")
+}
+
+function avecValeur() {
+	const nombre = 10;
+	console.log("Je retourne le nombre 10.")
+	return nombre;
+}
+
+// ATTENTION : Lorsqu'on retourne une valeur dans une fonction, le code qui suit
+// à l'intérieur de la foncton n'est pas lu :
+
+function warning() {
+	const nombre = 10;
+	console.log("Je retourne le nombre 10.")
+	return nombre;
+	
+	// Code non lu
+	console.log("Je ne suis pas lu car ma fonction a déjà retournée une valeur.")
+}
+```
+
+Si du code n’est pas lu, vscode nous le fera savoir :
+
+![Untitled](Introduction%20au%20Javascript%20139c8811c74b44eb9c099525ec72bbce/Untitled%2010.png)
+
+<aside>
+📎 **Mais à quoi cela sert de “return” ?**
+
+1. D’abord, on peut attribuer à une variable la valeur retournée en dehors d’une fonction.
+    
+    ```jsx
+    function myFunction() {
+    	return 10;
+    }
+    
+    // Je peux attribuer ma fonction à une variable
+    const myFunctionVariable = myFunction()
+    console.log(myFunctionVariable)  // output: 10
+    
+    // Ou sans variable 
+    console.log(myFunction())  // output: 10
+    
+    // ATTENTION : Lorsqu'on attribue une fonction à une variable
+    // le programme lit la fonction.
+    ```
+    
+2. Finir la fonction quand on le souhaite.
+    
+    ```jsx
+    const number = 9;
+    
+    function myFunction() {
+    	if (number < 10) {
+    		console.log("Le nombre est inférieur à 10.")
+    		return;
+    	}
+    	
+    	console.log("Le nombre est supérieur ou égal à 10.")
+    }
+    
+    // Dans la fonction ci-dessus, on vérifie si number est inférieur à 10.
+    	// Si oui, alors on écrit qu'il est inférieur ET on retourne la fonction.
+    	// Si non, on écrit qu'il est supérieur ou égal.
+    
+    // En gros, le 2e log n'est pas lu si la condition est validée.
+    // C'est le raccourci d'un if...else
+    
+    // Quand on retourne une fonction sans préciser valeur, alors la fonction 
+    // prendra la valeur par default : undefined.
+    
+    console.log(myFunction()) // output: undefined
+    ```
+    
+</aside>
+
+## Classes

@@ -3,6 +3,7 @@ import SecondaryButton from "@/components/buttons/SecondaryButton";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import Mux from "@mux/mux-node";
 
 interface AddLessonFormProps {
   isAdmin: boolean;
@@ -36,7 +37,7 @@ export default async function AddLessonForm({
       .replace(/\s+/g, "-");
     const categoryId = formData.get("category")?.toString();
     const about = formData.get("about")?.toString() || undefined;
-    const playbackId = formData.get("playback_id")?.toString() || undefined;
+    const video_url = formData.get("video_url")?.toString() || undefined;
     const repository_url =
       formData.get("repository_url")?.toString() || undefined;
     const draft = formData.get("draft") === "on";
@@ -45,14 +46,37 @@ export default async function AddLessonForm({
     if (!title || !categoryId) {
       throw new Error("Title and category are required");
     }
+    let assetId: string | undefined;
+    let playbackIdFromMux: string | undefined;
+
+    if (video_url) {
+      const mux = new Mux({
+        tokenId: process.env.MUX_TOKEN_ID!,
+        tokenSecret: process.env.MUX_SECRET_KEY!,
+      });
+
+      const asset = await mux.video.assets.create({
+        input: [{ url: video_url }],
+        playback_policy: ["public"],
+        max_resolution_tier: "1080p",
+        encoding_tier: "baseline",
+      });
+
+      assetId = asset.id;
+      if (asset.playback_ids && asset.playback_ids.length > 0) {
+        playbackIdFromMux = asset.playback_ids[0].id;
+      } else {
+        throw new Error("Failed to create playback ID");
+      }
+
+      console.log(asset);
+    }
 
     const checkLessonExist = await prisma.lessons.findFirst({
       where: {
         slug: slug_title,
       },
     });
-
-    console.log(checkLessonExist);
 
     if (checkLessonExist) {
       throw new Error("Lesson already exists");
@@ -64,14 +88,12 @@ export default async function AddLessonForm({
         slug: slug_title ?? "",
         categoryId: categoryId ?? "",
         description: about ?? "",
-        playbackId: playbackId ?? "",
+        playbackId: playbackIdFromMux ?? "",
         repository_url: repository_url ?? "",
         draft: draft ?? false,
         newLesson: newLesson ?? false,
       },
     });
-
-    console.log(addLesson);
 
     redirect("/admin");
   }
@@ -203,20 +225,20 @@ export default async function AddLessonForm({
                   />
                 </div>
               </div>
-
               <div className="sm:col-span-3">
                 <label
                   htmlFor="video_url"
                   className="block text-sm font-medium leading-6 text-gray-100"
                 >
-                  PlaybackId
+                  Lien de la vidéo
                 </label>
                 <div className="mt-2">
                   <input
-                    type="text"
-                    name="playback_id"
-                    id="playback_id"
+                    type="url"
+                    name="video_url"
+                    id="video_url"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="https://drive.google.com/uc?id=ID_DU_FICHIER"
                   />
                 </div>
               </div>
