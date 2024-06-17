@@ -130,7 +130,7 @@ export default async function LessonPage({
             />
           </div>
         ) : (
-          <p className="m-auto">Video not available</p>
+          <p className="m-auto">Vidéo pas disponible</p>
         )}
         <div className=" bg-indigo-800  max-w-xl px-24 py-12 gap-10 rounded-md mx-auto mb-10 border  border-white/10">
           <h1 className="text-4xl text-center font-bold">{lessons.title}</h1>
