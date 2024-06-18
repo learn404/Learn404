@@ -11,14 +11,12 @@ export async function POST(req: NextRequest) {
 
   const payload = await req.text();
   const res = JSON.parse(payload);
-
   const sig = req.headers.get("Stripe-Signature") as string;
   const datetime =  new Date(res?.created * 1000).toLocaleString();
 
   try {
     
-    let event = stripe.webhooks.constructEvent(payload, sig, process.env.STRIPE_WEBHOOK_SECRET as string);
-
+    let event = stripe.webhooks.constructEvent(payload, sig, process.env.STRIPE_WEBHOOK_SECRET!)
     if (event.type === "charge.succeeded") {
       // Add user to database
       console.log(`Stripe webhook received: ${event.type} at ${datetime}`);

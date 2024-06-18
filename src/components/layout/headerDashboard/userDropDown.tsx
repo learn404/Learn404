@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
-import { LogOut } from "lucide-react";
+import { useState } from "react";
 
 interface HeaderDashboardProps {
   isAvatar: boolean;
@@ -59,7 +59,7 @@ export default function UserDropdown({
             <li>
               <Link
                 href="/dashboard"
-                className="block px-4 py-2 hover:bg-white/10 rounded-lg mx-2"
+                className="block px-4 py-2 hover:bg-white/10 rounded mx-2"
               >
                 Dashboard
               </Link>
@@ -67,7 +67,7 @@ export default function UserDropdown({
             <li>
               <Link
                 href="/settings"
-                className="block px-4 py-2 hover:bg-white/10 rounded-lg mx-2"
+                className="block px-4 py-2 hover:bg-white/10 rounded mx-2"
               >
                 Settings
               </Link>
@@ -75,7 +75,7 @@ export default function UserDropdown({
             <li>
               <Link
                 href="/earnings"
-                className="block px-4 py-2 hover:bg-white/10 rounded-lg mx-2"
+                className="block px-4 py-2 hover:bg-white/10 rounded mx-2"
               >
                 Earnings
               </Link>
@@ -84,7 +84,7 @@ export default function UserDropdown({
               <li>
                 <Link
                   href="/admin"
-                  className="block px-4 py-2 hover:bg-white/10 rounded-lg mx-2"
+                  className="block px-4 py-2 hover:bg-white/10 rounded mx-2"
                 >
                   Admin
                 </Link>
@@ -94,7 +94,7 @@ export default function UserDropdown({
           <div className="py-1 flex justify-center">
             <button
               onClick={() => signOut({ callbackUrl: "/", redirect: true })}
-              className="px-4 py-2 hover:bg-white/10 flex items-center gap-2 text-sm font-medium rounded-lg mx-2 w-max text-left"
+              className="px-4 py-2 hover:bg-white/10 flex items-center gap-2 text-sm font-medium rounded w-max text-left"
             >
               <LogOut size={15} />
               <span className="text-sm text-center">Déconnexion</span>
