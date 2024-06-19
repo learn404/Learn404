@@ -1,5 +1,5 @@
 # Learn404
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7428045e-3ba5-4e52-9b8f-99cf39aa6df6/deploy-status)](https://app.netlify.com/sites/learn404/deploys)
 Bienvenue sur **Learn404** ! Ce projet est un site web proposant des formations de développement web destinées aux débutants. Le site est construit avec Nextjs, et Tailwind CSS.
 
 ## Table des matières

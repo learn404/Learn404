@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
-import { User } from "lucide-react";
+import { BookCheck } from "lucide-react";
+
 import Link from "next/link";
 
 async function getServerSideProps() {
@@ -31,14 +32,14 @@ export default async function LessonTable() {
               TITRE
             </th>
             <th scope="col" className="px-2 md:px-6 py-3">
-              BROUILLON
+              ETAT
             </th>
 
             <th
               scope="col"
               className="px-2  md:px-6 py-3 flex items-center gap-1"
             >
-              <User size={16} />
+              <BookCheck size={16} />
               <span>{lessons.length}</span>
             </th>
           </tr>

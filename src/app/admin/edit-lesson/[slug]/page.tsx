@@ -317,6 +317,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                           name="draft"
                           type="checkbox"
                           className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          defaultChecked={lesson[0]?.draft || false}
                         />
                       </div>
                       <div className="text-sm leading-6">
@@ -339,6 +340,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                           name="newLesson"
                           type="checkbox"
                           className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          defaultChecked={lesson[0]?.newLesson || false}
                         />
                       </div>
                       <div className="text-sm leading-6">

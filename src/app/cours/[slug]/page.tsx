@@ -93,8 +93,22 @@ export default async function LessonPage({
     },
     select: {
       slug: true,
+      title: true,
     },
   });
+
+  let previousLesson;
+  if (!nextLesson) {
+    previousLesson = await prisma.lessons.findFirst({
+      where: {
+        sort_number: (lessons?.sort_number as number) - 1,
+      },
+      select: {
+        slug: true,
+        title: true,
+      },
+    });
+  }
 
   if (lessons?.draft && user?.admin === false) {
     redirect("/dashboard");
@@ -132,37 +146,65 @@ export default async function LessonPage({
         ) : (
           <p className="m-auto">Vidéo pas disponible</p>
         )}
-        <div className=" bg-indigo-800  max-w-xl px-24 py-12 gap-10 rounded-md mx-auto mb-10 border  border-white/10">
-          <h1 className="text-4xl text-center font-bold">{lessons.title}</h1>
-          <div className="flex justify-center items-center mt-10 gap-10">
+        <div className="bg-indigo-800 max-w-sm lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
+          <h1 className="text-lg lg:text-4xl text-center font-bold">
+            {lessons.title}
+          </h1>
+          <div className="flex justify-center items-center mt-3 lg:mt-10 gap-10">
             <SecondaryButton type="button" redirectTo="/dashboard">
               Dashboard
             </SecondaryButton>
             {!nextLesson?.slug ? (
-              ""
+              <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
+                Previous lesson
+              </SecondaryButton>
             ) : (
               <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
                 Next lesson
               </SecondaryButton>
             )}
+            {user.admin ? (
+              <SecondaryButton redirectTo={`/admin/edit-lesson/${params.slug}`}>
+                Edit
+              </SecondaryButton>
+            ) : (
+              ""
+            )}
           </div>
         </div>
-        <div className="py-4 prose lg:prose-xl prose-invert m-auto  prose-pre:border prose-pre:bg-white/10">
+        <div className="py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10">
           {content}
         </div>
-        <div className=" bg-indigo-800 max-w-6xl px-24 py-12 gap-10 rounded-md mx-auto mb-10 border  border-white/10">
-          <div className="flex justify-center items-center mt-10 gap-10">
+        <div className="bg-indigo-800 max-w-sm lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
+          <div className="flex justify-center items-center gap-10">
             <SecondaryButton type="button" redirectTo="/dashboard">
               Dashboard
             </SecondaryButton>
             {!nextLesson?.slug ? (
-              ""
+              <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
+                Previous lesson
+              </SecondaryButton>
             ) : (
               <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
                 Next lesson
               </SecondaryButton>
             )}
           </div>
+          {nextLesson ? (
+            <div className="flex items mt-5">
+              <p className="text-neutral-500">Next lesson</p>
+              <p className="text-lg lg:text-2xl text-center font-bold mt-5">
+                {nextLesson?.title}
+              </p>
+            </div>
+          ) : (
+            <div className="flex items mt-5">
+              <p className="text-white/40">Previous lesson:</p>
+              <p className="text-sm  text-center font-bold ">
+                {previousLesson?.title}
+              </p>
+            </div>
+          )}
         </div>
       </main>
     </>

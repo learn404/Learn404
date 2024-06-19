@@ -1,13 +1,52 @@
-import { CodeXml, LineChart, ListVideo } from "lucide-react";
+"use client";
+import { CodeXml, LineChart, ListVideo, Code } from "lucide-react";
 import Image from "next/image";
+import IconCloud from "@/components/magicui/icon-cloud";
+import Particles from "@/components/magicui/particles";
+import { useTheme } from "next-themes";
+import { useState } from "react";
+const slugs = [
+  "typescript",
+  "javascript",
+  "dart",
+  "java",
+  "react",
+  "flutter",
+  "android",
+  "html5",
+  "css3",
+  "nodedotjs",
+  "express",
+  "nextdotjs",
+  "prisma",
+  "amazonaws",
+  "postgresql",
+  "firebase",
+  "nginx",
+  "vercel",
+  "testinglibrary",
+  "jest",
+  "cypress",
+  "docker",
+  "git",
+  "jira",
+  "github",
+  "gitlab",
+  "visualstudiocode",
+  "androidstudio",
+  "sonarqube",
+  "figma",
+];
 
 export default function FonctionnalitySection() {
+  const { theme } = useTheme();
+  const [color, setColor] = useState("#ffffff");
   return (
     <div
-      className="flex flex-col items-center justify-center w-full gap-10 py-[6.25rem] px-4"
+      className="relative flex flex-col items-center justify-center w-full gap-10 py-[6.25rem] px-4"
       id="fonctionnality"
     >
-      <div className=" flex flex-col items-center justify-center  gap-6 text-center max-w-md">
+      <div className=" flex flex-col items-center justify-center  gap-6 text-center max-w-md pointer-events-none z-50">
         <h2 className=" text-5xl font-semibold titleStyle">Fonctionnalités</h2>
         <p className="text-lg text-torea-50">
           Tu craqueras peut-être devant le panel de fonctionnalités à
@@ -15,9 +54,9 @@ export default function FonctionnalitySection() {
         </p>
       </div>
 
-      <div className="max-w-6xl flex flex-col gap-5">
+      <div className="max-w-6xl flex flex-col gap-5 z-50">
         <div className="flex gap-6 flex-wrap">
-          <div className="flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
+          <div className="flex flex-col items-start justify-between flex-1 gap-8 border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF] shadow-xl shadow-[#6128DF]/50">
                 <LineChart />
@@ -35,7 +74,7 @@ export default function FonctionnalitySection() {
             </span>
           </div>
 
-          <div className=" flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
+          <div className=" flex flex-col items-start justify-between flex-1 gap-8 border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#9C32CC] shadow-xl shadow-[#9C32CC]/50">
                 <ListVideo />
@@ -53,7 +92,7 @@ export default function FonctionnalitySection() {
           </div>
         </div>
 
-        <div className=" flex items-center justify-between flex-wrap border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
+        <div className=" flex items-center justify-between flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
           <div className="flex flex-col items-start justify-between gap-8 lg:max-w-md">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#CB2CAE] shadow-xl shadow-[#CB2CAE]/50">
@@ -81,7 +120,32 @@ export default function FonctionnalitySection() {
             height={400}
           ></Image>
         </div>
+        <div>
+          <div className="relative flex flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLineaflex h-full w-full max-w-[32rem] items- cardLinear  overflow-hidden  bg-background  pb-20 pt-8 ">
+            <IconCloud iconSlugs={slugs} />
+            <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF] shadow-xl shadow-[#6128DF]/50">
+              <Code />
+            </div>
+            <div className="mt-5">
+              <h3 className="text-3xl font-medium">
+                Explore de nouvelles technologies
+              </h3>
+              <p className="mt-5">
+                Avec le formation Learn404, vous aurez l'occasion de découvrir
+                de nouvelles technologies et de les mettre en pratique dans des
+                projets concrets.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
+      <Particles
+        className="absolute inset-0"
+        quantity={20}
+        ease={20}
+        color={color}
+        refresh
+      />
     </div>
   );
 }
