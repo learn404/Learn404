@@ -24,7 +24,51 @@ Lorsque vous démarrez un nouveau projet, la commande `git init` est votre premi
 git init
 ```
 
-## 2. Gérer les branches avec Git
+## 2. Enregistrer les modifications avec Git Commit
+
+Les commits sont des instantanés de votre projet. Ils vous permettent d'enregistrer l'état actuel de votre travail.
+
+### Ajouter des modifications
+
+- **Ajouter des Modifications :** Utilisez `git add .` pour préparer toutes les modifications du répertoire de travail pour le commit.
+
+```bash
+git add .
+```
+
+### Créer un commit
+
+- **Créer un Commit :** Utilisez `git commit -m "Message de Commit"` pour enregistrer les modifications préparées avec un message descriptif.
+
+```bash
+git commit -m "Ajoute la fonctionnalité X"
+```
+
+### Annuler un commit
+
+- **Annuler un Commit :** Utilisez `git revert <commit_id>` pour annuler les effets d’un commit spécifique tout en conservant l’historique.
+
+```bash
+git revert abc1234
+```
+
+### État du répertoire de travail
+
+- **État du Répertoire de Travail :** Utilisez `git status` pour voir les fichiers modifiés, ajoutés ou non suivis.
+
+```bash
+git status
+```
+
+### Historique des commits
+
+- **Historique des Commits :** Utilisez `git log` pour voir l’historique des commits, incluant les messages, auteurs et dates.
+
+```bash
+git log
+```
+
+## 3. Gérer les branches avec Git
 
 Les branches dans Git permettent de travailler sur différentes versions de votre projet simultanément. Cela est particulièrement utile pour ajouter de nouvelles fonctionnalités ou corriger des bugs sans affecter la version principale de votre code.
 
@@ -88,50 +132,6 @@ git pull origin main
 git branch -d feature/ma-nouvelle-fonctionnalite
 ```
 
-## 3. Enregistrer les modifications avec Git Commit
-
-Les commits sont des instantanés de votre projet. Ils vous permettent d'enregistrer l'état actuel de votre travail.
-
-### Ajouter des modifications
-
-- **Ajouter des Modifications :** Utilisez `git add .` pour préparer toutes les modifications du répertoire de travail pour le commit.
-
-```bash
-git add .
-```
-
-### Créer un commit
-
-- **Créer un Commit :** Utilisez `git commit -m "Message de Commit"` pour enregistrer les modifications préparées avec un message descriptif.
-
-```bash
-git commit -m "Ajoute la fonctionnalité X"
-```
-
-### Annuler un commit
-
-- **Annuler un Commit :** Utilisez `git revert <commit_id>` pour annuler les effets d’un commit spécifique tout en conservant l’historique.
-
-```bash
-git revert abc1234
-```
-
-### État du répertoire de travail
-
-- **État du Répertoire de Travail :** Utilisez `git status` pour voir les fichiers modifiés, ajoutés ou non suivis.
-
-```bash
-git status
-```
-
-### Historique des commits
-
-- **Historique des Commits :** Utilisez `git log` pour voir l’historique des commits, incluant les messages, auteurs et dates.
-
-```bash
-git log
-```
-
 ## 4. Travailler en collaboration avec des branches
 
 Pour éviter des conflits dans le code, les branches permettent de travailler sur différentes fonctionnalités sans interférer avec le code principal.
@@ -171,7 +171,13 @@ Le fichier [README.md](http://readme.md/) est important pour présenter votre pr
 
 ### 6.3. Pull Request (Demande de fusion)
 
-Une Pull Request permet de soumettre vos modifications sur la branche principale de votre projet. Cela facilite l’examen du code avant la fusion et encourage la collaboration et les discussions sur le code proposé.
+Une Pull Request (**`git request-pull`**) permet de soumettre vos modifications sur la branche principale de votre projet. Cela facilite l’examen du code avant la fusion et encourage la collaboration et les discussions sur le code proposé.
+
+```bash
+git request-pull [-p] <start> <URL> [<end>]
+
+```
+
 
 ## 7. GitIgnore
 
