@@ -1,0 +1,131 @@
+---
+title : Les fonctions de rappel en JavaScript
+slug : les-fonctions-de-rappel-en-javascript
+---
+
+
+
+Une fonction de rappel (aussi appelée _callback_ en anglais) est une fonction passée dans une autre fonction en tant qu'argument, qui est ensuite invoquée à l'intérieur de la fonction externe pour accomplir une sorte de routine ou d'action.
+
+```javascript
+function salutation(name) {
+  alert("Bonjour " + name);
+}
+
+function processUserInput(callback) {
+  var name = prompt("Entrez votre nom.");
+  callback(name);
+}
+
+processUserInput(salutation);
+```
+
+
+
+---
+SUPPRESSION APRES TOURNAGE
+
+Si on analyse le code, on voit que la fonction `salutation` prend un argument `name` et affiche une boîte de dialogue avec le message "Bonjour" suivi du nom fourni en argument de la fonction.
+
+Ensuite, la fonction `processUserInput` prend un argument `callback`. À l'intérieur de cette fonction, nous utilisons `prompt` pour afficher une boîte de dialogue qui demande à l'utilisateur de saisir son nom. La valeur saisie par l'utilisateur est stockée dans la variable `name`. Après, nous appelons la fonction de rappel `callback` en lui passant la valeur `name`, ainsi la fonction de rappel sera exécutée avec le nom saisi par l'utilisateur comme argument.
+
+Ici, nous appelons la fonction `processUserInput` en lui passant la fonction `salutation` comme argument. Cela signifie que la fonction `salutation` sera utilisée comme fonction de rappel (callback) à l'intérieur de `processUserInput`.
+
+---
+
+Les concepts clés à retenir sont que la fonction de rappel est une fonction passée en argument à une autre fonction. Cela permet de créer des comportements flexibles et réutilisables.
+
+
+
+> 💡 **Note:** Les fonctions de rappel peuvent sembler un peu complexes au début, mais elles deviennent vite un outil très puissant une fois maîtrisées!
+
+### 1. Utilisation avec des Timers
+
+Les fonctions de rappel sont souvent utilisées avec des fonctions de temporisation comme `setTimeout` et `setInterval`.
+
+#### Exemple avec `setTimeout`
+
+```javascript
+function afficherMessage() {
+  console.log("Message affiché après 2 secondes");
+}
+
+setTimeout(afficherMessage, 2000); // Appelle afficherMessage après 2000 ms (2 secondes)
+```
+
+> ⏰ **Astuce:** Utilisez `setTimeout` pour différer l'exécution d'une fonction, comme afficher un message après un certain délai.
+
+#### Exemple avec `setInterval`
+
+```javascript
+function afficherHeure() {
+  console.log(new Date().toLocaleTimeString());
+}
+
+setInterval(afficherHeure, 1000); // Appelle afficherHeure toutes les secondes
+```
+
+> 🕰 **Note:** `setInterval` est parfait pour des actions répétitives, comme mettre à jour une horloge chaque seconde.
+
+### 2. Utilisation avec les Événements du DOM
+
+Les callbacks sont couramment utilisés pour gérer les événements du DOM, comme les clics de souris, les soumissions de formulaires, etc.
+
+#### Exemple avec un Événement de Clic
+
+```javascript
+document.getElementById("monBouton").addEventListener("click", function() {
+  alert("Bouton cliqué!");
+});
+```
+
+> 🖱 **Astuce:** Utilisez des callbacks pour rendre vos pages web interactives, comme réagir aux clics de boutons.
+
+### 3. Utilisation avec les Fonctions de Filtrage, de Mappage et de Réduction des Tableaux
+
+Les méthodes `filter`, `map` et `reduce` des tableaux acceptent des callbacks pour traiter chaque élément du tableau.
+
+#### Exemple avec `filter`
+
+```javascript
+let nombres = [1, 2, 3, 4, 5, 6];
+let nombresPairs = nombres.filter(function(nombre) {
+  return nombre % 2 === 0;
+});
+
+console.log(nombresPairs); // [2, 4, 6]
+```
+
+> 🔍 **Note:** `filter` vous permet de créer un nouveau tableau contenant uniquement les éléments qui passent un certain test.
+
+#### Exemple avec `map`
+
+```javascript
+let nombres = [1, 2, 3, 4, 5];
+let nombresMultipliés = nombres.map(function(nombre) {
+  return nombre * 2;
+});
+
+console.log(nombresMultipliés); // [2, 4, 6, 8, 10]
+```
+
+> 🔄 **Astuce:** Utilisez `map` pour transformer tous les éléments d'un tableau selon une fonction donnée.
+
+#### Exemple avec `reduce`
+
+```javascript
+let nombres = [1, 2, 3, 4, 5];
+let somme = nombres.reduce(function(accumulateur, nombre) {
+  return accumulateur + nombre;
+}, 0);
+
+console.log(somme); // 15
+```
+
+> ➕ **Note:** `reduce` est très puissant pour accumuler une valeur basée sur tous les éléments d'un tableau, comme calculer une somme.
+
+### Conclusion
+
+Les fonctions de rappel sont une composante essentielle de la programmation JavaScript, permettant de créer des interactions dynamiques et de gérer des opérations asynchrones de manière élégante. Leur utilisation est omniprésente, que ce soit pour des opérations de minutage, des interactions utilisateur ou des manipulations de données.
+
+> 👍 **Note Finale:** Une fois que vous aurez pris l'habitude d'utiliser des callbacks, vous découvrirez à quel point ils rendent votre code plus flexible et puissant! Ne vous découragez pas si cela semble difficile au début – la pratique vous rendra maître en la matière.

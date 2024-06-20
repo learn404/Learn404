@@ -7,9 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Learn404",
+  title: "Learn404 - Formation en Développement Web",
   description:
-    "Learn404 est une plateforme de cours en ligne sur le développement web.",
+    "Devenez expert en création et optimisation de sites web avec notre formation complète en Développement Web. Apprenez les bases du HTML, CSS, et JavaScript, maîtrisez des frameworks comme React, Angular et plus encore, et les outils de développement web comme Git,...",
 };
 
 export default function RootLayout({

@@ -5,11 +5,12 @@ import SecondaryButton from "../buttons/SecondaryButton";
 import AnimatedShinyText from "../magicui/animated-shiny-text";
 import SeparateAway from "../magicui/separate-away";
 import RetroGrid from "../magicui/retro-grid";
+import Image from "next/image";
 
 export default function HeroSection() {
   return (
     <div className="mx-auto pt-16 px-4 max-w-[60rem] flex items-center justify-center flex-col gap-20 text-center">
-      <div className="flex flex-col items-center justify-center gap-7">
+      <div className="flex flex-col items-center justify-center gap-7 mx-auto">
         <div className="z-10 flex relative items-center justify-center">
           <div
             className={cn(
@@ -22,11 +23,12 @@ export default function HeroSection() {
             </AnimatedShinyText>
           </div>
         </div>
+
         <RetroGrid />
         <div className="flex flex-col items-center justify-center gap-6">
           <SeparateAway
-            upper_text="La banque de ressources"
-            lower_text="qu'il te manque"
+            upper_text="Deviens"
+            lower_text="développeur"
             duration={1.5}
             hidden_opacity={0}
             visible_opacity={1}
@@ -50,7 +52,12 @@ export default function HeroSection() {
 
       <div>
         <div className="relative w-screen flex justify-center">
-          <img src="/img/Hero_img.jpg" alt="logo" />
+          <Image
+            src="/img/Hero_img.webp"
+            alt="logo"
+            height={1000}
+            width={1000}
+          />
           <div className="pointer-events-none absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#02030C] "></div>
         </div>
       </div>

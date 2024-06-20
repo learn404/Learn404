@@ -30,6 +30,19 @@ export default async function AddLessonForm({
   async function addLesson(formData: FormData) {
     "use server";
 
+    const last_sort_number = await prisma.lessons.findFirst({
+      select: {
+        sort_number: true,
+      },
+      orderBy: {
+        sort_number: "desc",
+      },
+    });
+
+    const sort_number = last_sort_number?.sort_number
+      ? last_sort_number?.sort_number + 1
+      : 1;
+
     const title = formData.get("title")?.toString();
     const slug_title = formData
       .get("slug_title")
@@ -92,6 +105,7 @@ export default async function AddLessonForm({
         repository_url: repository_url ?? "",
         draft: draft ?? false,
         newLesson: newLesson ?? false,
+        sort_number: sort_number,
       },
     });
 

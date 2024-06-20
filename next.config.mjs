@@ -1,3 +1,14 @@
+import nextMDX from "@next/mdx";
+import remarkGfm from "remark-gfm";
+import createMDX from "@next/mdx";
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [],
+  },
+});
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -14,4 +25,4 @@ const nextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);
