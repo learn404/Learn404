@@ -2,9 +2,11 @@
 import { CodeXml, LineChart, ListVideo, Code } from "lucide-react";
 import Image from "next/image";
 import IconCloud from "@/components/magicui/icon-cloud";
+
 import Particles from "@/components/magicui/particles";
 import { useTheme } from "next-themes";
 import { useState } from "react";
+
 const slugs = [
   "typescript",
   "javascript",
@@ -113,15 +115,15 @@ export default function FonctionnalitySection() {
             </span>
           </div>
           <Image
-            src="/img/Card_img.png"
+            src="/img/Card_img.webp"
             alt="code image"
             className="hidden lg:block"
             width={400}
             height={400}
           ></Image>
         </div>
-        <div>
-          <div className="relative flex flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLineaflex h-full w-full max-w-[32rem] items- cardLinear  overflow-hidden  bg-background  pb-20 pt-8 ">
+        <div className="flex gap-6 flex-wrap ">
+          <div className="relative flex-none flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear  h-full w-full max-w-[32rem] items- cardLinear  overflow-hidden  bg-background  pb-20 pt-8 ">
             <IconCloud iconSlugs={slugs} />
             <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF] shadow-xl shadow-[#6128DF]/50">
               <Code />
@@ -137,6 +139,7 @@ export default function FonctionnalitySection() {
               </p>
             </div>
           </div>
+          <div className="flex-1 flex items-center justify-between flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear h-full w-full"></div>
         </div>
       </div>
       <Particles
