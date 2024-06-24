@@ -1,11 +1,9 @@
-"use client";
-import { CodeXml, LineChart, ListVideo, Code } from "lucide-react";
+import { CodeXml, LineChart, ListVideo, Code, StickyNote } from "lucide-react";
 import Image from "next/image";
 import IconCloud from "@/components/magicui/icon-cloud";
-
 import Particles from "@/components/magicui/particles";
-import { useTheme } from "next-themes";
-import { useState } from "react";
+import { getLessonNumber, getLessonType } from "@/lib/utils";
+import NumberTicker from "../magicui/number-ticker";
 
 const slugs = [
   "typescript",
@@ -40,9 +38,10 @@ const slugs = [
   "figma",
 ];
 
-export default function FonctionnalitySection() {
-  const { theme } = useTheme();
-  const [color, setColor] = useState("#ffffff");
+export default async function FonctionnalitySection() {
+  const lessonNumber = await getLessonNumber();
+  const lessonType = await getLessonType();
+
   return (
     <div
       className="relative flex flex-col items-center justify-center w-full gap-10 py-[6.25rem] px-4"
@@ -71,7 +70,7 @@ export default function FonctionnalitySection() {
                 to gain valuable insights.
               </p>
             </div>
-            <span className="underline text-torea-200 cursor-pointer">
+            <span className="underline text-torea-200 cursor-pointer after:content-['_↗']">
               View dashboard
             </span>
           </div>
@@ -88,7 +87,7 @@ export default function FonctionnalitySection() {
                 information du cours grâce à leur partie écrite !
               </p>
             </div>
-            <span className=" underline text-torea-200 cursor-pointer">
+            <span className=" underline text-torea-200 cursor-pointer after:content-['_↗']">
               View tokens
             </span>
           </div>
@@ -110,7 +109,7 @@ export default function FonctionnalitySection() {
                 ensure that your data is consistent and reliable.
               </p>
             </div>
-            <span className=" underline text-torea-200 cursor-pointer">
+            <span className=" underline text-torea-200 cursor-pointer after:content-['_↗']">
               View code collaboration
             </span>
           </div>
@@ -139,14 +138,61 @@ export default function FonctionnalitySection() {
               </p>
             </div>
           </div>
-          <div className="flex-1 flex items-center justify-between flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear h-full w-full"></div>
+
+          <div className="flex-1 flex flex-col justify-between flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
+            <div className="flex flex-col gap-5 py-4">
+              <div className="flex items-center gap-5">
+                <NumberTicker value={lessonNumber} />
+                <div className="flex items-center text-2xl gap-2">
+                  <span className="font-medium">Leçons</span>
+                  <StickyNote />
+                </div>
+              </div>
+              <div className="text-lg">
+                Il y a {lessonNumber} leçons dans la formation qui traitent de
+                différents sujets pour vous aider à devenir un meilleur
+                développeur. Chaque leçon est soigneusement conçue pour
+                maximiser votre apprentissage avec des exemples pratiques, des
+                exercices interactifs.
+              </div>
+            </div>
+            <div className="flex flex-col gap-5 py-4">
+              <div className="flex items-center gap-5">
+                <NumberTicker value={lessonType} />
+                <div className="flex items-center text-2xl gap-2">
+                  <span className="font-medium">Catégories</span>
+                  <StickyNote />
+                </div>
+              </div>
+              <div className="text-lg">
+                Les leçons sont réparties en {lessonType} catégories pour vous
+                aider à trouver rapidement ce que vous cherchez. Chaque
+                catégorie est conçue pour vous aider à apprendre un sujet
+                spécifique.
+              </div>
+            </div>
+            <div className="flex flex-col gap-5 py-4">
+              <div className="flex items-center gap-5">
+                <NumberTicker value={99} />
+                <div className="flex items-center text-2xl gap-2">
+                  <span className="font-medium">Heures de cours</span>
+                  <StickyNote />
+                </div>
+              </div>
+              <div className="text-lg">
+                Il y a un total de 99 heures de cours disponibles, vous offrant
+                une expérience d'apprentissage complète et approfondie. Ces
+                heures de cours sont conçues pour vous progresser rapidement.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <Particles
         className="absolute inset-0"
         quantity={20}
         ease={20}
-        color={color}
+        color="#ffffff"
         refresh
       />
     </div>

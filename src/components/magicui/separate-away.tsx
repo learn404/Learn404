@@ -15,7 +15,7 @@ interface SeparateAwayProps {
 export default function SeparateAway({
   upper_text,
   lower_text,
-  duration = 1.5,
+  duration = 0.5,
   hidden_opacity = 0,
   visible_opacity = 1,
   className,

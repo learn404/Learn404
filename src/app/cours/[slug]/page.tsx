@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import MuxPlayer from "@mux/mux-player-react";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
+import FinishLesson from "@/components/buttons/FinishLessonButton";
 
 const getPageContent = async (slug: string) => {
   const { meta, content } = await getPostBySlug(slug);
@@ -54,6 +55,7 @@ export default async function LessonPage({
       email: session?.user?.email as string,
     },
     select: {
+      id: true,
       name: true,
       email: true,
       isMember: true,
@@ -86,6 +88,19 @@ export default async function LessonPage({
       sort_number: true,
     },
   });
+  const statusLesson = await prisma.lessonProgress.findFirst({
+    where: {
+      userId: user.id,
+      lessonId: lessons?.id,
+    },
+    select: {
+      completed: true,
+    },
+  });
+
+  const isCompleted = statusLesson?.completed ?? false;
+
+  console.log(isCompleted, "isCompleted");
 
   let nextLesson = await prisma.lessons.findFirst({
     where: {
@@ -146,7 +161,7 @@ export default async function LessonPage({
         ) : (
           <p className="m-auto">Vidéo pas disponible</p>
         )}
-        <div className="bg-indigo-800 max-w-sm lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
+        <div className="bg-indigo-800 max-w-md lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
           <h1 className="text-lg lg:text-4xl text-center font-bold">
             {lessons.title}
           </h1>
@@ -154,18 +169,19 @@ export default async function LessonPage({
             <SecondaryButton type="button" redirectTo="/dashboard">
               Dashboard
             </SecondaryButton>
+
             {!nextLesson?.slug ? (
               <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
-                Previous lesson
+                Cours précédent
               </SecondaryButton>
             ) : (
               <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
-                Next lesson
+                Prochain cours
               </SecondaryButton>
             )}
             {user.admin ? (
               <SecondaryButton redirectTo={`/admin/edit-lesson/${params.slug}`}>
-                Edit
+                Modifier le cours
               </SecondaryButton>
             ) : (
               ""
@@ -180,26 +196,32 @@ export default async function LessonPage({
             <SecondaryButton type="button" redirectTo="/dashboard">
               Dashboard
             </SecondaryButton>
+            <FinishLesson
+              userId={user.id}
+              lessonId={lessons.id}
+              completed={isCompleted}
+              slug={params.slug}
+            />
             {!nextLesson?.slug ? (
               <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
-                Previous lesson
+                Cours précédent
               </SecondaryButton>
             ) : (
               <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
-                Next lesson
+                Prochain cours
               </SecondaryButton>
             )}
           </div>
           {nextLesson ? (
             <div className="flex items mt-5">
-              <p className="text-neutral-500">Next lesson</p>
+              <p className="text-neutral-500">Prochain cours</p>
               <p className="text-lg lg:text-2xl text-center font-bold mt-5">
                 {nextLesson?.title}
               </p>
             </div>
           ) : (
             <div className="flex items mt-5">
-              <p className="text-white/40">Previous lesson:</p>
+              <p className="text-white/40">Précédent cours:</p>
               <p className="text-sm  text-center font-bold ">
                 {previousLesson?.title}
               </p>

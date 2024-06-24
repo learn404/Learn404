@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import Mux from "@mux/mux-node";
+import { adminCheckAre } from "@/lib/utils";
 
 async function getServerSideProps() {
   const res = await prisma.categories.findMany();
@@ -38,14 +39,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return redirect("/");
   }
 
-  const adminCheck = await prisma.user.findFirst({
-    where: {
-      email: session?.user?.email,
-    },
-    select: {
-      admin: true,
-    },
-  });
+  const adminCheck = await adminCheckAre(session?.user?.email as string);
 
   if (!adminCheck?.admin || !session || !adminCheck) {
     return redirect("/");

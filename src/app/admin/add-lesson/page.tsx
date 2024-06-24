@@ -1,8 +1,8 @@
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import AddLessonForm from "./Form";
+import { adminCheckAre } from "@/lib/utils";
 
 export default async function AddLesson() {
   const session = await auth();
@@ -16,14 +16,7 @@ export default async function AddLesson() {
 
   if (session) {
     isAvatar = session?.user?.image ? true : false;
-    const adminCheck = await prisma.user.findFirst({
-      where: {
-        email: session?.user?.email,
-      },
-      select: {
-        admin: true,
-      },
-    });
+    const adminCheck = await adminCheckAre(session?.user?.email as string);
 
     if (adminCheck?.admin) {
       isAdmin = true;
