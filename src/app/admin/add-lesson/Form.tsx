@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import Mux from "@mux/mux-node";
+import { getLastSortNumber, lessonCheckExist } from "@/lib/utils";
 
 interface AddLessonFormProps {
   isAdmin: boolean;
@@ -11,7 +12,6 @@ interface AddLessonFormProps {
   session: any;
 }
 
-// Fetch categories from the database
 async function getServerSideProps() {
   const res = await prisma.categories.findMany();
   const categories = res.map((category) => ({
@@ -30,14 +30,7 @@ export default async function AddLessonForm({
   async function addLesson(formData: FormData) {
     "use server";
 
-    const last_sort_number = await prisma.lessons.findFirst({
-      select: {
-        sort_number: true,
-      },
-      orderBy: {
-        sort_number: "desc",
-      },
-    });
+    const last_sort_number = await getLastSortNumber();
 
     const sort_number = last_sort_number?.sort_number
       ? last_sort_number?.sort_number + 1
@@ -85,17 +78,13 @@ export default async function AddLessonForm({
       console.log(asset);
     }
 
-    const checkLessonExist = await prisma.lessons.findFirst({
-      where: {
-        slug: slug_title,
-      },
-    });
+    const checkLessonExist = await lessonCheckExist(slug_title as string);
 
     if (checkLessonExist) {
       throw new Error("Lesson already exists");
     }
 
-    const addLesson = await prisma.lessons.create({
+    await prisma.lessons.create({
       data: {
         title: title ?? "",
         slug: slug_title ?? "",

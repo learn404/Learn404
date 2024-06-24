@@ -30,6 +30,14 @@ const person2 = new Person("Bob", 25);
 person1.greet(); // Bonjour, je suis Alice et j'ai 30 ans.
 person2.greet(); // Bonjour, je suis Bob et j'ai 25 ans.
 ```
+> 🧑‍💻 **Analyse du code :**
+> 1. Nous définissons une classe `Person` avec un constructeur qui prend deux paramètres : `name` et `age`.
+> 2. Dans le constructeur, nous initialisons les propriétés `name` et `age` de l'objet à l'aide du mot-clé `this`.
+> 3. Nous définissons une méthode `greet` qui affiche un message de salutation avec le nom et l'âge de la personne.
+> 4. Nous créons deux instances de la classe `Person` : `person1` et `person2`, avec des valeurs différentes pour `name` et `age`.
+> 5. Nous appelons la méthode `greet` sur chaque instance pour afficher le message de salutation personnalisé.
+
+
 
 ## Le Concept d'Instance d'Objet
 
@@ -91,6 +99,16 @@ console.log(person.getName()); // Jane
 console.log(person.getAge()); // 25
 ```
 
+> 🧑‍💻 **Analyse du code :**
+> 1. Nous définissons une classe `Person` avec un constructeur qui initialise les propriétés `name` et `age`.
+> 2. Nous définissons des méthodes `getName` et `getAge` pour obtenir les valeurs des propriétés `name` et `age`.
+> 3. Nous définissons des méthodes `setName` et `setAge` pour modifier les valeurs des propriétés `name` et `age`.
+> 4. Nous créons une instance de la classe `Person` avec le nom `John` et l'âge `30`.
+> 5. Nous utilisons les méthodes `getName` et `getAge` pour obtenir les valeurs des propriétés `name` et `age`.
+> 6. Nous utilisons les méthodes `setName` et `setAge` pour modifier les valeurs des propriétés `name` et `age`.
+> 7. Nous utilisons à nouveau les méthodes `getName` et `getAge` pour vérifier que les valeurs ont été modifiées.
+
+
 ## La Notion de Polymorphisme
 
 Le polymorphisme fait référence à la capacité d’un objet à prendre différentes formes ou à se comporter différemment en fonction du contexte. Cela signifie qu’un même nom ou une même méthode peut être utilisé pour effectuer des actions différentes en fonction des objets auxquels il s’applique.
@@ -136,6 +154,12 @@ person1.introduce(); // Bonjour, je m'appelle John.
 person2.introduce(); // Bonjour, je suis Alice et je suis en 9.
 person3.introduce(); // Bonjour, je suis Mr. Smith et j'enseigne les Mathematics.
 ```
+> 🧑‍💻 **Analyse du code :**
+> 1. Nous définissons une classe `Person` avec une méthode `introduce` qui affiche un message de présentation.
+> 2. Nous définissons deux classes `Student` et `Teacher` qui héritent de la classe `Person` et redéfinissent la méthode `introduce` pour afficher des messages spécifiques.
+> 3. Nous créons trois instances de ces classes : `person1`, `person2` et `person3`.
+> 4. Nous appelons la méthode `introduce` sur chaque instance pour afficher le message de présentation personnalisé.
+> 5. Chaque instance utilise la méthode `introduce` de sa propre classe pour afficher un message différent.
 
 Le polymorphisme permet de traiter des objets de différentes classes héritant d’une classe de base de manière uniforme en utilisant une interface commune. Cela simplifie le code, favorise la réutilisabilité et permet une gestion plus générique des objets dans une hiérarchie de classes.
 
