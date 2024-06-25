@@ -90,7 +90,14 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
   }
 
   // This function is called when the user clicks on the "Next" button
-  const handleNextStep = async () => {
+  const handleStep = async (direction: "back" | "next") => {
+
+    if (direction === "back") {
+      setPaymentStep(false);
+      // setCodePromo({ code: "", value: 0 });
+      setPaymentInformations(null);
+      return;
+    }
 
     // If the user has entered a promo code, we check if it is valid
     if (codePromo && codePromo.code !== "") {
@@ -151,9 +158,9 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
           <div className="text-center">
             <span className="text-lg text-gray-400">Loading</span>
             <div className="flex items-center justify-center gap-2 mt-2">
-              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fast"></div>
-              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fast loading2"></div>
-              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fast loading3"></div>
+              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fab"></div>
+              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fab loading2"></div>
+              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fab loading3"></div>
             </div>
           </div> 
         )}
@@ -169,6 +176,8 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
                 }
                 placeholder="Code promo"
                 onChange={handleCodePromo}
+                autoComplete="off"
+                defaultValue={codePromo.code}
               />
               { (codePromo.value > 0) ? (
                 <span className="text-green-500 mt-1 text-right">Valide</span>
@@ -180,7 +189,7 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
               <button 
                 className="bg-torea-800 border-2 border-torea-800 px-8 py-2.5 rounded-full
                 font-semibold text-torea-50 enabled:hover:bg-indigo-900 "
-                onClick={handleNextStep} >
+                onClick={() => handleStep("next")} >
                   Next
                 </button>
             </div>
@@ -188,11 +197,18 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
 
         )}
         { stripePromise && clientSecret && paymentStep && paymentInformations && (
-          <EmailContext.Provider value={userEmail}>
-            <Elements stripe={stripePromise} options={options}>
-              <CheckoutForm {...paymentInformations}/>
-            </Elements>
-          </EmailContext.Provider>
+          <>
+            <div className="flex items-center justify-end mb-2">
+              <button className="underline text-gray-400" onClick={() => handleStep("back")}>
+                code promo
+              </button>
+            </div>
+            <EmailContext.Provider value={userEmail}>
+              <Elements stripe={stripePromise} options={options}>
+                <CheckoutForm {...paymentInformations}/>
+              </Elements>
+            </EmailContext.Provider>
+          </>
         )}
       </div>
   );
