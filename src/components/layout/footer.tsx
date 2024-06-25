@@ -1,94 +1,92 @@
-import PrimaryButton from "@/components/buttons/PrimaryButton";
-import { Camera, SquareUser } from "lucide-react";
+import { ChevronRightIcon } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 
+type FooterLink = { id: number; title: string; url: string };
+
+const footerLinks: FooterLink[][] = [
+  [
+    { id: 1, title: "About", url: "#" },
+    { id: 2, title: "Contact", url: "#" },
+    { id: 3, title: "Blog", url: "#" },
+    { id: 4, title: "Story", url: "#" },
+  ],
+  [
+    {
+      id: 5,
+      title: "Condition d'utilisation",
+      url: "/legal/condition-general-utilisation",
+    },
+    { id: 6, title: "Product", url: "#" },
+    { id: 7, title: "Press", url: "#" },
+    { id: 8, title: "More", url: "#" },
+  ],
+  [
+    { id: 9, title: "Press", url: "#" },
+    { id: 10, title: "Careers", url: "#" },
+    { id: 11, title: "Newsletters", url: "#" },
+    { id: 12, title: "More", url: "#" },
+  ],
+];
 export default function Footer() {
-  const date = new Date();
-  const year = date.getFullYear();
-
   return (
-    <div className="relative overflow-hidden pt-16 md:pt-24 lg:pt-32 pb-12 md:pb-20 lg:pb-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
-          <div className="max-w-xl lg:max-w-lg">
-            <div className="flex items-center gap-5">
-              <Image
-                src="/img/logo.png"
-                alt="Learn 404"
-                width={50}
-                height={50}
-              />
-              <h2 className="md:text-3xl font-bold tracking-tight text-white text-4xl">
-                Learn 404
-              </h2>
-            </div>
-            <p className="mt-4 text-lg leading-8 text-gray-300">
-              Inscris-toi à notre newsletter pour recevoir des outils et des
-              astuces pour devenir un meilleur développeur.
-            </p>
-            <div className="mt-6 flex max-w-md gap-x-4">
-              <label htmlFor="email-address" className="sr-only">
-                Adresse email
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-
-                placeholder="Entre ton adresse email"
-              />
-
-              <PrimaryButton>Je m'inscris</PrimaryButton>
-            </div>
-            <p className="text-gray-400 text-sm mt-5">
-              © {year} Learn404. Tous droits réservés.
-            </p>
-          </div>
-          <dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
-            <div className="flex flex-col items-start">
-              <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
-
-                <Camera className="h-6 w-6 text-white" aria-hidden="true" />
-              </div>
-              <dt className="mt-4 font-semibold text-white">Réseaux Sociaux</dt>
-              <dd className="mt-2 leading-7 text-gray-400">
-                Retrouve-nous sur les réseaux sociaux pour suivre nos dernières
-                actualités et nos derniers articles.
-              </dd>
-              <ul>
-                <li className="mt-2 leading-7 text-gray-400">
-                  <a
-                    href="#"
-                    className="hover:text-white/80 transition-colors duration-200"
+    <div className="px-7 md:px-10">
+      <div className="flex flex-col items-center justify-center gap-y-3 border-b border-dashed border-slate-400/20 py-10 lg:flex-row lg:items-center lg:justify-between">
+        <h3 className="max-w-sm text-balance text-center text-2xl font-bold text-white md:text-start md:text-4xl">
+          Tu as encore des questions ?
+        </h3>
+        <div className="flex flex-col items-center justify-center gap-x-5 gap-y-2 py-4 sm:flex-row">
+          <Link
+            href="#"
+            className="flex h-10 w-56 items-center justify-center rounded-full text-base font-semibold transition ease-out hover:ring-2  hover:ring-offset-2 bg-indigo-800 text-white hover:ring-indigo-900 hover:ring-offset-black lg:h-12 lg:text-base"
+          >
+            <span className="tracking-tight">Parlons ensemble</span>
+            <ChevronRightIcon className="ml-2" />
+          </Link>
+          <Link
+            href="#"
+            className="flex h-10 w-56 items-center justify-center rounded-full border text-sm font-semibold  transition ease-out text-white hover:bg-neutral-700/30 lg:h-12 lg:text-base"
+          >
+            <span className="tracking-tight">Tu veux un avant goût ?</span>
+          </Link>
+        </div>
+      </div>
+      <div className="flex flex-col py-10 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col items-start justify-start gap-y-5">
+          <Link href="#" className="flex items-center gap-x-2.5">
+            <Image
+              className="h-8 w-8 rounded-md"
+              src="/img/logo.png"
+              alt=""
+              width={250}
+              height={250}
+            />
+            <h1 className="text-xl font-bold text-white">Learn404</h1>
+          </Link>
+          <p className="tracking-tight text-white">
+            La plateforme des développeurs pour apprendre et partager leurs
+            connaissances.
+          </p>
+          <p className="text-sm tracking-tight text-white/50 sm:text-center">
+            Tous droits réservés © {new Date().getFullYear()} Learn404{" "}
+          </p>
+        </div>
+        <div className="pt-5 md:w-1/2">
+          <div className="flex items-center justify-between gap-x-3 px-0 lg:px-10">
+            {footerLinks.map((column, columnIndex) => (
+              <ul key={columnIndex} className="flex flex-col gap-y-2">
+                {column.map((link) => (
+                  <li
+                    key={link.id}
+                    className="group inline-flex cursor-pointer items-center justify-start gap-1 text-[15px]/snug font-medium  duration-200 text-white/50 hover:text-white/30"
                   >
-                    Twitter
-                  </a>
-                </li>
-                <li className="mt-2 leading-7 text-gray-400">
-                  <a
-                    href="#"
-                    className="hover:text-white/80 transition-colors duration-200"
-                  >
-                    Github
-                  </a>
-                </li>
+                    <Link href={link.url}>{link.title}</Link>
+                    <ChevronRightIcon className="h-4 w-4 translate-x-0 transform opacity-0 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-100" />
+                  </li>
+                ))}
               </ul>
-            </div>
-            <div className="flex flex-col items-start">
-              <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
-                <SquareUser className="h-6 w-6 text-white" aria-hidden="true" />
-              </div>
-              <dt className="mt-4 font-semibold text-white">Contact</dt>
-              <dd className="mt-2 leading-7 text-gray-400">
-                Tu peux nous contacter en cas de problème ou pour toute autre
-                question à l'adresse suivante : <br />
-                <span className="italic underline">learn404.dev@gmail.com</span>
-              </dd>
-            </div>
-          </dl>
+            ))}
+          </div>
         </div>
       </div>
     </div>

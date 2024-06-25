@@ -1,13 +1,53 @@
-import { CodeXml, LineChart, ListVideo } from "lucide-react";
+import { CodeXml, LineChart, ListVideo, Code, StickyNote } from "lucide-react";
 import Image from "next/image";
+import IconCloud from "@/components/magicui/icon-cloud";
+import Particles from "@/components/magicui/particles";
+import { getLessonNumber, getLessonType } from "@/lib/utils";
+import NumberTicker from "../magicui/number-ticker";
 
-export default function FonctionnalitySection() {
+const slugs = [
+  "typescript",
+  "javascript",
+  "dart",
+  "java",
+  "react",
+  "flutter",
+  "android",
+  "html5",
+  "css3",
+  "nodedotjs",
+  "express",
+  "nextdotjs",
+  "prisma",
+  "amazonaws",
+  "postgresql",
+  "firebase",
+  "nginx",
+  "vercel",
+  "testinglibrary",
+  "jest",
+  "cypress",
+  "docker",
+  "git",
+  "jira",
+  "github",
+  "gitlab",
+  "visualstudiocode",
+  "androidstudio",
+  "sonarqube",
+  "figma",
+];
+
+export default async function FonctionnalitySection() {
+  const lessonNumber = await getLessonNumber();
+  const lessonType = await getLessonType();
+
   return (
     <div
-      className="flex flex-col items-center justify-center w-full gap-10 py-[6.25rem] px-4"
+      className="relative flex flex-col items-center justify-center w-full gap-10 py-[6.25rem] px-4"
       id="fonctionnality"
     >
-      <div className=" flex flex-col items-center justify-center  gap-6 text-center max-w-md">
+      <div className=" flex flex-col items-center justify-center  gap-6 text-center max-w-md pointer-events-none z-50">
         <h2 className=" text-5xl font-semibold titleStyle">Fonctionnalités</h2>
         <p className="text-lg text-torea-50">
           Tu craqueras peut-être devant le panel de fonctionnalités à
@@ -15,9 +55,9 @@ export default function FonctionnalitySection() {
         </p>
       </div>
 
-      <div className="max-w-6xl flex flex-col gap-5">
+      <div className="max-w-6xl flex flex-col gap-5 z-50">
         <div className="flex gap-6 flex-wrap">
-          <div className="flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
+          <div className="flex flex-col items-start justify-between flex-1 gap-8 border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF] shadow-xl shadow-[#6128DF]/50">
                 <LineChart />
@@ -30,12 +70,12 @@ export default function FonctionnalitySection() {
                 to gain valuable insights.
               </p>
             </div>
-            <span className="underline text-torea-200 cursor-pointer">
+            <span className="underline text-torea-200 cursor-pointer after:content-['_↗']">
               View dashboard
             </span>
           </div>
 
-          <div className=" flex flex-col items-start justify-between flex-1 gap-8 border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
+          <div className=" flex flex-col items-start justify-between flex-1 gap-8 border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#9C32CC] shadow-xl shadow-[#9C32CC]/50">
                 <ListVideo />
@@ -47,13 +87,13 @@ export default function FonctionnalitySection() {
                 information du cours grâce à leur partie écrite !
               </p>
             </div>
-            <span className=" underline text-torea-200 cursor-pointer">
+            <span className=" underline text-torea-200 cursor-pointer after:content-['_↗']">
               View tokens
             </span>
           </div>
         </div>
 
-        <div className=" flex items-center justify-between flex-wrap border-[1px] rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
+        <div className=" flex items-center justify-between flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
           <div className="flex flex-col items-start justify-between gap-8 lg:max-w-md">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#CB2CAE] shadow-xl shadow-[#CB2CAE]/50">
@@ -69,19 +109,92 @@ export default function FonctionnalitySection() {
                 ensure that your data is consistent and reliable.
               </p>
             </div>
-            <span className=" underline text-torea-200 cursor-pointer">
+            <span className=" underline text-torea-200 cursor-pointer after:content-['_↗']">
               View code collaboration
             </span>
           </div>
           <Image
-            src="/img/Card_img.png"
+            src="/img/Card_img.webp"
             alt="code image"
             className="hidden lg:block"
             width={400}
             height={400}
           ></Image>
         </div>
+        <div className="flex gap-6 flex-wrap ">
+          <div className="relative flex-none flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear  h-full w-full max-w-[32rem] items- cardLinear  overflow-hidden  bg-background  pb-20 pt-8 ">
+            <IconCloud iconSlugs={slugs} />
+            <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF] shadow-xl shadow-[#6128DF]/50">
+              <Code />
+            </div>
+            <div className="mt-5">
+              <h3 className="text-3xl font-medium">
+                Explore de nouvelles technologies
+              </h3>
+              <p className="mt-5">
+                Avec le formation Learn404, vous aurez l'occasion de découvrir
+                de nouvelles technologies et de les mettre en pratique dans des
+                projets concrets.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex-1 flex flex-col justify-between flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
+            <div className="flex flex-col gap-5 py-4">
+              <div className="flex items-center gap-5">
+                <NumberTicker value={lessonNumber} />
+                <div className="flex items-center text-2xl gap-2">
+                  <span className="font-medium">Leçons</span>
+                  <StickyNote />
+                </div>
+              </div>
+              <div className="text-lg">
+                Il y a {lessonNumber} leçons dans la formation qui traitent de
+                différents sujets pour vous aider à devenir un meilleur
+                développeur. Chaque leçon est soigneusement conçue pour
+                maximiser votre apprentissage avec des exemples pratiques, des
+                exercices interactifs.
+              </div>
+            </div>
+            <div className="flex flex-col gap-5 py-4">
+              <div className="flex items-center gap-5">
+                <NumberTicker value={lessonType} />
+                <div className="flex items-center text-2xl gap-2">
+                  <span className="font-medium">Catégories</span>
+                  <StickyNote />
+                </div>
+              </div>
+              <div className="text-lg">
+                Les leçons sont réparties en {lessonType} catégories pour vous
+                aider à trouver rapidement ce que vous cherchez. Chaque
+                catégorie est conçue pour vous aider à apprendre un sujet
+                spécifique.
+              </div>
+            </div>
+            <div className="flex flex-col gap-5 py-4">
+              <div className="flex items-center gap-5">
+                <NumberTicker value={99} />
+                <div className="flex items-center text-2xl gap-2">
+                  <span className="font-medium">Heures de cours</span>
+                  <StickyNote />
+                </div>
+              </div>
+              <div className="text-lg">
+                Il y a un total de 99 heures de cours disponibles, vous offrant
+                une expérience d'apprentissage complète et approfondie. Ces
+                heures de cours sont conçues pour vous progresser rapidement.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <Particles
+        className="absolute inset-0"
+        quantity={20}
+        ease={20}
+        color="#ffffff"
+        refresh
+      />
     </div>
   );
 }

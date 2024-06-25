@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import MuxPlayer from "@mux/mux-player-react";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
+import FinishLesson from "@/components/buttons/FinishLessonButton";
 
 const getPageContent = async (slug: string) => {
   const { meta, content } = await getPostBySlug(slug);
@@ -54,6 +55,7 @@ export default async function LessonPage({
       email: session?.user?.email as string,
     },
     select: {
+      id: true,
       name: true,
       email: true,
       isMember: true,
@@ -86,6 +88,19 @@ export default async function LessonPage({
       sort_number: true,
     },
   });
+  const statusLesson = await prisma.lessonProgress.findFirst({
+    where: {
+      userId: user.id,
+      lessonId: lessons?.id,
+    },
+    select: {
+      completed: true,
+    },
+  });
+
+  const isCompleted = statusLesson?.completed ?? false;
+
+  console.log(isCompleted, "isCompleted");
 
   let nextLesson = await prisma.lessons.findFirst({
     where: {
@@ -93,8 +108,22 @@ export default async function LessonPage({
     },
     select: {
       slug: true,
+      title: true,
     },
   });
+
+  let previousLesson;
+  if (!nextLesson) {
+    previousLesson = await prisma.lessons.findFirst({
+      where: {
+        sort_number: (lessons?.sort_number as number) - 1,
+      },
+      select: {
+        slug: true,
+        title: true,
+      },
+    });
+  }
 
   if (lessons?.draft && user?.admin === false) {
     redirect("/dashboard");
@@ -130,39 +159,74 @@ export default async function LessonPage({
             />
           </div>
         ) : (
-          <p className="m-auto">Video not available</p>
+          <p className="m-auto">Vidéo pas disponible</p>
         )}
-        <div className=" bg-indigo-800  max-w-xl px-24 py-12 gap-10 rounded-md mx-auto mb-10 border  border-white/10">
-          <h1 className="text-4xl text-center font-bold">{lessons.title}</h1>
-          <div className="flex justify-center items-center mt-10 gap-10">
+        <div className="bg-indigo-800 max-w-md lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
+          <h1 className="text-lg lg:text-4xl text-center font-bold">
+            {lessons.title}
+          </h1>
+          <div className="flex justify-center items-center mt-3 lg:mt-10 gap-10">
             <SecondaryButton type="button" redirectTo="/dashboard">
               Dashboard
             </SecondaryButton>
+
             {!nextLesson?.slug ? (
-              ""
+              <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
+                Cours précédent
+              </SecondaryButton>
             ) : (
               <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
-                Next lesson
+                Prochain cours
               </SecondaryButton>
+            )}
+            {user.admin ? (
+              <SecondaryButton redirectTo={`/admin/edit-lesson/${params.slug}`}>
+                Modifier le cours
+              </SecondaryButton>
+            ) : (
+              ""
             )}
           </div>
         </div>
-        <div className="py-4 prose lg:prose-xl prose-invert m-auto  prose-pre:border prose-pre:bg-white/10">
+        <div className="py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10">
           {content}
         </div>
-        <div className=" bg-indigo-800 max-w-6xl px-24 py-12 gap-10 rounded-md mx-auto mb-10 border  border-white/10">
-          <div className="flex justify-center items-center mt-10 gap-10">
+        <div className="bg-indigo-800 max-w-sm lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
+          <div className="flex justify-center items-center gap-10">
             <SecondaryButton type="button" redirectTo="/dashboard">
               Dashboard
             </SecondaryButton>
+            <FinishLesson
+              userId={user.id}
+              lessonId={lessons.id}
+              completed={isCompleted}
+              slug={params.slug}
+            />
             {!nextLesson?.slug ? (
-              ""
+              <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
+                Cours précédent
+              </SecondaryButton>
             ) : (
               <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
-                Next lesson
+                Prochain cours
               </SecondaryButton>
             )}
           </div>
+          {nextLesson ? (
+            <div className="flex items mt-5">
+              <p className="text-neutral-500">Prochain cours</p>
+              <p className="text-lg lg:text-2xl text-center font-bold mt-5">
+                {nextLesson?.title}
+              </p>
+            </div>
+          ) : (
+            <div className="flex items mt-5">
+              <p className="text-white/40">Précédent cours:</p>
+              <p className="text-sm  text-center font-bold ">
+                {previousLesson?.title}
+              </p>
+            </div>
+          )}
         </div>
       </main>
     </>

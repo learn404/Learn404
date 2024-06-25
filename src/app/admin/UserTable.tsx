@@ -26,9 +26,6 @@ export default async function UserTable() {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="hidden px-2 md:block md:px-6 py-3">
-              ID
-            </th>
             <th scope="col" className="px-2 md:px-6 py-3">
               NOM
             </th>
@@ -60,12 +57,6 @@ export default async function UserTable() {
 function TableRow({ user }: { user: User }) {
   return (
     <tr className="hover:bg-white/5">
-      <th
-        scope="row"
-        className="hidden md:block px-2 md:px-6 py-3 font-medium text-gray-100 whitespace-nowrap"
-      >
-        {user.id}
-      </th>
       <td className="px-2 md:px-6 py-3">{user.name}</td>
       <td className="px-2 md:px-6 py-3">{user.email}</td>
       <td className="px-2 md:px-6 py-3">{user.admin ? "Admin" : "User"}</td>

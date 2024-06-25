@@ -1,30 +1,46 @@
-import { Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import PrimaryButton from "../buttons/PrimaryButton";
 import SecondaryButton from "../buttons/SecondaryButton";
+import AnimatedShinyText from "../magicui/animated-shiny-text";
+import SeparateAway from "../magicui/separate-away";
+import RetroGrid from "../magicui/retro-grid";
+import Image from "next/image";
 
 export default function HeroSection() {
   return (
     <div className="mx-auto pt-16 px-4 max-w-[60rem] flex items-center justify-center flex-col gap-20 text-center">
-      <div className="flex flex-col items-center justify-center gap-7">
-        <div className="flex items-center gap-3 py-1 px-4 border-2 border-torea-800 bg-torea-950 rounded-full">
-          <span className="text-xs text-torea-100">
-            Une bibliothèque grandissante !
-          </span>
-          <Sparkles width={14} color="#e6db5b" />
+      <div className="flex flex-col items-center justify-center gap-7 mx-auto">
+        <div className="z-10 flex relative items-center justify-center">
+          <div
+            className={cn(
+              "group rounded-full border text-base text-white bg-indigo-800 transition-all ease-in hover:cursor-pointer border-white/5 hover:bg-indigo-900 ",
+            )}
+          >
+            <AnimatedShinyText className="inline-flex items-center text-white/70 justify-center px-4 py-1 transition ease-out hover:duration-300 hover:text-white">
+              <span>✨ La bibliothèque du développeur</span>
+              <ArrowRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+            </AnimatedShinyText>
+          </div>
         </div>
+
+        <RetroGrid />
         <div className="flex flex-col items-center justify-center gap-6">
-          <h1 className="inline-block font-semibold text-4xl md:text-6xl lg:text-7xl font- text-center titleStyle">
-            La banque de ressources qu'il te manque
-          </h1>
+          <SeparateAway
+            upper_text="Deviens"
+            lower_text="développeur"
+            duration={1.5}
+            hidden_opacity={0}
+            visible_opacity={1}
+            className="font-display text-center text-4xl font-bold tracking-[-0.02em] text-white md:text-7xl md:leading-[5rem] titleStyle "
+          />
           <span className="text-torea-50">
             Améliore tes compétences en pratiquant !
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
           <PrimaryButton redirectTo="/join" type="button">
-            <span className="md:block font-medium">
-              Rejoindre l'aventure
-            </span>
+            <span className="md:block font-medium">Rejoindre l'aventure</span>
           </PrimaryButton>
           <SecondaryButton redirectTo="/" type="button">
             <span className="md:block font-medium">
@@ -35,7 +51,15 @@ export default function HeroSection() {
       </div>
 
       <div>
-        <img src="/img/Hero_img.jpg" alt="logo" />
+        <div className="relative w-screen flex justify-center">
+          <Image
+            src="/img/Hero_img.webp"
+            alt="logo"
+            height={1000}
+            width={1000}
+          />
+          <div className="pointer-events-none absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#02030C] "></div>
+        </div>
       </div>
     </div>
   );

@@ -105,7 +105,7 @@ export default async function Dashboard() {
               {lessons
                 .filter((lesson) => !lesson.draft)
                 .map((lesson) => (
-                  <Link href={`/cours/${lesson.title}`} key={lesson.id}>
+                  <Link href={`/cours/${lesson.slug}`} key={lesson.id}>
                     <li className="flex items-center justify-between p-4 bg-gray-800 rounded-md">
                       <h3 className="text-lg font-semibold text-white">
                         {lesson.title}

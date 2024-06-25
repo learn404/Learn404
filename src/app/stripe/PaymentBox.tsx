@@ -213,4 +213,3 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
       </div>
   );
 }
-
