@@ -13,7 +13,8 @@ export default async function Subscriptions() {
   if (!session) {
     redirect("/login");
   }
-
+  
+  
   const isMember = await prisma.user.findUnique({
     where: {
       email: session.user?.email!,
@@ -22,11 +23,11 @@ export default async function Subscriptions() {
       isMember: true,
     },
   })
-
+  
   if (isMember?.isMember) {
     redirect("/dashboard");
   }
-
+  
   const sessionData = {
     user: {
       name: session?.user?.name as string,
@@ -35,7 +36,7 @@ export default async function Subscriptions() {
     },
     expires: session?.expires as string,
   }
-
+  
   return (
     <>
       <HeaderDashboard session={sessionData}/>
