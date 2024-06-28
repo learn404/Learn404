@@ -35,7 +35,7 @@ export default function UserDropdown({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-52 bg-bg-primary text-torea-50
-         border border-white/10 mt-2 mr-2">
+         border border-white/10 mt-2 -translate-x-2">
         <DropdownMenuLabel>
           {session?.user?.name ?? "My account"}
         </DropdownMenuLabel>
