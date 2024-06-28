@@ -1,8 +1,9 @@
+import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +32,14 @@ export default function RootLayout({
           draggable={true}
           theme="light"
         />
-        <div className="min-h-screen bg-bg-primary">{children}</div>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="min-h-screen bg-bg-primary">{children}</div>
+          </ThemeProvider>
       </body>
     </html>
   );

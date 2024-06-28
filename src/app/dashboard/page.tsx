@@ -1,4 +1,4 @@
-import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
+import { ContentLayout } from "@/components/layout/content-layout";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -20,6 +20,7 @@ async function getServerSideProps() {
       sort_number: "asc",
     },
   });
+  
   const lessons = res.map((lesson) => ({
     id: lesson.id,
     title: lesson.title,
@@ -66,8 +67,7 @@ export default async function Dashboard() {
   const lessons = await getServerSideProps();
 
   return (
-    <>
-      <HeaderDashboard session={sessionData} />
+    <ContentLayout title="Dashboard" session={sessionData}>
       <main className="max-w-7xl mx-auto my-12 space-y-5 container">
         <h1 className="text-2xl font-semibold">
           Welcome back, {user?.name || user?.email}
@@ -131,6 +131,6 @@ export default async function Dashboard() {
           )}
         </section>
       </main>
-    </>
+    </ContentLayout>
   );
 }
