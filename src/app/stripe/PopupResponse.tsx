@@ -11,7 +11,7 @@ export default function PopupResponse(response: PopupResponseProps) {
   
 
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 origin-center bg-gray-950 border-[1px] border-gray-700 flex flex-col justify-center items-center z-50 py-16 px-20 rounded-xl animate-popup">      {response.success ? (
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 origin-center bg-gray-950 border-[1px] border-gray-700 flex flex-col justify-center items-center z-50 py-16 px-20 rounded-xl animate-popup">      {response.success ? (
         <Check width={100} height={100} color="#22c55e"/>
       ) : (
         <CircleX width={100} height={100} color="#ef4444"/>
@@ -23,7 +23,7 @@ export default function PopupResponse(response: PopupResponseProps) {
         {response.success ? (
           <PrimaryButton redirectTo="/dashboard">Go to dashboard</PrimaryButton>
         ) : (
-          <PrimaryButton onClick={() => window.location.reload()}>Retry</PrimaryButton>
+          <PrimaryButton onClick={() => window.location.reload()}>Reload</PrimaryButton>
         )}
       </div>
     </div>

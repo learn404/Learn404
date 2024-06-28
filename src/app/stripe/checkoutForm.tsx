@@ -7,7 +7,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementChangeEvent } from "@stripe/stripe-js";
 import { FormEvent, useContext, useState } from "react";
-import { EmailContext } from "./PaymentBox";
+import { EmailContext, PaymentInformations } from "./PaymentBox";
 import PopupResponse from "./PopupResponse";
 
 type ResponsePayment = {
@@ -16,17 +16,15 @@ type ResponsePayment = {
   error?: string;
 };
 
-export default function CheckoutForm() {
+export default function CheckoutForm(paymentInformations: PaymentInformations) {
+  
   const stripe = useStripe();
   const elements = useElements();
   const userEmail = useContext(EmailContext);
 
-  // const [message, setMessage] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isFormCompleted, setFormCompleted] = useState<boolean>(false);
-  const [responsePayment, setResponsePayment] = useState<
-    ResponsePayment | undefined
-  >(undefined);
+  const [responsePayment, setResponsePayment] = useState<ResponsePayment | undefined>(undefined);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,7 +37,6 @@ export default function CheckoutForm() {
       elements,
       redirect: "if_required",
       confirmParams: {
-        // return_url: `${window.location.origin}/dashboard/completion`,
         payment_method_data: {
           billing_details: {
             email: userEmail,
@@ -74,14 +71,22 @@ export default function CheckoutForm() {
 
   return (
     <>
-      {responsePayment && <PopupResponse {...responsePayment} />}
+      { responsePayment && (
+        <>
+          <PopupResponse {...responsePayment} />
+          <div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-screen bg-black/25 z-40"></div>
+        </>
+      )}
       <form id="payment-form" onSubmit={handleSubmit}>
         <PaymentElement onChange={handleStripeChange} />
-        <div className="mt-4 flex items-center justify-end gap-2 ">
+        {paymentInformations.code && (
+          <div className="mt-2 text-sm text-gray-400 text-right">Code : "{paymentInformations.code}" | -{paymentInformations.promo}%</div>
+        )}
+        <div className="mt-6 flex items-center justify-end gap-2 ">
           <button
             disabled={isLoading || !isFormCompleted || !!responsePayment}
             id="submit"
-            className="bg-torea-800 border-2 border-torea-800 px-8 py-3.5 rounded-full
+            className="relative bg-torea-800 border-2 border-torea-800 px-8 py-3.5 rounded-full
             font-semibold text-torea-50 enabled:hover:bg-indigo-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
             focus-visible:outline-indigo-500 disabled:cursor-not-allowed disabled:bg-torea-800/50 disabled:border-torea-800/50 disabled:text-gray-500"
           >
@@ -90,8 +95,11 @@ export default function CheckoutForm() {
                 ? "Chargement..."
                 : responsePayment
                   ? responsePayment?.type
-                  : "Confirmation du paiement EUR 5.99."}
+                  : (<span>Confimer l'achat <span className={paymentInformations.code ? "line-through" : ""}>{paymentInformations.basePriceFormated}</span></span>)}
             </span>
+            {(paymentInformations.promo > 0) && !isLoading && !responsePayment && (
+              <span className={"absolute right-8 bottom-0 text-sm " + (isFormCompleted && "text-torea-300")}>~{paymentInformations.finalPriceFormated}</span>
+            )}
           </button>
         </div>
       </form>

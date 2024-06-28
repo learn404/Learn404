@@ -2,78 +2,156 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+@layer base {
+  :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 20, 20, 20;
     --background-end-rgb: 0, 0, 0;
+
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+
+    --primary: 220.9 39.3% 11%;
+    --primary-foreground: 210 20% 98%;
+
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 224 71.4% 4.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 20% 98%;
+    --primary-foreground: 220.9 39.3% 11%;
+
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 216 12.2% 83.9%;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
-    }
+  :root {
+      --foreground-rgb: 255, 255, 255;
+      --background-start-rgb: 0, 0, 0;
+      --background-end-rgb: 0, 0, 0;
+  }
 }
 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
 html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-    color: rgb(var(--foreground-rgb));
-    background: var(--background-end-rgb);
-    overflow-x: hidden;
+  color: rgb(var(--foreground-rgb));
+  background: var(--background-end-rgb);
+  overflow-x: hidden;
 }
 
 @layer utilities {
-    .text-balance {
-        text-wrap: balance;
-    }
+  .text-balance {
+      text-wrap: balance;
+  }
 }
 
 .animation {
-    border: 1px solid #000;
+  border: 1px solid #000;
 }
 
-/* header:has(.header_Navlink:hover) .header_Navlink:not(:hover) {
-    color: rgba(238, 242, 255, .7);
-} */
-
 .titleStyle {
-    background: linear-gradient(146deg, #eef2ff 20.35%, #312d82 128.73%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  background: linear-gradient(146deg, #eef2ff 20.35%, #312d82 128.73%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .cardLinear {
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.05) 0%,
-        rgba(255, 255, 255, 0) 100%
-    );
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0) 100%
+  );
 }
 
 .lineLinear {
-    background: linear-gradient(
-        to right,
-        rgba(236, 236, 236, 1) 0%,
-        rgba(236, 236, 236, 0) 70%
-    );
+  background: linear-gradient(
+      to right,
+      rgba(236, 236, 236, 1) 0%,
+      rgba(236, 236, 236, 0) 70%
+  );
+}
+
+@keyframes pulse-fab {
+    50% {
+      opacity: .4;
+    }
+  }
+  
+.animate-pulse-fab {
+  animation: pulse-fab 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .loading2 {
-    animation-delay: 150ms;
+  animation-delay: 200ms;
 }
 
 .loading3 {
-    animation-delay: 300ms;
+  animation-delay: 400ms;
 }
 
 .dropdown-container {
-    position: absolute;
-    /* ou position: fixed */
-    z-index: 9999;
+  position: absolute;
+  /* ou position: fixed */
+  z-index: 9999;
 }

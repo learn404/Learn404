@@ -1,6 +1,5 @@
+import { SheetMenu } from "@/components/sheet-menu";
 import prisma from "@/lib/prisma";
-import Image from "next/image";
-import Link from "next/link";
 import UserDropdown from "./userDropDown";
 
 type sessionData = {
@@ -14,10 +13,12 @@ type sessionData = {
 
 interface HeaderDashboardProps {
   session: sessionData;
+  title: string;
 }
 
 export default async function HeaderDashboard({
   session,
+  title,
 }: HeaderDashboardProps) {
   let isAvatar = false;
   let isAdmin = false;
@@ -40,16 +41,17 @@ export default async function HeaderDashboard({
   }
 
   return (
-    <header className="p-4 m-auto w-full z-50">
-      <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative -mt-1">
-        <Link href="/">
-          <div className="flex items-center gap-5">
-            <Image src="/img/logo.png" alt="logo" width={30} height={30} />
-            <h3 className="hidden md:block text-xl font-semibold">Learn404</h3>
-          </div>
-        </Link>
-        <UserDropdown isAvatar={isAvatar} session={session} isAdmin={isAdmin} />
-      </nav>
+    <header className="sticky top-0 z-10 w-full bg-background/95 shadow backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:shadow-secondary py-2">
+      <div className="mx-4 sm:mx-8 flex h-14 items-center">
+        <div className="flex items-center space-x-4 lg:space-x-0">
+          <SheetMenu />
+          <h1 className="font-bold">{title}</h1>
+        </div>
+        <div className="flex flex-1 items-center space-x-2 justify-end">
+          {/* <ModeToggle /> */}
+          <UserDropdown session={session} isAdmin={isAdmin} isAvatar={isAvatar} />
+        </div>
+      </div>
     </header>
   );
 }
