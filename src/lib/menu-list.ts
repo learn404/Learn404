@@ -58,18 +58,30 @@ export function getMenuList(pathname: string): Group[] {
     {
       groupLabel: "Settings",
       menus: [
-        {
-          href: "/users",
-          label: "Users",
-          active: pathname.includes("/users"),
-          icon: Users,
-        },
+
         {
           href: "/account",
           label: "Account",
           active: pathname.includes("/account"),
           icon: Settings,
         }
+      ]
+    },
+    {
+      groupLabel: "Admin",
+      menus: [
+        {
+          href: "",
+          label: "Users",
+          active: pathname.includes("/admin"),
+          icon: Users,
+        },
+        {
+          href: "",
+          label: "Lessons",
+          active: pathname.includes("/admin"),
+          icon: Users,
+        },
       ]
     }
   ];
