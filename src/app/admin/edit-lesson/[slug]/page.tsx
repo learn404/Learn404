@@ -75,7 +75,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         slug: params.slug,
       },
     });
-    console.log(video_url, "video_url");
 
     let assetId: string | undefined;
     let playbackIdFromMux: string | undefined;
@@ -99,7 +98,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         throw new Error("Failed to create playback ID");
       }
 
-      console.log(asset);
     }
 
     if (!existingLesson) {
@@ -122,7 +120,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
       updateData.newLesson = newLesson;
 
     if (Object.keys(updateData).length === 0) {
-      console.log("Pas de changement détecté");
       return redirect("/admin");
     }
 
@@ -133,13 +130,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
       data: updateData,
     });
 
-    console.log("Le cours a été créé avec succès", updateLesson);
 
     redirect("/admin");
   }
   return (
     <>
-      <HeaderDashboard session={sessionData} />
+      <HeaderDashboard session={sessionData} title="Modification cours" />
       <div>
         <form className="p-8" action={editLesson}>
           <div className="space-y-12">
