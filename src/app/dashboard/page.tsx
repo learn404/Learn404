@@ -1,4 +1,4 @@
-import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
+import { ContentLayout } from "@/components/layout/content-layout";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -20,6 +20,7 @@ async function getServerSideProps() {
       sort_number: "asc",
     },
   });
+  
   const lessons = res.map((lesson) => ({
     id: lesson.id,
     title: lesson.title,
@@ -66,45 +67,16 @@ export default async function Dashboard() {
   const lessons = await getServerSideProps();
 
   return (
-    <>
-      <HeaderDashboard session={sessionData} />
-      <main className="max-w-7xl mx-auto my-12 space-y-5 container">
-        <h1 className="text-2xl font-semibold">
-          Welcome back, {user?.name || user?.email}
-        </h1>
-        <section>
-          <h2 className="text-xl font-semibold">Lessons</h2>
-          {user.admin ? (
-            <ul>
-              {lessons.map((lesson) => (
-                <Link href={`/cours/${lesson.slug}`} key={lesson.id}>
-                  <li className="flex items-center justify-between p-4 bg-gray-800 rounded-md">
-                    <h3 className="text-lg font-semibold text-white">
-                      {lesson.title}
-                    </h3>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </li>
-                </Link>
-              ))}
-            </ul>
-          ) : (
-            <ul>
-              {lessons
-                .filter((lesson) => !lesson.draft)
-                .map((lesson) => (
+      <ContentLayout title="Dashboard" session={sessionData}>
+        <main className="max-w-7xl mx-auto my-12 space-y-5 container">
+          <h1 className="text-2xl font-semibold">
+            Welcome back, {user?.name || user?.email}
+          </h1>
+          <section>
+            <h2 className="text-xl font-semibold">Lessons</h2>
+            {user.admin ? (
+              <ul>
+                {lessons.map((lesson) => (
                   <Link href={`/cours/${lesson.slug}`} key={lesson.id}>
                     <li className="flex items-center justify-between p-4 bg-gray-800 rounded-md">
                       <h3 className="text-lg font-semibold text-white">
@@ -127,10 +99,38 @@ export default async function Dashboard() {
                     </li>
                   </Link>
                 ))}
-            </ul>
-          )}
-        </section>
-      </main>
-    </>
+              </ul>
+            ) : (
+              <ul>
+                {lessons
+                  .filter((lesson) => !lesson.draft)
+                  .map((lesson) => (
+                    <Link href={`/cours/${lesson.slug}`} key={lesson.id}>
+                      <li className="flex items-center justify-between p-4 bg-gray-800 rounded-md">
+                        <h3 className="text-lg font-semibold text-white">
+                          {lesson.title}
+                        </h3>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </li>
+                    </Link>
+                  ))}
+              </ul>
+            )}
+          </section>
+        </main>
+      </ContentLayout>
   );
 }

@@ -136,7 +136,7 @@ export default async function LessonPage({
   return (
     <>
       <header className="z-50 relative">
-        <HeaderDashboard session={sessionData} />
+        <HeaderDashboard session={sessionData} title="Cours"/>
       </header>
 
       <main className="text-white flex justify-center flex-col z-0">

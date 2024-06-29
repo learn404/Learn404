@@ -23,7 +23,7 @@ const FinishLessonButton: React.FC<FinishLessonButtonProps> = ({
   const finishLesson = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/finish-lesson", {
+      const response = await fetch("/api/user/finish-lesson", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

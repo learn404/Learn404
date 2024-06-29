@@ -36,7 +36,7 @@ export default async function AdminDashboard() {
 
   return (
     <div>
-      <HeaderDashboard session={sessionData} />
+      <HeaderDashboard session={sessionData} title="Admin" />
       <main className="px-12">
         <h1 className="py-8 text-2xl font-bold">Admin Dashboard</h1>
         <PrimaryButton redirectTo="/admin/add-lesson">Add Lesson</PrimaryButton>
