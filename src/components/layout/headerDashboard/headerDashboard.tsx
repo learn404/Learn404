@@ -42,7 +42,7 @@ export default async function HeaderDashboard({
   }
 
   return (
-    <header className="sticky top-0 z-10 w-full bg-background/95 shadow backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:shadow-secondary py-2">
+    <header className="sticky top-0 z-10 w-full bg-black shadow backdrop-blur border-b-2 border-white/10 py-2 mb-5">
       <div className="mx-4 sm:mx-16 flex h-14 items-center">
         <div className="flex items-center">
           <Link href="/">

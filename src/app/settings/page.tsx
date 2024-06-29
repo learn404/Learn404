@@ -17,6 +17,13 @@ export default async function Settings() {
     where: {
       email: session?.user?.email as string,
     },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      image: true,
+      admin: true,
+    },
   });
 
   const sessionData = {
@@ -28,11 +35,23 @@ export default async function Settings() {
     expires: session?.expires as string,
   };
 
+  const accountData = await prisma.account.findFirst({
+    where: {
+      userId: user?.id,
+    },
+    select: {
+      id: true,
+      userId: true,
+      type: true,
+      provider: true,
+    },
+  });
+
+  console.log(accountData);
   return (
     <>
-      <HeaderDashboard session={sessionData} />
-      <SettingsForm user={user} />
-
+      <HeaderDashboard session={sessionData} title="Paramètre"></HeaderDashboard>
+      <SettingsForm user={user} accountData={accountData } />
       <Footer />
     </>
   );

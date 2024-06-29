@@ -47,7 +47,7 @@ export default function UserDropdown({
               <span>Tableau de bord</span>
             </DropdownMenuItem>
           </Link>
-          <Link href="">
+          <Link href="/settings">
             <DropdownMenuItem className="cursor-pointer">
               <Settings className="mr-2 w-4 h-4" />
               <span>Paramètres</span>
