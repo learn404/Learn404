@@ -38,7 +38,7 @@ export default async function AddLesson() {
 
   return (
     <>
-      <HeaderDashboard session={sessionData} />
+      <HeaderDashboard session={sessionData} title="Ajouter un cours"/>
       <main className="px-8">
         <AddLessonForm
           isAdmin={isAdmin}

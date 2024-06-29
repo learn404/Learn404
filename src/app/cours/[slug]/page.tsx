@@ -100,7 +100,6 @@ export default async function LessonPage({
 
   const isCompleted = statusLesson?.completed ?? false;
 
-  console.log(isCompleted, "isCompleted");
 
   let nextLesson = await prisma.lessons.findFirst({
     where: {

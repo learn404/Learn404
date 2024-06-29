@@ -43,11 +43,10 @@ export default async function Settings() {
       id: true,
       userId: true,
       type: true,
-      provider: true,
+      provider: true
     },
   });
 
-  console.log(accountData);
   return (
     <>
       <HeaderDashboard session={sessionData} title="Paramètre"></HeaderDashboard>
