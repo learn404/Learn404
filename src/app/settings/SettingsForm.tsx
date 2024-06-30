@@ -1,5 +1,4 @@
 "use client";
-import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,7 @@ interface FormSettingProps {
     email: string | null;
     admin: boolean | string | null;
     image: string | null;
+    isMember: boolean | null;
   } | null;
   accountData: {
     id: string;
@@ -49,7 +49,7 @@ export default function FormSetting({ user, accountData }: FormSettingProps) {
   };
 
   const handleDownloadInvoice = async () => {
-    router.push("/invoice");
+    router.push("/settings/invoice");
   };
 
   return (
@@ -152,55 +152,62 @@ export default function FormSetting({ user, accountData }: FormSettingProps) {
             </div>
           </div>
 
-          <div className="border-b border-gray-100/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-100">
-              PARAMETRE DU COMPTE
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-400">
-              Ces informations peuvent être modifiées plus tard.
-            </p>
+          {user?.isMember && (
+            <>
+              <div className="border-b border-gray-100/10 pb-12">
+                <h2 className="text-base font-semibold leading-7 text-gray-100">
+                  PARAMETRE DU COMPTE
+                </h2>
+                <p className="mt-1 text-sm leading-6 text-gray-400">
+                  Ces informations peuvent être modifiées plus tard.
+                </p>
 
-            <div className="sm:col-span-3">
-              <h3 className="text font-semibold mt-4 py-2">
-                Progression des cours
-              </h3>
-              <div className="py-2">
-                <p className="text-gray-400 text-sm">
-                  Le bouton de progression est le bouton qui permet de valider
-                  un cours terminé.
-                </p>
-                <p className="text-gray-400 mt-1">
-                  {" "}
-                  Vous pouvez réintialiser votre progression à tout moment et
-                  supprimer alors votre progression
-                </p>
+                <div className="sm:col-span-3">
+                  <h3 className="text font-semibold mt-4 py-2">
+                    Progression des cours
+                  </h3>
+                  <div className="py-2">
+                    <p className="text-gray-400 text-sm">
+                      Le bouton de progression est le bouton qui permet de
+                      valider un cours terminé.
+                    </p>
+                    <p className="text-gray-400 mt-1">
+                      {" "}
+                      Vous pouvez réintialiser votre progression à tout moment
+                      et supprimer alors votre progression
+                    </p>
+                  </div>
+                  <Button
+                    variant="default"
+                    onClick={handleResetProgression}
+                    className="mt-2"
+                  >
+                    Réinitialiser la progression
+                  </Button>
+                </div>
+                <div className="sm:col-span-3">
+                  <h3 className="text font-semibold mt-4 py-2">
+                    Votre facture
+                  </h3>
+                  <div className="">
+                    <p className="text-gray-400 text-sm">
+                      Vous pouvez voir votre facture et voir les cours que vous
+                      avez acheté
+                    </p>
+                  </div>
+                  <Button
+                    variant="default"
+                    className="mt-2"
+                    onClick={handleDownloadInvoice}
+                  >
+                    <Download />
+                    Télécharger votre facture
+                  </Button>
+                </div>
               </div>
-              <Button
-                variant="default"
-                onClick={handleResetProgression}
-                className="mt-2"
-              >
-                Réinitialiser la progression
-              </Button>
-            </div>
-            <div className="sm:col-span-3">
-              <h3 className="text font-semibold mt-4 py-2">Votre facture</h3>
-              <div className="">
-                <p className="text-gray-400 text-sm">
-                  Vous pouvez voir votre facture et voir les cours que vous avez
-                  acheté
-                </p>
-              </div>
-              <Button
-                variant="default"
-                className="mt-2"
-                onClick={handleDownloadInvoice}
-              >
-                <Download />
-                Télécharger votre facture
-              </Button>
-            </div>
-          </div>
+              
+            </>
+          )}
           <DeleteAccountButton user={{ id: user?.id ?? null }} />
         </div>
       </main>

@@ -23,6 +23,7 @@ export default async function Settings() {
       email: true,
       image: true,
       admin: true,
+      isMember: true,
     },
   });
 
@@ -43,14 +44,17 @@ export default async function Settings() {
       id: true,
       userId: true,
       type: true,
-      provider: true
+      provider: true,
     },
   });
 
   return (
     <>
-      <HeaderDashboard session={sessionData} title="Paramètre"></HeaderDashboard>
-      <SettingsForm user={user} accountData={accountData } />
+      <HeaderDashboard
+        session={sessionData}
+        title="Paramètres"
+      ></HeaderDashboard>
+      <SettingsForm user={user} accountData={accountData} />
       <Footer />
     </>
   );
