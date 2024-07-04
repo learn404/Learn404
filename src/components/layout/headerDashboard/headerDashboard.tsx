@@ -59,7 +59,7 @@ export default async function HeaderDashboard({
           <h1 className="text-xl font-semibold text-torea-50">{title}</h1>
         </div>
         <div className="flex flex-1 items-center space-x-2 justify-end">
-          {/* <ModeToggle /> */}
+        
           <UserDropdown session={session} isAdmin={isAdmin} isAvatar={isAvatar} />
         </div>
       </div>

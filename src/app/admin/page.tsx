@@ -56,7 +56,7 @@ export default async function Admin() {
       },
     },
     select: {
-      id: true,  // Ajouter cette ligne pour obtenir les IDs des catégories
+      id: true, 
       name: true,
     },
   });

@@ -88,6 +88,10 @@
 }
 
 
+body[data-scroll-locked]{
+  min-width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
