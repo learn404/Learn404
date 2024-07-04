@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DeleteAccountButton } from "@/components/buttons/DeleteAccountButton";
 import { Download } from "lucide-react";
+import { Input } from "@/components/ui/input"
 
 interface FormSettingProps {
   user: {
@@ -75,7 +76,7 @@ export default function FormSetting({ user, accountData }: FormSettingProps) {
                   </label>
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                      <input
+                      <Input
                         type="text"
                         name="title"
                         id="title"
@@ -96,7 +97,7 @@ export default function FormSetting({ user, accountData }: FormSettingProps) {
                     </label>
                     <div className="mt-2">
                       <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                        <input
+                        <Input
                           type="text"
                           name="slug_title"
                           id="slug_title"
@@ -118,7 +119,7 @@ export default function FormSetting({ user, accountData }: FormSettingProps) {
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input
+                    <Input
                       type="text"
                       name="slug_title"
                       id="slug_title"
@@ -137,7 +138,7 @@ export default function FormSetting({ user, accountData }: FormSettingProps) {
                   </label>
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                      <input
+                      <Input
                         type="text"
                         name="connexion_app"
                         id="connexion_app"
