@@ -49,14 +49,14 @@ export default function UserDropdown({
           </Link>
           <Link href="">
             <DropdownMenuItem className="cursor-pointer">
-              <Settings className="mr-2 w-4 h-4" />
-              <span>Paramètres</span>
+              <Coins className="mr-2 w-4 h-4" />
+              <span>Gains</span>
             </DropdownMenuItem>
           </Link>
           <Link href="">
             <DropdownMenuItem className="cursor-pointer">
-              <Coins className="mr-2 w-4 h-4" />
-              <span>Gains</span>
+              <Settings className="mr-2 w-4 h-4" />
+              <span>Paramètres</span>
             </DropdownMenuItem>
           </Link>
           {isAdmin && (

@@ -1,8 +1,7 @@
-import { CodeXml, LineChart, ListVideo, Code, StickyNote } from "lucide-react";
-import Image from "next/image";
 import IconCloud from "@/components/magicui/icon-cloud";
-import Particles from "@/components/magicui/particles";
 import { getLessonNumber, getLessonType } from "@/lib/utils";
+import { Code, CodeXml, LineChart, ListVideo, StickyNote } from "lucide-react";
+import Image from "next/image";
 import NumberTicker from "../magicui/number-ticker";
 
 const slugs = [
@@ -188,13 +187,13 @@ export default async function FonctionnalitySection() {
           </div>
         </div>
       </div>
-      <Particles
+      {/* <Particles
         className="absolute inset-0"
         quantity={20}
         ease={20}
         color="#ffffff"
         refresh
-      />
+      /> */}
     </div>
   );
 }
