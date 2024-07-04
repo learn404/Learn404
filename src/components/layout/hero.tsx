@@ -1,11 +1,11 @@
-import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import PrimaryButton from "../buttons/PrimaryButton";
 import SecondaryButton from "../buttons/SecondaryButton";
 import AnimatedShinyText from "../magicui/animated-shiny-text";
-import SeparateAway from "../magicui/separate-away";
 import RetroGrid from "../magicui/retro-grid";
-import Image from "next/image";
+import SeparateAway from "../magicui/separate-away";
 
 export default function HeroSection() {
   return (
@@ -52,12 +52,16 @@ export default function HeroSection() {
 
       <div>
         <div className="relative w-screen flex justify-center">
-          <Image
-            src="/img/Hero_img.webp"
-            alt="logo"
-            height={1000}
-            width={1000}
-          />
+          <div>
+            <Image
+              src="/img/Hero_img.webp"
+              alt="hero image"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className="w-full h-auto"
+            />
+          </div>
           <div className="pointer-events-none absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#02030C] "></div>
         </div>
       </div>
