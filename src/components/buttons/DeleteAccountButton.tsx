@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,12 +18,16 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 
 interface PropsDeleteAccountButton {
-  user: {
+  user?: {
     id: string | null; 
+  };
+  userSearch?: {
+    id: string | null;
+    name: string | null;
   };
 }
 
-export function DeleteAccountButton({ user }: PropsDeleteAccountButton) {
+export function DeleteAccountButton({ user, userSearch }: PropsDeleteAccountButton) {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
 
@@ -31,10 +36,18 @@ export function DeleteAccountButton({ user }: PropsDeleteAccountButton) {
   };
 
   const handleDeleteAccount = async () => {
-    const response = await fetch("api/user/delete-account", {
-      method: "POST",
-      body: JSON.stringify({ userId: user?.id }),
-    });
+    let response;
+    if (userSearch) {
+      response = await fetch("/api/user/delete-account", {
+        method: "POST",
+        body: JSON.stringify({ userId: userSearch?.id }),
+      });
+    } else {
+      response = await fetch("/api/user/delete-account", {
+        method: "POST",
+        body: JSON.stringify({ userId: user?.id }),
+      });
+    }
 
     if (!response.ok) {
       const data = await response.json();
@@ -44,7 +57,13 @@ export function DeleteAccountButton({ user }: PropsDeleteAccountButton) {
       console.log("Compte supprimé avec succès");
       const data = await response.json();
       toast.success(data.message);
-      router.push("/");
+      if (userSearch) {
+        router.push("/admin");
+        router.refresh();
+      } else {
+        router.push("/");
+        
+      }
     }
   };
 
@@ -56,18 +75,18 @@ export function DeleteAccountButton({ user }: PropsDeleteAccountButton) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Voulez-vous vraiment supprimer votre compte ?
+            {userSearch ? "Voulez-vous vraiment supprimer ce compte ?" : "Voulez-vous vraiment supprimer votre compte ?"}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Cette action est irréversible. Cela supprimera votre compte et
-            supprimera toutes vos données de notre serveur.
+            {userSearch ? `Cette action est irréversible. Cela supprimera le compte de ${userSearch?.name} et supprimera toutes les données de notre serveur.` : "Cette action est irréversible. Cela supprimera votre compte et supprimera toutes vos données de notre serveur."}
+
             <div className="flex items-center space-x-2 mt-2">
               <Checkbox id="terms" onCheckedChange={handleChecked} />
               <label
                 htmlFor="terms"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Je confirme la suppression de mon compte
+                {userSearch ? "Je confirme la suppression de ce compte" : "Je confirme la suppression de mon compte"}
               </label>
             </div>
           </AlertDialogDescription>
