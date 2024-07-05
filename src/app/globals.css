@@ -159,3 +159,9 @@ body {
   /* ou position: fixed */
   z-index: 9999;
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
