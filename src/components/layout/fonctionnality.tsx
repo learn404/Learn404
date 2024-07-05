@@ -92,7 +92,7 @@ export default async function FonctionnalitySection() {
           </div>
         </div>
 
-        <div className=" flex items-center justify-between flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear">
+        <div className="flex items-center justify-between flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear min-w-80">
           <div className="flex flex-col items-start justify-between gap-8 lg:max-w-md">
             <div className="flex flex-col gap-5">
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#CB2CAE] shadow-xl shadow-[#CB2CAE]/50">
@@ -124,7 +124,7 @@ export default async function FonctionnalitySection() {
           </div>
         </div>
         <div className="flex gap-6 flex-wrap ">
-          <div className="relative flex-none flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear  h-full w-full max-w-[32rem] items- cardLinear  overflow-hidden  bg-background  pb-20 pt-8 ">
+          <div className="relative flex-none flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear  h-full w-full  items- cardLinear  overflow-hidden  bg-background  pb-20 pt-8  ">
             <IconCloud iconSlugs={slugs} />
             <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF] shadow-xl shadow-[#6128DF]/50">
               <Code />
