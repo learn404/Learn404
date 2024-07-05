@@ -70,9 +70,10 @@ model Waitlist {
 
 model Categories {
   id        String    @id @default(cuid())
-  name      String    @unique
-  createdAt DateTime  @default(now())
-  Lessons   Lessons[]
+  name        String    @unique
+  sort_number Int?      @default(0)
+  createdAt   DateTime  @default(now())
+  Lessons     Lessons[]
 }
 
 model Lessons {

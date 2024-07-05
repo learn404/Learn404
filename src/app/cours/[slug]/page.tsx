@@ -6,18 +6,7 @@ import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard
 import MuxPlayer from "@mux/mux-player-react";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import FinishLesson from "@/components/buttons/FinishLessonButton";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { List } from "lucide-react";
-
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import SheetLessons from "@/components/sheet/sheetLessons";
 
 const getPageContent = async (slug: string) => {
   const { meta, content } = await getPostBySlug(slug);
@@ -143,69 +132,13 @@ export default async function LessonPage({
     redirect("/dashboard");
   }
 
-  const categories = await prisma.categories.findMany({
-    where : {
-      Lessons : {
-        some : {
-          draft : false,
-          
-        } ,
-      },
-    
-    },
-    include: {
-      Lessons: {
-        where: {
-          draft: false,
-        },
-        orderBy: {
-          sort_number: "asc",
-        },
-      },
-    },
-  });
-
-  const draft = await prisma.lessons.findMany({
-    where: {
-      draft: true,
-    },
-  });
-
   return (
     <>
       <header className="z-50 relative">
         <HeaderDashboard session={sessionData} title="Cours" />
       </header>
       <div className="z-50 fixed top-20 left-2 w-full h-full">
-        <Sheet>
-          <SheetTrigger className="z-50 flex items-center w-fit justify-center gap-2 rounded-md  px-3.5 py-2.5 text-xs md:text-sm font-semibold  shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  border border-input bg-white text-black hover:bg-neutral-300 focus-visible:outline-indigo-500">
-            
-              <List className="w-5 h-5" />
-            
-           
-          </SheetTrigger>
-          <SheetContent className=" bg-bg-primary border border-white/10 w-[100vw] lg:w-[30vw]" side="left">
-            <SheetHeader>
-              <SheetDescription>
-                <ul className="flex flex-col gap-5">
-                  {categories.map((category) => (
-                    <li key={category.id}>
-                      <h2 className="text-lg font-bold text-white">{category.name.toUpperCase()}</h2>
-                      <ul className="flex flex-col gap-2">
-                        {category.Lessons.map((lesson) => (
-                          <li key={lesson.id}>
-                            <Link href={`/cours/${lesson.slug}`} className="text-torea-50 hover:text-torea-50/80 ">
-                              {lesson.title}                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </SheetDescription>
-            </SheetHeader>
-          </SheetContent>
-        </Sheet>
+        <SheetLessons userId={user.id} />
       </div>
   
       <main className="text-white flex justify-center flex-col z-0">
