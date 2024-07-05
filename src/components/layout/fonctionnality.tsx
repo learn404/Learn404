@@ -1,8 +1,7 @@
-import { CodeXml, LineChart, ListVideo, Code, StickyNote } from "lucide-react";
-import Image from "next/image";
 import IconCloud from "@/components/magicui/icon-cloud";
-import Particles from "@/components/magicui/particles";
 import { getLessonNumber, getLessonType } from "@/lib/utils";
+import { Code, CodeXml, LineChart, ListVideo, StickyNote } from "lucide-react";
+import Image from "next/image";
 import NumberTicker from "../magicui/number-ticker";
 
 const slugs = [
@@ -113,13 +112,16 @@ export default async function FonctionnalitySection() {
               View code collaboration
             </span>
           </div>
-          <Image
-            src="/img/Card_img.webp"
-            alt="code image"
-            className="hidden lg:block"
-            width={400}
-            height={400}
-          ></Image>
+          <div className="max-w-2xl">
+            <Image
+              src="/img/Card_img.webp"
+              alt="code image"
+              className="hidden lg:block w-full h-auto"
+              width="0"
+              height="0"
+              sizes="100vw"
+            ></Image>
+          </div>
         </div>
         <div className="flex gap-6 flex-wrap ">
           <div className="relative flex-none flex-wrap border rounded-[1.25rem] border-[#2E3038] p-10 cardLinear  h-full w-full max-w-[32rem] items- cardLinear  overflow-hidden  bg-background  pb-20 pt-8 ">
@@ -188,13 +190,13 @@ export default async function FonctionnalitySection() {
           </div>
         </div>
       </div>
-      <Particles
+      {/* <Particles
         className="absolute inset-0"
         quantity={20}
         ease={20}
         color="#ffffff"
         refresh
-      />
+      /> */}
     </div>
   );
 }
