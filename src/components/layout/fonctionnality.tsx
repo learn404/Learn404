@@ -120,7 +120,7 @@ export default async function FonctionnalitySection() {
               width="0"
               height="0"
               sizes="100vw"
-            ></Image>
+            />
           </div>
         </div>
         <div className="flex gap-6 flex-wrap ">
