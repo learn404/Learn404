@@ -34,14 +34,14 @@ interface NextLessonsProps {
   section: "all" | "next";
 }
 
-const LessonsSection = async ({ isAdmin, section }: NextLessonsProps) => {
+const NextLessonsSection = async ({ isAdmin, section }: NextLessonsProps) => {
 
   const lessons = await getServerSideProps();
 
   return ( 
     <div className="text-torea-50">
       {isAdmin ? (
-        <ul className="flex items-start gap-4">
+        <ul className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {lessons.map((lesson) => (
             <LessonElement key={`next:${lesson.id}`} lesson={lesson}/>
           ))}
@@ -59,4 +59,4 @@ const LessonsSection = async ({ isAdmin, section }: NextLessonsProps) => {
    );
 }
  
-export default LessonsSection;
+export default NextLessonsSection;

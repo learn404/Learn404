@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const { userId, lessonId } = await req.json();
 
-    const checkProgress = await prisma.LessonProgress.findFirst({
+    const checkProgress = await prisma.lessonProgress.findFirst({
       where: {
         userId: userId,
         lessonId: lessonId,
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     console.log(checkProgress);
 
     if (!checkProgress) {
-      const progress = await prisma.LessonProgress.create({
+      const progress = await prisma.lessonProgress.create({
         data: {
           userId: userId,
           lessonId: lessonId,
