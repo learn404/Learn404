@@ -84,6 +84,8 @@ model Lessons {
   categoryId     String
   description    String?
   playbackId     String?
+  videoId        String?
+  duration       String?
   repository_url String?
   sort_number    Int        @default(0)
 
