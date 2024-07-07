@@ -43,15 +43,15 @@ const LessonsSection = async ({ isAdmin, section }: NextLessonsProps) => {
       {isAdmin ? (
         <ul className="flex items-start gap-4">
           {lessons.map((lesson) => (
-            <LessonElement lesson={lesson}/>
+            <LessonElement key={`next:${lesson.id}`} lesson={lesson}/>
           ))}
-      </ul>
+        </ul>
       ):(
         <ul className="flex items-start gap-4">
           {lessons
             .filter((lesson) => !lesson.draft)
             .map((lesson) => (
-              <LessonElement lesson={lesson} />
+              <LessonElement key={`all:${lesson.id}`} lesson={lesson} />
             ))}
         </ul>
       )}
