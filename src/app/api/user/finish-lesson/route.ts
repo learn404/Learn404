@@ -11,10 +11,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log("checkProgress", checkProgress);
-
-    console.log(checkProgress);
-
     if (!checkProgress) {
       await prisma.lessonProgress.create({
         data: {
