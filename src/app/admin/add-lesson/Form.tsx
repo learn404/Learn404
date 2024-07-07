@@ -1,10 +1,11 @@
-import PrimaryButton from "@/components/buttons/PrimaryButton";
-import SecondaryButton from "@/components/buttons/SecondaryButton";
-import prisma from "@/lib/prisma";
+"use client";
+
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import Mux from "@mux/mux-node";
-import { getLastSortNumber, lessonCheckExist } from "@/lib/utils";
+import { useState, useEffect } from 'react';
+import { Loader2 } from "lucide-react";
+import { addLesson } from "./addLesson";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface AddLessonFormProps {
   isAdmin: boolean;
@@ -12,122 +13,49 @@ interface AddLessonFormProps {
   session: any;
 }
 
-async function getServerSideProps() {
-  const res = await prisma.categories.findMany();
-  const categories = res.map((category) => ({
-    id: category?.id,
-    name: category?.name.toUpperCase(),
-  }));
-  return categories;
-}
-
-export default async function AddLessonForm({
+export default function AddLessonForm({
   session,
   isAvatar,
+  
 }: AddLessonFormProps) {
-  const categories = await getServerSideProps();
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  async function addLesson(formData: FormData) {
-    "use server";
-
-    const last_sort_number = await getLastSortNumber();
-
-    const sort_number = last_sort_number?.sort_number
-      ? last_sort_number?.sort_number + 1
-      : 1;
-
-    const title = formData.get("title")?.toString();
-    const slug_title = formData
-      .get("slug_title")
-      ?.toString()
-      .replace(/\s+/g, "-");
-    const categoryId = formData.get("category")?.toString();
-    const about = formData.get("about")?.toString() || undefined;
-    const video_url = formData.get("video_url")?.toString() || undefined;
-    const repository_url =
-      formData.get("repository_url")?.toString() || undefined;
-    const draft = formData.get("draft") === "on";
-    const newLesson = formData.get("newLesson") === "on";
-
-    if (!title || !categoryId) {
-      throw new Error("Title and category are required");
-    }
-    let assetId: string | undefined;
-    let playbackIdFromMux: string | undefined;
-    let videoId: string | undefined;
-    let duration:  undefined | number;
-
-    if (video_url) {
-      const mux = new Mux({
-        tokenId: process.env.MUX_TOKEN_ID!,
-        tokenSecret: process.env.MUX_SECRET_KEY!,
-      });
-
-      const asset = await mux.video.assets.create({
-        input: [{ url: video_url }],
-        playback_policy: ["public"],
-        max_resolution_tier: "1080p",
-        encoding_tier: "baseline",
-      });
-
-      assetId = asset.id;
-      if (asset.playback_ids && asset.playback_ids.length > 0) {
-        playbackIdFromMux = asset.playback_ids[0].id;
-        videoId = assetId;
-      } else {
-        throw new Error("Failed to create playback ID");
+  useEffect(() => {
+    async function fetchCategories() {
+      const categories = await fetch('/api/lessons/get-categories',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }
-
-      const waitForAssetReady = async (assetId: string) => {
-        while (true) {
-          const asset = await mux.video.assets.retrieve(assetId);
-          if (asset.status === "ready") {
-            return asset;
-          }
-          await new Promise(resolve => setTimeout(resolve, 5000));
-        }
-      };
-
-      const inputInfo = await waitForAssetReady(assetId);
-      duration = inputInfo.duration;
+      );
+      const data = await categories.json();
+      console.log(data);
+      setCategories(data);
     }
+    fetchCategories();
+  }, []);
 
-    let durationVideo: string = "00:00:00";
-    if (duration) {
-      const hours = Math.floor(duration / 3600).toString().padStart(2, "0");
-      const minutes = Math.floor((duration % 3600) / 60).toString().padStart(2, "0");
-      const seconds = Math.floor(duration % 60).toString().padStart(2, "0");
-      durationVideo = `${hours}:${minutes}:${seconds}`;
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    try {
+      const formData = new FormData(event.currentTarget);
+      const response = await addLesson(formData);
+      console.log(response);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsLoading(false);
     }
-
-    const checkLessonExist = await lessonCheckExist(slug_title as string);
-
-    if (checkLessonExist) {
-      throw new Error("Lesson already exists");
-    }
-
-    await prisma.lessons.create({
-      data: {
-        title: title ?? "",
-        slug: slug_title ?? "",
-        categoryId: categoryId ?? "",
-        description: about ?? "",
-        playbackId: playbackIdFromMux ?? "",
-        repository_url: repository_url ?? "",
-        draft: draft ?? false,
-        newLesson: newLesson ?? false,
-        sort_number: sort_number,
-        videoId: videoId,
-        duration: durationVideo as string, 
-      },
-    });
-
-    redirect("/admin");
-  }
+  };
 
   return (
     <>
-      <form className="p-8" action={addLesson}>
+      <form className="p-8" onSubmit={handleSubmit}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-100">
@@ -358,10 +286,9 @@ export default async function AddLessonForm({
             </div>
           </div>
         </div>
-
         <div className="flex items-center  gap-x-6">
-          <SecondaryButton type="button">Annuler</SecondaryButton>
-          <PrimaryButton type="submit">Créer le cours</PrimaryButton>
+          <Button variant="secondary" type="button" onClick={() => router.push('/admin')}>Annuler</Button>
+          <Button variant="default" type="submit" disabled={isLoading}>{isLoading ? (<Loader2 className="w-4 h-4 animate-spin" />) : ("Créer le cours")}</Button>
         </div>
       </form>
     </>

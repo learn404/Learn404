@@ -48,6 +48,7 @@ export default async function SheetLessons({ userId }: userIdProps) {
     categoryId: string;
     description: string | null;
     playbackId: string | null;
+    duration: string | null;
     repository_url: string | null;
     sort_number: number;
     draft: boolean;
@@ -132,9 +133,9 @@ export default async function SheetLessons({ userId }: userIdProps) {
                                   {lesson.title}
                                 </div>
                                 
-                                {lesson.newLesson && (
+                                {lesson.duration && (
                                   <span className="text-xs text-black bg-torea-50 px-1.5 rounded-md py-0.5 group-hover:text-black/80 group-hover:bg-torea-50/80 transition-all duration-300">
-                                    Nouveau
+                                    {lesson.duration}
                                   </span>
                                 )}
                               </div>

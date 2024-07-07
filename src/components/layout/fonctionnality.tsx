@@ -3,6 +3,7 @@ import { getLessonNumber, getLessonType } from "@/lib/utils";
 import { Code, CodeXml, LineChart, ListVideo, StickyNote } from "lucide-react";
 import Image from "next/image";
 import NumberTicker from "../magicui/number-ticker";
+import prisma from "@/lib/prisma";
 
 const slugs = [
   "typescript",
@@ -37,9 +38,42 @@ const slugs = [
   "figma",
 ];
 
+
+const convertDurationToSeconds = (duration: string) => {
+  const [hours, minutes, seconds] = duration.split(":").map(Number);
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+const convertSecondsToDuration = (seconds: number) => {
+  const hours = Math.floor(seconds / 3600);
+  if (hours === 0) {
+    return 1;
+  } else {
+    return `${hours}`;
+  }
+}
+
 export default async function FonctionnalitySection() {
   const lessonNumber = await getLessonNumber();
   const lessonType = await getLessonType();
+
+  const durationLessons = await prisma.lessons.findMany({
+    select: {
+      duration: true,
+    },
+  });
+
+  let durationTotalSeconds = 0;
+
+  durationLessons.forEach((lesson) => {
+    if (lesson.duration) {
+      durationTotalSeconds += convertDurationToSeconds(lesson.duration);
+    }
+  });
+
+  const durationTotal = convertSecondsToDuration(durationTotalSeconds);
+  const durationTotalNumber = Number(durationTotal);
+
 
   return (
     <div
@@ -175,16 +209,17 @@ export default async function FonctionnalitySection() {
             </div>
             <div className="flex flex-col gap-5 py-4">
               <div className="flex items-center gap-5">
-                <NumberTicker value={99} />
+                <NumberTicker value={durationTotalNumber} />
                 <div className="flex items-center text-2xl gap-2">
                   <span className="font-medium">Heures de cours</span>
                   <StickyNote />
                 </div>
               </div>
               <div className="text-lg">
-                Il y a un total de 99 heures de cours disponibles, vous offrant
-                une expérience d'apprentissage complète et approfondie. Ces
-                heures de cours sont conçues pour vous progresser rapidement.
+                Il y a un total de {durationTotalNumber} heures de cours
+                disponibles, vous offrant une expérience d'apprentissage
+                complète et approfondie. Ces heures de cours sont conçues pour
+                progresser rapidement.
               </div>
             </div>
           </div>

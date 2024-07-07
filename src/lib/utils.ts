@@ -17,7 +17,15 @@ export const getLessonNumber = () => {
 };
 
 export const getLessonType = () => {
-  const typeLesson = prisma.categories.count();
+  const typeLesson = prisma.categories.count({
+    where: {
+      Lessons: {
+        some: {
+          draft: false,
+        },
+      },
+    },
+  });
   return typeLesson;
 };
 
