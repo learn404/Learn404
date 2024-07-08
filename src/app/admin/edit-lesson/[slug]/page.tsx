@@ -1,10 +1,9 @@
 
+import Footer from "@/components/layout/footer";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
-import { auth } from "@/lib/auth";
+import { currentUser } from "@/lib/current-user";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import Footer from "@/components/layout/footer";
-import { adminCheckAre } from "@/lib/utils";
 import EditLessonForm from "./Form";
 
 async function getServerSideProps() {
@@ -18,25 +17,11 @@ async function getServerSideProps() {
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
-  const session = await auth();
-  if (!session) {
+  const user = await currentUser();
+
+  if (!user?.admin || !user) {
     return redirect("/");
   }
-
-  const adminCheck = await adminCheckAre(session?.user?.email as string);
-
-  if (!adminCheck?.admin || !session || !adminCheck) {
-    return redirect("/");
-  }
-
-  const sessionData = {
-    user: {
-      name: session?.user?.name as string,
-      email: session?.user?.email as string,
-      image: session?.user?.image as string,
-    },
-    expires: session?.expires as string,
-  };
 
   const lesson = await prisma.lessons.findMany({
     where: {
@@ -56,11 +41,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
   
   return (
     <>
-      <HeaderDashboard session={sessionData} title="Modification cours" />
+      <HeaderDashboard user={user} title="Modification cours" />
       <div>
         <EditLessonForm           
-        isAdmin={adminCheck?.admin}
-          session={sessionData}
+          isAdmin={user?.admin}
+          user={user}
           params={params}
           lesson={lesson[0]}
           categoryLesson={categoryLesson[0]}

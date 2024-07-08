@@ -1,43 +1,37 @@
 "use client";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { currentUserType } from "@/lib/current-user";
 import { Coins, Layout, LogOut, Settings, Shield } from "lucide-react";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 
 interface HeaderDashboardProps {
   isAvatar: boolean;
   isAdmin: boolean;
-  session: any;
+  user: currentUserType;
 }
 
 export default function UserDropdown({
   isAvatar,
-  session,
   isAdmin,
+  user,
 }: HeaderDashboardProps) {
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div
-          id="avatarButton"
-          className="rounded-full border border-white p-1 cursor-pointer"
-        >
           {isAvatar ? (
-            <Avatar>
-              <AvatarImage src={session?.user?.image} alt="profile" />
-            </Avatar>
+            <Image src={user?.image ?? ""} alt="profile" width={45} height={45} className="rounded-full border border-white p-1 cursor-pointer" />
           ) : (
             <div className="rounded-full bg-white w-10 h-10"></div>
           )}
-        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-w-52 bg-bg-primary text-torea-50
          border border-white/10 mt-2 -translate-x-2">
         <DropdownMenuLabel>
-          {session?.user?.name ?? "My account"}
+          {user?.name ?? "My account"}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-white/10" />
         <DropdownMenuGroup>

@@ -17,11 +17,11 @@ interface LessonElementProps {
   lesson: Lesson;
 }
 
-const LessonElement = async ({ lesson }: LessonElementProps) => {
+const LessonElement = ({ lesson }: LessonElementProps) => {
   return ( 
     <TooltipProvider delayDuration={100}>
       <Tooltip>
-          <div className="flex flex-col gap-8 p-4 w-[404px] rounded-md border-2 border-gray-800">
+          <div className="flex-1 flex flex-col gap-8 p-4 rounded-md border-2 border-gray-900 bg-gray-950 min-w-80">
             <div className="flex items-center justify-between">
               <div className="rounded-full w-12 h-12 bg-torea-300 flex items-center justify-center">
                 <Code size={20} color="black" />
@@ -30,9 +30,9 @@ const LessonElement = async ({ lesson }: LessonElementProps) => {
                 débutant
               </div>
             </div>
-            <div>
-              <TooltipTrigger className="mb-4">
-                <p className="text-start text-lg font-semibold truncate">{lesson.title}</p>
+            <div className="flex flex-col">
+              <TooltipTrigger className="mb-4 w-auto">
+                <p className="text-start text-base lg:text-lg font-semibold truncate">{lesson.title}</p>
               </TooltipTrigger> 
               <div className="flex items-center gap-3">
                 <Link 

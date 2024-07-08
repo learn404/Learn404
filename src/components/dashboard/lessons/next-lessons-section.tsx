@@ -31,32 +31,31 @@ async function getServerSideProps() {
 
 interface NextLessonsProps {
   isAdmin: boolean;
-  section: "all" | "next";
 }
 
-const LessonsSection = async ({ isAdmin, section }: NextLessonsProps) => {
+const NextLessonsSection = async ({ isAdmin }: NextLessonsProps) => {
 
   const lessons = await getServerSideProps();
 
   return ( 
     <div className="text-torea-50">
       {isAdmin ? (
-        <ul className="flex items-start gap-4">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {lessons.map((lesson) => (
-            <LessonElement key={`next:${lesson.id}`} lesson={lesson}/>
+            <LessonElement key={`next:${lesson.id}`} lesson={lesson}/>            
           ))}
-        </ul>
+        </div>
       ):(
-        <ul className="flex items-start gap-4">
+        <div className="flex items-start gap-4">
           {lessons
             .filter((lesson) => !lesson.draft)
             .map((lesson) => (
               <LessonElement key={`all:${lesson.id}`} lesson={lesson} />
             ))}
-        </ul>
+        </div>
       )}
     </div>
    );
 }
  
-export default LessonsSection;
+export default NextLessonsSection;

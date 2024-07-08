@@ -1,45 +1,19 @@
-import prisma from "@/lib/prisma";
+import { currentUserType } from "@/lib/current-user";
 import Image from "next/image";
 import Link from "next/link";
 import UserDropdown from "./userDropDown";
 
-type sessionData = {
-  user: {
-    name: string | null;
-    email: string | null;
-    image: string | null;
-  };
-  expires: string | null;
-};
-
 interface HeaderDashboardProps {
-  session: sessionData;
+  user: currentUserType;
   title: string;
 }
 
 export default async function HeaderDashboard({
-  session,
+  user,
   title,
 }: HeaderDashboardProps) {
-  let isAvatar = false;
-  let isAdmin = false;
-
-  if (session) {
-    isAvatar = session?.user?.image ? true : false;
-
-    const adminCheck = await prisma.user.findFirst({
-      where: {
-        email: session?.user?.email,
-      },
-      select: {
-        admin: true,
-      },
-    });
-
-    if (adminCheck) {
-      isAdmin = adminCheck.admin;
-    }
-  }
+  const isAvatar = user?.image ? true : false;
+  const isAdmin = user?.admin;
 
   return (
     <header className="sticky top-0 z-10 w-full bg-black shadow backdrop-blur border-b-2 border-white/10 py-2 mb-5">
@@ -59,8 +33,8 @@ export default async function HeaderDashboard({
           <h1 className="text-xl font-semibold text-torea-50">{title}</h1>
         </div>
         <div className="flex flex-1 items-center space-x-2 justify-end">
-        
-          <UserDropdown session={session} isAdmin={isAdmin} isAvatar={isAvatar} />
+          {/* <ModeToggle /> */}
+          <UserDropdown user={user} isAdmin={isAdmin} isAvatar={isAvatar} />
         </div>
       </div>
     </header>

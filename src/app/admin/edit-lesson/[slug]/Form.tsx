@@ -1,21 +1,22 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { currentUserType } from "@/lib/current-user";
 import { Loader2 } from "lucide-react";
-import { editLesson } from "./editLesson";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { editLesson } from "./editLesson";
 
 interface EditLessonFormProps {
     isAdmin: boolean;
-    session: any;
+    user: currentUserType;
     params: { slug: string };
     lesson: any;
     categoryLesson: any;
   }
 export default function EditLessonForm({
-    session,
+    user,
     params,
     lesson,
     categoryLesson
@@ -60,7 +61,7 @@ export default function EditLessonForm({
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ slug: params.slug, userId: session.user.id }),
+          body: JSON.stringify({ slug: params.slug, userId: user.id }),
         });
 
         if (response.ok) {

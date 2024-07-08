@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const { userId, lessonId } = await req.json();
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!checkProgress) {
-      await prisma.lessonProgress.create({
+      const progress = await prisma.lessonProgress.create({
         data: {
           userId: userId,
           lessonId: lessonId,

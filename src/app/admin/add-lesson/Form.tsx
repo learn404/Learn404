@@ -1,20 +1,21 @@
 "use client";
 
-import Image from "next/image";
-import { useState, useEffect } from 'react';
-import { Loader2 } from "lucide-react";
-import { addLesson } from "./addLesson";
 import { Button } from "@/components/ui/button";
+import { currentUserType } from "@/lib/current-user";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { addLesson } from "./addLesson";
 
 interface AddLessonFormProps {
   isAdmin: boolean;
   isAvatar: boolean;
-  session: any;
+  user: currentUserType;
 }
 
 export default function AddLessonForm({
-  session,
+  user,
   isAvatar,
   
 }: AddLessonFormProps) {
@@ -267,7 +268,7 @@ export default function AddLessonForm({
                     <div className="text-gray-400 flex items-center mt-2">
                       {isAvatar ? (
                         <Image
-                          src={session?.user?.image}
+                          src={user?.image || ""}
                           alt="profile"
                           width={40}
                           height={40}
@@ -277,7 +278,7 @@ export default function AddLessonForm({
                         <div className="rounded-full bg-white w-10 h-10"></div>
                       )}
                       <label className="ml-2" htmlFor="author">
-                        {session?.user?.name}
+                        {user?.name}
                       </label>
                     </div>
                   </div>

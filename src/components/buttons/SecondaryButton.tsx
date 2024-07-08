@@ -7,6 +7,7 @@ interface Props {
   type?: "button" | "submit" | "reset";
   redirectTo?: string;
   onClick?: () => void;
+  className?: string;
 }
 
 export default function SecondaryButton({
@@ -14,6 +15,7 @@ export default function SecondaryButton({
   type = "submit",
   redirectTo,
   onClick,
+  className,
 }: Props) {
   const handleClick = () => {
     if (redirectTo) {
@@ -27,7 +29,9 @@ export default function SecondaryButton({
     <button
       type={type}
       onClick={handleClick}
-      className="z-50 flex items-center gap-4 border border-white/10 rounded-md px-3.5 py-2.5 text-xs md:text-sm font-semibold text-white shadow-sm hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+      className={`z-50 flex items-center gap-4 border border-white/10 rounded-md px-3.5 py-2.5 text-xs md:text-sm font-semibold
+       text-white shadow-sm hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 
+       focus-visible:outline-indigo-500 ${className}`}
     >
       {children}
     </button>
