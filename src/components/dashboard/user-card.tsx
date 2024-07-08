@@ -22,7 +22,7 @@ const UserCard = ({ user }: UserCardProps) => {
             </p>
           </div> 
           <p className="font-semibold text-sm text-gray-500">Membre</p> 
-          <SecondaryButton redirectTo="/dashboard/settings" className="mt-4">Settings</SecondaryButton>
+          <SecondaryButton redirectTo="/dashboard/settings" className="mt-4">Paramètres</SecondaryButton>
         </div>
       </div>
 

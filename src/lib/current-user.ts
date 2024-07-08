@@ -9,6 +9,7 @@ export type currentUserType = {
   image: string | null;
   isMember: boolean;
   admin: boolean;
+  createdAt: Date;
 }
 
 export const currentUser = async () => {
@@ -30,6 +31,7 @@ export const currentUser = async () => {
       email: true,
       isMember: true,
       admin: true,
+      createdAt: true,
     },
   });
 

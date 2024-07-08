@@ -1,7 +1,7 @@
 import CategorieLessonsSection from "@/components/dashboard/lessons/categories-lessons-section";
 import NextLessonsSection from "@/components/dashboard/lessons/next-lessons-section";
 import UserCard from "@/components/dashboard/user-card";
-import { ContentLayout } from "@/components/layout/content-layout";
+import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import Footer from "@/components/layout/footer";
 import { Separator } from "@/components/ui/separator";
 import { currentUser } from "@/lib/current-user";
@@ -11,7 +11,7 @@ export default async function Dashboard() {
   const user = await currentUser();
 
   return (
-      <ContentLayout title="Dashboard" user={user}>
+      <DashboardLayout title="Dashboard" user={user}>
         <main className="max-w-8xl mx-auto py-12 space-y-12 container">
           <UserCard user={user} />
           <section>
@@ -24,6 +24,6 @@ export default async function Dashboard() {
           </section>
         </main>
         <Footer />
-      </ContentLayout>
+      </DashboardLayout>
   );
 }

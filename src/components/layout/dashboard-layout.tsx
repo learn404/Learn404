@@ -1,13 +1,13 @@
 import { currentUserType } from "@/lib/current-user";
 import HeaderDashboard from "./headerDashboard/headerDashboard";
 
-interface ContentLayoutProps {
+interface DashboardLayoutProps {
   user: currentUserType;
   title: string;
   children: React.ReactNode;
 }
 
-export function ContentLayout({ user, title, children }: ContentLayoutProps) {
+export function DashboardLayout({ user, title, children }: DashboardLayoutProps) {
 
   return (
     <div>
