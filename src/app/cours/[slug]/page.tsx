@@ -181,7 +181,11 @@ export default async function LessonPage({ params }: Params): Promise<JSX.Elemen
                 <SecondaryButton redirectTo={`/admin/edit-lesson/${params.slug}`}>
                   Modifier le cours
                 </SecondaryButton>
-                <ChapterLessonButton params={params} />
+                {lesson.playbackId ? (
+                  <ChapterLessonButton params={params} />
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               ""
