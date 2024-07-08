@@ -8,17 +8,18 @@ import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface HeaderDashboardProps {
-  isAvatar: boolean;
-  isAdmin: boolean;
+
+interface UserDropdownProps {
   user: currentUserType;
+  isAdmin: boolean;
+  isAvatar: boolean;
 }
 
 export default function UserDropdown({
   isAvatar,
   isAdmin,
   user,
-}: HeaderDashboardProps) {
+}: UserDropdownProps) {
 
   return (
     <DropdownMenu>
