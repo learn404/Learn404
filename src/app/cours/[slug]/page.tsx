@@ -152,7 +152,11 @@ export default async function LessonPage({
                 <SecondaryButton redirectTo={`/admin/edit-lesson/${params.slug}`}>
                   Modifier le cours
                 </SecondaryButton>
-                <ChapterLessonButton params={params} />
+                {lesson.playbackId ? (
+                  <ChapterLessonButton params={params} />
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               ""
