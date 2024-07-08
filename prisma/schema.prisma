@@ -95,6 +95,7 @@ model Lessons {
   updatedAt DateTime @updatedAt
 
   LessonProgress LessonProgress[]
+  LessonChapter LessonChapter[]
 }
 
 model LessonProgress {
@@ -110,4 +111,13 @@ model LessonProgress {
   User   User    @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+
+
+model LessonChapter {
+  id        String   @id @default(cuid())
+  id_lesson String
+  name      String
+  start     Int
+  Lessons   Lessons @relation(fields: [id_lesson], references: [id])
 }
