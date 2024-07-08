@@ -1,17 +1,11 @@
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { Lessons } from "@prisma/client";
 import { Code } from "lucide-react";
 import Link from "next/link";
 
-type Lesson = {
-  id: string;
-  title: string;
-  description: string | null;
-  draft: boolean;
-  newLesson: boolean;
-  slug: string;
-}
+type Lesson = Lessons;
 
 interface LessonElementProps {
   lesson: Lesson;
@@ -21,10 +15,11 @@ const LessonElement = ({ lesson }: LessonElementProps) => {
   return ( 
     <TooltipProvider delayDuration={100}>
       <Tooltip>
-          <div className="flex-1 flex flex-col gap-8 p-4 rounded-md border-2 border-gray-900 bg-gray-950 min-w-80">
+          <div className="flex-1 flex flex-col gap-8 p-4 rounded-md border-2 border-gray-800 bg-gray-950 min-w-80">
             <div className="flex items-center justify-between">
-              <div className="rounded-full w-12 h-12 bg-torea-300 flex items-center justify-center">
-                <Code size={20} color="black" />
+              <div className="rounded-full w-12 h-12 bg-gray-800 flex items-center justify-center">
+                <Code size={23} color="#eef2ff" />
+                {/* {lesson.sort_number} */}
               </div>
               <div className="px-3 py-1 rounded-full bg-torea-950/60 border-2 border-torea-900 text-sm">
                 débutant
@@ -46,7 +41,7 @@ const LessonElement = ({ lesson }: LessonElementProps) => {
                 </Link>
                 <Separator orientation="vertical" className={cn('h-10')} />
                 <span className="font-semibold text-sm text-gray-300">
-                  2h
+                  {lesson.duration ?? "Durée introuvable"}
                 </span>
               </div>
             </div>

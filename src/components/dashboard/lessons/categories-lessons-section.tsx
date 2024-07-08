@@ -4,7 +4,14 @@ import LessonElement from "./lesson-element";
 async function getServerSideProps() {
   const res = await prisma.categories.findMany({
     include: {
-      Lessons: true,
+      Lessons: {
+        orderBy: {
+          sort_number: 'asc'
+        }
+      }
+    },
+    orderBy: {
+      sort_number: 'asc'
     }
   })
 
