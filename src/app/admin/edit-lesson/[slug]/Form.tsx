@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { editLesson } from "./editLesson";
+import { toast } from "react-toastify";
 
 interface EditLessonFormProps {
     isAdmin: boolean;
@@ -46,18 +47,32 @@ export default function EditLessonForm({
         try {
           const formData = new FormData(event.currentTarget);
           const response = await editLesson(formData, params);
-          console.log(response);
         } catch (error) {
           console.error('Error submitting form:', error);
         } finally {
           setIsLoading(false);
         }
       };
+      
+      const handleDelete = async () => {
+        const response = await fetch('/api/lessons/delete-lesson', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ slug: params.slug, userId: session.user.id }),
+        });
 
-      console.log(lesson, 'lesson');
-      console.log(categoryLesson, 'categoryLesson');
-      console.log(categories, 'categories');
-      console.log(params, 'params');
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          router.push('/admin');
+          router.refresh();
+          toast.success('Le cours a été supprimé avec succès');
+        } else {
+          toast.error('Le cours n\'a pas été supprimé');
+        }
+      };
 
     return (
         <>
@@ -85,7 +100,7 @@ export default function EditLessonForm({
                       id="category"
                       name="category"
                       autoComplete="category-name"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
                       <option value={categoryLesson?.id}>
                         {categoryLesson?.name}
@@ -133,7 +148,7 @@ export default function EditLessonForm({
                         type="text"
                         name="slug_title"
                         id="slug_title"
-                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        className="block flex-1 border-0 bg-transparent py-1.5 pl-0.5 text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder={lesson?.slug}
                       />
                     </div>
@@ -152,7 +167,7 @@ export default function EditLessonForm({
                       id="about"
                       name="about"
                       rows={3}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       defaultValue={lesson?.description || ""}
                     />
                   </div>
@@ -185,7 +200,7 @@ export default function EditLessonForm({
                       name="repository_url"
                       id="repository_url"
                       placeholder={lesson?.repository_url || ""}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -202,7 +217,7 @@ export default function EditLessonForm({
                       type="url"
                       name="video_url"
                       id="video_url"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="https://drive.google.com/uc?id=ID_DU_FICHIER"
                     />
                   </div>
@@ -276,7 +291,7 @@ export default function EditLessonForm({
           </div>
 
           <div className="flex items-center gap-x-6">
-            <Button variant="outline" type="button">Supprimer le cours</Button>
+            <Button variant="outline" type="button" onClick={handleDelete}>Supprimer le cours</Button>
             <Button variant="default" type="submit" disabled={isLoading}>{isLoading ? (<Loader2 className="w-4 h-4 animate-spin"/>) : ("Modifier le cours")}</Button>
           </div>
         </form>
