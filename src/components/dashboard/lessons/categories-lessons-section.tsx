@@ -1,31 +1,12 @@
-import prisma from "@/lib/prisma";
+import { Categories, Lessons } from "@prisma/client";
 import LessonElement from "./lesson-element";
-
-async function getServerSideProps() {
-  const res = await prisma.categories.findMany({
-    include: {
-      Lessons: {
-        orderBy: {
-          sort_number: 'asc'
-        }
-      }
-    },
-    orderBy: {
-      sort_number: 'asc'
-    }
-  })
-
-  const categories = res.filter(category => category.Lessons.length > 0);
-  return categories;
-}
 
 interface NextLessonsProps {
   isAdmin: boolean;
+  categories: (Categories & { Lessons: Lessons[] })[];
 }
 
-const CategorieLessonsSection = async ({ isAdmin }: NextLessonsProps) => {
-
-  const categories = await getServerSideProps();
+const CategorieLessonsSection = async ({ isAdmin, categories }: NextLessonsProps) => {
 
   return ( 
     <div className="text-torea-50">

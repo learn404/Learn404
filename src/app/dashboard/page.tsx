@@ -5,10 +5,30 @@ import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import Footer from "@/components/layout/footer";
 import { Separator } from "@/components/ui/separator";
 import { currentUser } from "@/lib/current-user";
+import prisma from "@/lib/prisma";
+
+async function getCategoriesWithLessons() {
+  const res = await prisma.categories.findMany({
+    include: {
+      Lessons: {
+        orderBy: {
+          sort_number: 'asc'
+        }
+      }
+    },
+    orderBy: {
+      sort_number: 'asc'
+    }
+  })
+
+  const categories = res.filter(category => category.Lessons.length > 0);
+  return categories;
+}
 
 export default async function Dashboard() {
 
   const user = await currentUser();
+  const categories = await getCategoriesWithLessons();
 
   return (
       <DashboardLayout title="Dashboard" user={user}>
@@ -20,7 +40,7 @@ export default async function Dashboard() {
           </section>
           <Separator />
           <section>
-            <CategorieLessonsSection isAdmin={user.admin} />
+            <CategorieLessonsSection categories={categories} isAdmin={user.admin} />
           </section>
         </main>
         <Footer />

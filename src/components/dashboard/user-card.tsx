@@ -1,4 +1,5 @@
 import { currentUserType } from "@/lib/current-user";
+import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import { UserChart } from "./user-chart";
@@ -7,7 +8,30 @@ interface UserCardProps {
   user: currentUserType;
 }
 
-const UserCard = ({ user }: UserCardProps) => {
+
+const UserCard = async ({ user }: UserCardProps) => {
+  
+  async function getLessonsCompleted() {
+    const lessonsCompleted = await prisma.user.findUnique({
+      where: {
+        id: user.id,
+      },
+      select: {
+        _count: {
+          select: {
+            lessonProgress: true,
+          }
+        }
+      }
+    })
+
+    const lessons = await prisma.lessons.findMany({})
+
+    return { lessonsCompleted, lessonsNumber: lessons.length };
+  }
+
+  const { lessonsCompleted, lessonsNumber } = await getLessonsCompleted();
+  
   return ( 
     <div className="mx-auto flex items-center justify-between flex-wrap gap-4 py-4 px-8 md:py-6 md:px-12 rounded-lg border-2 border-gray-800 bg-gray-950 w-full max-w-4xl">
       <div className="flex items-start">
@@ -33,7 +57,7 @@ const UserCard = ({ user }: UserCardProps) => {
         </div>
       </div>
 
-      <UserChart />
+      <UserChart lessonsNumber={lessonsNumber} lessonsCompleted={lessonsCompleted?._count.lessonProgress} />
     </div>
    );
 }
