@@ -3,14 +3,15 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
-import MuxPlayer from "@mux/mux-player-react";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import FinishLesson from "@/components/buttons/FinishLessonButton";
 import SheetLessons from "@/components/sheet/sheetLessons";
+import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
+import  ChapterLessonButton  from "@/components/buttons/ChapterLessonButton";
+
 
 const getPageContent = async (slug: string) => {
   const { meta, content } = await getPostBySlug(slug);
-
   return { meta, content };
 };
 
@@ -21,9 +22,7 @@ interface Params {
   };
 }
 
-export async function generateMetadata({
-  params,
-}: Params): Promise<{ title: string }> {
+export async function generateMetadata({ params }: Params): Promise<{ title: string }> {
   try {
     const title = await prisma.lessons.findFirst({
       where: {
@@ -40,9 +39,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function LessonPage({
-  params,
-}: Params): Promise<JSX.Element> {
+export default async function LessonPage({ params }: Params): Promise<JSX.Element> {
   const { content } = await getPageContent(params.slug);
 
   const session = await auth();
@@ -132,6 +129,13 @@ export default async function LessonPage({
     redirect("/dashboard");
   }
 
+  const chapters = await prisma.lessonChapter.findMany({
+    where: {
+      id_lesson: lesson.id,
+    },
+  });
+  console.log(chapters, 'chapter page');
+
   return (
     <>
       <header className="z-50 relative">
@@ -140,37 +144,29 @@ export default async function LessonPage({
       <div className="z-50 fixed top-20 left-2 w-full h-full">
         <SheetLessons userId={user.id} />
       </div>
-  
+
       <main className="text-white flex justify-center flex-col z-0">
-        {/* https://drive.google.com/uc?id=ID_DU_FICHIER pour upload video sur google drive */}
-  
         {lesson.playbackId ? (
-          <div className="mx-auto w-[75vw]">
-            <MuxPlayer
-              stream-type="on-demand"
-              autoPlay={false}
-              max-resolution="1080p"
-              preload="false"
+          <div className="mx-auto w-[75vw] z-50">
+            <VideoPlayerWithChapters
               playbackId={lesson.playbackId}
-              accentColor="#fefefe"
-              metadata={{
-                video_id: lesson.id,
-                video_title: lesson.title,
-              }}
+              videoId={lesson.id}
+              videoTitle={lesson.title}
+              chapters={chapters}
             />
           </div>
         ) : (
           <p className="m-auto">Vidéo pas disponible</p>
         )}
-        <div className="bg-indigo-800 max-w-md lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
+        <div className="bg-indigo-800 max-w-[90vw] lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
           <h1 className="text-lg lg:text-4xl text-center font-bold">
             {lesson.title}
           </h1>
-          <div className="flex justify-center items-center mt-3 lg:mt-10 gap-10">
+          <div className="flex flex-wrap justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
             <SecondaryButton type="button" redirectTo="/dashboard">
               Dashboard
             </SecondaryButton>
-  
+
             {!nextLesson?.slug ? (
               <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
                 Cours précédent
@@ -181,19 +177,22 @@ export default async function LessonPage({
               </SecondaryButton>
             )}
             {user.admin ? (
-              <SecondaryButton redirectTo={`/admin/edit-lesson/${params.slug}`}>
-                Modifier le cours
-              </SecondaryButton>
+              <>
+                <SecondaryButton redirectTo={`/admin/edit-lesson/${params.slug}`}>
+                  Modifier le cours
+                </SecondaryButton>
+                <ChapterLessonButton params={params} />
+              </>
             ) : (
               ""
             )}
           </div>
         </div>
-        <div className="py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10">
+        <div className="z-50 py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10">
           {content}
         </div>
-        <div className="bg-indigo-800 max-w-sm lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
-          <div className="flex justify-center items-center gap-10">
+        <div className="bg-indigo-800 max-w-[90vw] lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
+          <div className="flex  justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
             <SecondaryButton type="button" redirectTo="/dashboard">
               Dashboard
             </SecondaryButton>
