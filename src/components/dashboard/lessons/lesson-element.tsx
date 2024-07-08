@@ -17,7 +17,7 @@ interface LessonElementProps {
   lesson: Lesson;
 }
 
-const LessonElement = async ({ lesson }: LessonElementProps) => {
+const LessonElement = ({ lesson }: LessonElementProps) => {
   return ( 
     <TooltipProvider delayDuration={100}>
       <Tooltip>
