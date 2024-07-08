@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const { userId, lessonId } = await req.json();
@@ -11,20 +11,16 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log(checkProgress);
-
     if (!checkProgress) {
       const progress = await prisma.lessonProgress.create({
         data: {
           userId: userId,
           lessonId: lessonId,
-          completed: !checkProgress?.completed, //
+          completed: true,
         },
       });
     } else {
-      console.log("update");
-      console.log(!checkProgress?.completed);
-      const progress = await prisma.lessonProgress.update({
+      await prisma.lessonProgress.update({
         where: {
           id: checkProgress.id,
         },

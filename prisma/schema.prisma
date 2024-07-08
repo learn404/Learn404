@@ -70,9 +70,10 @@ model Waitlist {
 
 model Categories {
   id        String    @id @default(cuid())
-  name      String    @unique
-  createdAt DateTime  @default(now())
-  Lessons   Lessons[]
+  name        String    @unique
+  sort_number Int?      @default(0)
+  createdAt   DateTime  @default(now())
+  Lessons     Lessons[]
 }
 
 model Lessons {
@@ -83,6 +84,8 @@ model Lessons {
   categoryId     String
   description    String?
   playbackId     String?
+  videoId        String?
+  duration       String?
   repository_url String?
   sort_number    Int        @default(0)
 
@@ -92,6 +95,7 @@ model Lessons {
   updatedAt DateTime @updatedAt
 
   LessonProgress LessonProgress[]
+  LessonChapter LessonChapter[]
 }
 
 model LessonProgress {
@@ -107,4 +111,13 @@ model LessonProgress {
   User   User    @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+
+
+model LessonChapter {
+  id        String   @id @default(cuid())
+  id_lesson String
+  name      String
+  start     Int
+  Lessons   Lessons @relation(fields: [id_lesson], references: [id])
 }

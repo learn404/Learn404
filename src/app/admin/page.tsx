@@ -1,28 +1,41 @@
-import PrimaryButton from "@/components/buttons/PrimaryButton";
+import Footer from "@/components/layout/footer";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import LessonTable from "./LessonTable";
-import UserTable from "./UserTable";
+import { SquarePen } from "lucide-react";
 
-export default async function AdminDashboard() {
+import { User, userColumns } from "./UserColumns";
+import { Lesson, lessonColumns } from "./LessonColumns";
+import { UserTable } from "./user-table";
+import { LessonTable } from "./lesson-table";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
+export default async function Admin() {
+
   const session = await auth();
+
   if (!session) {
-    return redirect("/");
+    redirect("/join");
   }
 
-  const adminCheck = await prisma.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: {
-      email: session?.user?.email,
+      email: session?.user?.email as string,
     },
     select: {
+      id: true,
+      name: true,
+      email: true,
+      image: true,
       admin: true,
+      isMember: true,
     },
   });
 
-  if (!adminCheck?.admin || !session || !adminCheck) {
-    return redirect("/");
+  if (!user?.admin) {
+    redirect("/");
   }
 
   const sessionData = {
@@ -34,27 +47,39 @@ export default async function AdminDashboard() {
     expires: session?.expires as string,
   };
 
+  const allUsers = await prisma.user.findMany();
+  const allLessons = await prisma.lessons.findMany();
+  const allCategories = await prisma.categories.findMany({
+    where: {
+      id: {
+        in: allLessons.map((lesson) => lesson.categoryId),
+      },
+    },
+    select: {
+      id: true, 
+      name: true,
+    },
+  });
+  
+  allLessons.forEach((lesson) => {
+    lesson.categoryId = allCategories.find(
+      (category) => category.id === lesson.categoryId
+    )?.name.toUpperCase() || "";
+  });
+  
+
   return (
     <div>
-      <HeaderDashboard session={sessionData} title="Admin" />
-      <main className="px-12">
-        <h1 className="py-8 text-2xl font-bold">Admin Dashboard</h1>
-        <PrimaryButton redirectTo="/admin/add-lesson">Add Lesson</PrimaryButton>
-        <div className="grid grid-cols-none md:grid-cols-12 gap-4">
-          <div className="md:col-span-7 bg-white/10 p-4 rounded-lg">
-            <h2 className="p-2 font-semibold text-xl">Users</h2>
-            <div className="z-10  max-h-[40vh] overflow-y-auto shadow-md sm:rounded-lg">
-              <UserTable />
-            </div>
-          </div>
-          <div className="md:col-span-5 md:col-start-8 bg-white/10 p-4 rounded-lg">
-            <h2 className="p-2 font-semibold text-xl">Lessons</h2>
-            <div className="z-10 max-h-[40vh] overflow-y-auto shadow-md sm:rounded-lg">
-              <LessonTable />
-            </div>
-          </div>
-        </div>
-      </main>
+      <HeaderDashboard session={sessionData} title="Admin"></HeaderDashboard>
+      <Link href="/admin/add-lesson">
+        <Button variant="default" className="mx-10"><SquarePen className="mr-1 w-4"/>
+        Ajouter un cours</Button>
+      </Link>
+      <div className="mx-auto px-10 lg:flex gap-10">
+        <UserTable columns={userColumns} data={allUsers} />
+        <LessonTable columns={lessonColumns} data={allLessons} />
+      </div>
+      <Footer />
     </div>
   );
 }

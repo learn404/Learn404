@@ -24,7 +24,7 @@ export default async function Completion() {
 
   return (
     <div>
-      <HeaderDashboard session={sessionData}/>
+      <HeaderDashboard session={sessionData} title="Confirmation de paiement" />
       <h1>Votre achat a bel et bien été pris en compte, vous avez maintenant accès à votre dashboard</h1>
       <Link href={"/dashboard"}>
         Dashboard

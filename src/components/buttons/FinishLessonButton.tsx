@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 interface FinishLessonButtonProps {
   userId: string;
@@ -11,19 +12,19 @@ interface FinishLessonButtonProps {
   slug: string;
 }
 
-const FinishLessonButton: React.FC<FinishLessonButtonProps> = ({
+const FinishLessonButton = ({
   userId,
   lessonId,
   completed,
   slug,
-}) => {
+}: FinishLessonButtonProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const finishLesson = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/finish-lesson", {
+      const response = await fetch("/api/user/finish-lesson", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,14 +48,15 @@ const FinishLessonButton: React.FC<FinishLessonButtonProps> = ({
   };
 
   return (
-    <button
+    <Button
       type="button"
       onClick={finishLesson}
       className="bg-white text-indigo-800 px-4 py-2 rounded-md"
       disabled={isLoading}
+      variant="outline"
     >
       {isLoading ? "En cours" : completed ? "Terminé" : "Terminer le cours"}
-    </button>
+    </Button>
   );
 };
 

@@ -28,7 +28,7 @@ export default function UserDropdown({
             <div className="rounded-full bg-white w-10 h-10"></div>
           )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-52 bg-bg-primary text-torea-50
+      <DropdownMenuContent className="max-w-52 bg-bg-primary text-torea-50
          border border-white/10 mt-2 -translate-x-2">
         <DropdownMenuLabel>
           {user?.name ?? "My account"}
@@ -41,7 +41,7 @@ export default function UserDropdown({
               <span>Tableau de bord</span>
             </DropdownMenuItem>
           </Link>
-          <Link href="">
+          <Link href="/settings">
             <DropdownMenuItem className="cursor-pointer">
               <Coins className="mr-2 w-4 h-4" />
               <span>Gains</span>
