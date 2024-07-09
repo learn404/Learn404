@@ -1,56 +1,30 @@
-import prisma from "@/lib/prisma";
+import { Lessons } from "@prisma/client";
 import LessonElement from "./lesson-element";
-
-async function getServerSideProps() {
-  const res = await prisma.lessons.findMany({
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      draft: true,
-      newLesson: true,
-      slug: true,
-      sort_number: true,
-    },
-    orderBy: {
-      sort_number: "asc",
-    },
-    take: 3,
-  });
-  
-  const lessons = res.map((lesson) => ({
-    id: lesson.id,
-    title: lesson.title,
-    description: lesson.description,
-    draft: lesson.draft,
-    newLesson: lesson.newLesson,
-    slug: lesson.slug,
-  }));
-  return lessons;
-}
 
 interface NextLessonsProps {
   isAdmin: boolean;
+  lessons: (Lessons & { status?: 1 | 2 | 3 })[]; // This is a union type
+  // lessonsCompleted: { lessonProgress: LessonProgress[], _count: { lessonProgress: number } };
 }
 
-const NextLessonsSection = async ({ isAdmin }: NextLessonsProps) => {
+const NextLessonsSection = async ({ isAdmin, lessons }: NextLessonsProps) => {
 
-  const lessons = await getServerSideProps();
+  let nextLessons = lessons.filter(lesson => lesson.status === 1 || lesson.status === 2).slice(0, 3);
 
   return ( 
     <div className="text-torea-50">
       {isAdmin ? (
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {lessons.map((lesson) => (
-            <LessonElement key={`next:${lesson.id}`} lesson={lesson}/>            
+        <div className="flex flex-wrap gap-4">
+          {[...nextLessons].map((lesson) => (
+            <LessonElement key={`next:${lesson.id}`} lesson={lesson}/>    
           ))}
         </div>
-      ):(
+      ) : (
         <div className="flex items-start gap-4">
-          {lessons
+          {[...nextLessons]
             .filter((lesson) => !lesson.draft)
             .map((lesson) => (
-              <LessonElement key={`all:${lesson.id}`} lesson={lesson} />
+              <LessonElement key={`next:${lesson.id}`} lesson={lesson} />
             ))}
         </div>
       )}
