@@ -1,11 +1,14 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import MuxPlayer from "@mux/mux-player-react";
 
 interface VideoPlayerWithChaptersProps {
   playbackId: string;
   videoId: string;
   videoTitle: string;
+  userId: string;
+  lessonId: string;
+  lessonProgress: any;
   chapters: any;
 }
 
@@ -14,11 +17,16 @@ const VideoPlayerWithChapters: React.FC<VideoPlayerWithChaptersProps> = ({
   videoId,
   videoTitle,
   chapters,
-}) => {
-  console.log(chapters, 'chapters');
-  const muxPlayerRef = useRef<any>(null);
+  userId,
+  lessonId,
+  lessonProgress,
 
-  
+}) => {
+  const muxPlayerRef = useRef<any>(null);
+  const [watchedTime, setWatchedTime] = useState(0);
+  const [hasWatchedOneMinute, setHasWatchedOneMinute] = useState(
+    lessonProgress ? true : false);
+
 
   useEffect(() => {
     const muxPlayerEl = muxPlayerRef.current;
@@ -48,10 +56,39 @@ const VideoPlayerWithChapters: React.FC<VideoPlayerWithChaptersProps> = ({
 
     muxPlayerEl?.addEventListener("chapterchange", handleChapterChange);
 
+    const handleTimeUpdate = () => {
+      if (muxPlayerEl) {
+        setWatchedTime((prevTime) => prevTime + muxPlayerEl.currentTime - prevTime);
+      }
+    };
+
+    muxPlayerEl?.addEventListener("timeupdate", handleTimeUpdate);
+
     return () => {
       muxPlayerEl?.removeEventListener("chapterchange", handleChapterChange);
+      muxPlayerEl?.removeEventListener("timeupdate", handleTimeUpdate);
     };
   }, [chapters]);
+
+  useEffect(() => {
+    if (watchedTime >= 60 && !hasWatchedOneMinute) {
+      setHasWatchedOneMinute(true);
+      const updateProgress = async () => {
+        const response = await fetch("/api/user/progress-lesson", {
+          method: "POST",
+        body: JSON.stringify({
+          userId: userId,
+          lessonId: lessonId,
+          hasWatchedOneMinute: true,
+        }),
+        });
+        console.log("User has watched at least one minute of video.");
+        const data = await response.json();
+        console.log(data);
+      };
+      updateProgress();
+    }
+  }, [watchedTime, hasWatchedOneMinute]);
 
   return (
     <MuxPlayer

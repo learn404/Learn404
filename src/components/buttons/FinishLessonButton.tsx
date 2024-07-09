@@ -24,7 +24,7 @@ const FinishLessonButton = ({
   const finishLesson = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/user/finish-lesson", {
+      const response = await fetch("/api/user/progress-lesson", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 export async function POST(req: NextRequest) {
   try {
-    const { userId, lessonId } = await req.json();
+    const { userId, lessonId, hasWatchedOneMinute } = await req.json();
 
     const checkProgress = await prisma.lessonProgress.findFirst({
       where: {
@@ -11,7 +11,15 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (!checkProgress) {
+    if (!checkProgress && hasWatchedOneMinute) {
+      await prisma.lessonProgress.create({
+        data: {
+          userId: userId,
+          lessonId: lessonId,
+          completed: false,
+        },
+      });
+    } else if ((!hasWatchedOneMinute) && (!checkProgress)) {
       await prisma.lessonProgress.create({
         data: {
           userId: userId,
@@ -19,15 +27,22 @@ export async function POST(req: NextRequest) {
           completed: true,
         },
       });
-    } else {
+    } else if (checkProgress && checkProgress.completed === true) {
+      await prisma.lessonProgress.delete({
+        where: {
+          id: checkProgress.id,
+        },
+      });
+    } else if (checkProgress && checkProgress.completed === false) {
       await prisma.lessonProgress.update({
         where: {
           id: checkProgress.id,
         },
         data: {
-          completed: !checkProgress?.completed,
+          completed: true,
         },
       });
+
     }
 
     return NextResponse.json(
