@@ -87,6 +87,8 @@ model Lessons {
   videoId        String?
   duration       String?
   repository_url String?
+  level          LessonsLevel? @default(BEGINNER)
+  
   sort_number    Int        @default(0)
 
   draft     Boolean  @default(true)
@@ -120,4 +122,10 @@ model LessonChapter {
   name      String
   start     Int
   Lessons   Lessons @relation(fields: [id_lesson], references: [id])
+}
+
+enum LessonsLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
 }
