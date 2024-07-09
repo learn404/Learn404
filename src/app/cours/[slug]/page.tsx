@@ -105,7 +105,16 @@ export default async function LessonPage({
       id_lesson: lesson.id,
     },
   });
-  console.log(chapters, 'chapter page');
+
+  const lessonProgress = await prisma.lessonProgress.findFirst({
+    where: {
+      userId: user.id,
+      lessonId: lesson.id,
+    },
+    select: {
+      completed: true,
+    },
+  });
 
   return (
     <>
@@ -124,6 +133,9 @@ export default async function LessonPage({
               videoId={lesson.id}
               videoTitle={lesson.title}
               chapters={chapters}
+              userId={user.id}
+              lessonId={lesson.id}
+              lessonProgress={lessonProgress}
             />
           </div>
         ) : (
