@@ -9,6 +9,12 @@ interface LessonElementProps {
   lesson: (Lessons & { status?: 1 | 2 | 3 }) | undefined; // This is a union type
 }
 
+const levelMap = {
+  BEGINNER: 'Débutant',
+  INTERMEDIATE: 'Intermédiaire',
+  ADVANCED: 'Avancé',
+}
+
 const LessonElement = ({ lesson }: LessonElementProps) => {
   return ( 
     <TooltipProvider delayDuration={100}>
@@ -20,7 +26,7 @@ const LessonElement = ({ lesson }: LessonElementProps) => {
                 {/* {lesson.sort_number} */}
               </div>
               <div className="px-3 py-1 rounded-full bg-torea-950/60 border-2 border-torea-900 text-sm">
-                débutant
+                {levelMap[lesson?.level!]}
               </div>
             </div>
             <div className="flex flex-col">
