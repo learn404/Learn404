@@ -6,7 +6,7 @@ import {
   PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
-} from "recharts"
+} from "recharts" 
 
 import { ChartConfig, ChartContainer } from "@/components/ui/chart"
 
