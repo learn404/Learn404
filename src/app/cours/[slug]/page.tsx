@@ -1,6 +1,5 @@
 import ChapterLessonButton from "@/components/buttons/ChapterLessonButton";
 import FinishLesson from "@/components/buttons/FinishLessonButton";
-import SecondaryButton from "@/components/buttons/SecondaryButton";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import SheetLessons from "@/components/sheet/sheetLessons";
 import { currentUser } from "@/lib/current-user";
@@ -8,6 +7,8 @@ import { getPostBySlug } from "@/lib/mdx";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const getPageContent = async (slug: string) => {
   const { meta, content } = await getPostBySlug(slug);
@@ -146,24 +147,34 @@ export default async function LessonPage({
             {lesson.title}
           </h1>
           <div className="flex flex-wrap justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
-            <SecondaryButton type="button" redirectTo="/dashboard">
-              Dashboard
-            </SecondaryButton>
+            <Link href="/dashboard">
+              <Button variant="secondary">
+                Tableau de bord
+              </Button>
+            </Link>
+            
+            
 
             {!nextLesson?.slug ? (
-              <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
-                Cours précédent
-              </SecondaryButton>
+              <Link href={`/cours/${previousLesson?.slug}`}>
+                <Button variant="secondary">
+                  Cours précédent
+                </Button>
+              </Link>
             ) : (
-              <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
-                Prochain cours
-              </SecondaryButton>
+              <Link href={`/cours/${nextLesson?.slug}`}>
+                <Button variant="secondary">
+                  Prochain cours
+                </Button>
+              </Link>
             )}
             {user.admin ? (
               <>
-                <SecondaryButton redirectTo={`/admin/edit-lesson/${params.slug}`}>
-                  Modifier le cours
-                </SecondaryButton>
+                <Link href={`/admin/edit-lesson/${params.slug}`}>
+                  <Button variant="secondary">
+                    Modifier le cours
+                  </Button>
+                </Link>
                 {lesson.playbackId ? (
                   <ChapterLessonButton params={params} />
                 ) : (
@@ -180,9 +191,11 @@ export default async function LessonPage({
         </div>
         <div className="bg-indigo-800 max-w-[90vw] lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
           <div className="flex  justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
-            <SecondaryButton type="button" redirectTo="/dashboard">
-              Dashboard
-            </SecondaryButton>
+            <Link href="/dashboard">
+              <Button variant="secondary">
+                Tableau de bord
+              </Button>
+            </Link>
             <FinishLesson
               userId={user.id}
               lessonId={lesson.id}
@@ -190,13 +203,17 @@ export default async function LessonPage({
               slug={params.slug}
             />
             {!nextLesson?.slug ? (
-              <SecondaryButton redirectTo={`/cours/${previousLesson?.slug}`}>
-                Cours précédent
-              </SecondaryButton>
+              <Link href={`/cours/${previousLesson?.slug}`}>
+                <Button variant="secondary">
+                  Cours précédent
+                </Button>
+              </Link>
             ) : (
-              <SecondaryButton redirectTo={`/cours/${nextLesson?.slug}`}>
-                Prochain cours
-              </SecondaryButton>
+              <Link href={`/cours/${nextLesson?.slug}`}>
+                <Button variant="secondary">
+                  Prochain cours
+                </Button>
+              </Link>
             )}
           </div>
           {nextLesson ? (

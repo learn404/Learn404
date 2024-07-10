@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import PrimaryButton from "../buttons/PrimaryButton";
-import SecondaryButton from "../buttons/SecondaryButton";
 import AnimatedShinyText from "../magicui/animated-shiny-text";
 import RetroGrid from "../magicui/retro-grid";
 import SeparateAway from "../magicui/separate-away";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -39,14 +39,18 @@ export default function HeroSection() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <PrimaryButton redirectTo="/join" type="button">
-            <span className="md:block font-medium">Rejoindre l'aventure</span>
-          </PrimaryButton>
-          <SecondaryButton redirectTo="/" type="button">
-            <span className="md:block font-medium">
-              Besoin d'en savoir plus ?
+          <Link href="/join">
+            <Button variant="default">
+              <span className="md:block font-medium">Rejoindre l'aventure</span>
+            </Button>
+          </Link>
+          <Link href="/">
+            <Button variant="secondary">
+              <span className="md:block font-medium">
+                Besoin d'en savoir plus ?
             </span>
-          </SecondaryButton>
+          </Button>
+          </Link>
         </div>
       </div>
 
