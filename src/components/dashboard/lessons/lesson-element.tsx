@@ -53,7 +53,8 @@ const LessonElement = ({ lesson }: LessonElementProps) => {
                   ?  <CheckCheck width={20} height={20} color="hsl(var(--chart-2))" />
                   : lesson?.status === 2 
                     ? <CircleDashed width={20} height={20} color="hsl(var(--chart-3))" /> 
-                    : "A voir"}
+                    : <CircleDashed width={20} height={20} color="#6b7280" />
+                }
                 </span>
               </div>
             </div>
