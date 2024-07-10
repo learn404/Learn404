@@ -6,7 +6,7 @@ import { CheckCheck, CircleDashed, Code } from "lucide-react";
 import Link from "next/link";
 
 interface LessonElementProps {
-  lesson: (Lessons & { status?: 1 | 2 | 3 }) | undefined; // This is a union type
+  lesson: (Lessons & { status?: 1 | 2 | 3 }) | undefined;
 }
 
 const levelMap = {
