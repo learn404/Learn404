@@ -3,7 +3,6 @@ import FinishLesson from "@/components/buttons/FinishLessonButton";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import SheetLessons from "@/components/sheet/sheetLessons";
 import { currentUser } from "@/lib/current-user";
-
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
