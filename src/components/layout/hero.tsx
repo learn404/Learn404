@@ -58,12 +58,12 @@ export default function HeroSection() {
         <div className="relative w-screen flex justify-center">
           <div>
             <Image
-              src="/img/Hero_img.webp"
+              src="/img/hero.png"
               alt="hero image"
               width="0"
               height="0"
-              sizes="100vw"
-              className="w-full h-auto"
+              sizes="75vw"
+              className="w-full h-auto rounded-2xl"
             />
           </div>
           <div className="pointer-events-none absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#02030C] "></div>

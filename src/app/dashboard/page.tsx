@@ -24,7 +24,6 @@ export default async function Dashboard() {
   const { categories, lessons } = await getCategoriesWithLessons();
   const lessonsStartedAndCompleted = await getLessonsStartedAndCompleted(user);
 
-  // On ajoute un status à chaque leçon pour savoir si elle est en cours(2), terminée(3) ou non commencée(1)
   lessons.forEach((lesson: (Lessons & { status?: number })) => {
     if (lessonsStartedAndCompleted.lessonProgress.find((lessonProgress) => (lessonProgress.lessonId === lesson.id) && lessonProgress.completed)) {
       lesson.status = 3;

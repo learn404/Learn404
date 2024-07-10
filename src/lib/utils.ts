@@ -127,3 +127,7 @@ export async function getCategoriesWithLessons() {
 
   return { categories, lessons };
 }
+
+export const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' });
+}

@@ -3,17 +3,13 @@ import FinishLesson from "@/components/buttons/FinishLessonButton";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import SheetLessons from "@/components/sheet/sheetLessons";
 import { currentUser } from "@/lib/current-user";
-import { getPostBySlug } from "@/lib/mdx";
+
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-const getPageContent = async (slug: string) => {
-  const { meta, content } = await getPostBySlug(slug);
-  return { meta, content };
-};
+import { getLesson } from "@/lib/lesson";
 
 interface Params {
   params: {
@@ -22,7 +18,9 @@ interface Params {
   };
 }
 
-export async function generateMetadata({ params }: Params): Promise<{ title: string }> {
+export async function generateMetadata({
+  params,
+}: Params): Promise<{ title: string }> {
   try {
     const title = await prisma.lessons.findFirst({
       where: {
@@ -42,9 +40,8 @@ export async function generateMetadata({ params }: Params): Promise<{ title: str
 export default async function LessonPage({
   params,
 }: Params): Promise<JSX.Element> {
-  
   const user = await currentUser();
-  const { content } = await getPageContent(params.slug);
+  let post = await getLesson(params.slug);
 
   const lesson = await prisma.lessons.findFirst({
     where: {
@@ -122,11 +119,11 @@ export default async function LessonPage({
       <header className="z-50 relative">
         <HeaderDashboard user={user} title="Cours" />
       </header>
-      <div className="z-50 fixed top-20 left-2 w-full h-full">
+      <div className="z-40 fixed top-20 left-2 ">
         <SheetLessons userId={user.id} />
       </div>
 
-      <main className="text-white flex justify-center flex-col z-0">
+      <main className="text-white flex justify-center flex-col z-50">
         {lesson.playbackId ? (
           <div className="mx-auto w-[75vw] z-50">
             <VideoPlayerWithChapters
@@ -148,32 +145,22 @@ export default async function LessonPage({
           </h1>
           <div className="flex flex-wrap justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
             <Link href="/dashboard">
-              <Button variant="secondary">
-                Tableau de bord
-              </Button>
+              <Button variant="secondary">Tableau de bord</Button>
             </Link>
-            
-            
 
             {!nextLesson?.slug ? (
               <Link href={`/cours/${previousLesson?.slug}`}>
-                <Button variant="secondary">
-                  Cours précédent
-                </Button>
+                <Button variant="secondary">Cours précédent</Button>
               </Link>
             ) : (
               <Link href={`/cours/${nextLesson?.slug}`}>
-                <Button variant="secondary">
-                  Prochain cours
-                </Button>
+                <Button variant="secondary">Prochain cours</Button>
               </Link>
             )}
             {user.admin ? (
               <>
                 <Link href={`/admin/edit-lesson/${params.slug}`}>
-                  <Button variant="secondary">
-                    Modifier le cours
-                  </Button>
+                  <Button variant="secondary">Modifier le cours</Button>
                 </Link>
                 {lesson.playbackId ? (
                   <ChapterLessonButton params={params} />
@@ -186,15 +173,38 @@ export default async function LessonPage({
             )}
           </div>
         </div>
-        <div className="z-50 py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10">
-          {content}
-        </div>
+        <section id="lesson">
+          <script
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "LegalDocument",
+                headline: post.metadata.title,
+                datePublished: post.metadata.publishedAt,
+                dateModified: post.metadata.publishedAt,
+                description: post.metadata.summary,
+                image: post.metadata.image
+                  ? `learn404.com${post.metadata.image}`
+                  : `learn404.com/og?title=${post.metadata.title}`,
+                url: `learn404.com/legal/${post.slug}`,
+                author: {
+                  "@type": "Person",
+                  name: "Nicolas Becharat",
+                },
+              }),
+            }}
+          />
+          <article
+            className="z-50 py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10"
+            dangerouslySetInnerHTML={{ __html: post.source }}
+          ></article>
+        </section>
         <div className="bg-indigo-800 max-w-[90vw] lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
           <div className="flex  justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
             <Link href="/dashboard">
-              <Button variant="secondary">
-                Tableau de bord
-              </Button>
+              <Button variant="secondary">Tableau de bord</Button>
             </Link>
             <FinishLesson
               userId={user.id}
@@ -204,15 +214,11 @@ export default async function LessonPage({
             />
             {!nextLesson?.slug ? (
               <Link href={`/cours/${previousLesson?.slug}`}>
-                <Button variant="secondary">
-                  Cours précédent
-                </Button>
+                <Button variant="secondary">Cours précédent</Button>
               </Link>
             ) : (
               <Link href={`/cours/${nextLesson?.slug}`}>
-                <Button variant="secondary">
-                  Prochain cours
-                </Button>
+                <Button variant="secondary">Prochain cours</Button>
               </Link>
             )}
           </div>
@@ -226,7 +232,7 @@ export default async function LessonPage({
           ) : (
             <div className="flex items mt-5">
               <p className="text-white/40">Précédent cours:</p>
-              <p className="text-sm  text-center font-bold ">
+              <p className="text-sm text-center font-bold ">
                 {previousLesson?.title}
               </p>
             </div>
