@@ -57,7 +57,7 @@ export default async function Header() {
             </Link>
             <Link
               href="/blog"
-              className="text-gray-4000 hover:text-torea-50 duration-200"
+              className="text-gray-400 hover:text-torea-50 duration-200"
             >
               Blog
             </Link>

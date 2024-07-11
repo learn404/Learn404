@@ -1,10 +1,15 @@
-import { Coins, Layout, Settings, Shield } from "lucide-react";
+import { Coins, Layout, Settings, Shield, Book } from "lucide-react";
 
 export const dropdownMenu = [
   {
     name: "Tableau de bord",
     icon: Layout,
     link: "/dashboard",
+  },
+  {
+    name: "Blog",
+    icon: Book,
+    link: "/blog",
   },
   {
     name: "Gains",
@@ -21,4 +26,5 @@ export const dropdownMenu = [
     icon: Shield,
     link: "/admin",
   },
+
 ];

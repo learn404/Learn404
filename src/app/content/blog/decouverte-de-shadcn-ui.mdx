@@ -33,12 +33,11 @@ Commencer avec ShadCN UI est un processus simple. Voici les étapes de base pour
 
 1. **Création d'un nouveau projet Vite** :
 
+  ```bash
+  npm create vite@latest
+  ```
 
-   ```bash
-   npm create vite@latest
-   ```
-
-2. **Ajouter Tailwind et sa configuration**
+2. **Ajouter Tailwind et sa configuration** :
 
 ###### Installation de tailwindcss et de ses dépendances, puis génération de vos fichiers de configuration tailwind.config.js et postcss.config.js :
 
@@ -48,7 +47,7 @@ npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 ```
 
-3. **Modifier le fichier tsconfig.json**
+3. **Modifier le fichier tsconfig.json** :
 ###### Ajoutez le code suivant au tsconfig.jsonfichier pour résoudre les chemins :
 
 ```tsx
@@ -66,7 +65,7 @@ npx tailwindcss init -p
 }
 ```
 
-4. **Mettre à jour vite.config.ts**
+4. **Mettre à jour vite.config.ts** :
 
 ###### Ajoutez le code suivant à vite.config.ts pour que votre application puisse résoudre les chemins sans erreur
 
@@ -89,13 +88,13 @@ export default defineConfig({
 })
 ```
 
-5. **Exécuter la CLI**
+5. **Exécuter la CLI** :
 
 ```bash
 npx shadcn-ui@latest init
 ```
 
-6. **Configurer les composants.json**
+6. **Configurer les composants.json** :
 
 ###### Quelques questions vous seront posées pour configurer **components.json**:
 
