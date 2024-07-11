@@ -137,6 +137,15 @@ export async function getChangelogData() {
   return res;
 }
 
+export async function getLessons() {
+  const res = await prisma.lessons.findMany({
+    orderBy: {
+      sort_number: 'asc'
+    }
+  })
+  return res;
+}
+
 
 export const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' });

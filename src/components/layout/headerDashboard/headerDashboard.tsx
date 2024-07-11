@@ -2,19 +2,36 @@ import { currentUserType } from "@/lib/current-user";
 import Image from "next/image";
 import Link from "next/link";
 import UserDropdown from "./userDropDown";
+import SearchInput from "../searchInput";
+import { getLessons } from "@/lib/utils";
+import { getBlogPosts } from "@/lib/blog";
+
 
 
 interface HeaderDashboardProps {
   user: currentUserType;
   title: string;
+
 }
 
 export default async function HeaderDashboard({
   user,
-  title,
+    title,
+
 }: HeaderDashboardProps) {
   const isAvatar = user?.image ? true : false;
   const isAdmin = user?.admin;
+
+  const lesson = await getLessons()
+  const posts = (await getBlogPosts()).map(post => ({
+    ...post,
+    metadata: {
+      title: post.metadata.title,
+      slug: post.metadata.slug,
+      publishAt: post.metadata.publishAt,
+      image: post.metadata.image,
+    }
+  }));
 
   return (
     <header className="sticky top-0 z-10 w-full bg-black shadow backdrop-blur border-b-2 border-white/10 py-2 mb-5">
@@ -33,8 +50,9 @@ export default async function HeaderDashboard({
           </div>
           <h1 className="text-xl font-semibold text-torea-50">{title}</h1>
         </div>
-        <div className="flex flex-1 items-center space-x-2 justify-end">
-          {/* <ModeToggle /> */}
+        <div className="flex flex-1 items-center space-x-2 justify-end gap-4">
+        
+          <SearchInput blog={posts} lessons={lesson}/>
           <UserDropdown user={user} isAdmin={isAdmin} isAvatar={isAvatar} />
         </div>
       </div>
