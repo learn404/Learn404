@@ -1,10 +1,9 @@
-import SecondaryButton from "@/components/buttons/SecondaryButton";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { LayoutDashboard, LogIn, Play, Shield } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import PrimaryButton from "../buttons/PrimaryButton";
+import { Button } from "@/components/ui/button";
 import { LogoutButton } from "../buttons/auth/AuthButton";
 
 export default async function Header() {
@@ -62,30 +61,38 @@ export default async function Header() {
         <div className="flex items-center gap-2">
           {session ? (
             <>
-              <PrimaryButton redirectTo="/dashboard" type="button">
-                <LayoutDashboard size={20} />
+              <Link href="/dashboard">
+                <Button variant="default">
+                  <LayoutDashboard size={20} />
                 <span className="font-medium text-sm">Dashboard</span>
-              </PrimaryButton>
+              </Button>
+              </Link>
               {isAdmin && (
-                <PrimaryButton redirectTo="/admin" type="button">
+                <Link href="/admin">
+                <Button variant="default" type="button">
                   <span className="hidden md:block font-medium">Admin</span>
                   <Shield size={20} className="block md:hidden" />
-                </PrimaryButton>
+                </Button>
+                </Link>
               )}
               <LogoutButton />
             </>
           ) : (
             <>
-              <PrimaryButton redirectTo="/join" type="button">
-                <Play size={20} />
-                <span className="md:block font-medium">Acheter</span>
-              </PrimaryButton>
-              <SecondaryButton redirectTo="/join" type="button">
-                <LogIn size={20} />
+              <Link href="/join">
+                <Button variant="default">
+                  <Play size={20} />
+                  <span className="md:block font-medium">Acheter</span>
+                </Button>
+              </Link>
+              <Link href="/join">
+                <Button variant="secondary">
+                  <LogIn size={20} />
                 <span className="hidden md:block font-medium">
                   Se connecter
                 </span>
-              </SecondaryButton>
+              </Button>
+              </Link>
             </>
           )}
         </div>

@@ -1,4 +1,5 @@
 // lib/utils.ts
+import { UserBase } from "@/app/dashboard/page";
 import prisma from "@/lib/prisma";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -70,3 +71,63 @@ export const getLessonBySlug = async (slug: string) => {
   });
   return lesson;
 };
+
+export async function getLessonsStartedAndCompleted(user: UserBase) {
+  const lessonsStartedAndCompleted = await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+    select: {
+      _count: {
+        select: {
+          lessonProgress: {
+            where: {
+              completed: true
+            }
+          },
+        },
+      },
+      lessonProgress: true      
+    }
+  })
+
+  // Check if lessonsStartedAndCompleted is null and return a default object if so
+  if (lessonsStartedAndCompleted === null) {
+    return {
+      _count: {
+        lessonProgress: 0, // Default to 0 if no lessons completed
+      },
+      lessonProgress: [], // Default to an empty array
+    };
+  }
+
+  return lessonsStartedAndCompleted;
+}
+
+export async function getCategoriesWithLessons() {
+  const res = await prisma.categories.findMany({
+    include: {
+      Lessons: {
+        orderBy: {
+          sort_number: 'asc'
+        }
+      }
+    },
+    orderBy: {
+      sort_number: 'asc'
+    }
+  })
+
+  const categories = res.filter(category => category.Lessons.length > 0);
+  const lessons = await prisma.lessons.findMany({
+    orderBy: {
+      sort_number: 'asc'
+    }
+  })
+
+  return { categories, lessons };
+}
+
+export const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' });
+}

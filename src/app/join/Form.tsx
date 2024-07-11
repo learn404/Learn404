@@ -1,9 +1,10 @@
 "use client";
 
-import PrimaryButton from "@/components/buttons/PrimaryButton";
+
 import { EyeIcon, EyeOff } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
+import { Button } from "@/components/ui/button";
 
 interface FormData {
   name: string;
@@ -158,7 +159,7 @@ export default function Form() {
           </div>
         </div>
         <div className="flex justify-center mt-10 w-full">
-          <PrimaryButton>Rejoins la formation</PrimaryButton>
+          <Button variant="default">Rejoins la formation</Button>
         </div>
       </form>
     </>

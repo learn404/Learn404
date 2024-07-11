@@ -6,24 +6,36 @@ import {
   PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
-} from "recharts"
+} from "recharts" 
 
 import { ChartConfig, ChartContainer } from "@/components/ui/chart"
+
 const chartData = [
-  { browser: "hoursPassed", hours: 20, fill: "var(--color-hoursPassed)" },
+  { lessons: "lessonsPassed", number: 0, fill: "var(--color-lessonsPassed)" },
 ]
 
 const chartConfig = {
   visitors: {
-    label: "Hours",
+    label: "Lessons",
   },
-  hoursPassed: {
+  lessonsPassed: {
     label: "Hours Passed",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig
 
-export function UserChart() {
+
+interface UserChartProps {
+  lessonsCompleted: number | undefined;
+  lessonsNumber: number;
+}
+
+export function UserChart( { lessonsCompleted, lessonsNumber }: UserChartProps) {
+
+  if (lessonsCompleted) {
+    chartData[0].number = lessonsCompleted;
+  }
+
   return (
     <ChartContainer
       config={chartConfig}
@@ -32,7 +44,7 @@ export function UserChart() {
       <RadialBarChart
         data={chartData}
         startAngle={0}
-        endAngle={200}
+        endAngle={(chartData[0].number / lessonsNumber) * 360}
         innerRadius={80}
         outerRadius={110}
       >
@@ -43,7 +55,7 @@ export function UserChart() {
           className="first:fill-muted last:fill-background"
           polarRadius={[86, 74]}
         />
-        <RadialBar dataKey="hours" background cornerRadius={10} />
+        <RadialBar dataKey="number" background cornerRadius={10} />
         <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
           <Label
             content={({ viewBox }) => {
@@ -60,14 +72,14 @@ export function UserChart() {
                       y={viewBox.cy}
                       className="fill-foreground text-4xl font-bold"
                     >
-                      {chartData[0].hours.toLocaleString()}h
+                      {chartData[0].number.toLocaleString()}
                     </tspan>
                     <tspan
                       x={viewBox.cx}
-                      y={(viewBox.cy || 0) + 24}
+                      y={(viewBox.cy || 0) + 27}
                       className="fill-muted-foreground"
                     >
-                      complétées
+                      {chartData[0].number < 2 ? "cours terminé" : "cours terminés"}
                     </tspan>
                   </text>
                 )
