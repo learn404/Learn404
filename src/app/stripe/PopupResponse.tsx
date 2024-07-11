@@ -1,4 +1,5 @@
-import PrimaryButton from "@/components/buttons/PrimaryButton";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { Check, CircleX } from "lucide-react";
 
 interface PopupResponseProps {
@@ -21,9 +22,11 @@ export default function PopupResponse(response: PopupResponseProps) {
         <h3 className="text-4xl font-semibold">{response.type}</h3>
         <p>{response.success || response.error}</p>
         {response.success ? (
-          <PrimaryButton redirectTo="/dashboard">Go to dashboard</PrimaryButton>
+          <Link href="/dashboard">
+            <Button>Go to dashboard</Button>
+          </Link>
         ) : (
-          <PrimaryButton onClick={() => window.location.reload()}>Reload</PrimaryButton>
+          <Button onClick={() => window.location.reload()}>Reload</Button>
         )}
       </div>
     </div>

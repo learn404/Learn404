@@ -90,7 +90,7 @@ export default async function Blog({
           }}
         />
         <div className="flex flex-col  max-w-3xl m-auto">
-          <div className="bg-indigo-800 min-w-sm lg:min-w-lg w-full px-6 py-3 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10 flex items-center justify-center">
+          <div className="bg-indigo-800 max-w-md lg:min-w-lg w-full px-6 py-3 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10 flex items-center justify-center">
             <div className="flex flex-col items-center">
               <h1 className="title font-medium text-2xl tracking-tighter max-w-[650px]">
                 {post.metadata.title}

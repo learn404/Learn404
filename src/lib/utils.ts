@@ -91,11 +91,11 @@ export async function getLessonsStartedAndCompleted(user: UserBase) {
     }
   })
 
-  // Check if lessonsStartedAndCompleted is null and return a default object if so
+
   if (lessonsStartedAndCompleted === null) {
     return {
       _count: {
-        lessonProgress: 0, // Default to 0 if no lessons completed
+        lessonProgress: 0,
       },
       lessonProgress: [], // Default to an empty array
     };
@@ -127,6 +127,16 @@ export async function getCategoriesWithLessons() {
 
   return { categories, lessons };
 }
+
+export async function getChangelogData() {
+  const res = await prisma.changeLog.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
+  return res;
+}
+
 
 export const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' });

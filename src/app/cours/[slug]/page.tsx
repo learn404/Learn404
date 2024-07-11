@@ -3,7 +3,6 @@ import FinishLesson from "@/components/buttons/FinishLessonButton";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import SheetLessons from "@/components/sheet/sheetLessons";
 import { currentUser } from "@/lib/current-user";
-
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
@@ -42,6 +41,11 @@ export default async function LessonPage({
 }: Params): Promise<JSX.Element> {
   const user = await currentUser();
   let post = await getLesson(params.slug);
+
+
+  const datePublished = post.metadata.publishedAt ? post.metadata.publishedAt : "";
+
+  const dateModified = post.metadata.publishedAt ? post.metadata.publishedAt : "";
 
   const lesson = await prisma.lessons.findFirst({
     where: {
@@ -180,15 +184,15 @@ export default async function LessonPage({
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
                 "@context": "https://schema.org",
-                "@type": "LegalDocument",
+                "@type": "Cours",
                 headline: post.metadata.title,
-                datePublished: post.metadata.publishedAt,
-                dateModified: post.metadata.publishedAt,
+                datePublished: datePublished,
+                dateModified: dateModified,
                 description: post.metadata.summary,
                 image: post.metadata.image
                   ? `learn404.com${post.metadata.image}`
                   : `learn404.com/og?title=${post.metadata.title}`,
-                url: `learn404.com/legal/${post.slug}`,
+                url: `learn404.com/cours/${post.slug}`,
                 author: {
                   "@type": "Person",
                   name: "Nicolas Becharat",
