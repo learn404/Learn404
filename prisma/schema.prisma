@@ -119,6 +119,15 @@ model LessonChapter {
   @@index([id_lesson], map: "LessonChapter_id_lesson_fkey")
 }
 
+model ChangeLog {
+  id        String   @id @default(cuid())
+  title     String
+  version   String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+
 enum Lessons_level {
   BEGINNER
   INTERMEDIATE
