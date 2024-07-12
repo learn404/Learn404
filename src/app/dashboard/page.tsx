@@ -36,11 +36,11 @@ export default async function Dashboard() {
   });
 
   return (
-      <DashboardLayout title="Dashboard" user={user}>
-        <main className="max-w-[1400px] w-full mx-auto py-12 px-4 md:px-8 space-y-12 container ">
+      <DashboardLayout title="Tableau de bord" user={user}>
+        <main className="max-w-[1400px] w-full mx-auto py-12 px-4 md:px-8 space-y-12">
           <UserCard user={user} numberOfLessons={lessons.length} lessonsCompleted={lessonsStartedAndCompleted?._count.lessonProgress} />
           <section className="bg-gray-900/50 p-5 md:p-10 rounded-md border-2 border-torea-950 max-w-screen-2xl">
-            <h2 className="text-2xl font-semibold mb-4">Prochaines lessons</h2>
+            <h2 className="text-2xl font-semibold mb-4">Prochains cours</h2>
             <NextLessonsSection lessons={lessons} isAdmin={user.admin} />
           </section>
           <Separator />

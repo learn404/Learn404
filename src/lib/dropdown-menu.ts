@@ -1,4 +1,4 @@
-import { Coins, Layout, Settings, Shield } from "lucide-react";
+import { Coins, Layout, Shield, User } from "lucide-react";
 
 export const dropdownMenu = [
   {
@@ -12,9 +12,9 @@ export const dropdownMenu = [
     link: "/earnings",
   },
   {
-    name: "Paramètres",
-    icon: Settings,
-    link: "/settings",
+    name: "Compte",
+    icon: User,
+    link: "/account/details",
   },
   {
     name: "Admin",
