@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import prisma from "@/lib/prisma";
 
 export const metadata = {
   title: "Blog",
