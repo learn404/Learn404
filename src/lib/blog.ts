@@ -7,6 +7,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
+
 type Metadata = {
   title: string;
   publishedAt: string;
@@ -30,8 +31,10 @@ export async function markdownToHTML(markdown: string) {
       },
       keepBackground: false,
     })
+    
     .use(rehypeStringify)
     .process(markdown);
+    
 
   return p.toString();
 }

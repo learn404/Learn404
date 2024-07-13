@@ -30,7 +30,7 @@ console.log(posts)
       {user ? <HeaderDashboard user={user} title="Blog" /> : <Header />}
       <section className="max-w-screen-xl mx-auto px-4">
         <h1 className="font-bold text-2xl mb-8 tracking-tighter ">Blog</h1>
-
+        <div className="flex flex-wrap gap-4">
         {posts
           .sort((a, b) => {
             if (
@@ -46,7 +46,7 @@ console.log(posts)
               <TooltipProvider delayDuration={1000}>
                 <Tooltip>
                   <Link
-                    className="flex flex-col space-y-1 mb-4 gap-8 p-4 rounded-md border-2 border-gray-800 bg-gray-950 w-fit group scale-100 hover:scale-105 transition-all duration-300"
+                    className="flex flex-col space-y-1 mb-4 gap-8 p-4 rounded-md border-2 border-gray-800 bg-gray-950 w-96 h-80 group scale-100 hover:scale-105 transition-all duration-300"
                     href={`/blog/${post.slug}`}
                   >
                     <div className="w-full flex flex-col">
@@ -68,7 +68,7 @@ console.log(posts)
                         </p>
                       
                       <TooltipContent>
-                        <p className="tracking-tight">{post.metadata.title}</p>
+                        <p className="tracking-tight w-full overflow-hidden max-h-full">{post.metadata.title}</p>
                       </TooltipContent>
                       <p className="h-6 text-xs text-muted-foreground">
                         {post.metadata.publishedAt}
@@ -77,8 +77,10 @@ console.log(posts)
                   </Link>
                 </Tooltip>
               </TooltipProvider>
-            </div>
+              </div>
+            
           ))}
+          </div>
       </section>
       <Footer />
     </>

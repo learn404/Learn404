@@ -10,10 +10,16 @@ import { lessonColumns } from "./LessonColumns";
 import { UserTable } from "./user-table";
 import { userColumns } from "./UserColumns";
 import AddChangeLogButton from "@/components/buttons/AddChangeLogButton";
+import CreateCategoryButton from "@/components/buttons/AddCategoryButton";
+import { get } from "http";
+import { getTransactions } from "@/lib/utils";
+
 
 export default async function Admin() {
   const user = await currentUser();
 
+  
+ const transactionData = await getTransactions();
   const allUsers = await prisma.user.findMany();
   const allLessons = await prisma.lessons.findMany();
   const allCategories = await prisma.categories.findMany({
@@ -47,8 +53,14 @@ export default async function Admin() {
         </Link>
         <div className="flex items-center gap-2">
           <AddChangeLogButton />
+          <CreateCategoryButton />
         </div>
       </div>
+      {/* <div>
+        <div className="text-white"> 
+        Total de transaction sur les 15 derniers jours {transactionData}
+        </div>
+      </div> */}
       <div className="mx-auto px-10 lg:flex gap-10">
         <UserTable columns={userColumns} data={allUsers} />
         <LessonTable columns={lessonColumns} data={allLessons} />
