@@ -75,11 +75,9 @@ model Session {
   @@index([userId])
 }
 
-model Waitlist {
+model Wishtlist {
   id        String   @id @default(cuid())
   email     String   @unique
-  firstName String
-  name      String
   createdAt DateTime @default(now())
 }
 

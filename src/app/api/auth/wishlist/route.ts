@@ -3,9 +3,9 @@ import prisma from "@/lib/prisma";
 
 export async function POST(request: Request) {
   try {
-    const { email, firstname, name } = await request.json();
+    const { email, } = await request.json();
 
-    const user = await prisma.user.findUnique({
+    const user = await prisma.wishtlist.findFirst({
       where: { email },
       select: {
         id: true,
@@ -19,16 +19,14 @@ export async function POST(request: Request) {
       );
     }
 
-    await prisma.waitlist.create({
+    await prisma.wishtlist.create({
       data: {
         email: email,
-        name: name,
-        firstName: firstname,
       },
     });
 
     return NextResponse.json(
-      { message: "Tu es ajouté à la WaitList" },
+      { message: "Tu es ajouté à la Wishlist" },
       { status: 200 },
     );
   } catch (error: any) {
