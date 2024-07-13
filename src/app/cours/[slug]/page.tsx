@@ -143,7 +143,7 @@ export default async function LessonPage({
         ) : (
           <p className="m-auto">Vidéo pas disponible</p>
         )}
-        <div className="bg-indigo-800 max-w-[90vw] lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
+        <div className="bg-indigo-800 max-w-[90vw] px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
           <h1 className="text-lg lg:text-4xl text-center font-bold">
             {lesson.title}
           </h1>
@@ -201,7 +201,7 @@ export default async function LessonPage({
             }}
           />
           <article
-            className="z-50 py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10"
+            className="max-w-[80vw] z-50 py-4 px-5 prose prose-lg prose-invert m-auto prose-pre:border prose-pre:bg-white/10"
             dangerouslySetInnerHTML={{ __html: post.source }}
           ></article>
         </section>

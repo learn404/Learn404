@@ -4,13 +4,41 @@ slug : le-terminal
 publishedAt: "2024-03-01"
 ---
 
-Le terminal, ou invite de commandes, est un programme qui vous permet de taper des commandes pour effectuer diverses tâches sur votre ordinateur.
+Le terminal, ou invite de commandes, est un programme qui vous permet de taper des commandes pour effectuer diverses tâches sur votre ordinateur. C'est un outil puissant qui vous offre un accès direct au cœur du système d'exploitation.
 
-<aside>
-❓ **Pourquoi en parler ?**
+---
 
-Apprendre à utiliser le terminal est essentiel pour devenir développeur. Il permet d'être plus rapide et efficace. Dans notre cas, il sera utile pour installer des packages pour nos projets et surtout… pour les démarrer !
-</aside>
+> ❓ **Pourquoi en parler ?**
+>
+> Apprendre à utiliser le terminal est essentiel pour devenir développeur. Il permet d'être plus rapide et efficace. Dans notre cas, il sera utile pour installer des packages pour nos projets et surtout… pour les démarrer !
+
+---
+
+## Pourquoi utiliser le Terminal ?
+
+Le terminal est un outil incontournable pour les développeurs et les utilisateurs avancés. Voici pourquoi :
+
+### Gain de Productivité
+
+Utiliser le terminal peut grandement accélérer votre flux de travail. Au lieu de naviguer dans des menus graphiques, vous pouvez exécuter des commandes directement. Par exemple, créer un dossier, déplacer des fichiers ou lancer des scripts se fait en quelques frappes au clavier.
+
+### Automatisation des Tâches
+
+Avec le terminal, vous pouvez automatiser des tâches répétitives grâce à des scripts. Par exemple, un script bash peut être utilisé pour installer automatiquement les dépendances d'un projet, lancer des tests, et déployer une application.
+
+### Accès Direct aux Fonctionnalités Système
+
+Certaines fonctionnalités du système d'exploitation sont uniquement accessibles via le terminal. Par exemple, la gestion avancée des permissions de fichiers, la manipulation de réseaux, ou encore le contrôle des processus en cours d'exécution.
+
+### Utilisation des Outils de Développement
+
+De nombreux outils de développement, comme Git pour le contrôle de version, npm pour la gestion des packages JavaScript, ou Docker pour la conteneurisation, nécessitent l'utilisation du terminal. Savoir utiliser ces outils est crucial pour tout développeur.
+
+### Débogage et Diagnostic
+
+Le terminal permet d'accéder à des outils de débogage et de diagnostic puissants. Par exemple, des commandes comme `top`, `htop`, `ping`, et `traceroute` fournissent des informations détaillées sur les performances du système et le réseau.
+
+---
 
 ## Utilisation du Terminal
 
@@ -20,6 +48,11 @@ Sur Windows, vous pouvez utiliser l'application "Invite de commandes". Un termin
 ### Sous macOS
 Sur macOS, vous pouvez utiliser l'application "Terminal", qui se trouve dans le dossier Applications > Utilitaires. Vous pouvez également accéder au terminal depuis VSCode.
 
+### Sous Linux
+Sur Linux, vous pouvez utiliser l'application "Terminal", généralement préinstallée sur la plupart des distributions. Vous pouvez également accéder au terminal depuis VSCode.
+
+---
+
 ## Commandes de base
 
 Voici les principales commandes à connaître pour le moment :
@@ -28,6 +61,8 @@ Voici les principales commandes à connaître pour le moment :
 - `cd cheminDossier` : se déplace dans les dossiers (change directory)
 - `touch nomFichier` : crée un fichier
 - `ls` : liste les fichiers et dossiers dans le répertoire courant
+
+---
 
 ### Comment créer un fichier
 
@@ -51,18 +86,47 @@ Pour créer un fichier sous macOS ou Linux, vous pouvez utiliser la commande `to
    touch exemple.txt
    ```
 
-<aside>
-📎 **Quelques exemples d’utilisation :**
+---
 
-- Créer un dossier “projet” : `mkdir projet`
-- Se déplacer dans le dossier “projet” : `cd projet`
-- Revenir en arrière d’un dossier : `cd ..`
-- Revenir en arrière de deux dossiers : `cd ../..`
-- Lister le contenu du dossier courant : `ls`
-- Créer un fichier vide nommé `index.html` :
-  - Sous Windows : `type nul > index.html`
-  - Sous macOS/Linux : `touch index.html`
-</aside>
+> 📎 **Quelques exemples d’utilisation :**
+>
+> - Créer un dossier “projet” : `mkdir projet`
+> - Se déplacer dans le dossier “projet” : `cd projet`
+> - Revenir en arrière d’un dossier : `cd ..`
+> - Revenir en arrière de deux dossiers : `cd ../..`
+> - Lister le contenu du dossier courant : `ls`
+> - Créer un fichier vide nommé `index.html` :
+>   - Sous Windows : `type nul > index.html`
+>   - Sous macOS/Linux : `touch index.html`
+
+---
+
+### Exercice pratique
+
+Pour mettre en pratique ce que vous avez appris, réalisez les étapes suivantes :
+
+1. **Créez un dossier pour votre projet :**
+   - Utilisez la commande `mkdir` pour créer un dossier nommé `mon_projet`.
+
+2. **Naviguez dans ce dossier :**
+   - Utilisez la commande `cd` pour entrer dans le dossier `mon_projet`.
+
+3. **Créez un fichier README :**
+   - Sous Windows, utilisez la commande `type nul > README.md`.
+   - Sous macOS/Linux, utilisez la commande `touch README.md`.
+
+4. **Créez un sous-dossier `src` :**
+   - Utilisez la commande `mkdir src`.
+
+5. **Naviguez dans le sous-dossier `src` et créez un fichier `index.html` :**
+   - Utilisez la commande `cd src`.
+   - Sous Windows, utilisez la commande `type nul > index.html`.
+   - Sous macOS/Linux, utilisez la commande `touch index.html`.
+
+6. **Listez le contenu du dossier `src` pour vérifier que le fichier a bien été créé :**
+   - Utilisez la commande `ls`.
+
+---
 
 Sans plus attendre, passons à l’écriture de nos premières lignes de code dans le prochain cours sur l’HTML et le CSS !
 

@@ -112,7 +112,7 @@ export default async function Blog({
             </div>
           </div>
           <article
-            className="z-50 py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10 w-screen"
+            className="z-50 py-4 px-5 prose lg:prose-lg prose-invert m-auto prose-pre:border prose-pre:bg-white/10 w-screen"
             dangerouslySetInnerHTML={{ __html: post.source }}
           ></article>
         </div>

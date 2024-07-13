@@ -146,6 +146,25 @@ export async function getLessons() {
   return res;
 }
 
+export async function getTransactions() {
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+  const fifteenDaysAgo = Math.floor(Date.now() / 1000) - (15 * 24 * 60 * 60);
+
+  const transactions = await stripe.charges.list({
+    limit: 100,
+    created: {
+      gte: fifteenDaysAgo
+    }
+  });
+  
+  const transationLength = transactions.data.length;
+
+  return transationLength;
+
+}
+
+
 
 export const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' });

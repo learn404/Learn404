@@ -35,7 +35,7 @@ export const currentUser = async () => {
     },
   });
 
-  if (!user?.isMember) {
+  if (!user?.isMember) { // 
     redirect("/dashboard/subscriptions/");
   }
 

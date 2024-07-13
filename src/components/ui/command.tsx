@@ -133,7 +133,7 @@ const CommandShortcut = ({
   return (
     <span
       className={cn(
-        "ml-auto text-xs tracking-widest text-white",
+        "ml-auto text-xs tracking-widest [&_[cmdk-group-heading]]:text-white",
         className
       )}
       {...props}

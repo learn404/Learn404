@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   CreditCard,
@@ -52,17 +52,17 @@ export default function SearchInput({
         e.preventDefault();
         setOpen((open) => !open);
       }
-      if (e.key === 'o' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "o" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        router.push('/dashboard')
+        router.push("/dashboard");
       }
-      if (e.key === 'b' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "b" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        router.push('/blog')
+        router.push("/blog");
       }
-      if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
+      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        router.push('/changelog')
+        router.push("/changelog");
       }
     };
 
@@ -78,7 +78,7 @@ export default function SearchInput({
         onClick={() => setOpen(true)}
       >
         <p className="text-sm text-muted-foreground">
-          Press{" "}
+          {" "}
           <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 cursor-pointer">
             <span className="text-xs">⌘</span>K
           </kbd>
@@ -90,65 +90,60 @@ export default function SearchInput({
           <CommandList>
             <CommandEmpty>Pas de résultat trouvé</CommandEmpty>
             <CommandGroup heading="Suggestions">
-            <CommandItem>
-                <Link href="/dashboard" className="flex items-center justify-between w-full ">
-                    <div className="flex items-center">
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        <span>Tableau de bord</span>
-                    </div>
-                    <div className="">
-                        <CommandShortcut>⌘O</CommandShortcut>
-                    </div>
-                </Link>
-              </CommandItem>
-              <CommandItem>
-                <Link href="/blog" className="flex items-center justify-between w-full">
-                    <div className="flex items-center">
-                        <Book className="mr-2 h-4 w-4" />
-                        <span>Blog</span>
-                    </div>
-                    <div className="">
-                        <CommandShortcut>⌘B</CommandShortcut>
-                    </div>
-                </Link>
-                    
-                
-              </CommandItem>
-              
-              <CommandItem>
-                <Link href="/changelog" className="flex items-center justify-between w-full">
-                    <div className="flex items-center">
-                        <Loader className="mr-2 h-4 w-4" />
-                        <span>Journal des modifications</span>
-                    </div>
-                    <div className="">
-                        <CommandShortcut>⌘J</CommandShortcut>
-                    </div>
-                </Link>
-                    
-                
-              </CommandItem>
+              <Link href="/dashboard">
+                <CommandItem className="flex items-center justify-between w-full cursor-pointer">
+                  <div className="flex items-center">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    <span>Tableau de bord</span>
+                  </div>
+                  <div className="">
+                    <CommandShortcut>⌘O</CommandShortcut>
+                  </div>
+                </CommandItem>
+              </Link>
+              <Link href="/blog">
+                <CommandItem className="flex items-center justify-between w-full cursor-pointer">
+                  <div className="flex items-center">
+                    <Book className="mr-2 h-4 w-4" />
+                    <span>Blog</span>
+                  </div>
+                  <div className="">
+                    <CommandShortcut>⌘B</CommandShortcut>
+                  </div>
+                </CommandItem>
+              </Link>
+              <Link href="/changelog">
+                <CommandItem className="flex items-center justify-between w-full cursor-pointer">
+                  <div className="flex items-center">
+                    <Loader className="mr-2 h-4 w-4" />
+                    <span>Journal des modifications</span>
+                  </div>
+                  <div className="">
+                    <CommandShortcut>⌘J</CommandShortcut>
+                  </div>
+                </CommandItem>
+              </Link>
             </CommandGroup>
             <CommandSeparator />
             <CommandGroup heading="Settings">
-              <CommandItem>
-                <Link href="/profile" className="flex items-center">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profil</span>
-                </Link>
-              </CommandItem>
-              <CommandItem>
-                <Link href="/settings" className="flex items-center">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Paramètres</span>
-                </Link>
-              </CommandItem>
-              <CommandItem>
-                <Link href="/changelog" className="flex items-center">
-                    <Loader className="mr-2 h-4 w-4" />
-                    <span>Journal des modifications</span>
-                </Link>
-              </CommandItem>
+              <Link href="/profile">
+                <CommandItem className="flex items-center w-full cursor-pointer">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profil</span>
+                </CommandItem>
+              </Link>
+              <Link href="/settings">
+                <CommandItem className="flex items-center w-full cursor-pointer">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Paramètres</span>
+                </CommandItem>
+              </Link>
+              <Link href="/changelog">
+                <CommandItem className="flex items-center w-full cursor-pointer">
+                  <Loader className="mr-2 h-4 w-4" />
+                  <span>Journal des modifications</span>
+                </CommandItem>
+              </Link>
             </CommandGroup>
             <CommandSeparator />
             <CommandGroup heading="Cours">
@@ -164,7 +159,9 @@ export default function SearchInput({
             <CommandGroup heading="Blog">
               {blog.map((post) => (
                 <Link href={`/blog/${post.slug}`} key={post.slug}>
-                  <CommandItem className="text-white">{post.metadata.title}</CommandItem>
+                  <CommandItem className="text-white">
+                    {post.metadata.title}
+                  </CommandItem>
                 </Link>
               ))}
             </CommandGroup>
