@@ -1,6 +1,5 @@
-import nextMDX from "@next/mdx";
-import remarkGfm from "remark-gfm";
 import createMDX from "@next/mdx";
+import remarkGfm from "remark-gfm";
 
 const withMDX = createMDX({
   options: {
@@ -22,7 +21,18 @@ const nextConfig = {
       },
     ],
   },
+
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+
+  async redirects() {
+    return [
+      {
+        source: '/account',
+        destination: '/account/details',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);

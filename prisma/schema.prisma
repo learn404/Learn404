@@ -18,8 +18,27 @@ model User {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   Account        Account?
+  BillingInformations BillingInformations?
   lessonProgress LessonProgress[]
   Session        Session[]
+}
+
+model BillingInformations {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  firstName      String
+  lastName       String
+  address        String
+  address2       String?
+  city           String
+  state          String?
+  zip            String
+  country        String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model Account {
@@ -56,11 +75,9 @@ model Session {
   @@index([userId])
 }
 
-model Waitlist {
+model Wishtlist {
   id        String   @id @default(cuid())
   email     String   @unique
-  firstName String
-  name      String
   createdAt DateTime @default(now())
 }
 
@@ -118,6 +135,15 @@ model LessonChapter {
 
   @@index([id_lesson], map: "LessonChapter_id_lesson_fkey")
 }
+
+model ChangeLog {
+  id        String   @id @default(cuid())
+  title     String
+  version   String
+  content   String
+  createdAt DateTime @default(now())
+}
+
 
 enum Lessons_level {
   BEGINNER

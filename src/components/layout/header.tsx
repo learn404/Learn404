@@ -55,46 +55,27 @@ export default async function Header() {
             >
               A propos
             </Link>
+            <Link
+              href="/blog"
+              className="text-gray-400 hover:text-torea-50 duration-200"
+            >
+              Blog
+            </Link>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          {session ? (
+          
             <>
-              <Link href="/dashboard">
-                <Button variant="default">
-                  <LayoutDashboard size={20} />
-                <span className="font-medium text-sm">Dashboard</span>
-              </Button>
-              </Link>
-              {isAdmin && (
-                <Link href="/admin">
-                <Button variant="default" type="button">
-                  <span className="hidden md:block font-medium">Admin</span>
-                  <Shield size={20} className="block md:hidden" />
-                </Button>
-                </Link>
-              )}
-              <LogoutButton />
-            </>
-          ) : (
-            <>
-              <Link href="/join">
+              <Link href="/wishlist">
                 <Button variant="default">
                   <Play size={20} />
-                  <span className="md:block font-medium">Acheter</span>
+                  <span className="md:block font-medium">WishList</span>
                 </Button>
               </Link>
-              <Link href="/join">
-                <Button variant="secondary">
-                  <LogIn size={20} />
-                <span className="hidden md:block font-medium">
-                  Se connecter
-                </span>
-              </Button>
-              </Link>
+              
             </>
-          )}
+        
         </div>
       </nav>
     </header>

@@ -6,6 +6,9 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import ShareUrlButton  from "@/components/buttons/ShareUrlButton";
+import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
+import { currentUser } from "@/lib/current-user";
 
 export async function generateMetadata({
   params,
@@ -62,10 +65,11 @@ export default async function Blog({
   if (!post) {
     notFound();
   }
+  const user = await currentUser();
 
   return (
     <>
-      <Header />
+{user ? <HeaderDashboard user={user} title="Blog" /> : <Header />}
       <section id="blog">
         <script
           type="application/ld+json"
@@ -89,23 +93,26 @@ export default async function Blog({
             }),
           }}
         />
-        <div className="flex flex-col  max-w-3xl m-auto">
-          <div className="bg-indigo-800 max-w-md lg:min-w-lg w-full px-6 py-3 lg:py-12 gap-3 lg:gap-10 rounded-md mb-10 border border-white/10 flex items-center justify-center mx-auto">
+        <div className="flex flex-col max-w-3xl m-auto">
+          <div className="bg-indigo-800 max-w-md lg:max-w-2xl w-full px-6 py-3 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10 flex items-center justify-center">
             <div className="flex flex-col items-center">
-              <h1 className="title font-medium text-2xl tracking-tighter max-w-[650px]">
+              <h1 className="title font-medium text-2xl tracking-tighter max-w-[650px] text-center">
                 {post.metadata.title}
               </h1>
               <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
                 <Suspense fallback={<p className="h-5" />}>
-                  <p className="text-sm text-neutral-400">
-                    {formatDate(post.metadata.publishedAt)}
+                  <div className="flex flex-col items-center gap-2">
+                    <p className="text-sm text-neutral-400">
+                      {formatDate(post.metadata.publishedAt)}
                   </p>
+                  <ShareUrlButton />
+                  </div>
                 </Suspense>
               </div>
             </div>
           </div>
           <article
-            className="z-50 py-4 px-5 prose lg:prose-xl prose-invert m-auto prose-pre:border prose-pre:bg-white/10"
+            className="z-50 py-4 px-5 prose lg:prose-lg prose-invert m-auto prose-pre:border prose-pre:bg-white/10 w-screen"
             dangerouslySetInnerHTML={{ __html: post.source }}
           ></article>
         </div>
