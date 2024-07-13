@@ -1,5 +1,5 @@
-import { Coins, Layout, Settings, Shield, Book } from "lucide-react";
-import { Coins, Layout, Shield, User } from "lucide-react";
+
+import { Coins, Layout, Shield, User, Book } from "lucide-react";
 
 export const dropdownMenu = [
   {
