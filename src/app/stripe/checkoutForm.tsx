@@ -51,11 +51,24 @@ export default function CheckoutForm(paymentInformations: PaymentInformations) {
     } else {
       setLoading(false);
       console.log(paymentIntent);
+      console.log("PaymentIntent was successful");
       setResponsePayment({
         success:
           "Votre paiement a été traité avec succès. Vous pouvez maintenant accéder à votre tableau de bord.",
         type: "Success",
       });
+      try {
+        await fetch("/api/email/subscription-mail", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: userEmail }),
+        });
+      
+      } catch (error) {
+        console.error("Error sending email", error);
+      }
     }
   };
 
