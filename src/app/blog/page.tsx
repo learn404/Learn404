@@ -5,6 +5,7 @@ import Header from "@/components/layout/header";
 
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import Image from "next/image";
+import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 
 import {
@@ -24,16 +25,13 @@ export const metadata = {
 export default async function BlogPage() {
   const posts = await getBlogPosts();
 
-  const session = await auth();
+  const session = await auth()
 
-  const user = await prisma.user.findFirst(
-    {
-      where: {
-        email: session?.user?.email,
-      },
-    }
-  )
-
+  const user = await prisma.user.findFirst({
+    where: {
+      email: session?.user?.email,
+    },
+  });
 
 
   return (
