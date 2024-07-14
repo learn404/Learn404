@@ -50,8 +50,7 @@ export default function CheckoutForm(paymentInformations: PaymentInformations) {
       setResponsePayment({ error: error.message, type: "Error" });
     } else {
       setLoading(false);
-      console.log(paymentIntent);
-      console.log("PaymentIntent was successful");
+
       setResponsePayment({
         success:
           "Votre paiement a été traité avec succès. Vous pouvez maintenant accéder à votre tableau de bord.",

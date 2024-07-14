@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { Resend } from "resend";
 import { SubscriptionEmail } from "../../../../components/email/subscriptionEmail"
-import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 
@@ -17,8 +16,6 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  console.log(user);
-
   try {
     await resend.emails.send({
         from: 'Learn404 <no-reply@learn404.com>',
@@ -27,7 +24,7 @@ export async function POST(request: NextRequest) {
         text: `Bienvenue sur notre plateforme Learn404, ${user?.name ?? 'User'}!`,
         react: SubscriptionEmail({ name: user?.name! }),
         headers: {
-          'List-Unsubscribe': `https://${process.env.AUTH_URL}/api/email/unsubscribe>`,
+          'List-Unsubscribe': `https://${process.env.AUTH_URL}unsubscribe>`,
         },
       });
     } catch (error) {

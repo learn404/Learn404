@@ -20,11 +20,11 @@ interface Learn404WelcomeEmailProps {
   name?: string;
 }
 
-const baseUrl = process.env.AUTH_URL
+const baseUrl = `https://${process.env.AUTH_URL}`
   ? `https://${process.env.AUTH_URL}`
   : "";
 
-const Learn404WelcomeEmail = ({
+export const WelcomeEmail = ({
   name = "Cher Membre",
 }: Learn404WelcomeEmailProps) => {
   return (
@@ -50,7 +50,7 @@ const Learn404WelcomeEmail = ({
       >
         <Body className="bg-offwhite text-base font-sans">
           <Img
-            src={`${baseUrl}/img/logo.png`}
+            src={`${baseUrl}img/logo.png`}
             width="184"
             height="75"
             alt="Learn404"
@@ -130,4 +130,4 @@ const Learn404WelcomeEmail = ({
   );
 };
 
-export default Learn404WelcomeEmail;
+export default WelcomeEmail;
