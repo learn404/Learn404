@@ -5,7 +5,7 @@ import Header from "@/components/layout/header";
 
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import Image from "next/image";
-import prisma from "@/lib/prisma";
+
 import { auth } from "@/lib/auth";
 
 import {

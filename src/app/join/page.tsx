@@ -32,13 +32,13 @@ export default async function Join() {
         />
       </div>
       <main className="flex flex-col-reverse justify-center items-start lg:flex-row lg:items-center px-12 lg:px-20 py-16 relative z-50 ">
-        <div>
+        <div className="px-10">
           <Image
-            src="/img/Card_img.webp"
+            src="/img/hero.png"
             alt="card"
             width={750}
             height={750}
-            className="-ml-6 min-w-80 lg:ml-0"
+            className="-ml-6 min-w-80 lg:ml-0 rounded-xl"
           />
         </div>
 
