@@ -1,5 +1,5 @@
 "use client";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -39,25 +39,37 @@ export default function AddChangeLogButton() {
     const content = formData.get("description")?.toString();
     let version = formData.get("version")?.toString() || "";
 
-    let major = version.slice(0, 2)
-    let minor = version.slice(2, 6)
-    
+    if (!title || !content || version.length < 6) {
+      toast.error("Veuillez remplir tous les champs");
+      setIsLoading(false);
+      return;
+    }
+
+    let major = version.slice(0, 2);
+    let minor = version.slice(2, 6);
 
     version = `${major}.${minor}`;
-    const response = await fetch("/api/changelog/create-changelog", {
-      method: "POST",
-      body: JSON.stringify({
-        title: title,
-        content: content,
-        version: version,
+    toast.promise(
+      fetch("/api/changelog/create-changelog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+          version: version,
+        }),
       }),
-    });
-    const data = await response.json();
-    toast.success(data.message);
+      {
+        loading: "Création du changelog...",
+        success: "Changelog créé avec succès",
+        error: "Une erreur est survenue lors de la création du changelog",
+      }
+    );
     setIsLoading(false);
     router.push("/changelog");
     router.refresh();
-   
   };
 
   return (

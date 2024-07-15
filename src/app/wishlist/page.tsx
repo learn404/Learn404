@@ -6,12 +6,8 @@
   import { redirect } from "next/navigation";
 import FormWishlist from "./Form";
   
-  export default async function Join() {
-    const session = await auth();
-  
-    if (session) {
-      redirect("/dashboard");
-    }
+  export default async function Wishlist() {
+    
   
     return (
       <div>

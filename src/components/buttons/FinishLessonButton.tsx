@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
@@ -24,25 +24,27 @@ const FinishLessonButton = ({
   const finishLesson = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/user/progress-lesson", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          lessonId,
+      toast.promise(
+        fetch("/api/user/progress-lesson", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            lessonId,
+          }),
         }),
-      });
-      if (!response.ok) {
-        throw new Error("La mise à jour de l'état du cours a échoué");
-      }
-      toast.success("L'état du cours a été mis à jour");
+        {
+          success: "L'état du cours a été mis à jour",
+          error: "La mise à jour de l'état du cours a échoué",
+          loading: "Mise à jour de l'état du cours en cours...",
+        }
+      );
       router.push(`/cours/${slug}`);
       router.refresh();
     } catch (error) {
       console.error(error);
-      toast.error("La mise à jour de l'état du cours a échoué");
     }
     setIsLoading(false);
   };

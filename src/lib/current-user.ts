@@ -20,7 +20,7 @@ export const currentUser = async () => {
     redirect("/join");
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: session?.user?.email as string,
     },
@@ -35,9 +35,6 @@ export const currentUser = async () => {
     },
   });
 
-  if (!user?.isMember) { // 
-    redirect("/dashboard/subscriptions/");
-  }
 
   return user;
 }

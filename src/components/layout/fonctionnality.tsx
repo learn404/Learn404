@@ -95,16 +95,13 @@ export default async function FonctionnalitySection() {
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#6128DF] shadow-xl shadow-[#6128DF]/50">
                 <LineChart />
               </div>
-              <h3 className="text-3xl font-medium">Analytics Dashboard</h3>
+              <h3 className="text-3xl font-medium">Recommendation de cours</h3>
               <p>
-                Our Analytics Dashboard provides a clear and intuitive interface
-                for you to easily analyze your data. From customizable graphs to
-                real-time data updates, our dashboard offers everything you need
-                to gain valuable insights.
+                Tu as accès à une liste de cours recommandés en fonction de ton niveau et de tes préférences pour t'aider à progresser plus rapidement et plus efficacement dans le domaine de ton choix !
               </p>
             </div>
             <span className="underline text-torea-200 cursor-pointer after:content-['_↗']">
-              View dashboard
+              Direction le tableau de bord
             </span>
           </div>
 
@@ -132,18 +129,14 @@ export default async function FonctionnalitySection() {
               <div className="flex items-center justify-center w-10 h-10 rounded-md bg-[#CB2CAE] shadow-xl shadow-[#CB2CAE]/50">
                 <CodeXml />
               </div>
-              <h3 className="text-3xl font-medium">Code collaboration</h3>
+              <h3 className="text-3xl font-medium">Collaboration</h3>
               <p>
-                Our advanced code synchronization technology ensures that your
-                data is always up-to-date and accurate, no matter where it's
-                coming from. Whether you're integrating data from multiple
-                sources or working with a team of developers, our
-                synchronization technology makes it easy to collaborate and
-                ensure that your data is consistent and reliable.
+                Un discord est mis à disposition pour que tu puisses échanger avec les autres membres de la formation, poser des questions et partager tes projets. Tu pourras également participer à des événements exclusifs !
+
               </p>
             </div>
             <span className=" underline text-torea-200 cursor-pointer after:content-['_↗']">
-              View code collaboration
+              Direction le discord
             </span>
           </div>
           <div className="max-w-2xl">

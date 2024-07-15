@@ -40,6 +40,9 @@ export default async function LessonPage({
   params,
 }: Params): Promise<JSX.Element> {
   const user = await currentUser();
+  if (!user?.isMember) {
+    redirect("/dashboard/subscriptions");
+  }
   let post = await getLesson(params.slug);
 
 

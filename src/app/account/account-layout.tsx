@@ -11,6 +11,7 @@ interface AccountLayoutProps {
 
 export default async function AccountLayout({ children, title, user }: AccountLayoutProps) {
 
+
   return (
     <>
       <HeaderDashboard

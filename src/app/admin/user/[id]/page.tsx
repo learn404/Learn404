@@ -15,6 +15,7 @@ export default async function UserProfile({
 }) {
   const user = await currentUser();
   
+  
   if (!user?.admin) {
     redirect("/");
   }

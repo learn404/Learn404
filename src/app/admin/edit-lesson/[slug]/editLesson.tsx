@@ -4,19 +4,8 @@ import prisma from "@/lib/prisma";
 import Mux from "@mux/mux-node";
 import { redirect } from "next/navigation";
 
-export async function editLesson(formData: FormData, params: { slug: string }) {
-  const title = formData.get("title")?.toString();
-  const slug_title = formData
-    .get("slug_title")
-    ?.toString()
-    .replace(/\s+/g, "-");
-  const categoryId = formData.get("category")?.toString();
-  const about = formData.get("about")?.toString() || undefined;
-  const video_url = formData.get("video_url")?.toString() || undefined;
-  const repository_url =
-    formData.get("repository_url")?.toString() || undefined;
-  const draft = formData.get("draft") === "on";
-  const newLesson = formData.get("newLesson") === "on";
+export async function editLesson(nameLesson: string, slugLesson: string, category: string, descriptionLesson: string, videoLesson: string, repositoryLesson: string, draft: boolean, level: string, params: { slug: string }) {
+  
 
   const existingLesson = await prisma.lessons.findFirst({
     where: {
@@ -24,19 +13,20 @@ export async function editLesson(formData: FormData, params: { slug: string }) {
     },
   });
 
+
   let assetId: string | undefined;
   let playbackIdFromMux: string | undefined;
   let videoId: string | undefined;
   let duration: undefined | number;
 
-  if (video_url) {
+  if (videoLesson) {
     const mux = new Mux({
       tokenId: process.env.MUX_TOKEN_ID!,
       tokenSecret: process.env.MUX_SECRET_KEY!,
     });
 
     const asset = await mux.video.assets.create({
-      input: [{ url: video_url }],
+      input: [{ url: videoLesson }],
       playback_policy: ["public"],
       max_resolution_tier: "1080p",
       encoding_tier: "baseline",
@@ -48,6 +38,7 @@ export async function editLesson(formData: FormData, params: { slug: string }) {
     } else {
       throw new Error("Failed to create playback ID");
     }
+
 
     const waitForAssetReady = async (assetId: string) => {
       while (true) {
@@ -81,22 +72,21 @@ export async function editLesson(formData: FormData, params: { slug: string }) {
   }
 
   const updateData: { [key: string]: any } = {};
-  if (title && existingLesson.title !== title) updateData.title = title;
-  if (title && existingLesson.slug !== slug_title) updateData.slug = slug_title;
-  if (categoryId && existingLesson.categoryId !== categoryId)
-    updateData.categoryId = categoryId;
-  if (about && existingLesson.description !== about)
-    updateData.description = about;
-  if (video_url !== "") {
+  if (nameLesson && existingLesson.title !== nameLesson) updateData.title = nameLesson;
+  if (nameLesson && existingLesson.slug !== slugLesson) updateData.slug = slugLesson;
+  if (category && existingLesson.categoryId !== category)
+    updateData.categoryId = category;
+  if (descriptionLesson && existingLesson.description !== descriptionLesson)
+    updateData.description = descriptionLesson;
+  if (videoLesson !== "") {
     updateData.playbackId = playbackIdFromMux;
     updateData.duration = durationVideo;
     updateData.videoId = videoId;
   }
-  if (repository_url && existingLesson.repository_url !== repository_url)
-    updateData.repository_url = repository_url;
+  if (repositoryLesson && existingLesson.repository_url !== repositoryLesson)
+    updateData.repository_url = repositoryLesson;
   if (existingLesson.draft !== draft) updateData.draft = draft;
-  if (existingLesson.newLesson !== newLesson) updateData.newLesson = newLesson;
-
+if (level && existingLesson.level !== level) updateData.level = level;
   if (Object.keys(updateData).length === 0) {
     return redirect("/admin");
   }

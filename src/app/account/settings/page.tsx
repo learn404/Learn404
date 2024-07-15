@@ -6,7 +6,7 @@ export default async function Settings() {
   const user = await currentUser();
   
   return (
-    <AccountLayout title="Paramètres" user={user}>
+    <AccountLayout title="Paramètres" user={user!}>
       <div>
         <h2 className="text-xl font-semibold text-gray-50">
             Progression des cours
@@ -19,7 +19,7 @@ export default async function Settings() {
              Vous pouvez remettre à zéro votre progression à tout moment en cliquant sur le bouton ci-dessous.
           </p>
         </div>
-        <ResetProgressionButton user={user} />
+        <ResetProgressionButton user={user!} />
       </div>
     </AccountLayout>
   )

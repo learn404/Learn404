@@ -4,43 +4,41 @@ import prisma from "@/lib/prisma";
 import { getLastSortNumber, lessonCheckExist } from "@/lib/utils";
 import Mux from "@mux/mux-node";
 import { redirect } from "next/navigation";
+import { Lessons_level } from ".prisma/client";
 
-export async function addLesson(formData: FormData) {
+export async function addLesson(nameLesson: string, slugLesson: string, category: string, descriptionLesson: string, videoLesson: string, repositoryLesson: string, draft: boolean, level: string) {
   const last_sort_number = await getLastSortNumber();
+
+  const lessonCheckExist = await prisma.lessons.findFirst({
+    where: {
+      slug: slugLesson,
+    },
+  });
+
+  console.log(lessonCheckExist, "lessonCheckExist");
+
+  if (lessonCheckExist) {
+    throw new Error("Lesson already exists");
+  }
+
 
   const sort_number = last_sort_number?.sort_number
     ? last_sort_number?.sort_number + 1
     : 1;
 
-  const title = formData.get("title")?.toString();
-  const slug_title = formData
-    .get("slug_title")
-    ?.toString()
-    .replace(/\s+/g, "-");
-  const categoryId = formData.get("category")?.toString();
-  const about = formData.get("about")?.toString() || undefined;
-  const video_url = formData.get("video_url")?.toString() || undefined;
-  const repository_url =
-    formData.get("repository_url")?.toString() || undefined;
-  const draft = formData.get("draft") === "on";
-  const newLesson = formData.get("newLesson") === "on";
-
-  if (!title || !categoryId) {
-    throw new Error("Title and category are required");
-  }
   let assetId: string | undefined;
   let playbackIdFromMux: string | undefined;
   let videoId: string | undefined;
   let duration: undefined | number;
 
-  if (video_url) {
+  if (videoLesson) {
     const mux = new Mux({
       tokenId: process.env.MUX_TOKEN_ID!,
       tokenSecret: process.env.MUX_SECRET_KEY!,
     });
 
     const asset = await mux.video.assets.create({
-      input: [{ url: video_url }],
+      input: [{ url: videoLesson }],
       playback_policy: ["public"],
       max_resolution_tier: "1080p",
       encoding_tier: "baseline",
@@ -76,25 +74,19 @@ export async function addLesson(formData: FormData) {
     durationVideo = `${hours}:${minutes}:${seconds}`;
   }
 
-  const checkLessonExist = await lessonCheckExist(slug_title as string);
-
-  if (checkLessonExist) {
-    throw new Error("Lesson already exists");
-  }
-
   await prisma.lessons.create({
     data: {
-      title: title ?? "",
-      slug: slug_title ?? "",
-      categoryId: categoryId ?? "",
-      description: about ?? "",
+      title: nameLesson ?? "",
+      slug: slugLesson ?? "",
+      categoryId: category ?? "",
+      description: descriptionLesson ?? "",
       playbackId: playbackIdFromMux ?? "",
-      repository_url: repository_url ?? "",
+      repository_url: repositoryLesson ?? "",
       draft: draft ?? false,
-      newLesson: newLesson ?? false,
       sort_number: sort_number,
       videoId: videoId,
       duration: durationVideo as string,
+      level: level as Lessons_level,
     },
   });
 

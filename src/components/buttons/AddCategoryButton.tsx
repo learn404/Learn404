@@ -1,5 +1,5 @@
 "use client";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -28,27 +28,24 @@ export default function AddCategoryButton() {
     setIsLoading(true);
     const formData = new FormData(e.target as HTMLFormElement);
 
-    
     const categoryName = formData.get("category-name")?.toString();
 
-    const response = await fetch("/api/lessons/create-category", {
-      method: "POST",
-      body: JSON.stringify({
-        categoryName: categoryName,
+    toast.promise(
+      fetch("/api/lessons/create-category", {
+        method: "POST",
+        body: JSON.stringify({
+          categoryName: categoryName,
+        }),
       }),
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      toast.success(data.message);
-      setIsLoading(false);
-      router.push("/admin/add-lesson");
-      router.refresh();
-    } else {
-      const data = await response.json();
-      toast.error(data.message);
-      setIsLoading(false);
-    }
+      {
+        loading: "Chargement...",
+        success: "Catégorie ajoutée avec succès",
+        error: "Une erreur est survenue lors de l'ajout de la catégorie",
+      }
+    );
+    setIsLoading(false);
+    router.push("/admin/add-lesson");
+    router.refresh();
   };
 
   return (
@@ -74,7 +71,7 @@ export default function AddCategoryButton() {
                 variant="default"
                 className="mt-4"
                 disabled={isLoading}
-                type="submit" 
+                type="submit"
               >
                 {isLoading ? "Chargement..." : "Ajouter"}
               </Button>

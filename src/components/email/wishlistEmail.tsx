@@ -16,27 +16,25 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-interface Learn404WelcomeEmailProps {
+interface WishlistEmailProps {
   name?: string;
 }
 
-const baseUrl = process.env.AUTH_URL
-  ? `https://${process.env.AUTH_URL}`
-  : "";
+const baseUrl = process.env.AUTH_URL ? `${process.env.AUTH_URL}` : "";
 
-export const SubscriptionEmail = ({
+export const WishlistEmail = ({
   name = "Cher Membre",
-}: Learn404WelcomeEmailProps) => {
+}: WishlistEmailProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Bienvenue sur Learn404</Preview>
+      <Preview>Confirmation d'inscription à la Wishlist</Preview>
       <Tailwind
         config={{
           theme: {
             extend: {
               colors: {
-                brand: "#4c51bf",
+                brand: "#4c51bf", // indigo-800
                 offwhite: "#fafbfb",
               },
               spacing: {
@@ -58,35 +56,31 @@ export const SubscriptionEmail = ({
           />
           <Container className="bg-white p-45">
             <Heading className="text-center my-0 leading-8">
-              Bienvenue sur Learn404, {name} !
+              Bienvenue dans la Wishlist, {name} !
             </Heading>
 
             <Section>
               <Row>
                 <Text className="text-base">
-                  Félicitations ! Tu viens de t'abonner à Learn404, la
-                  plateforme qui va permettre d'améliorer tes compétences en
-                  développement web.
+                  Merci de vous être inscrit à notre wishlist sur Learn404 ! 
+                  Vous recevrez des mises à jour sur les cours et ressources que vous souhaitez découvrir.
                 </Text>
 
                 <Text className="text-base mt-4">
-                  Voici comment commencer :
+                  Voici quelques avantages d'être inscrit :
                 </Text>
               </Row>
             </Section>
 
             <ul>
               <li className="mb-20">
-                <strong>Explore les vidéos de cours.</strong> Parcours notre
-                vaste bibliothèque de vidéos pour tous les niveaux.
+                <strong>Restez informé.</strong> Soyez le premier à connaître les nouvelles offres et cours.
               </li>
               <li className="mb-20">
-                <strong>Rejoins la communauté.</strong> Participe au Discord
-                pour poser des questions et discuter avec d'autres membres.
+                <strong>Profitez d'offres exclusives.</strong> Accédez à des promotions réservées aux membres de la wishlist.
               </li>
               <li className="mb-20">
-                <strong>Accède à ton tableau de bord.</strong> Gère tes cours,
-                suis ta progression et bien plus encore.
+                <strong>Participez à des événements.</strong> Recevez des invitations à nos webinars et événements en ligne.
               </li>
             </ul>
 
@@ -94,10 +88,10 @@ export const SubscriptionEmail = ({
               <Button
                 className="bg-brand text-white rounded-lg py-3 px-[18px]"
                 onClick={() => {
-                  window.location.href = `${baseUrl}dashboard`;
+                  window.location.href = `https://discord.gg/w3mKH2e2Jt`;
                 }}
               >
-                Accéder à ton tableau de bord
+                Explorer le discord
               </Button>
             </Section>
 
@@ -116,10 +110,10 @@ export const SubscriptionEmail = ({
             <Section>
               <Row>
                 <Column className="text-right px-20">
-                  <Link href={`${baseUrl}api/email/unsubscribe`}>Se désabonner</Link>
+                  <Link href={`${baseUrl}/api/email/unsubscribe`}>Se désabonner</Link>
                 </Column>
                 <Column className="text-left">
-                  <Link href={`${baseUrl}settings`}>Gérer les préférences</Link>
+                  <Link href={`${baseUrl}/settings`}>Gérer les préférences</Link>
                 </Column>
               </Row>
             </Section>
@@ -133,4 +127,4 @@ export const SubscriptionEmail = ({
   );
 };
 
-export default SubscriptionEmail;
+export default WishlistEmail;

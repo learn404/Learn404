@@ -36,7 +36,7 @@ export const WelcomeEmail = ({
           theme: {
             extend: {
               colors: {
-                brand: "#2250f4",
+                brand: "#4c51bf",
                 offwhite: "#fafbfb",
               },
               spacing: {

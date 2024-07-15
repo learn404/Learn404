@@ -11,12 +11,16 @@ import { UserTable } from "./user-table";
 import { userColumns } from "./UserColumns";
 import AddChangeLogButton from "@/components/buttons/AddChangeLogButton";
 import CreateCategoryButton from "@/components/buttons/AddCategoryButton";
-import { get } from "http";
 import { getTransactions } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 
 export default async function Admin() {
   const user = await currentUser();
+
+  if (!user?.admin) {
+    redirect("/");
+  }
 
   
  const transactionData = await getTransactions();
@@ -43,7 +47,7 @@ export default async function Admin() {
 
   return (
     <div>
-      <HeaderDashboard user={user} title="Admin"></HeaderDashboard>
+      <HeaderDashboard user={user!} title="Admin"></HeaderDashboard>
       <div className="flex items-center gap-2 mx-10">
         <Link href="/admin/add-lesson">
           <Button variant="default">

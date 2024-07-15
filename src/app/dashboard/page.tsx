@@ -7,6 +7,9 @@ import { Separator } from "@/components/ui/separator";
 import { currentUser } from "@/lib/current-user";
 import { getCategoriesWithLessons, getLessonsStartedAndCompleted } from "@/lib/utils";
 import { Lessons } from "@prisma/client";
+import { Metadata } from 'next'
+import { redirect } from "next/navigation";
+
 
 export type UserBase = {
   id: string;
@@ -18,11 +21,20 @@ export type UserBase = {
   createdAt: Date;
 }
 
+export const metadata: Metadata = {
+  title: 'Tableau de bord',
+}
+
 export default async function Dashboard() {
 
   const user = await currentUser();
+  if (!user?.isMember) {
+    redirect("/dashboard/subscriptions");
+  }
+
+
   const { categories, lessons } = await getCategoriesWithLessons();
-  const lessonsStartedAndCompleted = await getLessonsStartedAndCompleted(user);
+  const lessonsStartedAndCompleted = await getLessonsStartedAndCompleted(user!);
 
   lessons.forEach((lesson: (Lessons & { status?: number })) => {
     if (lessonsStartedAndCompleted.lessonProgress.find((lessonProgress) => (lessonProgress.lessonId === lesson.id) && lessonProgress.completed)) {

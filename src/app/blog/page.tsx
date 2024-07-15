@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import prisma from "@/lib/prisma";
+import { currentUser } from "@/lib/current-user";
 
 export const metadata = {
   title: "Blog",
@@ -25,13 +26,7 @@ export const metadata = {
 export default async function BlogPage() {
   const posts = await getBlogPosts();
 
-  const session = await auth()
-
-  const user = await prisma.user.findFirst({
-    where: {
-      email: session?.user?.email,
-    },
-  });
+  const user = await currentUser();
 
 
   return (
