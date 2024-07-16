@@ -6,7 +6,7 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { CheckCheck, CircleDashed, List, Circle } from "lucide-react";
+import { CheckCheck, CircleDashed, List } from "lucide-react";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { getLessonsStartedAndCompleted } from "@/lib/utils";
@@ -75,7 +75,9 @@ export default async function SheetLessons({ userId }: userIdProps) {
   });
 
   const user = await currentUser(); 
-  const lessonsStartedAndCompleted = await getLessonsStartedAndCompleted(user);
+  
+
+  const lessonsStartedAndCompleted = await getLessonsStartedAndCompleted(user!);
 
   categories.forEach((category) => {
     category.Lessons.forEach((lesson: LessonWithFormattedSortNumber) => {

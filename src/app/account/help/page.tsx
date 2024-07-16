@@ -2,12 +2,17 @@ import { Button } from "@/components/ui/button";
 import { currentUser } from "@/lib/current-user";
 import { DiscordLogoIcon } from "@radix-ui/react-icons";
 import AccountLayout from "../account-layout";
+import { redirect } from "next/navigation";
 
 export default async function Help() {
   const user = await currentUser();
-  
+
+  if (!user) {
+    redirect('/join')
+  }
+
   return (
-    <AccountLayout title="Aide / Discord" user={user}>
+    <AccountLayout title="Aide / Discord" user={user!}>
       <div>
         <h2 className="text-xl font-semibold text-gray-50">
           Besoin d'aide ?

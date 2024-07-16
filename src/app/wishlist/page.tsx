@@ -8,7 +8,6 @@ import FormWishlist from "./Form";
   
   export default async function Wishlist() {
     
-  
     return (
       <div>
         <Header />

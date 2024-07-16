@@ -2,12 +2,17 @@ import { currentUser } from "@/lib/current-user";
 import prisma from "@/lib/prisma";
 import AccountLayout from "../account-layout";
 import FormDetails from "./form-details";
+import { redirect } from "next/navigation";
 
 
 
 const Details = async () => {
 
   const user = await currentUser();
+
+  if (!user) {
+    redirect('/login')
+  }
 
   const accountData = await prisma.account.findFirst({
     where: {
@@ -23,8 +28,8 @@ const Details = async () => {
 
 
   return ( 
-    <AccountLayout title="Mon compte" user={user}>
-      <FormDetails user={user} account={accountData} />
+    <AccountLayout title="Mon compte" user={user!}>
+      <FormDetails user={user!} account={accountData} />
     </AccountLayout>
    );
 }

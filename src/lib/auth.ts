@@ -4,7 +4,7 @@ import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GooglePovider from "next-auth/providers/google";
 import { Resend } from "resend";
-import { WelcomeEmail } from '@/components/email/welcomeEmail';
+import { WelcomeEmail } from "@/components/email/welcomeEmail";
 
 const resend = new Resend(process.env.RESEND_SECRET_KEY);
 
@@ -23,34 +23,40 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       try {
-        await resend.emails.send({
-          from: 'Learn404 <no-reply@learn404.com>',
-          to: [user.email!],
-          subject: 'Bienvenue sur Learn404 !',
-          text: `Bienvenue sur notre plateforme Learn404, ${user.name ?? 'User'}!`,
-          react: WelcomeEmail({ name: user.name! }),
-          headers: {
-            'List-Unsubscribe': `https://${process.env.AUTH_URL}unsubscribe>`,
-          },
-        });
-
-        await resend.contacts.create({
-          email: user.email!,
-          unsubscribed: false,
-          audienceId: process.env.RESEND_AUDIENCE_ID!,
-        });
-
-        await prisma.user.update({
+        const user_exist = await prisma.user.findUnique({
           where: { email: user.email! },
-          data: { welcomeEmailSent: true },
         });
-      
-      } catch (error) {
-        console.error('Erreur envoie mail', error);
-      }
 
+        if (!user_exist) {
+
+          await resend.emails.send({
+            from: "Learn404 <no-reply@learn404.com>",
+            to: [user.email!],
+            subject: "Bienvenue sur Learn404 !",
+            text: `Bienvenue sur notre plateforme Learn404, ${
+              user.name ?? "User"
+            }!`,
+            react: WelcomeEmail({ name: user.name! }),
+            headers: {
+              "List-Unsubscribe": `https://${process.env.AUTH_URL}unsubscribe>`,
+            },
+          });
+
+          await resend.contacts.create({
+            email: user.email!,
+            unsubscribed: false,
+            audienceId: process.env.RESEND_AUDIENCE_ID!,
+          });
+
+          await prisma.user.update({
+            where: { email: user.email! },
+            data: { welcomeEmailSent: true },
+          });
+        }
+      } catch (error) {
+        console.error("Erreur envoie mail", error);
+      }
       return true;
     },
   },
-  
 });

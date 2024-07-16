@@ -165,6 +165,36 @@ export async function getTransactions() {
 }
 
 
+export async function getUpvotes(id: string) {
+  const upvotes = await prisma.roadmap.findFirst({
+    where: {
+      id: id
+    },
+    select : {
+      upvotes: true
+    }
+  })
+  return upvotes;
+}
+
+export async function upvoteRoadmap(id: string) {
+
+
+  const upvote = await prisma.roadmap.update({
+    where: {
+      id: id
+    },
+    data: {
+      upvotes: {
+        increment: +1
+      }
+    }
+  })
+
+  return upvote;
+}
+
+
 
 export const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' });

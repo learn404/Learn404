@@ -10,7 +10,7 @@ export type currentUserType = {
   isMember: boolean;
   admin: boolean;
   createdAt: Date;
-}
+} 
 
 export const currentUser = async () => {
 
@@ -36,5 +36,5 @@ export const currentUser = async () => {
   });
 
 
-  return user;
+  return user ;
 }

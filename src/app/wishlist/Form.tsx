@@ -75,8 +75,7 @@ export default function FormWishlist() {
       console.error("Error submitting form:", error);
       if (error) {
         setSubscribeStatus(false);
-        router.push("/wishlist");
-        router.refresh()
+        
       } else {
         setSubscribeStatus(true);
       }

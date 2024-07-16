@@ -2,11 +2,11 @@ import { getBlogPosts } from "@/lib/blog";
 import Link from "next/link";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import Image from "next/image";
-
-import { auth } from "@/lib/auth";
 
 import {
   Tooltip,
@@ -14,8 +14,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import prisma from "@/lib/prisma";
-import { currentUser } from "@/lib/current-user";
 
 export const metadata = {
   title: "Blog",
@@ -26,7 +24,13 @@ export const metadata = {
 export default async function BlogPage() {
   const posts = await getBlogPosts();
 
-  const user = await currentUser();
+  const session = await auth()
+
+  const user = await prisma.user.findFirst({
+    where: {
+      email: session?.user?.email
+    }
+  })
 
 
   return (

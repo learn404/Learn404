@@ -5,7 +5,7 @@ export default async function Feedback() {
   const user = await currentUser();
   
   return (
-    <AccountLayout title="Feedback" user={user}>
+    <AccountLayout title="Feedback" user={user!}>
       <div>
         <h2 className="text-xl font-semibold text-gray-50">
           Feedback

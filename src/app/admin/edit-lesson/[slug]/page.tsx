@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const user = await currentUser();
 
-  if (!user?.admin || !user) {
+  if (!user!.admin || !user) {
     return redirect("/");
   }
 

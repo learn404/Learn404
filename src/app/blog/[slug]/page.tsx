@@ -6,9 +6,10 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import ShareUrlButton  from "@/components/buttons/ShareUrlButton";
+import ShareUrlButton from "@/components/buttons/ShareUrlButton";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
-import { currentUser } from "@/lib/current-user";
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
 export async function generateMetadata({
   params,
@@ -65,11 +66,17 @@ export default async function Blog({
   if (!post) {
     notFound();
   }
-  const user = await currentUser();
+  const session = await auth()
+
+  const user = await prisma.user.findFirst({
+    where: {
+      email: session?.user?.email
+    }
+  })
 
   return (
     <>
-{user ? <HeaderDashboard user={user} title="Blog" /> : <Header />}
+      {user ? <HeaderDashboard user={user} title="Blog" /> : <Header />}
       <section id="blog">
         <script
           type="application/ld+json"
@@ -104,8 +111,8 @@ export default async function Blog({
                   <div className="flex flex-col items-center gap-2">
                     <p className="text-sm text-neutral-400">
                       {formatDate(post.metadata.publishedAt)}
-                  </p>
-                  <ShareUrlButton />
+                    </p>
+                    <ShareUrlButton />
                   </div>
                 </Suspense>
               </div>
