@@ -24,18 +24,9 @@ export const metadata = {
 export default async function BlogPage() {
   const posts = await getBlogPosts();
 
-  const session = await auth()
-
-  const user = await prisma.user.findFirst({
-    where: {
-      email: session?.user?.email
-    }
-  })
-
-
   return (
     <>
-      {user ? <HeaderDashboard user={user} title="Blog" /> : <Header />}
+      <Header />
       <section className="max-w-screen-xl mx-auto px-4">
         <h1 className="font-bold text-2xl mb-8 tracking-tighter ">Blog</h1>
         <div className="flex flex-wrap gap-4">

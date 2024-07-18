@@ -1,9 +1,9 @@
 import Header from "@/components/layout/header";
-import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import Footer from "@/components/layout/footer";
 import { getChangelogData, adminCheckAre } from "@/lib/utils";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import AddChangeLogButton from "@/components/buttons/AddChangeLogButton";
 
 import ChangeLogSection from "./changeLogSection";
 
@@ -23,11 +23,10 @@ export default async function Changelog() {
 
   return (
     <div>
-      {user ? (
-        <HeaderDashboard user={user} title="Journal des modifications" />
-      ) : (
+      {(
         <Header />
       )}
+      {user?.admin ? <AddChangeLogButton /> : null}
       <ChangeLogSection ChangelogData={ChangelogData} isAdmin={isAdminData?.admin ?? false} />
       <Footer />
     </div>

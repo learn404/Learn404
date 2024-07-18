@@ -28,6 +28,7 @@ import { useRouter } from "next/navigation";
 export default function AddChangeLogButton() {
   const router = useRouter();
 
+  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,8 +50,9 @@ export default function AddChangeLogButton() {
     let minor = version.slice(2, 6);
 
     version = `${major}.${minor}`;
-    toast.promise(
-      fetch("/api/changelog/create-changelog", {
+
+    const createChangelog = async () => {
+      return fetch("/api/changelog/create-changelog", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +62,11 @@ export default function AddChangeLogButton() {
           content: content,
           version: version,
         }),
-      }),
+      });
+    }
+
+    toast.promise(
+      createChangelog(),
       {
         loading: "Création du changelog...",
         success: "Changelog créé avec succès",
@@ -68,13 +74,13 @@ export default function AddChangeLogButton() {
       }
     );
     setIsLoading(false);
-    router.push("/changelog");
+    setOpen(false);
     router.refresh();
   };
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="default">
             <RefreshCcw className="mr-1 w-4" />

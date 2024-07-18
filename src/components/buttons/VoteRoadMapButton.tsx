@@ -2,8 +2,9 @@
 
 import { useOptimistic } from 'react';
 import { Button } from "../ui/button";
-import { ArrowUpIcon } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { adjustVote } from "@/lib/adjustVote";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Vote = {
   id: string;
@@ -17,20 +18,23 @@ export default function VoteRoadMapButton({ id, upvotes, userId }: { id: string,
   )
   let amount = 0
 
-  const handleVote = async () => {
+  const handleVote = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (userId) {
+      amount = await adjustVote(id, userId)
+    }
     addOptimisticVote(amount);
-    amount = await adjustVote(id, userId)
-    addOptimisticVote(amount);
+  
   };
 
   return (
-    <div className="flex flex-row items-center">
-      <Button variant="outline" className="flex items-center" size="sm" onClick={handleVote}>
-        <ArrowUpIcon className="w-3 h-3 text-gray-400" />
-        <span className="text-gray-400 text-sm">{
+    <>
+      <Button variant="outline" className="flex items-center overflow-hidden" size="sm" onClick={handleVote}>
+        <ArrowUp className="w-3 h-3 text-gray-400" />
+        <motion.span className="text-gray-400 text-sm" initial={{ y: 100 }} animate={{ y: 0 }} transition={{ duration: 0.2 , type: "spring", damping: 15 }}>{
             optimisticVotes
-        }</span>
+        }</motion.span>
       </Button>
-    </div>
+    </>
   );
 }

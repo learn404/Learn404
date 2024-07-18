@@ -18,15 +18,10 @@ const footerLinks: FooterLink[][] = [
       url: "/legal/condition-general-utilisation",
     },
     { id: 6, title: "Journal des modifications", url: "/changelog" }, 
-    { id: 7, title: "Press", url: "#" },
+    { id: 7, title: "Roadmaps", url: "/roadmaps" },
     { id: 8, title: "More", url: "#" },
   ],
-  [
-    { id: 9, title: "Press", url: "#" },
-    { id: 10, title: "Careers", url: "#" },
-    { id: 11, title: "Newsletters", url: "#" },
-    { id: 12, title: "More", url: "#" },
-  ],
+
 ];
 export default function Footer() {
   return (
@@ -74,7 +69,7 @@ export default function Footer() {
           </p>
         </div>
         <div className="pt-5 md:w-1/2">
-          <div className="flex items-center justify-between gap-x-3 px-0 lg:px-10">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-x-3 gap-y-2 md:gap-y-0 px-0 lg:px-10">
             {footerLinks.map((column, columnIndex) => (
               <ul key={columnIndex} className="flex flex-col gap-y-2">
                 {column.map((link) => (
