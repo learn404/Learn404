@@ -57,7 +57,7 @@ export default async function Admin() {
         </Link>
         <div className="flex items-center gap-2">
           <AddChangeLogButton />
-          <CreateCategoryButton />
+          <CreateCategoryButton title="Ajouter une catégorie" />
         </div>
       </div>
       {/* <div>

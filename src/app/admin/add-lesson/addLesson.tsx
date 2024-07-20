@@ -15,7 +15,6 @@ export async function addLesson(nameLesson: string, slugLesson: string, category
     },
   });
 
-  console.log(lessonCheckExist, "lessonCheckExist");
 
   if (lessonCheckExist) {
     throw new Error("Lesson already exists");

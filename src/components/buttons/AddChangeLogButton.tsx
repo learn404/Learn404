@@ -51,7 +51,7 @@ export default function AddChangeLogButton() {
 
     version = `${major}.${minor}`;
 
-    const createChangelog = async () => {
+    const createChangelog = () => {
       return fetch("/api/changelog/create-changelog", {
         method: "POST",
         headers: {

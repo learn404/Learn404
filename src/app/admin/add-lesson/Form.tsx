@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { toast } from "sonner";
+import AddCategoryButton from "@/components/buttons/AddCategoryButton";
 interface AddLessonFormProps {
   isAdmin: boolean;
   isAvatar: boolean;
@@ -43,8 +44,8 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
   ];
 
   const status = [
-    { id: "1", name: "Brouillon" },
-    { id: "2", name: "En ligne" },
+    { id: "1", name: "Brouillon", value : true},
+    { id: "2", name: "En ligne" , value : false},
   ];
 
   useEffect(() => {
@@ -77,18 +78,21 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
     try {
       const formData = new FormData(event.currentTarget);
 
-      let status = formData.get("status")!.toString().toLowerCase();
-      let draft = false;
-
-      if (status === "brouillon") {
-        draft = true;
-      } else if (status === "en ligne") {
-        draft = false;
-      }
+      
 
       const nameLesson = formData.get("name_lesson")?.toString()!;
       const categoryLesson = formData.get("category")!.toString();
       const levelLesson = formData.get("level")!;
+      const status = formData.get('status')?.toString() || ""
+
+      let draft = true 
+
+      if (status ==="1"){
+        draft = true 
+      }
+      else if (status==="2"){
+        draft = false
+      }
 
       let level = "BEGINNER";
 
@@ -105,6 +109,8 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
         return;
       }
 
+      console.log(draft)
+
       toast.promise(
         addLesson(
             nameLesson,
@@ -114,7 +120,7 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
             formData.get("video_lesson")?.toString() || "",
             formData.get("repository_lesson")?.toString() || "",
             draft,
-            level.toString() as string // Cast level.toString() to string
+            level.toString() as string,
         ),
         {
           loading: "Ajout du cours...",
@@ -228,12 +234,13 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
                 <h2 className="font-semibold text-2xl">Catégories du cours</h2>
               </div>
               <div className="mt-4 flex flex-col lg:flex-row justify-start lg:items-center gap-6">
-                <div className="flex flex-col gap-2">
+                <div className="flex items-end gap-2">
+                  <div className="flex flex-col gap-2">
                   <Label htmlFor="category">Catégorie</Label>
                   <Select name="category">
                     <SelectTrigger
                       id="category"
-                      className="w-[300px] rounded-md bg-gray-950 "
+                      className="w-[200px] rounded-md bg-gray-950 "
                     >
                       <SelectValue placeholder="Choisir la catégorie" />
                     </SelectTrigger>
@@ -248,13 +255,15 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
+                  </div>
+                  <AddCategoryButton title="+" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="level">Niveau</Label>
                   <Select name="level">
                     <SelectTrigger
                       id="level"
-                      className="w-[300px] rounded-md bg-gray-950 "
+                      className="w-[200px] rounded-md bg-gray-950 "
                     >
                       <SelectValue placeholder="Choisir le niveau" />
                     </SelectTrigger>

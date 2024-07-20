@@ -18,25 +18,30 @@ import { Layers3 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function AddCategoryButton() {
+export default function AddCategoryButton({title}: {title: string}) {
   const router = useRouter();
 
+  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmitCategory = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.stopPropagation();
     e.preventDefault();
     setIsLoading(true);
     const formData = new FormData(e.target as HTMLFormElement);
 
     const categoryName = formData.get("category-name")?.toString();
 
-    toast.promise(
-      fetch("/api/lessons/create-category", {
+    const createCategory = () => {
+      return fetch("/api/lessons/create-category", {
         method: "POST",
         body: JSON.stringify({
           categoryName: categoryName,
         }),
-      }),
+      });
+    }
+
+    toast.promise(createCategory,
       {
         loading: "Chargement...",
         success: "Catégorie ajoutée avec succès",
@@ -44,17 +49,17 @@ export default function AddCategoryButton() {
       }
     );
     setIsLoading(false);
-    router.push("/admin/add-lesson");
+    setOpen(false);
     router.refresh();
   };
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="default">
             <Layers3 className="mr-1 w-4" />
-            Ajouter une catégorie
+            {title}
           </Button>
         </DialogTrigger>
         <DialogContent className="border-2 border-white/10 bg-bg-primary">
