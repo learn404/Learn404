@@ -31,17 +31,12 @@ interface Lesson {
   slug: string;
 }
 
-interface Blog {
-  metadata: { title: string; slug: string; publishAt: string; image: string };
-  slug: string;
-  source: string;
-}
 export default function SearchInput({
   lessons,
-  blog,
+ 
 }: {
   lessons: Lesson[];
-  blog: Blog[];
+
 }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -155,16 +150,7 @@ export default function SearchInput({
                 </Link>
               ))}
             </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup heading="Blog">
-              {blog.map((post) => (
-                <Link href={`/blog/${post.slug}`} key={post.slug}>
-                  <CommandItem className="text-white">
-                    {post.metadata.title}
-                  </CommandItem>
-                </Link>
-              ))}
-            </CommandGroup>
+
           </CommandList>
         </Command>
       </CommandDialog>
