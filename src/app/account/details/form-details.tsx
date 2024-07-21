@@ -189,7 +189,7 @@ const FormDetails = ({ user, account }: FormDetailsProps) => {
                           {...field}
                           type="text"
                           disabled={!item.editable}
-                          className= "h-12 bg-gray-900/80 border-2 border-gray-800 flex items-center pl-3 rounded-sm text-gray-300 w-full text-base"
+                          className= "h-12 bg-gray-900/80 border-2 border-gray-800 flex items-center rounded-sm text-gray-300 w-full text-base"
                         />
                       </FormControl>
                       <FormMessage />
@@ -199,10 +199,10 @@ const FormDetails = ({ user, account }: FormDetailsProps) => {
 
               ) : (
                 <div key={item.label} className="flex flex-col gap-1">
-                  <p className="text-gray-400">
+                  <p className="text-gray-400 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                     {item.label} {item.needed && <span>*</span>}
                   </p>
-                  <div className="h-12 bg-gray-900/80 text-gray-500 border-2 border-gray-800 flex items-center pl-3 rounded-sm">
+                  <div className="h-12 bg-gray-900/80 text-gray-500 border-2 border-gray-800 flex items-center px-3 py-2 rounded-sm mt-2">
                     <span>{item.value}</span>
                   </div>
                 </div>
@@ -241,7 +241,7 @@ const FormDetails = ({ user, account }: FormDetailsProps) => {
 
                 ) : (
                   <div key={item.label} className="flex flex-col gap-1">
-                    <p className="text-gray-400">
+                    <p className="text-gray-400 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                       {item.label} {item.needed && <span>*</span>}
                     </p>
                     <div className="h-12 bg-gray-900/80 border-2 border-gray-800 flex items-center pl-3 rounded-sm text-gray-300">
