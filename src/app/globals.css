@@ -105,12 +105,12 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  height: 100%;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background: var(--background-end-rgb);
-  overflow-x: hidden;
 }
 
 @layer utilities {

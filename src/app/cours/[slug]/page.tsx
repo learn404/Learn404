@@ -2,14 +2,14 @@ import ChapterLessonButton from "@/components/buttons/ChapterLessonButton";
 import FinishLesson from "@/components/buttons/FinishLessonButton";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import SheetLessons from "@/components/sheet/sheetLessons";
+import { Button } from "@/components/ui/button";
 import { currentUser } from "@/lib/current-user";
+import { getLesson } from "@/lib/lesson";
 import prisma from "@/lib/prisma";
+import jwt from "jsonwebtoken";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { getLesson } from "@/lib/lesson";
-import jwt from "jsonwebtoken";
 
 interface Params {
   params: {
@@ -153,7 +153,7 @@ export default async function LessonPage({
         <SheetLessons userId={user.id} />
       </div>
 
-      <main className="relative flex grow flex-col overflow-auto">
+      <main className="relative flex grow flex-col">
         <section className="relative">
           {lesson.playbackId ? (
             <div className="z-50">
@@ -235,8 +235,8 @@ export default async function LessonPage({
             ></article>
           </div>
 
-          <div className="ml-auto hidden px-2 lg:block w-full items-start h-full">
-            <div className="sticky top-10 w-full">
+          <div className="ml-auto hidden px-2 w-full lg:block h-full flex-shrink-0">
+            <div className="sticky top-0 w-full pt-2">
               <div className="pt-10 lg:sticky lg:top-0 lg:pt-4">
                 <p>Prochain cours</p>
                 <p>{nextLesson?.title}</p>
