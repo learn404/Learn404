@@ -22,7 +22,6 @@ model User {
   BillingInformations BillingInformations?
   lessonProgress LessonProgress[]
   Session        Session[]
-  RoadmapVote    RoadmapVote[]
 }
 
 model BillingInformations {
@@ -148,41 +147,6 @@ model ChangeLog {
   createdAt DateTime @default(now())
 }
 
-model Roadmap {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  status      String
-  type        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  upvotes     Int      @default(0)
-  priority    Roadmap_priority @default(LOW)
-  RoadmapVote RoadmapVote[]
-}
-
-model RoadmapVote {
-  id        String   @id @default(cuid())
-  userId    String
-  roadmapId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  roadmap   Roadmap  @relation(fields: [roadmapId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-}
-
-
-enum Roadmap_status {
-  TODO
-  IN_PROGRESS
-  DONE
-}
-
-enum Roadmap_priority {
-  LOW
-  MEDIUM
-  HIGH
-}
 
 
 enum Lessons_level {
