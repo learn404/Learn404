@@ -178,3 +178,10 @@ body[data-scroll-locked]{
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.highlighted-code-line {
+  background-color: rgba(30, 41, 59, .7) !important;
+  padding: 0.2rem 0.5rem !important;
+  color: green !important;
+  margin: -0.2rem -0.5rem !important;
+}

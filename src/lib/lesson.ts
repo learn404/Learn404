@@ -5,6 +5,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import rehypeHighlight from "rehype-highlight";
+import rehypeHighlightLines from "rehype-highlight-code-lines";
 import { unified } from "unified";
 
 type Metadata = {
@@ -22,6 +24,10 @@ export async function markdownToHTML(markdown: string) {
   const p = await unified()
     .use(remarkParse)
     .use(remarkRehype)
+    .use(rehypeHighlight)
+    .use(rehypeHighlightLines, {
+      showLineNumbers: true,
+    })
     .use(rehypePrettyCode, {
       // https://rehype-pretty.pages.dev/#usage
       theme: {
@@ -31,6 +37,7 @@ export async function markdownToHTML(markdown: string) {
       keepBackground: false,
     })
     .use(rehypeStringify)
+
     .process(markdown);
 
   return p.toString();
