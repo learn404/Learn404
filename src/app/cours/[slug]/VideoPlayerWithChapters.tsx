@@ -10,6 +10,7 @@ interface VideoPlayerWithChaptersProps {
   lessonId: string;
   lessonProgress: any;
   chapters: any;
+  token: string;
 }
 
 const VideoPlayerWithChapters: React.FC<VideoPlayerWithChaptersProps> = ({
@@ -20,15 +21,17 @@ const VideoPlayerWithChapters: React.FC<VideoPlayerWithChaptersProps> = ({
   userId,
   lessonId,
   lessonProgress,
-
+  token,
 }) => {
   const muxPlayerRef = useRef<any>(null);
   const [watchedTime, setWatchedTime] = useState(0);
   const [hasWatchedOneMinute, setHasWatchedOneMinute] = useState(
-    lessonProgress ? true : false);
-
+    lessonProgress ? true : false
+  );
 
   useEffect(() => {
+
+    console.log(token, "token")
     const muxPlayerEl = muxPlayerRef.current;
 
     const addChaptersToPlayer = () => {
@@ -58,7 +61,9 @@ const VideoPlayerWithChapters: React.FC<VideoPlayerWithChaptersProps> = ({
 
     const handleTimeUpdate = () => {
       if (muxPlayerEl) {
-        setWatchedTime((prevTime) => prevTime + muxPlayerEl.currentTime - prevTime);
+        setWatchedTime(
+          (prevTime) => prevTime + muxPlayerEl.currentTime - prevTime
+        );
       }
     };
 
@@ -76,11 +81,11 @@ const VideoPlayerWithChapters: React.FC<VideoPlayerWithChaptersProps> = ({
       const updateProgress = async () => {
         const response = await fetch("/api/user/progress-lesson", {
           method: "POST",
-        body: JSON.stringify({
-          userId: userId,
-          lessonId: lessonId,
-          hasWatchedOneMinute: true,
-        }),
+          body: JSON.stringify({
+            userId: userId,
+            lessonId: lessonId,
+            hasWatchedOneMinute: true,
+          }),
         });
         console.log("User has watched at least one minute of video.");
         const data = await response.json();
@@ -91,19 +96,26 @@ const VideoPlayerWithChapters: React.FC<VideoPlayerWithChaptersProps> = ({
   }, [watchedTime, hasWatchedOneMinute]);
 
   return (
-    <MuxPlayer
-      ref={muxPlayerRef}
-      stream-type="on-demand"
-      autoPlay={false}
-      max-resolution="1080p"
-      preload="false"
-      playbackId={playbackId}
-      accentColor="#fefefe"
-      metadata={{
-        video_id: videoId,
-        video_title: videoTitle,
-      }}
-    />
+    <div className="mx-auto max-w-7xl py-2 lg:px-6 lg:py-4">
+      <div className="relative aspect-video">
+        <div className="group absolute z-20 flex h-full w-full items-center justify-center">
+        <MuxPlayer
+          ref={muxPlayerRef}
+          stream-type="on-demand"
+          autoPlay={false}
+          max-resolution="1080p"
+          preload="false"
+          playbackId={playbackId}
+          accentColor="#fefefe"
+          metadata={{
+            video_id: videoId,
+            video_title: videoTitle,
+          }}
+          tokens={{playback: token}}
+        />
+        </div>
+      </div>
+    </div>
   );
 };
 

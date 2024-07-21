@@ -78,8 +78,6 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
     try {
       const formData = new FormData(event.currentTarget);
 
-      
-
       const nameLesson = formData.get("name_lesson")?.toString()!;
       const categoryLesson = formData.get("category")!.toString();
       const levelLesson = formData.get("level")!;
@@ -108,8 +106,6 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
         toast.error("Veuillez remplir les champs obligatoires");
         return;
       }
-
-      console.log(draft)
 
       toast.promise(
         addLesson(

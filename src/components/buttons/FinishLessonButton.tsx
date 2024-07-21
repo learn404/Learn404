@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 
 interface FinishLessonButtonProps {
   userId: string;
@@ -24,8 +25,8 @@ const FinishLessonButton = ({
   const finishLesson = async () => {
     setIsLoading(true);
     try {
-      toast.promise(
-        fetch("/api/user/progress-lesson", {
+      const sendFinishLessonRequest = () => {
+        return fetch ("/api/user/progress-lesson", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -34,19 +35,19 @@ const FinishLessonButton = ({
             userId,
             lessonId,
           }),
-        }),
-        {
-          success: "L'état du cours a été mis à jour",
-          error: "La mise à jour de l'état du cours a échoué",
-          loading: "Mise à jour de l'état du cours en cours...",
-        }
-      );
-      router.push(`/cours/${slug}`);
-      router.refresh();
+        });
+      };
+      await toast.promise(sendFinishLessonRequest, {
+        success: "L'état du cours a été mis à jour",
+        error: "La mise à jour de l'état du cours a échoué",
+        loading: "Mise à jour de l'état du cours en cours...",
+      });
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
+      router.refresh();
     }
-    setIsLoading(false);
   };
 
   return (
@@ -57,7 +58,7 @@ const FinishLessonButton = ({
       disabled={isLoading}
       variant="outline"
     >
-      {isLoading ? "En cours" : completed ? "Terminé" : "Terminer le cours"}
+      {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : (completed ? "Terminé" : "Terminer le cours")}
     </Button>
   );
 };

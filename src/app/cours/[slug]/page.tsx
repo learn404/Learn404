@@ -9,11 +9,13 @@ import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getLesson } from "@/lib/lesson";
+import jwt from 'jsonwebtoken';
 
 interface Params {
   params: {
     slug: string;
     title: string;
+    link: string;
   };
 }
 
@@ -45,10 +47,11 @@ export default async function LessonPage({
   }
   let post = await getLesson(params.slug);
 
-
   const datePublished = post.metadata.publishedAt ? post.metadata.publishedAt : "";
 
   const dateModified = post.metadata.publishedAt ? post.metadata.publishedAt : "";
+
+  const links = post.metadata.link ? post.metadata.link : "";
 
   const lesson = await prisma.lessons.findFirst({
     where: {
@@ -121,6 +124,19 @@ export default async function LessonPage({
     },
   });
 
+  const secretKey= Buffer.from(process.env.MUX_SIGNING_KEY as string, 'base64').toString("ascii")
+
+
+
+
+
+  const token = jwt.sign({
+   sub: lesson.playbackId,
+   aud: 'v',
+   exp: Math.floor(Date.now()/1000) + (60*60),
+   kid: process.env.MUX_SIGNING_KEY_ID, 
+  }, secretKey, { algorithm: 'RS256' });
+
   return (
     <>
       <header className="z-50 relative">
@@ -132,8 +148,9 @@ export default async function LessonPage({
 
       <main className="text-white flex justify-center flex-col z-50">
         {lesson.playbackId ? (
-          <div className="mx-auto w-[75vw] z-50">
+          <div className="z-50">
             <VideoPlayerWithChapters
+              token={token}
               playbackId={lesson.playbackId}
               videoId={lesson.id}
               videoTitle={lesson.title}
