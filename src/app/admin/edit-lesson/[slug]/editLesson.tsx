@@ -27,7 +27,7 @@ export async function editLesson(nameLesson: string, slugLesson: string, categor
 
     const asset = await mux.video.assets.create({
       input: [{ url: videoLesson }],
-      playback_policy: ["public"],
+      playback_policy: ["signed"],
       max_resolution_tier: "1080p",
       encoding_tier: "baseline",
     });
