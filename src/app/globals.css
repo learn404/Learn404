@@ -184,4 +184,16 @@ body[data-scroll-locked]{
   padding: 0.2rem 0.5rem !important;
   color: green !important;
   margin: -0.2rem -0.5rem !important;
+  position: absolute;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+.highlighted-code-line:hover {
+ 
+  background-color: rgba(23, 32, 45, 0.7) !important;
+  transition: all 0.3s ease-in-out;
+}
+
+pre {
+  position: relative;
 }
