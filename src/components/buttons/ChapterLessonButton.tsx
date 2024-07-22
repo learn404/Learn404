@@ -29,9 +29,7 @@ export default function ChapterLessonButton({
     setIsLoading(true);
     try {
       const formData = new FormData(event?.currentTarget);
-      console.log(params.slug);
-      console.log(formData.get("name"));
-      console.log(formData.get("start"));
+
 
       toast.promise(
         fetch("/api/lessons/add-chapter", {
@@ -63,11 +61,11 @@ export default function ChapterLessonButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="secondary" size={"lg"}>
+        <Button variant="secondary">
           Ajouter un chapitre
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-black">
+      <DialogContent className="bg-black">
         <DialogHeader>
           <DialogTitle>Ajouter un chapitre</DialogTitle>
           <DialogDescription>Ajoute un chapitre à la Vidéo</DialogDescription>
