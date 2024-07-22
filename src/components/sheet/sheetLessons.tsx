@@ -116,11 +116,11 @@ export default async function SheetLessons({ userId }: userIdProps) {
                         (lesson: LessonWithFormattedSortNumber) => (
                           <li
                             key={lesson.id}
-                            className="group flex items-center gap-2 hover:bg-torea-50/10 transition-all duration-300 px-2 py-1 rounded-md"
+                            className="group flex items-cneter gap-2 hover:bg-torea-50/10 transition-all duration-300 px-2 py-1 rounded-md"
                           >
                             <Link
                               href={`/cours/${lesson.slug}`}
-                              className="text-torea-50 hover:text-torea-50/80 transition-all duration-300 flex justify-between items-center gap-2"
+                              className="text-torea-50 hover:text-torea-50/80 transition-all duration-300 flex justify-between items-center gap-2 w-full"
                             >
                               <div className="flex items-center gap-3">
                                 <div className="w-6 h-6 flex items-center justify-center">
@@ -144,18 +144,20 @@ export default async function SheetLessons({ userId }: userIdProps) {
                                     />
                                   )}
                                 </div>
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-start gap-2 text-left">
                                   <span className="text-torea-50 group-hover:text-torea-50/80 transition-all duration-300">
                                     {lesson.formatted_sort_number}.{" "}
                                   </span>
                                   {lesson.title}
                                 </div>
                               </div>
+                              <div className="ml-auto">
                               {lesson.duration && (
                                 <span className="text-xs text-black bg-torea-50 px-1.5 rounded-md py-0.5 group-hover:text-black/80 group-hover:bg-torea-50/80 transition-all duration-300 h-fit">
                                   {lesson.duration}
                                 </span>
                               )}
+                              </div>
                             </Link>
                           </li>
                         )
