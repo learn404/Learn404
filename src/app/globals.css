@@ -72,9 +72,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-      --foreground-rgb: 255, 255, 255;
-      --background-start-rgb: 0, 0, 0;
-      --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
@@ -92,7 +92,7 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
   }
-  
+
   .dark {
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -115,7 +115,7 @@ body {
 
 @layer utilities {
   .text-balance {
-      text-wrap: balance;
+    text-wrap: balance;
   }
 }
 
@@ -132,26 +132,26 @@ body {
 
 .cardLinear {
   background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.05) 0%,
-      rgba(255, 255, 255, 0) 100%
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0) 100%
   );
 }
 
 .lineLinear {
   background: linear-gradient(
-      to right,
-      rgba(236, 236, 236, 1) 0%,
-      rgba(236, 236, 236, 0) 70%
+    to right,
+    rgba(236, 236, 236, 1) 0%,
+    rgba(236, 236, 236, 0) 70%
   );
 }
 
 @keyframes pulse-fab {
-    50% {
-      opacity: .4;
-    }
+  50% {
+    opacity: 0.4;
   }
-  
+}
+
 .animate-pulse-fab {
   animation: pulse-fab 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
@@ -170,7 +170,7 @@ body {
   z-index: 9999;
 }
 
-body[data-scroll-locked]{
+body[data-scroll-locked] {
   min-width: 100%;
 }
 .no-scrollbar {
@@ -180,7 +180,7 @@ body[data-scroll-locked]{
 }
 
 .highlighted-code-line {
-  background-color: rgba(30, 41, 59, .7) !important;
+  background-color: rgba(30, 41, 59, 0.7) !important;
   padding: 0.2rem 0.5rem !important;
   color: green !important;
   margin: -0.2rem -0.5rem !important;
@@ -188,8 +188,8 @@ body[data-scroll-locked]{
   width: 100%;
   transition: all 0.3s ease-in-out;
 }
+
 .highlighted-code-line:hover {
- 
   background-color: rgba(23, 32, 45, 0.7) !important;
   transition: all 0.3s ease-in-out;
 }
