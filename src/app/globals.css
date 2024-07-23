@@ -197,3 +197,19 @@ body[data-scroll-locked] {
 pre {
   position: relative;
 }
+
+
+::selection {
+  background-color: #000;
+  color: #fff;
+}
+
+::moz-selection {
+  background-color: #000;
+  color: #fff;
+}
+
+pre ::selection {
+  background-color: #fff;
+  color: #000;
+}
