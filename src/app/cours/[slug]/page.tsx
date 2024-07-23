@@ -10,6 +10,7 @@ import jwt from "jsonwebtoken";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
+import DetailsLesson from './detailsLesson';
 
 interface Params {
   params: {
@@ -56,6 +57,7 @@ export default async function LessonPage({
     : "";
 
   const links = post.metadata.link ? post.metadata.link : "";
+  const repo = post.metadata.repo ? post.metadata.repo : "";
 
   const lesson = await prisma.lessons.findFirst({
     where: {
@@ -67,6 +69,8 @@ export default async function LessonPage({
       draft: true,
       playbackId: true,
       sort_number: true,
+      duration: true,
+      description: true,
     },
   });
   const statusLesson = await prisma.lessonProgress.findFirst({
@@ -238,8 +242,7 @@ export default async function LessonPage({
           <div className="ml-auto hidden px-2 w-full lg:block h-full flex-shrink-0">
             <div className="sticky top-0 w-full pt-2">
               <div className="pt-10 lg:sticky lg:top-0 lg:pt-4">
-                <p>Prochain cours</p>
-                <p>{nextLesson?.title}</p>
+                <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={repo} link={links} admin={user.admin} playbackId={lesson.playbackId} />
               </div>
             </div>
           </div>
