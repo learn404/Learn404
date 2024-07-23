@@ -29,7 +29,6 @@ export async function markdownToHTML(markdown: string) {
       showLineNumbers: true,
     })
     .use(rehypePrettyCode, {
-      // https://rehype-pretty.pages.dev/#usage
       theme: {
         light: "min-light",
         dark: "min-dark",
@@ -37,14 +36,19 @@ export async function markdownToHTML(markdown: string) {
       keepBackground: false,
     })
     .use(rehypeStringify)
-
     .process(markdown);
-
   return p.toString();
 }
 
 export async function getLesson(slug: string) {
-  const filePath = path.join(process.cwd(), "src", "app", "content", "lessons", `${slug}.mdx`);
+  const filePath = path.join(
+    process.cwd(),
+    "src",
+    "app",
+    "content",
+    "lessons",
+    `${slug}.mdx`
+  );
   let source = fs.readFileSync(filePath, "utf-8");
   const { content: rawContent, data: metadata } = matter(source);
   const content = await markdownToHTML(rawContent);
@@ -71,5 +75,7 @@ async function getAllLessons(dir: string) {
 }
 
 export async function getLessonPosts() {
-  return getAllLessons(path.join(process.cwd(), "src", "app", "content", "lessons")); 
+  return getAllLessons(
+    path.join(process.cwd(), "src", "app", "content", "lessons")
+  );
 }
