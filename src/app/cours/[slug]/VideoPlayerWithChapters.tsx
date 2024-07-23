@@ -31,7 +31,6 @@ const VideoPlayerWithChapters: React.FC<VideoPlayerWithChaptersProps> = ({
 
   useEffect(() => {
 
-    console.log(token, "token")
     const muxPlayerEl = muxPlayerRef.current;
 
     const addChaptersToPlayer = () => {

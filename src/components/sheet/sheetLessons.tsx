@@ -12,7 +12,6 @@ import prisma from "@/lib/prisma";
 import { getLessonsStartedAndCompleted } from "@/lib/utils";
 import { currentUser } from "@/lib/current-user";
 
-
 type userIdProps = {
   userId: string;
 };
@@ -74,8 +73,7 @@ export default async function SheetLessons({ userId }: userIdProps) {
     });
   });
 
-  const user = await currentUser(); 
-  
+  const user = await currentUser();
 
   const lessonsStartedAndCompleted = await getLessonsStartedAndCompleted(user!);
 
@@ -96,10 +94,13 @@ export default async function SheetLessons({ userId }: userIdProps) {
   return (
     <>
       <Sheet>
-        <SheetTrigger className="z-50 flex items-center w-fit justify-center gap-2 rounded-md px-3.5 py-2.5 text-xs md:text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border border-input bg-white text-black hover:bg-neutral-300 focus-visible:outline-indigo-500">
+        <SheetTrigger className=" flex items-center w-fit justify-center gap-2 rounded-md px-3.5 py-2.5 text-xs md:text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border border-input bg-white text-black hover:bg-neutral-300 focus-visible:outline-indigo-500">
           <List className="w-5 h-5" />
         </SheetTrigger>
-        <SheetContent className="bg-bg-primary border border-white/10 w-[100vw] lg:w-[30vw]" side="left">
+        <SheetContent
+          className="bg-bg-primary border border-white/10 w-[100vw] lg:w-[30vw] z-[100]"
+          side="left"
+        >
           <SheetHeader>
             <SheetTitle>
               <h1 className="text-2xl font-bold text-white">Cours</h1>
@@ -120,7 +121,7 @@ export default async function SheetLessons({ userId }: userIdProps) {
                           >
                             <Link
                               href={`/cours/${lesson.slug}`}
-                              className="text-torea-50 hover:text-torea-50/80 transition-all duration-300 flex justify-between items-center gap-2"
+                              className="text-torea-50 hover:text-torea-50/80 transition-all duration-300 flex justify-between items-center gap-2 w-full"
                             >
                               <div className="flex items-center gap-3">
                                 <div className="w-6 h-6 flex items-center justify-center">
@@ -144,18 +145,20 @@ export default async function SheetLessons({ userId }: userIdProps) {
                                     />
                                   )}
                                 </div>
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-start gap-2 text-left">
                                   <span className="text-torea-50 group-hover:text-torea-50/80 transition-all duration-300">
                                     {lesson.formatted_sort_number}.{" "}
                                   </span>
                                   {lesson.title}
                                 </div>
                               </div>
-                              {lesson.duration && (
-                                <span className="text-xs text-black bg-torea-50 px-1.5 rounded-md py-0.5 group-hover:text-black/80 group-hover:bg-torea-50/80 transition-all duration-300 h-fit">
-                                  {lesson.duration}
-                                </span>
-                              )}
+                              <div className="ml-auto">
+                                {lesson.duration && (
+                                  <span className="text-xs text-black bg-torea-50 px-1.5 rounded-md py-0.5 group-hover:text-black/80 group-hover:bg-torea-50/80 transition-all duration-300 h-fit">
+                                    {lesson.duration}
+                                  </span>
+                                )}
+                              </div>
                             </Link>
                           </li>
                         )

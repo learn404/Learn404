@@ -4,7 +4,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import { Loader2 } from "lucide-react";
+import { CheckCircleIcon, CircleIcon } from "lucide-react";
+
 
 interface FinishLessonButtonProps {
   userId: string;
@@ -21,6 +22,8 @@ const FinishLessonButton = ({
 }: FinishLessonButtonProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(completed);
+
 
   const finishLesson = async () => {
     setIsLoading(true);
@@ -46,20 +49,30 @@ const FinishLessonButton = ({
       console.error(error);
     } finally {
       setIsLoading(false);
+      setIsCompleted(!isCompleted);
       router.refresh();
+      
     }
   };
 
   return (
-    <Button
-      type="button"
-      onClick={finishLesson}
-      className="bg-white text-indigo-800 px-4 py-2 rounded-md"
-      disabled={isLoading}
-      variant="outline"
-    >
-      {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : (completed ? "Terminé" : "Terminer le cours")}
-    </Button>
+    <div> 
+    {isCompleted ? (
+      <>
+        <Button variant="outline" onClick={finishLesson}>
+          <CheckCircleIcon className="w-4 h-4 text-green-500" />
+          <p className="text-green-500">Terminé</p>
+        </Button>
+      </>
+    ) : (
+      <>
+        <Button variant="outline" onClick={finishLesson}  >
+          <CircleIcon className="w-4 h-4 text-gray-800" />
+          <p className="text-gray-800">Terminer le cours</p>
+        </Button>
+      </>
+    )}
+  </div>
   );
 };
 

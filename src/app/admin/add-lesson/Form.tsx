@@ -133,7 +133,7 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
   };
   return (
     <>
-      <form className="p-8 max-w-[80vw] m-auto" onSubmit={handleSubmit}>
+      <form className="p-8 max-w-[80vw] m-auto flex-shrink-0 relative" onSubmit={handleSubmit}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/admin">

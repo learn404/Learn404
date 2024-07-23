@@ -23,8 +23,9 @@ export default async function AddLesson() {
           isAdmin={user!.admin}
           user={user!}
           isAvatar={!user!.image}
-        />
-      </main>
+          />
+        </main>
+      
     </>
   );
 }
