@@ -110,7 +110,6 @@ html {
 body {
   color: rgb(var(--foreground-rgb));
   background: var(--background-end-rgb);
-  overflow-x: hidden;
 }
 
 @layer utilities {
@@ -171,6 +170,7 @@ body {
 }
 
 body[data-scroll-locked]{
+  overflow: none;
   min-width: 100%;
 }
 .no-scrollbar {

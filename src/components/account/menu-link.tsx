@@ -37,9 +37,9 @@ const accountMenu = [
 const AccountMenu = () => {  
   
   const pathname = usePathname();  
-
+  
   return ( 
-    <aside className="w-72 flex flex-col border-r-2 border-gray-900 mr-8">
+    <aside className="w-72 h-full flex flex-col border-r-2 border-gray-900 mr-8 lg:sticky lg:top-10">
       <div className="text-gray-400">
         {accountMenu.map((item) => (
           <Link 

@@ -1,16 +1,16 @@
 "use client";
 
 import {
-  CreditCard,
   Book,
+  LayoutDashboard,
   Loader,
   Settings,
-  LayoutDashboard,
-  User,
+  User
 } from "lucide-react";
 
 import {
   Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -18,11 +18,10 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-  CommandDialog,
 } from "@/components/ui/command";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 interface Lesson {

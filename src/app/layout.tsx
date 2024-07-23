@@ -2,8 +2,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from 'sonner';
 import "./globals.css";
-import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ["latin"] });
 

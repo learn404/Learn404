@@ -1,11 +1,9 @@
 import { currentUserType } from "@/lib/current-user";
+import { getLessons } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import UserDropdown from "./userDropDown";
 import SearchInput from "../searchInput";
-import { getLessons } from "@/lib/utils";
-
-
+import UserDropdown from "./userDropDown";
 
 interface HeaderDashboardProps {
   user: currentUserType;
@@ -25,7 +23,7 @@ export default async function HeaderDashboard({
 
 
   return (
-    <header className="sticky top-0 z-10 w-full bg-black shadow backdrop-blur border-b-2 border-white/10 py-2 mb-5">
+    <header className="z-10 w-full bg-bg-primary shadow backdrop-blur border-b-2 border-gray-900 py-2 mb-5">
       <div className="mx-4 sm:mx-16 flex h-14 items-center">
         <div className="flex items-center">
           <Link href="/">
