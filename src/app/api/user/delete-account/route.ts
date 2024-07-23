@@ -2,18 +2,18 @@ import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
-    try {
-        const { id } = await req.json();
+  const { userId } = await req.json();
 
-        const roadmap = await prisma.roadmap.update({
-            where: { id },
-            data: { upvotes: { increment: 1 } }
-        });
-
-        console.log(roadmap);
-        return NextResponse.json({ message: "Vote added" });
-    } catch (error) {
-        console.error('Error updating upvotes:', error);
-        return NextResponse.json({ message: "Failed to add vote" }, { status: 500 });
-    }
+  try {
+    const user = await prisma.user.delete({
+      where: { id: userId },
+    });
+    return NextResponse.json({ message: "L'utilisateur a été supprimé avec succès", user });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return NextResponse.json(
+      { message: "Echec de la suppression de l'utilisateur" },
+      { status: 500 }
+    );
+  }
 }
