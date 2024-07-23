@@ -22,6 +22,7 @@ export default function ChapterLessonButton({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,9 +31,8 @@ export default function ChapterLessonButton({
     try {
       const formData = new FormData(event?.currentTarget);
 
-
-      toast.promise(
-        fetch("/api/lessons/add-chapter", {
+      const addChapter = () => {
+        return fetch("/api/lessons/add-chapter", {
           method: "POST",
           body: JSON.stringify({
             name: formData.get("name"),
@@ -42,24 +42,26 @@ export default function ChapterLessonButton({
           headers: {
             "Content-Type": "application/json",
           },
-        }),
+        });
+      }
+      toast.promise(
+        addChapter(),
         {
           success: "Chapitre ajouté avec succès",
           error: "Une erreur est survenue lors de l'ajout du chapitre",
           loading: "Ajout du chapitre en cours...",
         }
       );
-      router.push(`/cours/${params.slug}`);
-      router.refresh();
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
+      setOpen(false);
+      router.refresh();
     }
   };
-
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary">
           Ajouter un chapitre
