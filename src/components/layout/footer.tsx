@@ -23,7 +23,7 @@ const footerLinks: FooterLink[][] = [
 ];
 export default function Footer() {
   return (
-    <div className="mx-auto max-w-screen-2xl px-7 md:px-10">
+    <footer className="mx-auto max-w-screen-2xl px-7 md:px-10">
       <div className="border-b border-dashed border-slate-400/20 py-10">
         <div className="flex flex-col items-center justify-center gap-y-3 lg:flex-row lg:items-center lg:justify-between">
           <h3 className="max-w-sm text-balance text-center text-2xl font-bold text-white md:text-start md:text-4xl">
@@ -84,6 +84,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }

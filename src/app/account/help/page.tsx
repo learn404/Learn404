@@ -7,8 +7,8 @@ import AccountLayout from "../account-layout";
 export default async function Help() {
   const user = await currentUser();
 
-  if (!user) {
-    redirect('/join')
+  if (!user?.isMember) {
+    redirect("/dashboard/subscriptions");
   }
 
   return (
