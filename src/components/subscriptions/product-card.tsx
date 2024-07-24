@@ -36,7 +36,7 @@ const ProductCard = () => {
         </ul>
       </div>
 
-      <div className="absolute top-0 left-0 w-full h-64 bg-blue-900 rounded-lg overflow-clip">
+      <div className="absolute top-0 left-0 w-full h-60 bg-blue-900 rounded-lg overflow-clip">
         <Image src="/img/hero.png" fill={true} sizes="20vw" className="object-cover" alt="Subscription" />
       </div>
     </div>

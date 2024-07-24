@@ -51,14 +51,14 @@ export default function CheckoutForm(paymentInformations: PaymentInformations) {
     
     if (error) {
       setLoading(false);
-      setResponsePayment({ error: error.message, type: "Error" });
+      setResponsePayment({ error: "Une erreur est survenue, si celle-ci persiste vous pouvez nous contacter à l'addresse suivante : contact.learn404@gmail.com", type: "Erreur" });
     } else {
       setLoading(false);
 
       setResponsePayment({
         success:
-          "Votre paiement a été traité avec succès. Vous pouvez maintenant accéder à votre tableau de bord.",
-        type: "Success",
+          "Merci pour votre achat ! Vous pouvez maintenant accéder à votre tableau de bord.",
+        type: "Paiement accepté",
       });
       
       try {
