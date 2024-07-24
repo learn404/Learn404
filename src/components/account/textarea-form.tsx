@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { createFeedback } from "@/app/actions/create-feedback"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -33,9 +34,15 @@ export function TextareaForm() {
     resolver: zodResolver(FormSchema),
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    // A compléter
-    toast.success("Votre feedback a bien été envoyé !")
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const response = await createFeedback(data.feedback)
+        
+    if (response.error) {
+      toast.error(response.error)
+    } else {
+      toast.success("Votre feedback a bien été envoyé ! Merci pour votre retour.")
+      form.setValue("feedback", "")
+    }
   }
 
   return (
