@@ -46,8 +46,6 @@ export default function CheckoutForm(paymentInformations: PaymentInformations) {
         },
       },
     });
-
-    console.log(paymentIntent);
     
     if (error) {
       setLoading(false);
