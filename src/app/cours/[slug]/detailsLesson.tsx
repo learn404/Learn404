@@ -48,14 +48,14 @@ export default function DetailsLesson({
 }) {
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">{title}</h2>
         <Badge variant="secondary">{duration}</Badge>
       </div>
-      <div className="flex flex-col my-4">
+      <div className="flex flex-col">
         {description && <p className="text-gray-500">{description}</p>}
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col">
         {repo && repo.length > 0 && (
           <div>
             <ul>
@@ -93,7 +93,7 @@ export default function DetailsLesson({
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-2 mt-4">
+      <div className="flex flex-row lg:flex-col gap-2 mt-4">
         <div className="flex flex-col gap-2">
           {admin ? (
             <div className="flex items-center gap-2">
@@ -110,13 +110,14 @@ export default function DetailsLesson({
             ""
           )}
         </div>
-
-        <FinishLessonButton
+        <div className="hidden lg:block">
+          <FinishLessonButton
           lessonId={lessonId}
           userId={userId}
           slug={slug}
           completed={completed}
         />
+        </div>
       </div>
     </div>
   );
