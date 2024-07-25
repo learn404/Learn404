@@ -51,10 +51,6 @@ export default function SearchInput({
         e.preventDefault();
         router.push("/dashboard");
       }
-      if (e.key === "b" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        router.push("/blog");
-      }
       if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         router.push("/changelog");
@@ -93,17 +89,6 @@ export default function SearchInput({
                   </div>
                   <div className="">
                     <CommandShortcut>⌘O</CommandShortcut>
-                  </div>
-                </CommandItem>
-              </Link>
-              <Link href="/blog">
-                <CommandItem className="flex items-center justify-between w-full cursor-pointer">
-                  <div className="flex items-center">
-                    <Book className="mr-2 h-4 w-4" />
-                    <span>Blog</span>
-                  </div>
-                  <div className="">
-                    <CommandShortcut>⌘B</CommandShortcut>
                   </div>
                 </CommandItem>
               </Link>
