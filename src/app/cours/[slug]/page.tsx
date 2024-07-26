@@ -158,7 +158,7 @@ export default async function LessonPage({
       </div>
 
       <main className="relative flex grow flex-col">
-        <section className="relative">
+        <section className="relative ">
           {lesson.playbackId ? (
             <div className="z-50">
               <VideoPlayerWithChapters
@@ -173,11 +173,11 @@ export default async function LessonPage({
               />
             </div>
           ) : (
-            <p className="m-auto">Vidéo pas disponible</p>
+            <p className="m-auto w-fit">Vidéo pas disponible</p>
           )}
         </section>
 
-        <section className="mx-auto mt-6 flex pb-16 sm:mt-12 sm:max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4">
+        <section className="mx-auto mt-6 flex pb-16 sm:mt-12 max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4 ">
           <div id="lesson" className="min-w-0 lg:col-span-2 lg:px-2 lg:text-lg">
             <script
               type="application/ld+json"
@@ -197,39 +197,14 @@ export default async function LessonPage({
                   author: {
                     "@type": "Person",
                     name: "Nicolas Becharat",
+                    url: "https://learn404.com",
                   },
                 }),
               }}
             />
-            <div className="mt-8 border-y border-white/5 bg-gray-800/25 px-4 py-8 sm:mt-10  sm:rounded-lg sm:border sm:p-4 lg:hidden">
+            <div className="border-y border-white/5 bg-indigo-800 px-4 py-8 mt-10  rounded-lg sm:border sm:p-4 lg:hidden">
               <div className="flex flex-wrap justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
-                <Link href="/dashboard">
-                  <Button variant="secondary">Tableau de bord</Button>
-                </Link>
-
-                {!nextLesson?.slug ? (
-                  <Link href={`/cours/${previousLesson?.slug}`}>
-                    <Button variant="secondary">Cours précédent</Button>
-                  </Link>
-                ) : (
-                  <Link href={`/cours/${nextLesson?.slug}`}>
-                    <Button variant="secondary">Prochain cours</Button>
-                  </Link>
-                )}
-                {user.admin ? (
-                  <>
-                    <Link href={`/admin/edit-lesson/${params.slug}`}>
-                      <Button variant="secondary">Modifier le cours</Button>
-                    </Link>
-                    {lesson.playbackId ? (
-                      <ChapterLessonButton params={params} />
-                    ) : (
-                      ""
-                    )}
-                  </>
-                ) : (
-                  ""
-                )}
+                <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={repo} link={links} admin={user.admin} playbackId={lesson.playbackId} />
               </div>
             </div>
 
@@ -249,16 +224,14 @@ export default async function LessonPage({
         </section>
 
         <div className="bg-indigo-800 max-w-[90vw] lg:max-w-xl px-6 py-3 lg:px-24 lg:py-12 gap-3 lg:gap-10 rounded-md mx-auto mb-10 border border-white/10">
-          <div className="flex  justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
+          <div className="flex justify-start lg:justify-center items-center gap-x-10 gap-y-5 flex-wrap">
             <Link href="/dashboard">
               <Button variant="secondary">Tableau de bord</Button>
             </Link>
-            <FinishLesson
-              userId={user.id}
-              lessonId={lesson.id}
-              completed={isCompleted}
-              slug={params.slug}
-            />
+            <div className="block lg:hidden">
+              <FinishLesson userId={user.id} lessonId={lesson.id} completed={isCompleted} slug={params.slug} />
+            </div>
+            
             {!nextLesson?.slug ? (
               <Link href={`/cours/${previousLesson?.slug}`}>
                 <Button variant="secondary">Cours précédent</Button>
@@ -270,16 +243,16 @@ export default async function LessonPage({
             )}
           </div>
           {nextLesson ? (
-            <div className="flex items mt-5">
-              <p className="text-neutral-500">Prochain cours</p>
-              <p className="text-lg lg:text-2xl text-center font-bold mt-5">
+            <div className="flex flex-col items-start mt-5">
+              <p className="text-white/40 text-sm">Prochain cours</p>
+              <p className="lg:text-2xl text-left font-bold lg:mt-3">
                 {nextLesson?.title}
               </p>
             </div>
           ) : (
-            <div className="flex items mt-5">
-              <p className="text-white/40">Précédent cours:</p>
-              <p className="text-sm text-center font-bold ">
+            <div className="flex flex-col items-start mt-5">
+              <p className="text-white/40 text-sm">Précédent cours:</p>
+              <p className="text-sm text-left font-bold lg:mt-3">
                 {previousLesson?.title}
               </p>
             </div>

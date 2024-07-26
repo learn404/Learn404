@@ -8,11 +8,6 @@ export const dropdownMenu = [
     link: "/dashboard",
   },
   {
-    name: "Blog",
-    icon: Book,
-    link: "/blog",
-  },
-  {
     name: "Gains",
     icon: Coins,
     link: "/earnings",
