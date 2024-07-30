@@ -98,6 +98,7 @@ model Lessons {
   title          String
   slug           String
   categoryId     String
+  contentLesson  String          @db.LongText
   description    String?
   playbackId     String?
   repository_url String?
@@ -107,6 +108,7 @@ model Lessons {
   updatedAt      DateTime         @updatedAt
   sort_number    Int              @default(0)
   duration       String?
+  links          String?
   videoId        String?
   level          Lessons_level?   @default(BEGINNER)
   LessonChapter  LessonChapter[]
