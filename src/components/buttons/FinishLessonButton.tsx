@@ -40,7 +40,7 @@ const FinishLessonButton = ({
           }),
         });
       };
-      await toast.promise(sendFinishLessonRequest, {
+      toast.promise(sendFinishLessonRequest, {
         success: "L'état du cours a été mis à jour",
         error: "La mise à jour de l'état du cours a échoué",
         loading: "Mise à jour de l'état du cours en cours...",
@@ -59,16 +59,16 @@ const FinishLessonButton = ({
     <div> 
     {isCompleted ? (
       <>
-        <Button variant="outline" onClick={finishLesson}>
+        <Button variant="secondary" onClick={finishLesson}>
           <CheckCircleIcon className="w-4 h-4 text-green-500" />
           <p className="text-green-500">Terminé</p>
         </Button>
       </>
     ) : (
       <>
-        <Button variant="outline" onClick={finishLesson}  >
-          <CircleIcon className="w-4 h-4 text-gray-800" />
-          <p className="text-gray-800">Terminer le cours</p>
+        <Button variant="secondary" onClick={finishLesson}  >
+          <CircleIcon className="w-4 h-4 text-gray-100" />
+          <p className="text-gray-100">Terminer le cours</p>
         </Button>
       </>
     )}
