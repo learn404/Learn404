@@ -75,7 +75,7 @@ export function TextareaForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Envoyer</Button>
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   )
