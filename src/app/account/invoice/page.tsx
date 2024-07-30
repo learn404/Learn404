@@ -7,8 +7,8 @@ import { redirect } from "next/navigation";
 export default async function Invoice() {
     const user = await currentUser();
 
-    if (!user) {
-        redirect('/join')
+    if (!user?.isMember) {
+        redirect("/dashboard/subscriptions");
     }
 
     return (

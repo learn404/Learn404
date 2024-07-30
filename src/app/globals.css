@@ -170,9 +170,12 @@ body {
   z-index: 9999;
 }
 
-body[data-scroll-locked] {
+
+body[data-scroll-locked]{
+  overflow: none;
   min-width: 100%;
 }
+
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;

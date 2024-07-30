@@ -18,21 +18,31 @@ export async function POST(req: NextRequest) {
     
     let event = stripe.webhooks.constructEvent(payload, sig, process.env.STRIPE_WEBHOOK_SECRET!)
     if (event.type === "charge.succeeded") {
-      // Add user to database
-      console.log(`Stripe webhook received: ${event.type} at ${datetime}`);
+      const billingDetails = event.data.object.billing_details;
+      const fullNameSplit = billingDetails.name?.split(" ");
       
-      const userEmail = event.data.object.billing_details.email as string;
-      console.log("USER EMAIL: ", userEmail);
-
-      await prisma.user.update({
+      const user = await prisma.user.update({
         where: {
-          email: userEmail,
+          email: billingDetails.email!,
         },
         data: {
           isMember: true,
         }
       })
-  
+      
+      await prisma.billingInformations.create({
+        data: {
+          userId: user.id,
+          firstName: fullNameSplit![0],
+          lastName: fullNameSplit![1],
+          address: billingDetails.address?.line1 || "",
+          address2: billingDetails.address?.line2 || "",
+          city: billingDetails.address?.city || "",
+          country: billingDetails.address?.country || "",
+          zip: billingDetails.address?.postal_code || "",
+          state: billingDetails.address?.state || "",
+        }
+      })
     }
 
     return NextResponse.json({ event: event.type, status: 200 })

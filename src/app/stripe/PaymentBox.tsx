@@ -1,5 +1,8 @@
 'use client';
 
+import { BreadcrumbSubscriptions } from "@/components/subscriptions/breadcrumb-subscriptions";
+import StripeElementLoading from "@/components/subscriptions/stripe-element-loading";
+import { Button } from "@/components/ui/button";
 import { Elements } from "@stripe/react-stripe-js";
 import { Appearance, Stripe, loadStripe } from "@stripe/stripe-js";
 import { FormEvent, createContext, useState } from "react";
@@ -89,7 +92,6 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
     setLoadingFirst(false);
   }
 
-  // This function is called when the user clicks on the "Next" button
   const handleStep = async (direction: "back" | "next") => {
 
     if (direction === "back") {
@@ -154,27 +156,21 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
 
   return (
       <div className="max-w-md w-full">
+        <BreadcrumbSubscriptions isPayment = {paymentStep} handleStep={handleStep} />
         { isLoadingFirst && (
-          <div className="text-center">
-            <span className="text-lg text-gray-400">Loading</span>
-            <div className="flex items-center justify-center gap-2 mt-2">
-              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fab"></div>
-              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fab loading2"></div>
-              <div className="w-2.5 aspect-square rounded-full bg-slate-300 animate-pulse-fab loading3"></div>
-            </div>
-          </div> 
+          <StripeElementLoading /> 
         )}
         { !paymentStep && (
           <div>
             <div className="flex flex-col gap-1">
-              <span className="text-lg text-torea-50">Tu as un code promo ? (facultatif)</span>
+              <h3 className="text-lg text-gray-50">Code Promo</h3>
               <input 
                 type="text"
                 id="codePromo" 
-                className={"rounded-md px-4 py-2 bg-gray-950 border-[1px] outline-none " + 
+                className={"rounded-md px-4 py-2 bg-gray-950 border-[1px] outline-none text-gray-100 " + 
                   ((codePromo.value > 0) ? "border-green-500/50 focus:border-green-500/50" : "border-torea-950 focus:border-torea-800" )
                 }
-                placeholder="Code promo"
+                placeholder="Tu as un code promo ?"
                 onChange={handleCodePromo}
                 autoComplete="off"
                 defaultValue={codePromo.code}
@@ -186,29 +182,19 @@ export default function PaymentBox({ userEmail }: PaymentBoxProps) {
               )}
             </div>  
             <div className="mt-4 flex justify-end items-center">
-              <button 
-                className="bg-torea-800 border-2 border-torea-800 px-8 py-2.5 rounded-full
-                font-semibold text-torea-50 enabled:hover:bg-indigo-900 "
-                onClick={() => handleStep("next")} >
-                  Next
-                </button>
+              <Button onClick={() => handleStep("next")}>
+                Suivant
+              </Button>
             </div>
           </div>
 
         )}
         { stripePromise && clientSecret && paymentStep && paymentInformations && (
-          <>
-            <div className="flex items-center justify-end mb-2">
-              <button className="underline text-gray-400" onClick={() => handleStep("back")}>
-                code promo
-              </button>
-            </div>
-            <EmailContext.Provider value={userEmail}>
-              <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm {...paymentInformations}/>
-              </Elements>
-            </EmailContext.Provider>
-          </>
+          <EmailContext.Provider value={userEmail}>
+            <Elements stripe={stripePromise} options={options}>
+              <CheckoutForm {...paymentInformations}/>
+            </Elements>
+          </EmailContext.Provider>
         )}
       </div>
   );
