@@ -307,6 +307,7 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
                         )}
                       />
                       <div className="gap-2 flex flex-col mt-2">
+                        <div className="flex items-end justify-between">
                         <FormField
                           control={form.control}
                           name="category"
@@ -342,6 +343,8 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
                             </FormItem>
                           )}
                         />
+                        <AddCategoryButton />
+                        </div>
                       </div>
                       <div className="gap-2 flex flex-col mt-2">
                         <FormField
