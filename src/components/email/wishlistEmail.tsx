@@ -34,7 +34,7 @@ export const WishlistEmail = ({
           theme: {
             extend: {
               colors: {
-                brand: "#4c51bf", // indigo-800
+                brand: "#4c51bf",
                 offwhite: "#fafbfb",
               },
               spacing: {
@@ -118,7 +118,7 @@ export const WishlistEmail = ({
               </Row>
             </Section>
             <Text className="text-center text-gray-400 mb-45">
-              Learn404, 123 Rue de la Formation, Paris, France
+              Learn404, Paris, France
             </Text>
           </Container>
         </Body>

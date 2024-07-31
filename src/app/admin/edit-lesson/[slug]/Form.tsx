@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Minus, Plus } from "lucide-react";
+
 import {
   Select,
   SelectContent,
@@ -146,11 +147,6 @@ export default function EditLessonForm({
         levelLesson = "ADVANCED";
       }
 
-      console.log(links, "links");
-
-
-
-
       const editFormLesson = () => {
         return editLesson(
           nameLesson || lesson.title,
@@ -171,7 +167,7 @@ export default function EditLessonForm({
       };
 
       toast.promise(editFormLesson(), {
-        loading: "Enregistrement du cours...",
+        loading: "Enregistrement du cours de la modification...",
         success: "Le cours a été modifié avec succès",
         error: "Le cours n'a pas été modifié",
       });
@@ -269,13 +265,14 @@ export default function EditLessonForm({
               </Badge>
             </div>
             <div className="flex items-center gap-4">
-              <Button variant={"default"} disabled={isLoading}>
+              <Button variant={"default"} disabled={isLoading} type="submit">
                 {isLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   "Enregistrer"
                 )}
               </Button>
+              <Button variant={"destructive"} onClick={handleDelete} type="button">Supprimer le cours</Button>
             </div>
           </div>
           <div className="grid grid-cols-12 items-start gap-4 mt-4">

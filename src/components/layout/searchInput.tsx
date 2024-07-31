@@ -77,7 +77,7 @@ export default function SearchInput({
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command className="bg-bg-primary text-white">
           <CommandInput placeholder="Rechercher ..." />
-          <CommandList>
+          <CommandList className="no-scrollbar">
             <CommandEmpty>Pas de résultat trouvé</CommandEmpty>
             <CommandGroup heading="Suggestions">
               <Link href="/dashboard">

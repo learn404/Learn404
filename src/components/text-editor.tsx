@@ -1,38 +1,56 @@
 "use client";
 
-
-import { useEditor, EditorContent, type Editor, ReactNodeViewRenderer } from "@tiptap/react";
+import {
+  useEditor,
+  EditorContent,
+  type Editor,
+  ReactNodeViewRenderer,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Bold, Strikethrough, Italic, List, ListOrdered, TextQuote, Code, Text ,ArrowBigLeft, Link as LinkIcon,ImagePlus, Heading1, Heading2, Heading3 } from "lucide-react";
+import {
+  Bold,
+  Strikethrough,
+  Italic,
+  List,
+  ListOrdered,
+  TextQuote,
+  Code,
+  Text,
+  ArrowBigLeft,
+  Link as LinkIcon,
+  ImagePlus,
+  Heading1,
+  Heading2,
+  Heading3,
+} from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
 import { Separator } from "@/components/ui/separator";
-import HardBreak from '@tiptap/extension-hard-break';
-import CharacterCount from '@tiptap/extension-character-count';
-import CodeBlock from '@tiptap/extension-code-block'
-import Image from '@tiptap/extension-image'
-import Heading from '@tiptap/extension-heading'
-import { useEffect } from 'react';
-import Paragraph from '@tiptap/extension-paragraph';
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import css from 'highlight.js/lib/languages/css'
-import js from 'highlight.js/lib/languages/javascript'
-import ts from 'highlight.js/lib/languages/typescript'
-import html from 'highlight.js/lib/languages/xml'
-import bash from 'highlight.js/lib/languages/bash'
+import HardBreak from "@tiptap/extension-hard-break";
+import CharacterCount from "@tiptap/extension-character-count";
+import CodeBlock from "@tiptap/extension-code-block";
+import Image from "@tiptap/extension-image";
+import Heading from "@tiptap/extension-heading";
+import { useEffect } from "react";
+import Paragraph from "@tiptap/extension-paragraph";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import css from "highlight.js/lib/languages/css";
+import js from "highlight.js/lib/languages/javascript";
+import ts from "highlight.js/lib/languages/typescript";
+import html from "highlight.js/lib/languages/xml";
+import bash from "highlight.js/lib/languages/bash";
 // load all highlight.js languages
-import {lowlight} from 'lowlight/lib/core.js';
+import { lowlight } from "lowlight/lib/core.js";
 
+lowlight.registerLanguage("css", css);
+lowlight.registerLanguage("javascript", js);
+lowlight.registerLanguage("typescript", ts);
+lowlight.registerLanguage("html", html);
+lowlight.registerLanguage("bash", bash);
 
-lowlight.registerLanguage('css', css); 
-lowlight.registerLanguage('javascript', js);
-lowlight.registerLanguage('typescript', ts);
-lowlight.registerLanguage('html', html);
-lowlight.registerLanguage('bash', bash);
+import Link from "@tiptap/extension-link";
+import React, { useCallback } from "react";
 
-import Link from '@tiptap/extension-link';
-import React, { useCallback } from 'react';
-
-import CodeBlockComponent from '@/components/tiptap/CodeBlockComponent';
+import CodeBlockComponent from "@/components/tiptap/CodeBlockComponent";
 
 const RichTextEditor = ({
   value,
@@ -44,7 +62,8 @@ const RichTextEditor = ({
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: "h-[50vh] lg:h-[80vh] w-full rounded-md rounded-br-none rounded-bl-none border border-input bg-transparent px-3 py-2 border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
+        class:
+          "h-[50vh] lg:h-[80vh] w-full rounded-md rounded-br-none rounded-bl-none border border-input bg-transparent px-3 py-2 border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
       },
     },
     extensions: [
@@ -58,20 +77,24 @@ const RichTextEditor = ({
           HTMLAttributes: {
             class: "list-disc pl-4",
           },
-        },      
-        
+        },
       }),
-      CodeBlockLowlight
-        .extend({
-          addNodeView() {
-            return ReactNodeViewRenderer(CodeBlockComponent)
-          },
-        })
-        .configure({ lowlight }),
+      CodeBlockLowlight.extend({
+        addNodeView() {
+          return ReactNodeViewRenderer(CodeBlockComponent);
+        },
+      }).configure({ lowlight }),
       HardBreak.configure({
         HTMLAttributes: {
           class: "mb-2",
         },
+      }),
+      HardBreak.extend({
+        addKeyboardShortcuts () {
+          return {
+            Enter: () => this.editor.commands.setHardBreak()
+          }
+        }
       }),
       Link.configure({
         HTMLAttributes: {
@@ -79,7 +102,7 @@ const RichTextEditor = ({
         },
         openOnClick: false,
         autolink: true,
-        defaultProtocol: 'https',
+        defaultProtocol: "https",
       }),
       Image.configure({
         HTMLAttributes: {
@@ -96,69 +119,80 @@ const RichTextEditor = ({
         },
       }),
     ],
-    content: value, // Set the initial content with the provided value
+    content: value,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML()); // Call the onChange callback with the updated HTML content
+      onChange(editor.getHTML());
     },
   });
 
   const setLink = useCallback(() => {
-    const previousUrl = editor?.getAttributes('link').href;
-    const url = window.prompt('URL', previousUrl);
+    const previousUrl = editor?.getAttributes("link").href;
+    const url = window.prompt("URL", previousUrl);
 
-    // cancelled
     if (url === null) {
       return;
     }
 
-    // empty
-    if (url === '') {
-      editor?.chain().focus().extendMarkRange('link').unsetLink().run();
+    if (url === "") {
+      editor?.chain().focus().extendMarkRange("link").unsetLink().run();
       return;
     }
 
-    // update link
-    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+    editor
+      ?.chain()
+      .focus()
+      .extendMarkRange("link")
+      .setLink({ href: url })
+      .run();
   }, [editor]);
 
   const addImage = useCallback(() => {
-    const url = window.prompt('URL')
+    const url = window.prompt("URL");
 
     if (url) {
-      editor?.chain().focus().setImage({ src: url }).run()
+      editor?.chain().focus().setImage({ src: url }).run();
     }
-  }, [editor])
-
+  }, [editor]);
 
   useEffect(() => {
     const breakLine = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && e.shiftKey) { // if shift key is pressed, it's a new line
+      if (e.key === "Enter" && e.shiftKey) {
+
         e.preventDefault();
         editor?.chain().focus().setHardBreak().run();
-       
       }
-      
     };
     document.addEventListener("keydown", breakLine);
-    console.log(editor);
-    return () => document.removeEventListener("keydown", breakLine);
 
+    return () => document.removeEventListener("keydown", breakLine);
   }, [editor]);
 
   return (
     <>
       <EditorContent editor={editor} />
-      {editor ? <RichTextEditorToolbar editor={editor} setLink={setLink} addImage={addImage} /> : null}
+      {editor ? (
+        <RichTextEditorToolbar
+          editor={editor}
+          setLink={setLink}
+          addImage={addImage}
+        />
+      ) : null}
       <div className={`flex flex-row items-center gap-2 text-sm`}>
-        
         {editor?.storage.characterCount.characters()} caractères
-        
       </div>
     </>
   );
 };
 
-const RichTextEditorToolbar = ({ editor, setLink, addImage }: { editor: Editor, setLink: () => void, addImage: () => void }) => {
+const RichTextEditorToolbar = ({
+  editor,
+  setLink,
+  addImage,
+}: {
+  editor: Editor;
+  setLink: () => void;
+  addImage: () => void;
+}) => {
   return (
     <div className="border border-input bg-transparent rounded-br-md rounded-bl-md p-1 flex flex-row items-center gap-1">
       <Toggle
@@ -243,26 +277,30 @@ const RichTextEditorToolbar = ({ editor, setLink, addImage }: { editor: Editor, 
       <Toggle
         size="sm"
         pressed={editor.isActive("heading", { level: 1 })}
-        onPressedChange={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
-
+        onPressedChange={() =>
+          editor.chain().focus().toggleHeading({ level: 1 }).run()
+        }
+        className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
       >
-      
         <Heading1 className="h-4 w-4" />
       </Toggle>
       <Toggle
         size="sm"
         pressed={editor.isActive("heading", { level: 2 })}
-        onPressedChange={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
+        onPressedChange={() =>
+          editor.chain().focus().toggleHeading({ level: 2 }).run()
+        }
+        className={editor.isActive("heading", { level: 2 }) ? "is-active" : ""}
       >
         <Heading2 className="h-4 w-4" />
       </Toggle>
       <Toggle
         size="sm"
         pressed={editor.isActive("heading", { level: 3 })}
-        onPressedChange={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
+        onPressedChange={() =>
+          editor.chain().focus().toggleHeading({ level: 3 }).run()
+        }
+        className={editor.isActive("heading", { level: 3 }) ? "is-active" : ""}
       >
         <Heading3 className="h-4 w-4" />
       </Toggle>

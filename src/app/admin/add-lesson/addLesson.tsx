@@ -67,6 +67,14 @@ export async function addLesson(nameLesson: string, slugLesson: string, contentL
     duration = inputInfo.duration;
   }
 
+  if (links && links[0].url !== "" && links[0].label !== "") {
+    links = [...links];
+  }
+  else {
+    links = [];
+  }
+
+
   let durationVideo: string = "00:00:00";
   if (duration) {
     const hours = Math.floor(duration / 3600).toString().padStart(2, "0");
@@ -87,7 +95,7 @@ export async function addLesson(nameLesson: string, slugLesson: string, contentL
       sort_number: sort_number,
       contentLesson: contentLesson ?? "",
       videoId: videoId,
-      links: JSON.stringify(links),
+      links: links ? JSON.stringify(links) : "",
       duration: durationVideo as string,
       level: level as Lessons_level,
     },
