@@ -1,7 +1,7 @@
 "use client";
 
 
-import { useEditor, EditorContent, type Editor } from "@tiptap/react";
+import { useEditor, EditorContent, type Editor, ReactNodeViewRenderer } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Bold, Strikethrough, Italic, List, ListOrdered, TextQuote, Code, Text ,ArrowBigLeft, Link as LinkIcon,ImagePlus, Heading1, Heading2, Heading3 } from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
@@ -13,10 +13,26 @@ import Image from '@tiptap/extension-image'
 import Heading from '@tiptap/extension-heading'
 import { useEffect } from 'react';
 import Paragraph from '@tiptap/extension-paragraph';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import css from 'highlight.js/lib/languages/css'
+import js from 'highlight.js/lib/languages/javascript'
+import ts from 'highlight.js/lib/languages/typescript'
+import html from 'highlight.js/lib/languages/xml'
+import bash from 'highlight.js/lib/languages/bash'
+// load all highlight.js languages
+import {lowlight} from 'lowlight/lib/core.js';
+
+
+lowlight.registerLanguage('css', css); 
+lowlight.registerLanguage('javascript', js);
+lowlight.registerLanguage('typescript', ts);
+lowlight.registerLanguage('html', html);
+lowlight.registerLanguage('bash', bash);
 
 import Link from '@tiptap/extension-link';
 import React, { useCallback } from 'react';
 
+import CodeBlockComponent from '@/components/tiptap/CodeBlockComponent';
 
 const RichTextEditor = ({
   value,
@@ -45,6 +61,13 @@ const RichTextEditor = ({
         },      
         
       }),
+      CodeBlockLowlight
+        .extend({
+          addNodeView() {
+            return ReactNodeViewRenderer(CodeBlockComponent)
+          },
+        })
+        .configure({ lowlight }),
       HardBreak.configure({
         HTMLAttributes: {
           class: "mb-2",
@@ -57,12 +80,6 @@ const RichTextEditor = ({
         openOnClick: false,
         autolink: true,
         defaultProtocol: 'https',
-      }),
-      
-      CodeBlock.configure({
-        HTMLAttributes: {
-          class: "border-gray-300 rounded-md p-2 bg-gray-500 text-white font-code",
-        },
       }),
       Image.configure({
         HTMLAttributes: {
