@@ -105,7 +105,7 @@ export async function editLesson(
   if (links && JSON.stringify(existingLesson.links) !== JSON.stringify(links))
     if (links && links[0].url !== "" && links[0].label !== "") {
       const existingLinks = existingLesson.links ? JSON.parse(existingLesson.links) : [];
-      const updatedLinks = [...existingLinks, ...links];
+      const updatedLinks = [...existingLinks, ...links]; 
       updateData.links = JSON.stringify(updatedLinks);
     }
 
