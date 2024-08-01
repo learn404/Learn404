@@ -116,5 +116,5 @@ export async function editLesson(
     data: updateData,
   });
 
-  redirect("/admin");
+  redirect(`/cours/${slugLesson}`);
 }

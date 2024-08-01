@@ -108,7 +108,7 @@ model Lessons {
   updatedAt      DateTime         @updatedAt
   sort_number    Int              @default(0)
   duration       String?
-  links          String?
+  links          String?  @db.LongText
   videoId        String?
   level          Lessons_level?   @default(BEGINNER)
   LessonChapter  LessonChapter[]

@@ -30,6 +30,7 @@ import CharacterCount from "@tiptap/extension-character-count";
 import CodeBlock from "@tiptap/extension-code-block";
 import Image from "@tiptap/extension-image";
 import Heading from "@tiptap/extension-heading";
+import Blockquote from '@tiptap/extension-blockquote'
 import { useEffect } from "react";
 import Paragraph from "@tiptap/extension-paragraph";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
@@ -78,7 +79,9 @@ const RichTextEditor = ({
             class: "list-disc pl-4",
           },
         },
+        
       }),
+      Paragraph,
       CodeBlockLowlight.extend({
         addNodeView() {
           return ReactNodeViewRenderer(CodeBlockComponent);
@@ -88,13 +91,6 @@ const RichTextEditor = ({
         HTMLAttributes: {
           class: "mb-2",
         },
-      }),
-      HardBreak.extend({
-        addKeyboardShortcuts () {
-          return {
-            Enter: () => this.editor.commands.setHardBreak()
-          }
-        }
       }),
       Link.configure({
         HTMLAttributes: {
@@ -110,14 +106,13 @@ const RichTextEditor = ({
         },
       }),
       CharacterCount.configure(),
-      Heading.configure({
-        levels: [1, 2, 3],
-      }),
-      Paragraph.configure({
+      Heading, 
+      Blockquote.configure({
         HTMLAttributes: {
-          class: "mb-2",
+          class: "border-l-4 border-gray-300 pl-4",
         },
       }),
+      
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -235,6 +230,7 @@ const RichTextEditorToolbar = ({
         size="sm"
         pressed={editor.isActive("blockquote")}
         onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
+        className={editor.isActive('blockquote') ? 'is-active' : ''}
       >
         <TextQuote className="h-4 w-4" />
       </Toggle>
@@ -252,13 +248,13 @@ const RichTextEditorToolbar = ({
       >
         <ArrowBigLeft className="h-4 w-4" />
       </Toggle>
-      <Toggle
+    <Toggle
         size="sm"
         pressed={editor.isActive("paragraph")}
         onPressedChange={() => editor.chain().focus().setParagraph().run()}
       >
         <Text className="h-4 w-4" />
-      </Toggle>
+      </Toggle> 
       <Toggle
         size="sm"
         pressed={editor.isActive("link")}

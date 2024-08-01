@@ -175,7 +175,7 @@ export default function EditLessonForm({
       console.error("Error submitting form:", error);
     } finally {
       setIsLoading(false);
-      router.push("/admin");
+      router.push(`/cours/${slugLesson}`);
       router.refresh();
     }
   }
