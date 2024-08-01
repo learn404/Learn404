@@ -1,16 +1,17 @@
+import { currentUserType } from "@/lib/current-user";
 import HeaderDashboard from "./headerDashboard/headerDashboard";
 
 interface ContentLayoutProps {
-  session: any;
+  user: currentUserType;
   title: string;
   children: React.ReactNode;
 }
 
-export function ContentLayout({ session, title, children }: ContentLayoutProps) {
+export function ContentLayout({ user, title, children }: ContentLayoutProps) {
 
   return (
     <div>
-      <HeaderDashboard session={session} title={title} />
+      <HeaderDashboard user={user} title={title} />
       {children}
     </div>
   )

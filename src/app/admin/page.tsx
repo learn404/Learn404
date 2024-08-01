@@ -1,52 +1,25 @@
 import Footer from "@/components/layout/footer";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
-import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { redirect } from "next/navigation";
-import { SquarePen } from "lucide-react";
-
-import { User, userColumns } from "./UserColumns";
-import { Lesson, lessonColumns } from "./LessonColumns";
-import { UserTable } from "./user-table";
-import { LessonTable } from "./lesson-table";
+import { SquarePen, RefreshCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { currentUser } from "@/lib/current-user";
 import Link from "next/link";
+import { LessonTable } from "./lesson-table";
+import { lessonColumns } from "./LessonColumns";
+import { UserTable } from "./user-table";
+import { userColumns } from "./UserColumns";
+import AddChangeLogButton from "@/components/buttons/AddChangeLogButton";
+import CreateCategoryButton from "@/components/buttons/AddCategoryButton";
+import { get } from "http";
+import { getTransactions } from "@/lib/utils";
+
 
 export default async function Admin() {
+  const user = await currentUser();
 
-  const session = await auth();
-
-  if (!session) {
-    redirect("/join");
-  }
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session?.user?.email as string,
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      image: true,
-      admin: true,
-      isMember: true,
-    },
-  });
-
-  if (!user?.admin) {
-    redirect("/");
-  }
-
-  const sessionData = {
-    user: {
-      name: session?.user?.name as string,
-      email: session?.user?.email as string,
-      image: session?.user?.image as string,
-    },
-    expires: session?.expires as string,
-  };
-
+  
+ const transactionData = await getTransactions();
   const allUsers = await prisma.user.findMany();
   const allLessons = await prisma.lessons.findMany();
   const allCategories = await prisma.categories.findMany({
@@ -56,25 +29,38 @@ export default async function Admin() {
       },
     },
     select: {
-      id: true, 
+      id: true,
       name: true,
     },
   });
-  
+
   allLessons.forEach((lesson) => {
-    lesson.categoryId = allCategories.find(
-      (category) => category.id === lesson.categoryId
-    )?.name.toUpperCase() || "";
+    lesson.categoryId =
+      allCategories
+        .find((category) => category.id === lesson.categoryId)
+        ?.name.toUpperCase() || "";
   });
-  
 
   return (
     <div>
-      <HeaderDashboard session={sessionData} title="Admin"></HeaderDashboard>
-      <Link href="/admin/add-lesson">
-        <Button variant="default" className="mx-10"><SquarePen className="mr-1 w-4"/>
-        Ajouter un cours</Button>
-      </Link>
+      <HeaderDashboard user={user} title="Admin"></HeaderDashboard>
+      <div className="flex items-center gap-2 mx-10">
+        <Link href="/admin/add-lesson">
+          <Button variant="default">
+            <SquarePen className="mr-1 w-4" />
+            Ajouter un cours
+          </Button>
+        </Link>
+        <div className="flex items-center gap-2">
+          <AddChangeLogButton />
+          <CreateCategoryButton />
+        </div>
+      </div>
+      {/* <div>
+        <div className="text-white"> 
+        Total de transaction sur les 15 derniers jours {transactionData}
+        </div>
+      </div> */}
       <div className="mx-auto px-10 lg:flex gap-10">
         <UserTable columns={userColumns} data={allUsers} />
         <LessonTable columns={lessonColumns} data={allLessons} />

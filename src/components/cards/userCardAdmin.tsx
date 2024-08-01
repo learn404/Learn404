@@ -1,5 +1,6 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DeleteAccountButton } from "@/components/buttons/DeleteAccountButton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { currentUserType } from "@/lib/current-user";
 
 interface UserCardAdminProps {
     userSearch: {
@@ -11,18 +12,11 @@ interface UserCardAdminProps {
         isMember: boolean | null;
         createdAt: Date | null;
     } | null;
-    user: {
-        id: string;
-        name: string | null;
-        email: string | null;
-        admin: boolean | string | null;
-        image: string | null;
-        isMember: boolean | null;
-        createdAt: Date | null;
-    } | null;
+    user: currentUserType;
 }
 
 export default function UserCardAdmin({ userSearch, user }: UserCardAdminProps) {
+  
     let howManyDays = 0;
     if (userSearch?.createdAt) {
         howManyDays = Math.floor(

@@ -9,7 +9,7 @@ const footerLinks: FooterLink[][] = [
   [
     { id: 1, title: "About", url: "#" },
     { id: 2, title: "Contact", url: "#" },
-    { id: 3, title: "Blog", url: "#" },
+    { id: 3, title: "Blog", url: "/blog" },
     { id: 4, title: "Story", url: "#" },
   ],
   [
@@ -18,7 +18,7 @@ const footerLinks: FooterLink[][] = [
       title: "Condition d'utilisation",
       url: "/legal/condition-general-utilisation",
     },
-    { id: 6, title: "Product", url: "#" },
+    { id: 6, title: "Journal des modifications", url: "/changelog" }, 
     { id: 7, title: "Press", url: "#" },
     { id: 8, title: "More", url: "#" },
   ],

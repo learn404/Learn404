@@ -1,4 +1,5 @@
 // lib/utils.ts
+import { UserBase } from "@/app/dashboard/page";
 import prisma from "@/lib/prisma";
 import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -70,3 +71,101 @@ export const getLessonBySlug = async (slug: string) => {
   });
   return lesson;
 };
+
+export async function getLessonsStartedAndCompleted(user: UserBase) {
+  const lessonsStartedAndCompleted = await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+    select: {
+      _count: {
+        select: {
+          lessonProgress: {
+            where: {
+              completed: true
+            }
+          },
+        },
+      },
+      lessonProgress: true      
+    }
+  })
+
+
+  if (lessonsStartedAndCompleted === null) {
+    return {
+      _count: {
+        lessonProgress: 0,
+      },
+      lessonProgress: [], // Default to an empty array
+    };
+  }
+
+  return lessonsStartedAndCompleted;
+}
+
+export async function getCategoriesWithLessons() {
+  const res = await prisma.categories.findMany({
+    include: {
+      Lessons: {
+        orderBy: {
+          sort_number: 'asc'
+        }
+      }
+    },
+    orderBy: {
+      sort_number: 'asc'
+    }
+  })
+
+  const categories = res.filter(category => category.Lessons.length > 0);
+  const lessons = await prisma.lessons.findMany({
+    orderBy: {
+      sort_number: 'asc'
+    }
+  })
+
+  return { categories, lessons };
+}
+
+export async function getChangelogData() {
+  const res = await prisma.changeLog.findMany({
+    orderBy: {
+      createdAt: 'desc'
+    }
+  })
+  return res;
+}
+
+export async function getLessons() {
+  const res = await prisma.lessons.findMany({
+    orderBy: {
+      sort_number: 'asc'
+    }
+  })
+  return res;
+}
+
+export async function getTransactions() {
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+  const fifteenDaysAgo = Math.floor(Date.now() / 1000) - (15 * 24 * 60 * 60);
+
+  const transactions = await stripe.charges.list({
+    limit: 100,
+    created: {
+      gte: fifteenDaysAgo
+    }
+  });
+  
+  const transationLength = transactions.data.length;
+
+  return transationLength;
+
+}
+
+
+
+export const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' });
+}

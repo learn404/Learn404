@@ -1,47 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model User {
+  id             String           @id @default(cuid())
+  name           String?
+  email          String?          @unique
+  emailVerified  DateTime?
+  image          String?
+  isMember       Boolean          @default(false)
+  admin          Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Account        Account?
+  BillingInformations BillingInformations?
+  lessonProgress LessonProgress[]
+  Session        Session[]
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  Session       Session[]
-  Account       Account?
-  isMember      Boolean   @default(false)
-  admin         Boolean   @default(false)
-
+model BillingInformations {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  firstName      String
+  lastName       String
+  address        String
+  address2       String?
+  city           String
+  state          String?
+  zip            String
+  country        String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
 
-  lessonProgress LessonProgress[]
+  @@index([userId])
 }
 
 model Account {
-  id                       String  @id @default(cuid())
-  userId                   String  @unique
+  id                       String   @id @default(cuid())
+  userId                   String   @unique
   type                     String
   provider                 String
   providerAccountId        String
-  refresh_token            String? @db.Text
-  access_token             String? @db.Text
+  refresh_token            String?  @db.Text
+  access_token             String?  @db.Text
   expires_at               Int?
   token_type               String?
   scope                    String?
-  id_token                 String? @db.Text
+  id_token                 String?  @db.Text
   session_state            String?
   refresh_token_expires_in Int?
-  user                     User?   @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  user                     User     @relation(fields: [userId], references: [id])
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -52,72 +68,85 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@index([userId])
 }
 
-model Waitlist {
+model Wishlist {
   id        String   @id @default(cuid())
   email     String   @unique
-  firstName String
-  name      String
   createdAt DateTime @default(now())
 }
 
 model Categories {
-  id        String    @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String    @unique
-  sort_number Int?      @default(0)
   createdAt   DateTime  @default(now())
+  sort_number Int?      @default(0)
   Lessons     Lessons[]
 }
 
 model Lessons {
-  id             String     @id @default(cuid())
+  id             String           @id @default(cuid())
   title          String
   slug           String
-  Categories     Categories @relation(fields: [categoryId], references: [id])
   categoryId     String
   description    String?
   playbackId     String?
-  videoId        String?
-  duration       String?
   repository_url String?
-  sort_number    Int        @default(0)
-
-  draft     Boolean  @default(true)
-  newLesson Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  draft          Boolean          @default(true)
+  newLesson      Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  sort_number    Int              @default(0)
+  duration       String?
+  videoId        String?
+  level          Lessons_level?   @default(BEGINNER)
+  LessonChapter  LessonChapter[]
   LessonProgress LessonProgress[]
-  LessonChapter LessonChapter[]
+  Categories     Categories       @relation(fields: [categoryId], references: [id])
+
+  @@index([categoryId], map: "Lessons_categoryId_fkey")
 }
 
 model LessonProgress {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   userId    String
   lessonId  String
-  completed Boolean @default(false)
-
+  completed Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  Lesson Lessons @relation(fields: [lessonId], references: [id])
-  User   User    @relation(fields: [userId], references: [id])
+  Lesson    Lessons  @relation(fields: [lessonId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
+  @@index([lessonId], map: "LessonProgress_lessonId_fkey")
 }
 
-
 model LessonChapter {
-  id        String   @id @default(cuid())
+  id        String  @id @default(cuid())
   id_lesson String
   name      String
   start     Int
   Lessons   Lessons @relation(fields: [id_lesson], references: [id])
+
+  @@index([id_lesson], map: "LessonChapter_id_lesson_fkey")
+}
+
+model ChangeLog {
+  id        String   @id @default(cuid())
+  title     String
+  version   String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+
+enum Lessons_level {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
 }

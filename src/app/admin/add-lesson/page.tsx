@@ -1,49 +1,33 @@
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
-import { auth } from "@/lib/auth";
+import { currentUser } from "@/lib/current-user";
 import { redirect } from "next/navigation";
 import AddLessonForm from "./Form";
-import { adminCheckAre } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default async function AddLesson() {
-  const session = await auth();
+  const user = await currentUser();
 
-  let isAdmin = false;
-  let isAvatar = false;
-
-  if (!session) {
-    return redirect("/");
-  }
-
-  if (session) {
-    isAvatar = session?.user?.image ? true : false;
-    const adminCheck = await adminCheckAre(session?.user?.email as string);
-
-    if (adminCheck?.admin) {
-      isAdmin = true;
-    }
-  }
-
-  if (!isAdmin) {
+  if (!user.admin) {
     redirect("/dashboard");
   }
 
-  const sessionData = {
-    user: {
-      name: session?.user?.name as string,
-      email: session?.user?.email as string,
-      image: session?.user?.image as string,
-    },
-    expires: session?.expires as string,
-  };
-
   return (
     <>
-      <HeaderDashboard session={sessionData} title="Ajouter un cours"/>
+      <HeaderDashboard user={user} title="Ajouter un cours" />
+      
       <main className="px-8">
+      <Link href="/admin">
+        <Button variant="outline" className="mx-8">
+          <ArrowLeft className="w-4 h-4" />
+          Retour
+          </Button>
+        </Link>
         <AddLessonForm
-          isAdmin={isAdmin}
-          session={session}
-          isAvatar={isAvatar}
+          isAdmin={user.admin}
+          user={user}
+          isAvatar={!!user.image}
         />
       </main>
     </>

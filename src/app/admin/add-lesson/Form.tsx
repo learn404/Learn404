@@ -1,37 +1,44 @@
 "use client";
 
-import Image from "next/image";
-import { useState, useEffect } from 'react';
-import { Loader2 } from "lucide-react";
-import { addLesson } from "./addLesson";
 import { Button } from "@/components/ui/button";
+import { currentUserType } from "@/lib/current-user";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { addLesson } from "./addLesson";
+import CreateCategoryButton from "@/components/buttons/AddCategoryButton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+  SelectLabel,
+} from "@/components/ui/select";
 
 interface AddLessonFormProps {
   isAdmin: boolean;
   isAvatar: boolean;
-  session: any;
+  user: currentUserType;
 }
 
-export default function AddLessonForm({
-  session,
-  isAvatar,
-  
-}: AddLessonFormProps) {
-  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
+    []
+  );
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     async function fetchCategories() {
-      const categories = await fetch('/api/lessons/get-categories',
-      {
-        method: 'GET',
+      const categories = await fetch("/api/lessons/get-categories", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      }
-      );
+      });
       const data = await categories.json();
       console.log(data);
       setCategories(data);
@@ -47,7 +54,7 @@ export default function AddLessonForm({
       const response = await addLesson(formData);
       console.log(response);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     } finally {
       setIsLoading(false);
     }
@@ -67,28 +74,36 @@ export default function AddLessonForm({
             </p>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="category"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Catégorie
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="category"
-                    name="category"
-                    autoComplete="category-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              <div className="sm:col-span-3 lg:flex items-end gap-5">
+                <div>
+                  <label
+                    htmlFor="category"
+                    className="block text-sm font-medium leading-6 text-gray-100"
                   >
-                    <option value="">Choisir une catégorie</option>
-                    {categories.map((category: any) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
+                    Catégorie
+                  </label>
+                  <div className="mt-2">
+                    <Select name="category">
+                      <SelectTrigger
+                        id="category"
+                        className="w-fit rounded-md border-0 py-1.5 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      >
+                        <SelectValue placeholder="Choisir une catégorie" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Catégories</SelectLabel>
+                          {categories.map((category: any) => (
+                            <SelectItem value={category.id} key={category.id}>
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
+                
               </div>
               <div className="sm:col-span-4">
                 <label
@@ -267,7 +282,7 @@ export default function AddLessonForm({
                     <div className="text-gray-400 flex items-center mt-2">
                       {isAvatar ? (
                         <Image
-                          src={session?.user?.image}
+                          src={user?.image || ""}
                           alt="profile"
                           width={40}
                           height={40}
@@ -277,7 +292,7 @@ export default function AddLessonForm({
                         <div className="rounded-full bg-white w-10 h-10"></div>
                       )}
                       <label className="ml-2" htmlFor="author">
-                        {session?.user?.name}
+                        {user?.name}
                       </label>
                     </div>
                   </div>
@@ -287,8 +302,20 @@ export default function AddLessonForm({
           </div>
         </div>
         <div className="flex items-center  gap-x-6">
-          <Button variant="secondary" type="button" onClick={() => router.push('/admin')}>Annuler</Button>
-          <Button variant="default" type="submit" disabled={isLoading}>{isLoading ? (<Loader2 className="w-4 h-4 animate-spin" />) : ("Créer le cours")}</Button>
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={() => router.push("/admin")}
+          >
+            Annuler
+          </Button>
+          <Button variant="default" type="submit" disabled={isLoading}>
+            {isLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              "Créer le cours"
+            )}
+          </Button>
         </div>
       </form>
     </>

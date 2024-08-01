@@ -1,0 +1,253 @@
+---
+title : Découvrir Git
+slug : decouvrir-git
+publishedAt: "2024-03-01"
+
+---
+
+
+
+# Introduction à Git
+
+Bienvenue dans ce cours sur Git, un outil essentiel pour tout développeur. Git est un système de contrôle de version qui permet de suivre les modifications de vos fichiers et de collaborer avec d'autres développeurs. Que vous travailliez seul ou en équipe, Git vous aide à organiser et gérer votre code de manière efficace.
+
+Nous allons découvrir ensemble les bases de Git, de l'initialisation d'un projet à l'utilisation avancée des branches et des commits. À la fin de ce cours, vous serez capable de gérer vos projets avec Git de manière efficace et professionnelle.
+
+## Pourquoi utiliser Git ?
+
+Imaginez que vous travaillez sur un projet complexe et que vous souhaitez tester une nouvelle fonctionnalité sans risquer de casser votre code existant. Avec Git, vous pouvez créer une branche séparée, y effectuer des modifications, puis fusionner cette branche avec votre branche principale une fois les tests terminés. Git vous permet également de collaborer avec d'autres développeurs, chacun pouvant travailler sur des fonctionnalités différentes sans interférer avec les autres.
+
+---
+
+> 💡 **Note :** Pensez à Git comme à une machine à remonter le temps pour votre code. Vous pouvez revenir à des versions antérieures, voir les modifications apportées, et même fusionner différentes versions du code.
+
+---
+
+## Initialiser un projet Git
+
+La première étape pour utiliser Git est d'initialiser un dépôt Git dans votre projet.
+const codeString = `
+```bash
+git init
+```;
+
+
+
+
+Cette commande crée un nouveau dossier `.git` dans votre projet, qui contient toutes les informations nécessaires pour suivre les modifications de vos fichiers.
+
+---
+
+> 🧑‍💻 **Exemple pratique :**
+>
+> 1. Ouvrez votre terminal.
+> 2. Accédez au dossier de votre projet.
+> 3. Tapez `git init` et appuyez sur Entrée.
+> 4. Vous avez maintenant un dépôt Git initialisé dans votre projet !
+
+---
+
+## Ajouter des modifications avec Git
+
+Une fois votre projet initialisé, vous pouvez commencer à suivre les modifications de vos fichiers.
+
+### Ajouter des fichiers à l'index
+
+```bash
+git add .
+```
+
+Cette commande ajoute toutes les modifications de vos fichiers à l'index (ou "staging area"), préparant ces fichiers pour le prochain commit.
+
+### Créer un commit
+
+```bash
+git commit -m "Message de commit"
+```
+
+Un commit enregistre les modifications ajoutées avec un message descriptif. C'est comme prendre un instantané de l'état actuel de votre projet.
+
+---
+
+> 💡 **Note :** Un bon message de commit doit être concis et descriptif, comme "Ajoute la fonctionnalité de connexion" ou "Corrige le bug de l'affichage".
+
+---
+
+## Suivre l'historique des commits
+
+Vous pouvez voir l'historique des commits de votre projet avec la commande suivante :
+
+```bash
+git log
+```
+
+Cela affiche une liste des commits, incluant leurs identifiants, auteurs, dates, et messages de commit.
+
+---
+
+> 🧑‍💻 **Exemple pratique :**
+>
+> 1. Faites quelques modifications dans vos fichiers et ajoutez-les à l'index avec `git add .`.
+> 2. Créez un commit avec `git commit -m "Votre message de commit"`.
+> 3. Tapez `git log` pour voir l'historique de vos commits.
+
+---
+
+## Utiliser les branches dans Git
+
+Les branches sont un élément clé de Git, permettant de travailler sur différentes fonctionnalités en parallèle sans interférer avec le code principal.
+
+### Créer une nouvelle branche
+
+```bash
+git checkout -b nom_de_branche
+```
+
+Cette commande crée une nouvelle branche et bascule sur cette branche.
+
+### Fusionner une branche
+
+Une fois que vous avez terminé de travailler sur une branche, vous pouvez la fusionner avec votre branche principale (souvent appelée `main`).
+
+```bash
+git checkout main
+git merge nom_de_branche
+```
+
+Cela intègre les modifications de la branche spécifiée dans la branche principale.
+
+---
+
+> 💡 **Note :** Avant de fusionner une branche, assurez-vous que tout fonctionne correctement. Vous pouvez également demander à un collègue de revoir votre code.
+
+---
+
+## Annuler des modifications
+
+### Annuler un commit
+
+Si vous avez fait une erreur dans un commit, vous pouvez l'annuler avec la commande suivante :
+
+```bash
+git revert id_du_commit
+```
+
+Cela crée un nouveau commit qui annule les modifications du commit spécifié.
+
+### Annuler des modifications locales
+
+Si vous souhaitez annuler toutes les modifications locales non ajoutées à l'index, utilisez :
+
+```bash
+git checkout -- .
+```
+
+---
+
+> 🧑‍💻 **Exemple pratique :**
+>
+> 1. Faites quelques modifications dans vos fichiers, mais ne les ajoutez pas à l'index.
+> 2. Tapez `git checkout -- .` pour annuler ces modifications locales.
+> 3. Vos fichiers devraient revenir à leur état précédent.
+
+---
+
+## Travailler en équipe avec Git
+
+### Travailler avec un dépôt distant
+
+Pour collaborer avec d'autres développeurs, vous pouvez utiliser un service d'hébergement de dépôt Git comme GitHub.
+
+### Cloner un dépôt
+
+Pour copier un dépôt Git existant sur votre machine, utilisez la commande suivante :
+
+```bash
+git clone url_du_dépôt
+```
+
+### Envoyer des modifications à un dépôt distant
+
+Une fois que vous avez fait des modifications et créé des commits, vous pouvez les envoyer à un dépôt distant avec la commande suivante :
+
+```bash
+git push origin nom_de_branche
+```
+
+---
+
+> 💡 **Note :** Avant de pousser vos modifications, assurez-vous de récupérer les dernières modifications du dépôt distant avec `git pull`.
+
+---
+
+## Les Pull Requests
+
+Une Pull Request (PR) est une fonctionnalité des plateformes de gestion de code source comme GitHub, GitLab ou Bitbucket, qui permet aux développeurs de notifier les autres membres de l'équipe sur les modifications qu'ils ont apportées à une branche. Elle facilite la revue de code et l'intégration des modifications dans la branche principale.
+
+### Créer une Pull Request
+
+1. Poussez votre branche avec les modifications vers le dépôt distant.
+2. Allez sur la plateforme de gestion de code source (GitHub, GitLab, etc.).
+3. Créez une Pull Request en comparant votre branche avec la branche principale.
+
+---
+
+> 💡 **Note :** Les Pull Requests permettent d'assurer la qualité du code grâce à la revue par les pairs, avant de fusionner les modifications dans la branche principale.
+
+---
+
+## Utilisation de GitKraken
+
+GitKraken est un client Git visuel qui simplifie la gestion de vos dépôts Git grâce à une interface utilisateur intuitive. Il est particulièrement utile pour les développeurs qui préfèrent une interface graphique plutôt que des lignes de commande.
+
+### Avantages de GitKraken
+
+- **Interface utilisateur intuitive** : Visualisez vos branches, commits et modifications de manière claire et organisée.
+- **Gestion des Pull Requests** : Créez et gérez des Pull Requests directement depuis l'application.
+- **Fonctionnalités avancées** : Utilisez des fonctionnalités comme le merge, rebase, et cherry-pick facilement.
+
+### Installation de GitKraken
+
+Pour installer GitKraken, suivez ces étapes :
+
+1. Allez sur [GitKraken](https://www.gitkraken.com/) et téléchargez l'application.
+2. Installez l'application en suivant les instructions pour votre système d'exploitation.
+3. Connectez-vous à vos dépôts Git et commencez à explorer l'interface.
+
+---
+
+> 🧑‍💻 **Exemple pratique :**
+>
+> 1. Téléchargez et installez GitKraken.
+> 2. Clonez un dépôt Git existant ou créez un nouveau dépôt.
+> 3. Explorez les fonctionnalités de GitKraken pour gérer vos branches, commits, et Pull Requests.
+
+---
+
+## GitHub Education
+
+GitHub Education est une initiative de GitHub qui offre des outils et des ressources gratuits aux étudiants pour les aider dans leurs projets de développement. Si vous êtes étudiant, vous pouvez bénéficier de nombreux avantages en vous inscrivant à GitHub Education.
+
+### Avantages de GitHub Education
+
+- **GitHub Student Developer Pack** : Accédez gratuitement à des outils et des services populaires comme GitHub Pro, Canva, AWS, DigitalOcean, et bien d'autres.
+- **GitHub Classroom** : Une plateforme pour les enseignants et les étudiants pour gérer les travaux pratiques et les projets de groupe.
+- **Cours et tutoriels gratuits** : Accédez à des ressources éducatives pour apprendre le développement logiciel et utiliser GitHub de manière efficace.
+
+### Comment s'inscrire à GitHub Education
+
+1. Allez sur [GitHub Education](https://education.github.com/).
+2. Cliquez sur "Get benefits" et suivez les instructions pour vous inscrire en tant qu'étudiant.
+3. Fournissez une preuve de votre statut d'étudiant (comme une adresse email académique ou une carte d'étudiant).
+4. Une fois votre inscription validée, vous aurez accès à tous les avantages du GitHub Student Developer Pack.
+
+---
+
+> 💡 **Note :** Profitez de GitHub Education pour améliorer vos compétences en développement et accéder à des outils professionnels gratuitement pendant vos études.
+
+---
+
+## Conclusion
+
+Git est un outil puissant qui vous permet de gérer et de suivre les modifications de votre code, de collaborer avec d'autres développeurs, et de travailler sur différentes fonctionnalités en parallèle. En maîtrisant les bases de Git, ainsi que les outils et fonctionnalités avancés comme les Pull Requests, GitKraken, et GitHub Education, vous pouvez améliorer votre flux de travail et devenir un développeur plus efficace et organisé.
+

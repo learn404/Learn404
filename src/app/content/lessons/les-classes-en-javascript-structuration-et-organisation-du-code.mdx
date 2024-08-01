@@ -1,0 +1,239 @@
+---
+
+title : Les Classes en JavaScript - Structuration et Organisation du Code
+slug : les-classes-en-javascript-structuration-et-organisation-du-code
+publishedAt: "2024-03-01"
+
+---
+
+Les classes en JavaScript, c'est comme un plan ou un modèle qui te permet de créer des objets avec des caractéristiques et des comportements précis. C'est un concept super important en programmation orientée objet (POO). Allez, plongeons dans le monde des classes et découvrons comment elles nous aident à structurer notre code !
+
+## Définir une Classe
+
+Une classe en JavaScript, c'est un peu comme une recette de cuisine. Tu as les ingrédients (propriétés) et les instructions (méthodes) pour créer quelque chose de génial. Voici un exemple basique pour te donner une idée :
+
+```javascript
+class Person {
+  // Définition de la classe Person
+  constructor(name, age) {
+    // Constructeur de la classe Person
+    this.name = name; // Initialisation de l'attribut name
+    this.age = age; // Initialisation de l'attribut age
+  }
+
+  greet() {
+    console.log(`Bonjour, je suis ${this.name} et j'ai ${this.age} ans.`);
+  }
+}
+
+const person1 = new Person("Alice", 30);
+const person2 = new Person("Bob", 25);
+
+person1.greet(); // Bonjour, je suis Alice et j'ai 30 ans.
+person2.greet(); // Bonjour, je suis Bob et j'ai 25 ans.
+```
+
+> 🧑‍💻 **Analyse du code :**
+> 1. On crée une classe `Person` avec un constructeur qui prend deux paramètres : `name` et `age`.
+> 2. Dans le constructeur, on initialise les propriétés `name` et `age` de l'objet avec le mot-clé `this`.
+> 3. On définit une méthode `greet` qui affiche un message de salutation avec le nom et l'âge de la personne.
+> 4. On crée deux instances de la classe `Person` : `person1` et `person2`, avec des valeurs différentes pour `name` et `age`.
+> 5. On appelle la méthode `greet` sur chaque instance pour afficher le message de salutation personnalisé.
+
+## Le Rôle du Mot-clé `this`
+
+Le mot-clé `this` en JavaScript joue un rôle crucial dans le contexte des objets et des classes. Il fait référence à l'objet actuel dans lequel le code est en train de s'exécuter. En d'autres termes, `this` est un pointeur qui permet d'accéder aux propriétés et méthodes de l'objet courant.
+
+### Pourquoi utiliser `this` ?
+
+1. **Référencer les Propriétés de l'Objet :**
+   `this` permet de différencier les propriétés de l'objet des variables locales ou des paramètres de fonctions. Dans un constructeur ou une méthode, `this` fait référence à l'instance spécifique de l'objet qui est créée ou utilisée.
+
+   ```javascript
+   class Car {
+     constructor(brand, model) {
+       this.brand = brand; // Initialisation de l'attribut brand
+       this.model = model; // Initialisation de l'attribut model
+     }
+
+     displayInfo() {
+       console.log(`Marque: ${this.brand}, Modèle: ${this.model}`);
+     }
+   }
+
+   const car1 = new Car("Toyota", "Corolla");
+   car1.displayInfo(); // Marque: Toyota, Modèle: Corolla
+   ```
+
+2. **Accéder aux Méthodes de l'Objet :**
+   `this` est également utilisé pour appeler d'autres méthodes de l'objet depuis une méthode. Cela permet de créer des comportements complexes en combinant plusieurs méthodes.
+
+   ```javascript
+   class Counter {
+     constructor() {
+       this.count = 0;
+     }
+
+     increment() {
+       this.count++;
+       this.displayCount();
+     }
+
+     displayCount() {
+       console.log(`Count: ${this.count}`);
+     }
+   }
+
+   const counter = new Counter();
+   counter.increment(); // Count: 1
+   ```
+
+3. **Manipuler le Contexte d'Exécution :**
+   Dans des fonctions imbriquées ou des callbacks, `this` peut perdre sa référence au contexte d'origine. Des techniques comme l'utilisation de flèches (arrow functions) ou la méthode `bind` permettent de préserver le contexte de `this`.
+
+   ```javascript
+   class User {
+     constructor(name) {
+       this.name = name;
+     }
+
+     greet() {
+       setTimeout(() => {
+         console.log(`Hello, ${this.name}`); // 'this' se réfère toujours à l'instance User
+       }, 1000);
+     }
+   }
+
+   const user = new User("John");
+   user.greet(); // Hello, John
+   ```
+
+## Le Concept d'Instance d'Objet
+
+Une instance d'objet, c'est une copie concrète de la classe avec ses propres valeurs. Imagine une classe `Person` avec les propriétés `name` et `age`. Chaque personne que tu crées avec cette classe sera une instance différente, comme `person1` et `person2` dans l'exemple précédent.
+
+## Le Rôle du Constructeur
+
+Le constructeur d’une classe en JavaScript sert à initialiser les propriétés d’un objet lors de sa création. C’est une méthode spéciale qui est automatiquement appelée lorsque tu crées une nouvelle instance de la classe. Regarde comment ça marche :
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+```
+
+Dans cet exemple, le constructeur de la classe `Person` prend deux paramètres, `name` et `age`, et utilise le mot-clé `this` pour définir les propriétés `name` et `age` de l'objet en cours de création.
+
+## Le Concept d’Encapsulation
+
+L’encapsulation, c'est le fait de regrouper des données et des méthodes qui les manipulent dans une seule entité, appelée objet. Ça permet de protéger les données et de contrôler comment elles sont modifiées. Voici un exemple avec une classe `Person` :
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  setName(newName) {
+    this.name = newName;
+  }
+
+  getAge() {
+    return this.age;
+  }
+
+  setAge(newAge) {
+    if (newAge >= 0) {
+      this.age = newAge;
+    }
+  }
+}
+
+const person = new Person("John", 30);
+console.log(person.getName()); // John
+console.log(person.getAge()); // 30
+
+person.setName("Jane");
+person.setAge(25);
+
+console.log(person.getName()); // Jane
+console.log(person.getAge()); // 25
+```
+
+> 🧑‍💻 **Analyse du code :**
+> 1. On définit une classe `Person` avec un constructeur qui initialise les propriétés `name` et `age`.
+> 2. On crée des méthodes `getName` et `getAge` pour obtenir les valeurs des propriétés `name` et `age`.
+> 3. On crée des méthodes `setName` et `setAge` pour modifier les valeurs des propriétés `name` et `age`.
+> 4. On crée une instance de la classe `Person` avec le nom `John` et l'âge `30`.
+> 5. On utilise les méthodes `getName` et `getAge` pour obtenir les valeurs des propriétés `name` et `age`.
+> 6. On utilise les méthodes `setName` et `setAge` pour modifier les valeurs des propriétés `name` et `age`.
+> 7. On utilise à nouveau les méthodes `getName` et `getAge` pour vérifier que les valeurs ont été modifiées.
+
+## La Notion de Polymorphisme
+
+Le polymorphisme, c'est la capacité d’un objet à prendre différentes formes ou à se comporter différemment selon le contexte. Ça signifie qu’un même nom ou une même méthode peut être utilisé pour faire des choses différentes selon les objets auxquels ils s’appliquent.
+
+```javascript
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  introduce() {
+    console.log(`Bonjour, je m'appelle ${this.name}.`);
+  }
+}
+
+class Student extends Person {
+  constructor(name, grade) {
+    super(name);
+    this.grade = grade;
+  }
+
+  introduce() {
+    console.log(`Bonjour, je suis ${this.name} et je suis en ${this.grade}.`);
+  }
+}
+
+class Teacher extends Person {
+  constructor(name, subject) {
+    super(name);
+    this.subject = subject;
+  }
+
+  introduce() {
+    console.log(`Bonjour, je suis ${this.name} et j'enseigne les ${this.subject}.`);
+  }
+}
+
+const person1 = new Person("John");
+const person2 = new Student("Alice", 9);
+const person3 = new Teacher("Mr. Smith", "Mathematics");
+
+person1.introduce(); // Bonjour, je m'appelle John.
+person2.introduce(); // Bonjour, je suis Alice et je suis en 9.
+person3.introduce(); // Bonjour, je suis Mr. Smith et j'enseigne les Mathematics.
+```
+
+> 🧑‍💻 **Analyse du code :**
+> 1. On définit une classe `Person` avec une méthode `introduce` qui affiche un message de présentation.
+> 2. On définit deux classes `Student` et `Teacher` qui héritent de la classe `Person` et redéfinissent la méthode `introduce` pour afficher des messages spécifiques.
+> 3. On crée trois instances de ces classes : `person1`, `person2` et `person3`.
+> 4. On appelle la méthode `introduce` sur chaque instance pour afficher le message de présentation personnalisé.
+> 5. Chaque instance utilise la méthode `introduce` de sa propre classe pour afficher un message différent.
+
+Le polymorphisme permet de traiter des objets de différentes classes héritant d’une classe de base de manière uniforme en utilisant une interface commune. Ça simplifie le code, favorise la réutilisabilité et permet une gestion plus générique des objets dans une hiérarchie de classes.
+
+Pour en savoir plus, tu peux consulter les ressources suivantes :
+- [MDN Web Docs sur les constructeurs en JavaScript](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Classes/constructor)
+- [POO Formation sur GitHub](https://github.com/learn404/POO-Formation)
+
+---
