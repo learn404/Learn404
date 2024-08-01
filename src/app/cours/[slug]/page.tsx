@@ -11,6 +11,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
 import DetailsLesson from './detailsLesson';
+import ArticleLesson from './articleLesson';
 
 interface Params {
   params: {
@@ -46,19 +47,7 @@ export default async function LessonPage({
   if (!user?.isMember) {
     redirect("/dashboard/subscriptions");
   }
-  let post = await getLesson(params.slug);
-
-  const datePublished = post.metadata.publishedAt
-    ? post.metadata.publishedAt
-    : "";
-
-  const dateModified = post.metadata.publishedAt
-    ? post.metadata.publishedAt
-    : "";
-
-  const links = post.metadata.link ? post.metadata.link : "";
-  const repo = post.metadata.repo ? post.metadata.repo : "";
-
+  
   const lesson = await prisma.lessons.findFirst({
     where: {
       slug: params.slug,
@@ -71,6 +60,9 @@ export default async function LessonPage({
       sort_number: true,
       duration: true,
       description: true,
+      contentLesson: true,
+      links: true,
+      repository_url: true,
     },
   });
   const statusLesson = await prisma.lessonProgress.findFirst({
@@ -177,8 +169,8 @@ export default async function LessonPage({
           )}
         </section>
 
-        <section className="mx-auto mt-6 flex pb-16 sm:mt-12 max-w-lg md:max-w-prose lg:mt-12 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-3.5 lg:px-4 ">
-          <div id="lesson" className="min-w-0 lg:col-span-2 lg:px-2 lg:text-lg">
+        <section className="mx-auto mt-6 flex pb-16 sm:mt-12 w-full px-6 lg:mt-12 lg:grid lg:grid-cols-3 lg:gap-3.5 lg:px-24 ">
+          <div id="lesson" className="w-full lg:col-span-2 lg:px-2 lg:text-lg">
             <script
               type="application/ld+json"
               suppressHydrationWarning
@@ -186,14 +178,14 @@ export default async function LessonPage({
                 __html: JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "Cours",
-                  headline: post.metadata.title,
+                  /* headline: post.metadata.title,
                   datePublished: datePublished,
                   dateModified: dateModified,
                   description: post.metadata.summary,
                   image: post.metadata.image
                     ? `learn404.com${post.metadata.image}`
                     : `learn404.com/og?title=${post.metadata.title}`,
-                  url: `learn404.com/cours/${post.slug}`,
+                  url: `learn404.com/cours/${post.slug}`, */
                   author: {
                     "@type": "Person",
                     name: "Nicolas Becharat",
@@ -204,20 +196,19 @@ export default async function LessonPage({
             />
             <div className="border-y border-white/5 bg-indigo-800 px-4 py-8 mt-10  rounded-lg sm:border sm:p-4 lg:hidden">
               <div className="flex flex-wrap justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
-                <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={repo} link={links} admin={user.admin} playbackId={lesson.playbackId} />
+                 <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={lesson.repository_url} link={lesson.links} admin={user.admin} playbackId={lesson.playbackId} />
               </div>
             </div>
 
-            <article
-              className="min-w-0 lg:col-span-2 lg:px-2 lg:text-lg z-50 py-4 px-5 prose prose-lg prose-invert m-auto prose-pre:border prose-pre:border-white/10 prose-pre:bg-[#ffffff0a] prose-pre:text-white"
-              dangerouslySetInnerHTML={{ __html: post.source }}
-            ></article>
+            <ArticleLesson lesson={lesson.contentLesson} />
+
+            
           </div>
 
           <div className="ml-auto hidden px-2 w-full lg:block h-full flex-shrink-0">
             <div className="sticky top-0 w-full pt-2">
               <div className="pt-10 lg:sticky lg:top-0 lg:pt-4">
-                <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={repo} link={links} admin={user.admin} playbackId={lesson.playbackId} />
+                 <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={lesson.repository_url} link={lesson.links} admin={user.admin} playbackId={lesson.playbackId} /> 
               </div>
             </div>
           </div>

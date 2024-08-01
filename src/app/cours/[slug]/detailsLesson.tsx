@@ -29,23 +29,14 @@ export default function DetailsLesson({
   completed: boolean;
   admin: boolean;
   playbackId: string | null;
-  repo:
-    | [
-        {
-          url: string;
-          label: string;
-        }
-      ]
-    | [];
-  link:
-    | [
-        {
-          url: string;
-          label: string;
-        }
-      ]
-    | [];
+  repo: string | null;
+  link: string | null;
 }) {
+
+  const links = link ? JSON.parse(link) : [];
+  
+  console.log(links, 'links');
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
@@ -59,26 +50,26 @@ export default function DetailsLesson({
         {repo && repo.length > 0 && (
           <div>
             <ul>
-              {repo.map((repo) => (
+              
                 <li
-                  key={repo.url}
+                  key={repo}
                   className="hover:bg-torea-50/10 transition-colors p-2 rounded-md cursor-pointer duration-300 "
                 >
                   <div className="flex items-center gap-2 mt-2">
                     <Github className="w-4 h-4" />
-                    {repo.label}
+                    {repo}
                   </div>
                 </li>
-              ))}
+              
             </ul>
           </div>
         )}
-        {link && link.length > 0 && (
+        {links && links.length > 0 && (
           <div>
             <ul>
-              {link.map((link, index) => (
+              {links.map((link: any) => (
                 <li
-                  key={index}
+                  key={link.url}
                   className="hover:bg-torea-50/10 transition-colors p-2 rounded-md cursor-pointer duration-300 "
                 >
                   <Link href={link.url} className="underline">

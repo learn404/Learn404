@@ -124,7 +124,7 @@ export const SubscriptionEmail = ({
               </Row>
             </Section>
             <Text className="text-center text-gray-400 mb-45">
-              Learn404, 123 Rue de la Formation, Paris, France
+              Learn404, Paris, France
             </Text>
           </Container>
         </Body>

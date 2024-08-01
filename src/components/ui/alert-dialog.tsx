@@ -79,7 +79,7 @@ const AlertDialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Title
     ref={ref}
-    className={cn("text-lg font-semibold text-gray-50", className)}
+    className={cn("text-lg font-semibold text-gray-900", className)}
     {...props}
   />
 ))
@@ -117,7 +117,7 @@ const AlertDialogCancel = React.forwardRef<
   <AlertDialogPrimitive.Cancel
     ref={ref}
     className={cn(
-      buttonVariants({ variant: "outline" }),
+      buttonVariants({ variant: "cancel" }),
       "mt-2 sm:mt-0",
       className
     )}

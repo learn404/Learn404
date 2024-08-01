@@ -6,7 +6,8 @@ import Mux from "@mux/mux-node";
 import { redirect } from "next/navigation";
 import { Lessons_level } from ".prisma/client";
 
-export async function addLesson(nameLesson: string, slugLesson: string, category: string, descriptionLesson: string, videoLesson: string, repositoryLesson: string, draft: boolean, level: string) {
+export async function addLesson(nameLesson: string, slugLesson: string, contentLesson: string, category: string, descriptionLesson: string, videoLesson: string, repositoryLesson: string, draft: boolean, level: string, links: { label: string; url: string; }[]) {
+
   const last_sort_number = await getLastSortNumber();
 
   const lessonCheckExist = await prisma.lessons.findFirst({
@@ -66,6 +67,14 @@ export async function addLesson(nameLesson: string, slugLesson: string, category
     duration = inputInfo.duration;
   }
 
+  if (links && links[0].url !== "" && links[0].label !== "") {
+    links = [...links];
+  }
+  else {
+    links = [];
+  }
+
+
   let durationVideo: string = "00:00:00";
   if (duration) {
     const hours = Math.floor(duration / 3600).toString().padStart(2, "0");
@@ -84,7 +93,9 @@ export async function addLesson(nameLesson: string, slugLesson: string, category
       repository_url: repositoryLesson ?? "",
       draft: draft ?? false,
       sort_number: sort_number,
+      contentLesson: contentLesson ?? "",
       videoId: videoId,
+      links: links ? JSON.stringify(links) : "",
       duration: durationVideo as string,
       level: level as Lessons_level,
     },

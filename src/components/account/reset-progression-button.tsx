@@ -40,7 +40,7 @@ export default function ResetProgressionButton({ user }: ResetProgressionButtonP
     <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <AlertDialogTrigger asChild>
         <Button className="mt-5">
-          <RefreshCcw className="w-5 h-5" /> Reset ma progression
+          <RefreshCcw className="w-5 h-5" /> Réinitialiser ma progression
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -52,8 +52,8 @@ export default function ResetProgressionButton({ user }: ResetProgressionButtonP
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleResetProgression}>Reset</AlertDialogAction>
+          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogAction onClick={handleResetProgression}>Réinitialiser</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

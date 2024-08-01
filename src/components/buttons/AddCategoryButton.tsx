@@ -18,7 +18,7 @@ import { Layers3 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function AddCategoryButton({title}: {title: string}) {
+export default function AddCategoryButton({title}: {title?: string }) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -62,7 +62,7 @@ export default function AddCategoryButton({title}: {title: string}) {
             {title}
           </Button>
         </DialogTrigger>
-        <DialogContent className="border-2 border-white/10 bg-bg-primary">
+        <DialogContent className="border-2 border-white/10 bg-bg-primary max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Ajouter une catégorie</DialogTitle>
           </DialogHeader>
