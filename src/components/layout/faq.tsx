@@ -2,7 +2,7 @@ import { CreditCard, FlaskConical, HeartHandshake, KeyRound, MailQuestion, Ticke
 
 const FaqSection = () => {
   return ( 
-    <div id="faq" className="px-6 pb-[6.25rem]">
+    <div id="faq" className="px-6 pb-[12.5rem]">
       <div className="mx-auto max-w-[1436px] flex flex-col items-center">
         <h2 className="text-center text-gray-50 text-3xl sm:text-4xl font-semibold text-balance max-w-xl">
           Vous pourriez vous poser une de ces questions
