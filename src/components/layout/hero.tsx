@@ -1,72 +1,33 @@
-import { cn } from "@/lib/utils";
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import AnimatedShinyText from "../magicui/animated-shiny-text";
-import RetroGrid from "../magicui/retro-grid";
-import SeparateAway from "../magicui/separate-away";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import PrimaryButton from "../buttons/PrimaryButton";
 
 export default function HeroSection() {
   return (
-    <div className="mx-auto pt-16 px-4 max-w-[60rem] flex items-center justify-center flex-col gap-20 text-center">
-      <div className="flex flex-col items-center justify-center gap-7 mx-auto">
-        <div className="z-10 flex relative items-center justify-center">
-          <div
-            className={cn(
-              "group rounded-full border text-base text-white bg-indigo-800 transition-all ease-in hover:cursor-pointer border-white/5 hover:bg-indigo-900 ",
-            )}
-          >
-            <AnimatedShinyText className="inline-flex items-center text-white/70 justify-center px-4 py-1 transition ease-out hover:duration-300 hover:text-white">
-              <span>✨ La bibliothèque du développeur</span>
-              <ArrowRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
-            </AnimatedShinyText>
-          </div>
-        </div>
-
-        <RetroGrid />
-        <div className="flex flex-col items-center justify-center gap-6">
-          <SeparateAway
-            upper_text="Deviens"
-            lower_text="développeur"
-            duration={1.5}
-            hidden_opacity={0}
-            visible_opacity={1}
-            className="font-display text-center text-4xl font-bold tracking-[-0.02em] text-white md:text-7xl md:leading-[5rem] titleStyle "
-          />
-          <span className="text-torea-50">
-            Améliore tes compétences en pratiquant !
-          </span>
-        </div>
-        <div className="flex items-center justify-center gap-4">
-          <Link href="/join">
-            <Button variant="default">
-              <span className="md:block font-medium">Rejoindre l'aventure</span>
-            </Button>
-          </Link>
-          <Link href="/">
-            <Button variant="secondary">
-              <span className="md:block font-medium">
-                Besoin d'en savoir plus ?
-            </span>
-          </Button>
-          </Link>
-        </div>
-      </div>
-
-      <div>
-        <div className="relative w-screen flex justify-center">
+    <div className="px-6 pb-8 pt-10 sm:pb-16 lg:flex lg:py-32">
+      <div className="mx-auto max-w-[1436px] w-full lg:flex">
+        <div className="mx-auto max-w-3xl md:flex-shrink-0 mt-16">
           <div>
-            <Image
-              src="/img/hero.png"
-              alt="hero image"
-              width="0"
-              height="0"
-              sizes="75vw"
-              className="w-full h-auto rounded-2xl"
-            />
+            <h1 className="text-4xl sm:text-6xl font-bold text-gray-50" >
+              Apprends le développement web
+            </h1>
+            <p className="mt-4 text-base sm:text-xl font-medium text-gray-300">
+              Rejoins le programme Learn404 et commence l'aventure pour devenir développeur web.  
+            </p>
           </div>
-          <div className="pointer-events-none absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[#02030C] "></div>
+          <div className="mt-8">
+            <PrimaryButton redirectTo="/join" type="button">
+              <Image src="/img/Logo_icon_blanc.svg" alt="logo icon" width={20} height={20} sizes="10vw" />
+              <span className="font-medium">Rejoindre Learn404</span>
+            </PrimaryButton>
+          </div>
+        </div>
+        <div className="relative mx-auto mt-16 flex max-w-3xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none">
+          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none rounded-xl border border-gray-800 bg-gray-950">
+            <Image src="/img/Hero_img.webp" alt="App screenshot" width="882" height="1200" className="w-[76rem] rounded-md shadow-2xl border:1px solid rgba(255,255,255,.1)" />
+          </div>
+          <div className="hidden lg:block absolute -bottom-16 -left-52 w-44">
+            <Image src="/img/arrow.svg" alt="wave" width={0} height={0} sizes="20vw" className="w-full h-auto" />
+          </div>
         </div>
       </div>
     </div>
