@@ -87,7 +87,7 @@ export default function Pricing() {
   ];
 
   return (
-    <section className="mx-auto max-w-5xl pb-[6.25rem]">
+    <section className="mx-auto max-w-5xl pb-[12.5rem] px-6">
       <div className="flex flex-col gap-y-2">
         <div className="mx-auto max-w-5xl text-center">
           <h2 className="text-gray-50 text-3xl sm:text-4xl font-semibold">
@@ -99,7 +99,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="mx-auto grid h-full w-full max-w-4xl place-content-center items-center gap-6 px-6 my-6 lg:items-start">
+        <div className="mx-auto grid h-full w-full max-w-4xl place-content-center items-center gap-6 my-6 lg:items-start">
           {pricingOptions.map((option, index) => (
             <PricingCard key={index} option={option} />
           ))}

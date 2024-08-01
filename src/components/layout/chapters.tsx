@@ -178,8 +178,7 @@ const ChaptersSection = () => {
                 Javascript
               </h1>
               <p className="mt-2 text-gray-400 max-w-2xl ">
-                Découvre le langage de programmation qui rendra ton site web dynamique en ajoutant de la logique et des.
-
+                Découvre le langage de programmation qui rendra ton site web dynamique en ajoutant de la logique et des interactions.
               </p>
               <div className='flex items-center flex-wrap gap-y-2.5 gap-x-16 mt-8'>
                 <div className="space-y-2.5">
