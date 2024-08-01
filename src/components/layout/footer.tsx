@@ -1,6 +1,7 @@
+import { DiscordLogoIcon } from "@radix-ui/react-icons";
 import { ChevronRightIcon } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 type FooterLink = { id: number; title: string; url: string };
 
@@ -40,14 +41,8 @@ export default function Footer() {
             href="#"
             className="flex h-10 w-56 items-center justify-center rounded-full text-base font-semibold transition ease-out hover:ring-2  hover:ring-offset-2 bg-indigo-800 text-white hover:ring-indigo-900 hover:ring-offset-black lg:h-12 lg:text-base"
           >
-            <span className="tracking-tight">Parlons ensemble</span>
-            <ChevronRightIcon className="ml-2" />
-          </Link>
-          <Link
-            href="#"
-            className="flex h-10 w-56 items-center justify-center rounded-full border text-sm font-semibold  transition ease-out text-white hover:bg-neutral-700/30 lg:h-12 lg:text-base"
-          >
-            <span className="tracking-tight">Tu veux un avant goût ?</span>
+            <DiscordLogoIcon className="mr-2 text-2xl" />
+            <span className="tracking-tight">Rejoins le discord</span>
           </Link>
         </div>
       </div>

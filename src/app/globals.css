@@ -113,8 +113,8 @@ body {
   border: 1px solid #000;
 }
 
-.titleStyle {
-  background: linear-gradient(146deg, #eef2ff 20.35%, #312d82 128.73%);
+.textLinear {
+  background: var(--Linear-white, linear-gradient(146deg, #372FA3 20.35%, #EEF2FF 128.73%));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
