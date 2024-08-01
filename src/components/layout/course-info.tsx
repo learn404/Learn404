@@ -1,4 +1,40 @@
-const CoursesInfos = () => {
+import NumberTicker from "../magicui/number-ticker";
+import prisma from "@/lib/prisma";
+import { getLessonNumber, getLessonType } from "@/lib/utils";
+const convertDurationToSeconds = (duration: string) => {
+  const [hours, minutes, seconds] = duration.split(":").map(Number);
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+const convertSecondsToDuration = (seconds: number) => {
+  const hours = Math.floor(seconds / 3600);
+  if (hours === 0) {
+    return 1;
+  } else {
+    return `${hours}`;
+  }
+}
+
+const CoursesInfos = async () => {
+  const lessonNumber = await getLessonNumber();
+  const lessonType = await getLessonType();
+
+  const durationLessons = await prisma.lessons.findMany({
+    select: {
+      duration: true,
+    },
+  });
+
+  let durationTotalSeconds = 0;
+
+  durationLessons.forEach((lesson) => {
+    if (lesson.duration) {
+      durationTotalSeconds += convertDurationToSeconds(lesson.duration);
+    }
+  });
+
+  const durationTotal = convertSecondsToDuration(durationTotalSeconds);
+  const durationTotalNumber = Number(durationTotal);
   return ( 
     <div className="relative px-6 py-[6.25rem] bg-torea-950/30">
       <div className="mx-auto flex flex-col sm:items-center justify-center gap-14">
@@ -18,7 +54,7 @@ const CoursesInfos = () => {
         <div className="flex items-start flex-wrap gap-y-4 max-w-4xl w-full">
           <div className="flex flex-col items-center justify-between flex-1">
             <span className="font-extrabold text-6xl sm:text-7xl lg:text-8xl textLinear">
-              3
+              <NumberTicker value={lessonNumber} />
             </span>
             <span className="mt-2 text-center text-lg sm:text-2xl lg:text-3xl font-medium text-gray-300">
               cours
@@ -26,7 +62,7 @@ const CoursesInfos = () => {
           </div>
           <div className="flex flex-col items-center justify-center flex-1 mx-3">
             <span className="font-extrabold text-6xl sm:text-7xl lg:text-8xl textLinear">
-              4
+              <NumberTicker value={lessonType} />
             </span>
             <span className="mt-2 text-center text-lg sm:text-2xl lg:text-3xl font-medium text-gray-300">
               catégories
@@ -34,7 +70,7 @@ const CoursesInfos = () => {
           </div>
           <div className="flex flex-col items-center justify-center flex-1">
             <span className="font-extrabold text-6xl sm:text-7xl lg:text-8xl textLinear">
-              10
+              <NumberTicker value={durationTotalNumber} />
             </span>
             <span className="mt-2 text-center text-lg sm:text-2xl lg:text-3xl font-medium text-gray-300">
               heures de cours
