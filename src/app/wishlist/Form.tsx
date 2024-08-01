@@ -6,14 +6,12 @@ import { Label } from "@/components/ui/label";
 import  {AnimatedSubscribeButton} from "@/components/magicui/animated-subscribe-button";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { subscribe } from "diagnostics_channel";
+
 
 export default function FormWishlist (){
 
     const [isLoading, setIsLoading] = useState(false);
     const [subscribeStatus, setSubscribeStatus] = useState(false);
-
-    console.log(subscribeStatus);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -30,7 +28,6 @@ export default function FormWishlist (){
                 return;
             }
 
-            console.log(subscribeStatus, 'test1');
 
             if (!email.includes("@") || !email.includes(".")) {
                 toast.error("Veuillez entrer une adresse email valide");
@@ -39,7 +36,6 @@ export default function FormWishlist (){
                 setIsLoading(false);
                 return;
             }
-            console.log(subscribeStatus, 'test2');
 
 
             if (email.length < 5) {
@@ -50,10 +46,6 @@ export default function FormWishlist (){
                 setIsLoading(false);
                 return;
             }
-
-            console.log(subscribeStatus, 'test3');
-
-
 
           const response = await fetch('/api/auth/wishlist', {
             method: 'POST',
