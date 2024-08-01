@@ -24,7 +24,7 @@ export default async function Header() {
   }
 
   return (
-    <header className="px-6 pt-6">
+    <header className="px-6 lg:px-20 pt-6">
       <nav className="mx-auto flex items-center gap-2 max-w-[1436px]">
         <Link href="/" className="flex-1 flex items-center gap-2">
           <Image src="/img/logo_text.svg" alt="logo" width={0} height={0} sizes="20vw" className="w-32 h-auto" />

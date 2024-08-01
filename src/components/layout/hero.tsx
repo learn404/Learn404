@@ -3,7 +3,7 @@ import PrimaryButton from "../buttons/PrimaryButton";
 
 export default function HeroSection() {
   return (
-    <div className="px-6 pb-8 pt-10 sm:pb-16 lg:flex lg:py-32">
+    <div className="px-6 pb-8 pt-10 sm:pb-16 lg:flex lg:px-20 lg:py-32">
       <div className="mx-auto max-w-[1436px] w-full lg:flex">
         <div className="mx-auto max-w-3xl md:flex-shrink-0 mt-16">
           <div>

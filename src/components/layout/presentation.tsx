@@ -1,6 +1,6 @@
 const PresentationSection = () => {
   return ( 
-    <div id="presentation" className="px-6 max-md:py-16 pb-8 sm:pb-16">
+    <div id="presentation" className="px-6 lg:px-20 max-md:py-16 pb-8 sm:pb-16">
       <div className="flex flex-col items-center justify-center mx-auto">
         <h2 className="text-3xl sm:text-4xl font-semibold text-gray-50">
           Présentation du projet
