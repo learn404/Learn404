@@ -1,6 +1,6 @@
-import NumberTicker from "../magicui/number-ticker";
 import prisma from "@/lib/prisma";
 import { getLessonNumber, getLessonType } from "@/lib/utils";
+import NumberTicker from "../magicui/number-ticker";
 const convertDurationToSeconds = (duration: string) => {
   const [hours, minutes, seconds] = duration.split(":").map(Number);
   return hours * 3600 + minutes * 60 + seconds;
@@ -47,7 +47,7 @@ const CoursesInfos = async () => {
             tout le long de notre apprentissage du développement web.
           </p>
           <p className="mt-5">
-            Vous apprendrez donc tout ce que l'on sait, en partant de la prise en main d’un environnement de travail jusqu’à nos 
+            Vous apprendrez donc tout ce que l'on sait, en partant de la prise en main d'un environnement de travail jusqu'à nos 
           <span className="text-gray-50 font-semibold "> connaissances actuelles</span>. La plateforme sera mise à jour tous les mois pour y ajouter de nouveaux cours. 
           </p>
         </div>
@@ -69,9 +69,9 @@ const CoursesInfos = async () => {
             </span>
           </div>
           <div className="flex flex-col items-center justify-center flex-1">
-            <span className="font-extrabold text-6xl sm:text-7xl lg:text-8xl textLinear">
+            <p className="font-extrabold text-6xl sm:text-7xl lg:text-8xl textLinear">
               <NumberTicker value={durationTotalNumber} />
-            </span>
+            </p>
             <span className="mt-2 text-center text-lg sm:text-2xl lg:text-3xl font-medium text-gray-300">
               heures de cours
             </span>
