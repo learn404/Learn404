@@ -50,14 +50,11 @@ export async function POST(req: NextRequest) {
 
       // Set the promotion code
       paymentInformations.code = code;
-    }
-    
-    console.log("Payment informations: ", paymentInformations);
-    
+    }    
     
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: paymentInformations.finalPrice * 100,
+      amount: Math.round(paymentInformations.finalPrice * 100),
       currency: paymentInformations.currency,
       receipt_email: email,
       // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional
