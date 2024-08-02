@@ -45,7 +45,7 @@ export default function NumberTicker({
   return (
     <span
       className={cn(
-        "inline-block tabular-nums text-7xl font-black leading-none tracking-tighter text-indigo-800",
+        "inline-block tabular-nums font-black leading-none text-indigo-800",
         className,
       )}
       ref={ref}
