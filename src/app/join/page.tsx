@@ -44,8 +44,10 @@ export default async function Join() {
 
         <div className="flex flex-col items-start max-w-80 lg:max-w-md">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium">
-            <span className="text-torea-300">Sign in</span> or{" "}
-            <span className="text-torea-300">Sign up</span> to continue
+            <span className="text-torea-300">
+              Connectez-vous
+              </span> ou{" "}
+            <span className="text-torea-300">Créez un compte</span> pour continuer
           </h2>
           <div className="flex items-center justify-center gap-3 mt-5 lg:mt-8">
             <LoginGoogleButton />
