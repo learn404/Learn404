@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,6 +34,7 @@ export default function AddCategoryButton({title}: {title?: string }) {
 
     const categoryName = formData.get("category-name")?.toString();
     const level = formData.get("level")?.toString();
+    const description = formData.get("description")?.toString();
 
     const createCategory = () => {
       return fetch("/api/lessons/create-category", {
@@ -40,6 +42,7 @@ export default function AddCategoryButton({title}: {title?: string }) {
         body: JSON.stringify({
           categoryName: categoryName,
           level: level,
+          description: description,
         }),
       });
     }
@@ -84,6 +87,7 @@ export default function AddCategoryButton({title}: {title?: string }) {
                   <SelectItem value="ADVANCED">Avancé</SelectItem>
                 </SelectContent>
               </Select>
+              <Textarea name="description" placeholder="Description de la catégorie" />
             </DialogDescription>
             <DialogFooter className="flex justify-end">
               <Button

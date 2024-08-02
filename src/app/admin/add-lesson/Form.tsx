@@ -26,7 +26,6 @@ import AddCategoryButton from "@/components/buttons/AddCategoryButton";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -57,10 +56,10 @@ const formSchema = z.object({
 interface AddLessonFormProps {
   isAdmin: boolean;
   isAvatar: boolean;
-  user: currentUserType;
+  categories: { id: string; name: string }[];
 }
 
-export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
+export default function AddLessonForm({ categories }: AddLessonFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -82,14 +81,10 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
     name: "links",
   });
 
-  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
-    []
-  );
   const [isLoading, setIsLoading] = useState(false);
   const [nameLesson, setNameLesson] = useState("");
   const [slugLesson, setSlugLesson] = useState("");
   const [content, setContent] = useState("");
-  const router = useRouter();
 
   const difficulties = [
     { id: "1", name: "Débutant" },
@@ -101,19 +96,6 @@ export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
     { id: "2", name: "En ligne", value: false },
   ];
 
-  useEffect(() => {
-    async function fetchCategories() {
-      const categories = await fetch("/api/lessons/get-categories", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await categories.json();
-      setCategories(data);
-    }
-    fetchCategories();
-  }, []);
 
   useEffect(() => {
     setSlugLesson(
