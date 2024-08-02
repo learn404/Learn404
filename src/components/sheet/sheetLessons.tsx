@@ -146,9 +146,7 @@ export default async function SheetLessons({ userId }: userIdProps) {
                                   )}
                                 </div>
                                 <div className="flex items-start gap-2 text-left">
-                                  <span className="text-torea-50 group-hover:text-torea-50/80 transition-all duration-300">
-                                    {lesson.formatted_sort_number}.{" "}
-                                  </span>
+                                  
                                   {lesson.title}
                                 </div>
                               </div>

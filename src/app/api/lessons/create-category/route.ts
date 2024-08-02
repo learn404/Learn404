@@ -4,7 +4,7 @@ import { currentUser } from "@/lib/current-user";
 import prisma from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
-  const { categoryName } = await request.json();
+  const { categoryName, level, description } = await request.json();
 
   const user = await currentUser();
 
@@ -36,7 +36,9 @@ export async function POST(request: NextRequest) {
   const newCategory = await prisma.categories.create({
     data: {
       name: categoryNameLow,
-    },
+      level: level,
+      description: description,
+    }, 
   });
 
   return NextResponse.json(

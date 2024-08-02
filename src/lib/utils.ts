@@ -117,6 +117,8 @@ export async function getCategoriesWithLessons() {
     },
   });
 
+
+
   const categories = res.filter((category) => category.Lessons.length > 0);
   const lessons = await prisma.lessons.findMany({
     orderBy: {
@@ -125,6 +127,15 @@ export async function getCategoriesWithLessons() {
   });
 
   return { categories, lessons };
+}
+
+export async function getCategories() {
+  const res = await prisma.categories.findMany({
+    orderBy: {
+      sort_number: "asc",
+    },
+  });
+  return res;
 }
 
 export async function getChangelogData() {

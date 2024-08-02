@@ -90,6 +90,8 @@ model Categories {
   name        String    @unique
   createdAt   DateTime  @default(now())
   sort_number Int?      @default(0)
+  level          Lessons_level?   @default(BEGINNER)
+  description    String?
   Lessons     Lessons[]
 }
 

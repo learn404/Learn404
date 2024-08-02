@@ -10,6 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -31,12 +33,16 @@ export default function AddCategoryButton({title}: {title?: string }) {
     const formData = new FormData(e.target as HTMLFormElement);
 
     const categoryName = formData.get("category-name")?.toString();
+    const level = formData.get("level")?.toString();
+    const description = formData.get("description")?.toString();
 
     const createCategory = () => {
       return fetch("/api/lessons/create-category", {
         method: "POST",
         body: JSON.stringify({
           categoryName: categoryName,
+          level: level,
+          description: description,
         }),
       });
     }
@@ -69,7 +75,19 @@ export default function AddCategoryButton({title}: {title?: string }) {
           <form onSubmit={handleSubmitCategory}>
             <DialogDescription className="flex flex-col gap-4">
               <Label htmlFor="category-name">Nom de la catégorie</Label>
-              <Input id="category-name" name="category-name" />
+              
+              <Input id="category-name" name="category-name" placeholder="Nom de la catégorie" />
+              <Select name="level" defaultValue="BEGINNER">
+                <SelectTrigger>
+                  <SelectValue placeholder="Sélectionner un niveau" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="BEGINNER">Débutant</SelectItem>
+                  <SelectItem value="INTERMEDIATE">Intermédiaire</SelectItem>
+                  <SelectItem value="ADVANCED">Avancé</SelectItem>
+                </SelectContent>
+              </Select>
+              <Textarea name="description" placeholder="Description de la catégorie" />
             </DialogDescription>
             <DialogFooter className="flex justify-end">
               <Button
