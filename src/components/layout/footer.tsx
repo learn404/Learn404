@@ -23,7 +23,7 @@ const footerLinks: FooterLink[][] = [
 ];
 export default function Footer() {
   return (
-    <footer className="mx-auto max-w-screen-2xl px-7 md:px-10">
+    <footer className="mx-auto max-w-screen-2xl px-6 lg:px-20">
       <div className="border-b border-dashed border-slate-400/20 py-10">
         <div className="flex flex-col items-center justify-center gap-y-3 lg:flex-row lg:items-center lg:justify-between">
           <h3 className="max-w-sm text-balance text-center text-2xl font-bold text-white md:text-start md:text-4xl">
@@ -34,14 +34,8 @@ export default function Footer() {
               href="#"
               className="flex h-10 w-56 items-center justify-center rounded-full text-base font-semibold transition ease-out hover:ring-2  hover:ring-offset-2 bg-indigo-800 text-white hover:ring-indigo-900 hover:ring-offset-black lg:h-12 lg:text-base"
             >
-              <span className="tracking-tight">Parlons ensemble</span>
+              <span className="tracking-tight">Rejoins le discord</span>
               <ChevronRightIcon className="ml-2" />
-            </Link>
-            <Link
-              href="#"
-              className="flex h-10 w-56 items-center justify-center rounded-full border text-sm font-semibold  transition ease-out text-white hover:bg-neutral-700/30 lg:h-12 lg:text-base"
-            >
-              <span className="tracking-tight">Tu veux un avant goût ?</span>
             </Link>
           </div>
         </div>
