@@ -243,7 +243,7 @@ export default async function LessonPage({
           ) : (
             <div className="flex flex-col items-start mt-5">
               <p className="text-white/40 text-sm">Précédent cours:</p>
-              <p className="text-sm text-left font-bold lg:mt-3">
+              <p className="lg:text-2xl text-left font-bold lg:mt-3">
                 {previousLesson?.title}
               </p>
             </div>
