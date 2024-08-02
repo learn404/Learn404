@@ -20,10 +20,10 @@ export async function POST(req: NextRequest) {
   try {
 
     let paymentInformations: PaymentInformations = {
-      basePrice: 5.99,
-      basePriceFormated: "EUR 5.99",
-      finalPrice: 5.99,
-      finalPriceFormated: "EUR 5.99",
+      basePrice: 19.99,
+      basePriceFormated: "EUR 19.99",
+      finalPrice: 19.99,
+      finalPriceFormated: "EUR 19.99",
       promo: 0,
       currency: "eur",
     };
@@ -51,6 +51,8 @@ export async function POST(req: NextRequest) {
       // Set the promotion code
       paymentInformations.code = code;
     }
+    
+    console.log("Payment informations: ", paymentInformations);
     
     
     // Create a PaymentIntent with the order amount and currency

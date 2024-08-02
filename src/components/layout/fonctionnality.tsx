@@ -1,3 +1,4 @@
+import { FeatureCard8 } from "../magicui/animated-card-8";
 
 
 export default async function FonctionnalitySection() {
@@ -44,8 +45,8 @@ export default async function FonctionnalitySection() {
             propice à l'évolution en rejoignant le discord privé.
           </p>
         </div>
-        <div className="w-full max-w-xl aspect-video bg-gray-950 border border-gray-800 mt-6 rounded-xl">
-          <div className="w-full h-full" />
+        <div className="w-full max-w-xl aspect-video mt-6">
+          <FeatureCard8  />
         </div>
       </div>
     </section>

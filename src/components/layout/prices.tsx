@@ -70,7 +70,7 @@ export default function Pricing() {
   const pricingOptions: PricingOption[] = [
     {
       name: "Offre",
-      price: "5.99€",
+      price: "19.99€",
 
       description:
         "Tu veux devenir un développeur web professionnel ? C'est le bon endroit pour commencer.",

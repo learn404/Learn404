@@ -9,7 +9,7 @@ const ProductCard = () => {
           <Image src="/img/logo.png" width={48} height={48} sizes="100vw" alt="Subscription" />
           <div>
             <h3 className="text-gray-300 text-sm md:text-base">Formation Learn404</h3>
-            <p className="text-gray-50 font-bold md:text-lg lg:text-xl">20€ à vie</p>
+            <p className="text-gray-50 font-bold md:text-lg lg:text-xl">19.99€ à vie</p>
           </div>
         </div>
         <ul className="flex flex-col space-y-4 text-sm md:text-base">

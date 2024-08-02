@@ -30,8 +30,8 @@ export default async function Header() {
           <Image src="/img/logo_text.svg" alt="logo" width={0} height={0} sizes="20vw" className="w-32 h-auto" />
         </Link>
         <div className="text-gray-400 flex items-center font-medium max-md:hidden">
-          <Link href="/#fonctionnality" className="hover:text-gray-200 transition-colors px-5 py-4">Features</Link>
-          <Link href="/#prices" className="hover:text-gray-200 transition-colors px-5 py-4">Pricing</Link>
+          <Link href="/#fonctionnality" className="hover:text-gray-200 transition-colors px-5 py-4">Fonctionnalités</Link>
+          <Link href="/#prices" className="hover:text-gray-200 transition-colors px-5 py-4">Prix</Link>
           <Link href="/#faq" className="hover:text-gray-200 transition-colors px-5 py-4">FAQ</Link>
         </div>
         <div className="flex-1 flex items-center gap-1 justify-end">
