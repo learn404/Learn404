@@ -1,10 +1,9 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { LayoutDashboard, LogIn, Play, Shield } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { LogoutButton } from "../buttons/auth/AuthButton";
+import PrimaryButton from "../buttons/PrimaryButton";
+import DropdownLanding from "../dropdown-landing";
 
 export default async function Header() {
   const session = await auth();
@@ -25,74 +24,25 @@ export default async function Header() {
   }
 
   return (
-    <header className="p-4 m-auto w-full">
-      <nav className="rounded-lg bg-black bg-opacity-20 backdrop-blur-xl flex items-center justify-between px-8 py-4 relative">
-        <div className="flex items-center justify-start gap-10 lg:gap-16">
-          <Link href="/">
-            <div className="flex items-center gap-5">
-              <Image src="/img/logo.png" alt="logo" width={30} height={30} />
-              <h3 className="hidden md:block text-xl font-semibold text-torea-50">
-                Learn404
-              </h3>
-            </div>
-          </Link>
-          <div className="hidden lg:flex items-center justify-center gap-9">
-            <Link
-              href="/#fonctionnality"
-              className="text-gray-400 hover:text-torea-50 duration-200"
-            >
-              Fonctionnalités
-            </Link>
-            <Link
-              href="/#prices"
-              className="text-gray-400 hover:text-torea-50 duration-200"
-            >
-              Prix
-            </Link>
-            <Link
-              href="/"
-              className="text-gray-400 hover:text-torea-50 duration-200"
-            >
-              A propos
-            </Link>
-          </div>
+    <header className="px-6 lg:px-20 pt-6">
+      <nav className="mx-auto flex items-center gap-2 max-w-[1436px]">
+        <Link href="/" className="flex-1 flex items-center gap-2">
+          <Image src="/img/logo_text.svg" alt="logo" width={0} height={0} sizes="20vw" className="w-32 h-auto" />
+        </Link>
+        <div className="text-gray-400 flex items-center font-medium max-md:hidden">
+          <Link href="/#fonctionnality" className="hover:text-gray-200 transition-colors px-5 py-4">Features</Link>
+          <Link href="/#prices" className="hover:text-gray-200 transition-colors px-5 py-4">Pricing</Link>
+          <Link href="/#faq" className="hover:text-gray-200 transition-colors px-5 py-4">FAQ</Link>
         </div>
-
-        <div className="flex items-center gap-2">
+        <div className="flex-1 flex items-center gap-1 justify-end">
           {session ? (
-            <>
-              <Link href="/dashboard">
-                <Button variant="default">
-                  <LayoutDashboard size={20} />
-                <span className="font-medium text-sm">Dashboard</span>
-              </Button>
-              </Link>
-              {isAdmin && (
-                <Link href="/admin">
-                <Button variant="default" type="button">
-                  <span className="hidden md:block font-medium">Admin</span>
-                  <Shield size={20} className="block md:hidden" />
-                </Button>
-                </Link>
-              )}
-              <LogoutButton />
-            </>
+            <DropdownLanding session={session} isAdmin={isAdmin} />
           ) : (
             <>
-              <Link href="/join">
-                <Button variant="default">
-                  <Play size={20} />
-                  <span className="md:block font-medium">Acheter</span>
-                </Button>
-              </Link>
-              <Link href="/join">
-                <Button variant="secondary">
-                  <LogIn size={20} />
-                <span className="hidden md:block font-medium">
-                  Se connecter
-                </span>
-              </Button>
-              </Link>
+              <PrimaryButton redirectTo="/join" type="button">
+                <Image src="/img/Logo_icon_blanc.svg" alt="logo icon" width={20} height={20} sizes="10vw" />
+                <span className="md:block font-medium">Rejoindre Learn404</span>
+              </PrimaryButton>
             </>
           )}
         </div>
