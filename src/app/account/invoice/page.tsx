@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { currentUser } from "@/lib/current-user";
 import { ReceiptText } from "lucide-react";
-import AccountLayout from "../account-layout";
 import { redirect } from "next/navigation";
+import AccountLayout from "../account-layout";
 
 export default async function Invoice() {
     const user = await currentUser();
 
     if (!user?.isMember) {
-        redirect("/dashboard/subscriptions");
+        redirect("/account/settings");
     }
 
     return (

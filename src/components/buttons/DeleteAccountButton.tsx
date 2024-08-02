@@ -14,8 +14,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface PropsDeleteAccountButton {
   user?: {
@@ -25,11 +25,13 @@ interface PropsDeleteAccountButton {
     id: string | null;
     name: string | null;
   };
+  className?: string;
 }
 
 export function DeleteAccountButton({
   user,
   userSearch,
+  className,
 }: PropsDeleteAccountButton) {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
@@ -66,7 +68,12 @@ export function DeleteAccountButton({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">Supprimer le compte</Button>
+        <Button 
+          variant="destructive"
+          className={className}
+        >
+          Supprimer le compte
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -77,10 +84,10 @@ export function DeleteAccountButton({
           </AlertDialogTitle>
           <AlertDialogDescription>
             {userSearch
-              ? `Cette action est irréversible. Cela supprimera le compte de ${userSearch?.name} et supprimera toutes les données de notre serveur.`
-              : "Cette action est irréversible. Cela supprimera votre compte et supprimera toutes vos données de notre serveur."}
+              ? `Cette action est irréversible. Cela supprimera le compte de ${userSearch?.name} et toutes ses données de notre serveur.`
+              : "Cette action est irréversible. Cela supprimera votre compte et toutes vos données de notre serveur."}
 
-            <div className="flex items-center space-x-2 mt-2">
+            <div className="flex items-center space-x-2 mt-4">
               <Checkbox id="terms" onCheckedChange={handleChecked} />
               <label
                 htmlFor="terms"

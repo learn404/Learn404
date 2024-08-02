@@ -11,7 +11,7 @@ const Details = async () => {
   const user = await currentUser();
 
   if (!user?.isMember) {
-    redirect("/dashboard/subscriptions");
+    redirect("/account/settings");
   }
 
   const accountData = await prisma.account.findFirst({

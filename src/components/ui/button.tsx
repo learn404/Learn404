@@ -18,7 +18,7 @@ const buttonVariants = cva(
           "border-white/10 border font-semibold text-white hover:bg-white/10 focus-visible:outline-indigo-500",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        cancel: "border border-gray-300 bg-transparent text-gray-800 hover:bg-gray-100 hover:text-gray-700 focus-visible:outline-indigo-500",
+        cancel: "border border-gray-900 bg-gray-900 text-gray-200 hover:bg-gray-800 hover:text-gray-100 focus-visible:outline-indigo-500",
       },
       size: {
         default: "h-10 px-4 py-2",

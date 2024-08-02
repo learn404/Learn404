@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Book,
   LayoutDashboard,
   Loader,
   Settings,
@@ -63,16 +62,17 @@ export default function SearchInput({
   return (
     <>
       <Button
-        variant={"outline"}
-        className="border-2 rounded-md p-2"
+        variant={"outline"} 
+        className="flex items-center border-2 text-gray-200 hover:bg-gray-800"
         onClick={() => setOpen(true)}
       >
-        <p className="text-sm text-muted-foreground">
-          {" "}
-          <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 cursor-pointer">
-            <span className="text-xs">⌘</span>K
-          </kbd>
-        </p>
+        <kbd 
+          className="pointer-events-none inline-flex h-3 w-3 select-none items-center justify-center gap-1
+          rounded font-mono font-medium text-gray-400
+          cursor-pointer text-[0.7rem]"
+        >
+          <span>⌘</span>K
+        </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command className="bg-bg-primary text-white">

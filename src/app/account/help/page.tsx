@@ -8,9 +8,9 @@ export default async function Help() {
   const user = await currentUser();
 
   if (!user?.isMember) {
-    redirect("/dashboard/subscriptions");
+    redirect("/account/settings");
   }
-
+  
   return (
     <AccountLayout title="Aide / Discord" user={user!}>
       <div>
