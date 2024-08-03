@@ -80,13 +80,13 @@ export function DeleteAccountButton({
         <AlertDialogHeader>
           <AlertDialogTitle>
             {userSearch
-              ? "Voulez-vous vraiment supprimer ce compte ?"
-              : "Voulez-vous vraiment supprimer votre compte ?"}
+              ? "Veux-tu vraiment supprimer ce compte ?"
+              : "Veux-tu vraiment supprimer ton compte ?"}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {userSearch
               ? `Cette action est irréversible. Cela supprimera le compte de ${userSearch?.name} et toutes ses données de notre serveur.`
-              : "Cette action est irréversible. Cela supprimera votre compte et toutes vos données de notre serveur."}
+              : "Cette action est irréversible. Cela supprimera ton compte et toutes tes données de notre serveur."}
 
             <div className="flex items-center space-x-2 mt-4">
               <Checkbox id="terms" onCheckedChange={handleChecked} />

@@ -19,7 +19,7 @@ export default async function Invoice() {
                 </h2>
                 <div className="text-gray-300 mt-5">
                     <p>
-                        Votre facture est disponible ci-dessous en français.
+                        Ta facture est disponible ci-dessous en français.
                     </p>
                 </div>
                 <Button className="mt-5">

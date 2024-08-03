@@ -40,7 +40,7 @@ export function TextareaForm() {
     if (response.error) {
       toast.error(response.error)
     } else {
-      toast.success("Votre feedback a bien été envoyé ! Merci pour votre retour.")
+      toast.success("Ton feedback a bien été envoyé ! Merci pour le retour :)")
       form.setValue("feedback", "")
     }
   }

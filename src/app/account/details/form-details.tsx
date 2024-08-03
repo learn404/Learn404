@@ -118,7 +118,7 @@ const FormDetails = ({ accountDetails }: FormDetailsProps) => {
 
     updateDetailsAccount(values);
     detailsCache.current = values;
-    toast.success("Vos informations ont été mises à jour.");
+    toast.success("Les informations de ton compte ont été mises à jour.");
     setIsLoading(false);
     router.refresh();
   }

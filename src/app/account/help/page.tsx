@@ -20,7 +20,7 @@ export default async function Help() {
         <div className="text-gray-300 mt-5">
           <p>
             Bloqué sur un exercice ou sur un projet personnel ? Pas de panique, rejoins
-            notre Discord member-only :
+            le Discord où nous pourrons répondre à tes questions :
           </p>
           <a href="https://discord.gg/K9AQJUPUc2" target="_blank">
             <Button className="mt-5 flex items-center">

@@ -15,10 +15,10 @@ export default async function Settings() {
           </h2>
           <div className="text-gray-300 mt-5">
             <p>
-              Votre progression correspond à l'ensemble des cours que vous avez suivis.
+              Ta progression correspond à l'ensemble des cours que tu as suivis.
             </p>
             <p className="mt-2">
-              Vous pouvez remettre à zéro votre progression à tout moment en cliquant sur le bouton ci-dessous.
+              Tu peux remettre à zéro ta progression à tout moment en cliquant sur le bouton ci-dessous.
             </p>
           </div>
           <ResetProgressionButton user={user!} />
@@ -31,10 +31,10 @@ export default async function Settings() {
         </h2>
         <div className="text-gray-300 mt-4">
           <p>
-             <span className="font-semibold">ATTENTION :</span> Supprimer votre compte est une action irréversible. Cela supprimera toutes vos données de notre serveur.
+             <span className="font-semibold">ATTENTION :</span> La suppression de ton compte est une action irréversible. Cela supprimera toutes tes données de notre serveur.
           </p>
           <p className="mt-2">
-            Il n'est pour le moment pas possible de récupérer vos données après la suppression de votre compte.
+            Il n'est pour le moment pas possible de récupérer les données de ton compte après sa suppression.
           </p>
         </div>
         <DeleteAccountButton user={user!} className="mt-4" />

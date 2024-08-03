@@ -11,19 +11,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { RefreshCcw } from "lucide-react";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function AddChangeLogButton() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function AddChangeLogButton() {
     let version = formData.get("version")?.toString() || "";
 
     if (!title || !content || version.length < 6) {
-      toast.error("Veuillez remplir tous les champs");
+      toast.error("Remplis tous les champs");
       setIsLoading(false);
       return;
     }

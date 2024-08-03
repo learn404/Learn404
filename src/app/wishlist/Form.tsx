@@ -23,21 +23,21 @@ export default function FormWishlist() {
       const email = formData.get("email")?.toString().toLowerCase().trim();
 
       if (!email) {
-        toast.error("Veuillez entrer une adresse email valide");
+        toast.error("Adresse email invalide");
         setSubscribeStatus(false);
         setIsLoading(false);
         return;
       }
 
       if (!email.includes("@") || !email.includes(".")) {
-        toast.error("Veuillez entrer une adresse email valide");
+        toast.error("Adresse email invalide");
         setSubscribeStatus(false);
         setIsLoading(false);
         return;
       }
 
       if (email.length < 5) {
-        toast.error("Veuillez entrer une adresse email valide");
+        toast.error("Adresse email invalide");
         setSubscribeStatus(false);
         setIsLoading(false);
         return;
