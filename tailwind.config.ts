@@ -1,4 +1,3 @@
-import type { Config } from "tailwindcss"
 
 const config = {
   darkMode: ["class"],
@@ -126,6 +125,11 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        moveX: {
+          "0%": { transform: "translate3D(0, 0, 0)" },
+          "50%": { transform: "translate3D(-100%, 0, 0)" },
+          "100%": { transform: "translate3D(0, 0, 0)" },
+        },
       },
       animation: {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
@@ -136,6 +140,7 @@ const config = {
         grid: "grid 15s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        moveX: "moveX 2s ease-out infinite",
       },
     },
   },

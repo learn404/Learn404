@@ -31,8 +31,9 @@ export default async function FonctionnalitySection() {
           </p>
         </div>
 
-        <div className="w-full max-w-xl aspect-video bg-gray-950 border border-gray-800 mt-6 rounded-xl">
-          <div className="w-full h-full" />
+        <div className="relative w-full max-w-xl aspect-video mt-6 rounded-xl">
+          <Image src="/img/maquette_screen.png" alt="progression" width={0} height={0} sizes="100vw" className="w-full h-full" />
+          <Image src="/img/cursor.png" alt="progression" width={0} height={0} sizes="100vw" className="w-32 h-auto absolute right-28 bottom-20 animate-moveX delay-1000" />
         </div>
       </div>
       <div className="mx-auto w-full max-w-[1436px] flex flex-wrap items-center justify-between gap-x-8">

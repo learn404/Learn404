@@ -1,10 +1,18 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const logo = [
+  "/svg/vscode-logo.svg",
+  "/svg/html-logo.svg",
+  "/svg/js-logo.svg",
+]
 
 const ChaptersSection = ({
   categories,
@@ -115,7 +123,7 @@ const ChaptersSection = ({
           viewBox={`0 0 870 20`}
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="hidden lg:block absolute top-24 left-[10vw]"
+          className="hidden lg:block absolute top-24 left-[10vw] z-20"
         >
           <path
             id="Union"
@@ -163,38 +171,51 @@ const ChaptersSection = ({
           return (
             <section
               key={index}
-              className="w-screen pt-16 lg:pt-52 px-6 lg:px-[10vw] lg:h-svh"
+              className="relative w-screen pt-16 lg:pt-52 px-6 lg:px-[10vw] lg:h-svh"
             >
-              <span className="bg-torea-950 border border-torea-800 rounded-full px-4 py-2 text-gray-50 max-sm:text-sm">
-                {category.level}
-              </span>
-              <div className="mt-8">
-                <h1 className="text-3xl lg:text-5xl m-0 text-gray-50">
-                  {category.name}
-                </h1>
-                <p className="mt-2 text-gray-400 max-w-2xl ">
-                  {category.description}
-                </p>
-                <div className="flex flex-wrap gap-16 mt-8">
-                  {chunkedLessons.map((lessonGroup, groupIndex) => (
-                    <div
-                      key={groupIndex}
-                      className="flex flex-col gap-y-4"
-                    >
-                      {lessonGroup.map((lesson, lessonIndex) => (
-                        <div key={lesson.id} className="flex items-center gap-4">
-                          <span className="text-gray-50 font-semibold text-lg sm:text-xl lg:text-2xl tabular-nums">
-                            {lessonIndex + 1 + groupIndex * chunkSize}
-                          </span>
-                          <span className="text-gray-400 font-semibold text-lg sm:text-xl lg:text-2xl">
-                            {lesson.title}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
+                <span className="bg-torea-950 border border-torea-800 rounded-full px-4 py-2 text-gray-50 max-sm:text-sm">
+                  {category.level}
+                </span>
+                <div className="mt-8 z-10">
+                  <h1 className="text-3xl lg:text-5xl m-0 text-gray-50">
+                    {category.name}
+                  </h1>
+                  <p className="mt-2 text-gray-400 max-w-2xl ">
+                    {category.description}
+                  </p>
+                  <div className="flex flex-wrap gap-x-16 mt-8">
+                    {chunkedLessons.map((lessonGroup, groupIndex) => (
+                      <div
+                        key={groupIndex}
+                        className={cn(
+                          "flex flex-col gap-y-4",
+                          groupIndex > 0 && "max-lg:mt-4"
+                        )}
+                      >
+                        {lessonGroup.map((lesson, lessonIndex) => (
+                          <div key={lesson.id} className="flex items-center gap-4">
+                            <span className="text-gray-50 font-semibold text-lg sm:text-xl lg:text-2xl tabular-nums">
+                              {lessonIndex + 1 + groupIndex * chunkSize}
+                            </span>
+                            <span className="text-gray-400 font-semibold text-lg sm:text-xl lg:text-2xl">
+                              {lesson.title}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+                <div className="hidden lg:block w-1/4 max-w-96 aspect-square absolute bottom-2/4 right-28 2xl:right-1/4 z-0">
+                  <Image
+                    src={logo[index]}
+                    alt="arrow"
+                    width={0}
+                    height={0}
+                    sizes="20vw"
+                    className="w-full h-full"
+                  />
+                </div>
             </section>
           );
         })}
