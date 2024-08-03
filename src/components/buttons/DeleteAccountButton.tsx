@@ -42,6 +42,7 @@ export function DeleteAccountButton({
 
   const handleDeleteAccount = async () => {
     const userId = userSearch?.id || user?.id;
+  
 
     toast.promise(
       fetch("/api/user/delete-account", {

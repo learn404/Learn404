@@ -7,12 +7,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const user = await currentUser();
-
-    if (!user || !user.admin) {
+    
+    if (!user || (user?.id !== userId && !user.admin)) {
+  
       return NextResponse.json(
         {
-          message:
-            "Accès refusé, vous n'êtes pas admin, merci de ne pas tenter de faire des requêtes illégales",
+          message: "Accès refusé, vous ne pouvez pas supprimer ce profil",
         },
         { status: 403 }
       );
