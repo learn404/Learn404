@@ -5,19 +5,15 @@ import Link from "next/link";
 type FooterLink = { id: number; title: string; url: string };
 
 const footerLinks: FooterLink[][] = [
-  [
-    { id: 1, title: "About", url: "#" },
-    { id: 2, title: "Contact", url: "#" },
-    { id: 4, title: "Story", url: "#" },
-  ],
+  
   [
     {
-      id: 5,
+      id: 1,
       title: "Condition d'utilisation",
       url: "/legal/condition-general-utilisation",
     },
-    { id: 6, title: "Journal des modifications", url: "/changelog" }, 
-    { id: 8, title: "More", url: "#" },
+    { id: 2, title: "Journal des modifications", url: "/changelog" }, 
+    { id: 3, title: "Contact", url: "mailto:contact@learn404.com" },
   ],
 
 ];
