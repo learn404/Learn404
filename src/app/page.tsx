@@ -7,8 +7,45 @@ import Header from "@/components/layout/header";
 import HeroSection from "@/components/layout/hero";
 import PresentationSection from "@/components/layout/presentation";
 import PricesSection from "@/components/layout/prices";
+import prisma from "@/lib/prisma";
 
-export default function Home() {
+export default async function Home() {
+
+  const categories = await prisma.categories.findMany({
+    where: {
+      Lessons: {
+        some: {
+          draft: false,
+        },
+      },
+    },
+    select:{
+      id: true,
+      name: true,
+      description: true,
+      level: true,
+      
+      },
+    
+    orderBy: {
+      sort_number: "asc",
+    },
+  });
+
+  const lessons = await prisma.lessons.findMany({
+    where: {
+      draft: false,
+    },
+    select:{
+      id: true,
+      title: true,
+      slug: true,
+      categoryId: true,
+    }
+  });
+
+
+
   return (
     <div className="relative min-h-screen flex flex-col">
       <Header />
@@ -17,7 +54,7 @@ export default function Home() {
         <PresentationSection />
         <FonctionnalitySection />
         <CoursesInfos />
-        <ChaptersSection />
+        <ChaptersSection categories={categories} lessons={lessons} />
         <PricesSection />
         {/* <Avis /> */}
         <FaqSection />

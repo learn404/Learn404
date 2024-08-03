@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let categoryNameLow = categoryName.toLowerCase().trim();
+  let categoryNameLow = categoryName.trim();
 
   const category = await prisma.categories.findFirst({
     where: {
