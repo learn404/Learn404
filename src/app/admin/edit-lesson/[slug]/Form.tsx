@@ -1,41 +1,39 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { currentUserType } from "@/lib/current-user";
-import { ChevronLeft, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { editLesson } from "./editLesson";
-import Link from "next/link";
+import { editLesson } from "@/app/actions/editLesson";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Minus, Plus } from "lucide-react";
+import { currentUserType } from "@/lib/current-user";
+import { ChevronLeft, Loader2, Minus, Plus } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectGroup,
-  SelectLabel,
-} from "@/components/ui/select";
-import { toast } from "sonner";
+import RichTextEditor from "@/components/text-editor";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
-import RichTextEditor from "@/components/text-editor";
 
 const formSchema = z.object({
   name_lesson: z.string().optional(),

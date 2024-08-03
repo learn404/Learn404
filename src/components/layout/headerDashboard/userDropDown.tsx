@@ -38,7 +38,7 @@ export default function UserDropdown({
         <DropdownMenuSeparator className="bg-white/10" />
         <DropdownMenuGroup>
           {dropdownMenu.map((item) => (
-            !isAdmin && item.name === "Admin" ? (
+            (!isAdmin && ["Admin", "Gains"].includes(item.name) ) ? (
               null
             ) : (
               <Link href={item.link} key={`menu:${item.name}`}>

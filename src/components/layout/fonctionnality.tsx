@@ -1,5 +1,5 @@
+import Image from "next/image";
 import { FeatureCard8 } from "../magicui/animated-card-8";
-
 
 export default async function FonctionnalitySection() {
 
@@ -17,8 +17,8 @@ export default async function FonctionnalitySection() {
             Suivez votre avancé dans les cours avec nos fonctionnalités de suivi de progression.
           </p>
         </div>
-        <div className="w-full max-w-xl aspect-video bg-gray-950 border border-gray-800 mt-6 rounded-xl">
-          <div className="w-full h-full" />
+        <div className="w-full max-w-xl aspect-video mt-6 rounded-xl">
+          <Image src="/img/progress_screen.png" alt="progression" width={0} height={0} sizes="100vw" className="w-full h-full" />
         </div>
       </div>
       <div className="mx-auto w-full max-w-[1436px] flex lg:flex-row-reverse flex-wrap items-center justify-between gap-x-8">
