@@ -1,6 +1,6 @@
-import { NextResponse, NextRequest } from "next/server";
-import prisma from "@/lib/prisma";
 import { currentUser } from "@/lib/current-user";
+import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const { userId } = await req.json();
@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
     const user = await currentUser();
     
     if (!user || (user?.id !== userId && !user.admin)) {
-      console.log(user?.id, userId);
       return NextResponse.json(
         {
           message: "Accès refusé, vous ne pouvez pas supprimer ce profil",
