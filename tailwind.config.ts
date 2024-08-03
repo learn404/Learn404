@@ -1,12 +1,12 @@
-
+import type { Config } from "tailwindcss";
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx, jsx, mdx, js}',
-    './components/**/*.{js,jsx,ts,tsx,mdx}',
-    './app/**/*.{js,jsx,ts,tsx, mdx}',
-    './src/**/*.{js,jsx,ts,tsx, mdx}',
-	],
+    "./pages/**/*.{ts,tsx, jsx, mdx, js}",
+    "./components/**/*.{js,jsx,ts,tsx,mdx}",
+    "./app/**/*.{js,jsx,ts,tsx, mdx}",
+    "./src/**/*.{js,jsx,ts,tsx, mdx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -126,9 +126,17 @@ const config = {
           to: { height: "0" },
         },
         moveX: {
-          "0%": { transform: "translate3D(0, 0, 0)" },
-          "50%": { transform: "translate3D(-100%, 0, 0)" },
-          "100%": { transform: "translate3D(0, 0, 0)" },
+          "0%": { transform: "translate3D(100%, 100%, 0)", easing: "ease-in" },
+
+          "30%": { transform: "translate3D(-100%, -100%, 0) scale(1)", easing: "ease-out" },
+          "35%": { transform: "translate3D(-100%, -100%, 0) scale(0.9)", easing: "ease-out" }, // 
+          "40%": { transform: "translate3D(-100%, -100%, 0) scale(1)", easing: "ease-in-out" },
+      
+          "60%": { transform: "translate3D(60%, -60%, 0)scale(1)", easing: "ease-in-out" }, 
+          "65%": { transform: "translate3D(60%, -60%, 0)scale(0.9)", easing: "ease-in-out" },
+          "70%": { transform: "translate3D(60%, -60%, 0)scale(1)", easing: "ease-in-out" },
+          "90%": { transform: "translate3D(100%, 100%, 0)", easing: "ease-in"  },
+          "100%": { transform: "translate3D(100%, 100%, 0)", easing: "ease-in"  },
         },
       },
       animation: {
@@ -140,7 +148,7 @@ const config = {
         grid: "grid 15s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        moveX: "moveX 2s ease-out infinite",
+        moveX: "moveX 5s ease-in-out infinite",
       },
     },
   },
@@ -149,6 +157,6 @@ const config = {
     require("@tailwindcss/typography"),
     require("tailwind-scrollbar"),
   ],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
