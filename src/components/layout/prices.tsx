@@ -87,8 +87,8 @@ export default function Pricing() {
   ];
 
   return (
-    <section className="mx-auto max-w-5xl max-lg:mt-[6.25rem] mb-[12.5rem] px-6">
-      <div className="flex flex-col gap-y-8">
+    <section className="mx-auto max-w-5xl max-lg:pt-[6.25rem] pb-[12.5rem] px-6">
+      <div className="flex flex-col gap-y-2">
         <div className="mx-auto max-w-5xl text-center">
           <h2 className="text-gray-50 text-3xl sm:text-4xl font-semibold">
             Rejoins Learn404 maintenant.
