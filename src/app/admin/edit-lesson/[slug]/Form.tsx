@@ -164,7 +164,7 @@ export default function EditLessonForm({
       };
 
       toast.promise(editFormLesson(), {
-        loading: "Enregistrement du cours de la modification...",
+        loading: "Ajout des modifications...",
         success: "Le cours a été modifié avec succès",
         error: "Le cours n'a pas été modifié",
       });
