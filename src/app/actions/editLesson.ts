@@ -99,7 +99,6 @@ export async function editLesson(
   if (existingLesson.draft !== draft) updateData.draft = draft;
   if (level && existingLesson.level !== level) updateData.level = level;
   if (contentLesson !== "") {
-    console.log("Updating contentLesson with:", contentLesson);
     updateData.contentLesson = contentLesson;
   }
   if (links && JSON.stringify(existingLesson.links) !== JSON.stringify(links))

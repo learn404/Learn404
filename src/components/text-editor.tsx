@@ -44,7 +44,7 @@ import {
   UnderlineIcon
 } from "lucide-react";
 import { useEffect } from "react";
-// load all highlight.js languages
+
 import { lowlight } from "lowlight/lib/core.js";
 
 lowlight.registerLanguage("css", css);
