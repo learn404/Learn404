@@ -115,6 +115,21 @@ const ChaptersSection = ({
 
   const svgPath = generatePath(categories.length -1);
 
+  let level = 'Débutant';
+
+  
+  categories.forEach((category) => {
+    if (category.level === 'BEGINNER'){
+      level = 'Débutant';
+    }
+    if (category.level === 'INTERMEDIATE'){
+      level = 'Intermédiaire';
+    }
+    if (category.level === 'ADVANCED'){
+      level = 'Avancé';
+    }
+  });
+
   return (
     <div className="overflow-hidden relative" ref={component}>
       <div
@@ -181,7 +196,7 @@ const ChaptersSection = ({
               className="relative w-screen pt-16 lg:pt-52 px-6 lg:px-[10vw] lg:h-svh"
             >
                 <span className="bg-torea-950 border border-torea-800 rounded-full px-4 py-2 text-gray-50 max-sm:text-sm">
-                  {category.level}
+                  {level}
                 </span>
                 <div className="mt-8 z-10">
                   <h2 className="text-3xl lg:text-5xl m-0 text-gray-50">
