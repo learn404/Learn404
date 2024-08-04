@@ -203,7 +203,7 @@ const RichTextEditorToolbar = ({
   addImage: () => void;
 }) => {
   return (
-    <div className="border border-input bg-transparent rounded-br-md rounded-bl-md p-1 flex flex-row items-center gap-1">
+    <div className="border border-input bg-transparent rounded-br-md rounded-bl-md p-1 flex flex-row items-center gap-1 flex-wrap">
       <Toggle
         size="sm"
         pressed={editor.isActive("bold")}
@@ -283,13 +283,6 @@ const RichTextEditorToolbar = ({
       >
         <ArrowBigLeft className="h-4 w-4" />
       </Toggle>
-      <Toggle
-        size="sm"
-        pressed={editor.isActive("paragraph")}
-        onPressedChange={() => editor.chain().focus().setParagraph().run()}
-      >
-        <Text className="h-4 w-4" />
-      </Toggle> 
       <Toggle
         size="sm"
         pressed={editor.isActive("paragraph")}
