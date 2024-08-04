@@ -106,12 +106,14 @@ export default async function SheetLessons({ userId }: userIdProps) {
               <h1 className="text-2xl font-bold text-white">Cours</h1>
             </SheetTitle>
             <SheetDescription className="overflow-y-auto max-h-[calc(100vh-1rem)] rounded-lg scrollbar-none">
-              <ul className="flex flex-col gap-5 my-5">
+              <ul className="flex flex-col gap-5 my-5 ">
                 {categories.map((category) => (
-                  <li key={category.id}>
-                    <h2 className="text-lg font-bold text-white">
+                  <li key={category.id} className="relative">
+                    <div className="sticky top-0 bg-bg-primary">
+                    <h2 className="text-lg font-bold text-white sticky top-0">
                       {category.name.toUpperCase()}
                     </h2>
+                    </div>
                     <ul className="flex flex-col gap-2 mt-4">
                       {category.Lessons.map(
                         (lesson: LessonWithFormattedSortNumber) => (
