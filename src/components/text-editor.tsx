@@ -1,44 +1,49 @@
 "use client";
 
+import { Separator } from "@/components/ui/separator";
+import { Toggle } from "@/components/ui/toggle";
+import Blockquote from '@tiptap/extension-blockquote';
+import CharacterCount from "@tiptap/extension-character-count";
+import { Code as CodeSyntax } from '@tiptap/extension-code';
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import HardBreak from "@tiptap/extension-hard-break";
+import Heading from "@tiptap/extension-heading";
+import Highlight from '@tiptap/extension-highlight';
+import Image from "@tiptap/extension-image";
+import Paragraph from "@tiptap/extension-paragraph";
+import Underline from '@tiptap/extension-underline';
 import {
-  useEditor,
   EditorContent,
-  type Editor,
   ReactNodeViewRenderer,
+  useEditor,
+  type Editor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import {
-  Bold,
-  Strikethrough,
-  Italic,
-  List,
-  ListOrdered,
-  TextQuote,
-  Code,
-  Text,
-  ArrowBigLeft,
-  Link as LinkIcon,
-  ImagePlus,
-  Heading1,
-  Heading2,
-  Heading3,
-} from "lucide-react";
-import { Toggle } from "@/components/ui/toggle";
-import { Separator } from "@/components/ui/separator";
-import HardBreak from "@tiptap/extension-hard-break";
-import CharacterCount from "@tiptap/extension-character-count";
-import CodeBlock from "@tiptap/extension-code-block";
-import Image from "@tiptap/extension-image";
-import Heading from "@tiptap/extension-heading";
-import Blockquote from '@tiptap/extension-blockquote'
-import { useEffect } from "react";
-import Paragraph from "@tiptap/extension-paragraph";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import bash from "highlight.js/lib/languages/bash";
 import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
-import bash from "highlight.js/lib/languages/bash";
+import {
+  ArrowBigLeft,
+  Bold,
+  Code,
+  Code2,
+  Heading1,
+  Heading2,
+  Heading3,
+  Highlighter,
+  ImagePlus,
+  Italic,
+  Link as LinkIcon,
+  List,
+  ListOrdered,
+  Strikethrough,
+  Text,
+  TextQuote,
+  UnderlineIcon
+} from "lucide-react";
+import { useEffect } from "react";
 // load all highlight.js languages
 import { lowlight } from "lowlight/lib/core.js";
 
@@ -49,7 +54,7 @@ lowlight.registerLanguage("html", html);
 lowlight.registerLanguage("bash", bash);
 
 import Link from "@tiptap/extension-link";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 
 import CodeBlockComponent from "@/components/tiptap/CodeBlockComponent";
 
@@ -60,6 +65,7 @@ const RichTextEditor = ({
   value: string;
   onChange: (value: string) => void;
 }) => {
+
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -81,7 +87,14 @@ const RichTextEditor = ({
         },
         
       }),
-      Paragraph,
+      Paragraph.configure({
+        HTMLAttributes: {
+          class: "mb-3 text-base text-gray-50 leading-7",
+        },
+      }),
+      Underline,
+      Highlight,
+      CodeSyntax,
       CodeBlockLowlight.extend({
         addNodeView() {
           return ReactNodeViewRenderer(CodeBlockComponent);
@@ -89,7 +102,7 @@ const RichTextEditor = ({
       }).configure({ lowlight }),
       HardBreak.configure({
         HTMLAttributes: {
-          class: "mb-2",
+          class: "mb-0",
         },
       }),
       Link.configure({
@@ -162,6 +175,7 @@ const RichTextEditor = ({
     return () => document.removeEventListener("keydown", breakLine);
   }, [editor]);
 
+
   return (
     <>
       <EditorContent editor={editor} />
@@ -211,6 +225,20 @@ const RichTextEditorToolbar = ({
       >
         <Strikethrough className="h-4 w-4" />
       </Toggle>
+      <Toggle
+        size="sm"
+        pressed={editor.isActive("strike")}
+        onPressedChange={() => editor.chain().focus().toggleUnderline().run()}
+      >
+        <UnderlineIcon className="h-4 w-4" />
+      </Toggle>
+      <Toggle
+        size="sm"
+        pressed={editor.isActive("highlight")}
+        onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
+      >
+        <Highlighter className="h-4 w-4" />
+      </Toggle>
       <Separator orientation="vertical" className="w-[1px] h-8" />
       <Toggle
         size="sm"
@@ -241,6 +269,13 @@ const RichTextEditorToolbar = ({
       >
         <Code className="h-4 w-4" />
       </Toggle>
+      <Toggle 
+        size="sm"
+        pressed={editor.isActive("code")} 
+        onPressedChange={() => editor.chain().focus().toggleCode().run()}
+      >
+        <Code2 className="h-4 w-4" />
+      </Toggle>
       <Toggle
         size="sm"
         pressed={editor.isActive("hardBreak")}
@@ -248,7 +283,14 @@ const RichTextEditorToolbar = ({
       >
         <ArrowBigLeft className="h-4 w-4" />
       </Toggle>
-    <Toggle
+      <Toggle
+        size="sm"
+        pressed={editor.isActive("paragraph")}
+        onPressedChange={() => editor.chain().focus().setParagraph().run()}
+      >
+        <Text className="h-4 w-4" />
+      </Toggle> 
+      <Toggle
         size="sm"
         pressed={editor.isActive("paragraph")}
         onPressedChange={() => editor.chain().focus().setParagraph().run()}
