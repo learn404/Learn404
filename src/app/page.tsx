@@ -41,6 +41,9 @@ export default async function Home() {
       title: true,
       slug: true,
       categoryId: true,
+    },
+    orderBy: {
+      sort_number: "asc",
     }
   });
 
