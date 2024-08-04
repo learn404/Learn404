@@ -5,7 +5,7 @@ export default async function FonctionnalitySection() {
 
   return (
     <section
-      className="relative px-6 lg:px-20 flex flex-col items-center max-md:gap-16 gap-10 py-[6.25rem]"
+      className="relative px-6 lg:px-20 flex flex-col items-center max-md:gap-16 gap-10 pt-[6.25rem] pb-[12.5rem]"
       id="fonctionnality"
     >
       <div className="mx-auto w-full max-w-[1436px] flex flex-wrap items-center justify-between gap-x-8">

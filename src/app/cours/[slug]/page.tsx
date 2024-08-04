@@ -1,17 +1,15 @@
-import ChapterLessonButton from "@/components/buttons/ChapterLessonButton";
 import FinishLesson from "@/components/buttons/FinishLessonButton";
 import HeaderDashboard from "@/components/layout/headerDashboard/headerDashboard";
 import SheetLessons from "@/components/sheet/sheetLessons";
 import { Button } from "@/components/ui/button";
 import { currentUser } from "@/lib/current-user";
-import { getLesson } from "@/lib/lesson";
 import prisma from "@/lib/prisma";
 import jwt from "jsonwebtoken";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import VideoPlayerWithChapters from "./VideoPlayerWithChapters";
-import DetailsLesson from './detailsLesson';
 import ArticleLesson from './articleLesson';
+import DetailsLesson from './detailsLesson';
 
 interface Params {
   params: {
@@ -169,48 +167,48 @@ export default async function LessonPage({
           )}
         </section>
 
-        <section className="mx-auto mt-6 flex pb-16 sm:mt-12 w-full px-6 lg:mt-12 lg:grid lg:grid-cols-3 lg:gap-3.5 lg:px-24 ">
-          <div id="lesson" className="w-full lg:col-span-2 lg:px-2 lg:text-lg">
-            <script
-              type="application/ld+json"
-              suppressHydrationWarning
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "Cours",
-                  /* headline: post.metadata.title,
-                  datePublished: datePublished,
-                  dateModified: dateModified,
-                  description: post.metadata.summary,
-                  image: post.metadata.image
-                    ? `learn404.com${post.metadata.image}`
-                    : `learn404.com/og?title=${post.metadata.title}`,
-                  url: `learn404.com/cours/${post.slug}`, */
-                  author: {
-                    "@type": "Person",
-                    name: "Nicolas Becharat",
-                    url: "https://learn404.com",
-                  },
-                }),
-              }}
-            />
-            <div className="border-y border-white/5 bg-indigo-800 px-4 py-8 mt-10  rounded-lg sm:border sm:p-4 lg:hidden">
-              <div className="flex flex-wrap justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
-                 <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={lesson.repository_url} link={lesson.links} admin={user.admin} playbackId={lesson.playbackId} />
+        <section className="mx-auto mt-6 pb-16 sm:mt-12 px-6 lg:mt-12  lg:px-24 ">
+          <div className="mx-auto w-full max-w-[1436px] flex lg:grid lg:grid-cols-3 lg:gap-7 ">
+            <div id="lesson" className="w-full lg:col-span-2 lg:text-lg">
+              <script
+                type="application/ld+json"
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Cours",
+                    /* headline: post.metadata.title,
+                    datePublished: datePublished,
+                    dateModified: dateModified,
+                    description: post.metadata.summary,
+                    image: post.metadata.image
+                      ? `learn404.com${post.metadata.image}`
+                      : `learn404.com/og?title=${post.metadata.title}`,
+                    url: `learn404.com/cours/${post.slug}`, */
+                    author: {
+                      "@type": "Person",
+                      name: "Nicolas Becharat",
+                      url: "https://learn404.com",
+                    },
+                  }),
+                }}
+              />
+              <div className="border-y border-white/5 bg-indigo-800 px-4 py-8 mt-10  rounded-lg sm:border sm:p-4 lg:hidden">
+                <div className="flex flex-wrap justify-center items-center mt-3 lg:mt-10 gap-x-10 gap-y-5">
+                  <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={lesson.repository_url} link={lesson.links} admin={user.admin} playbackId={lesson.playbackId} />
+                </div>
+              </div>
+              <ArticleLesson lesson={lesson.contentLesson} />
+            </div>
+
+            <div className="ml-auto hidden px-2 w-full lg:block h-full flex-shrink-0">
+              <div className="sticky top-0 w-full pt-2">
+                <div className="pt-10 lg:sticky lg:top-0 lg:pt-4">
+                  <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={lesson.repository_url} link={lesson.links} admin={user.admin} playbackId={lesson.playbackId} /> 
+                </div>
               </div>
             </div>
 
-            <ArticleLesson lesson={lesson.contentLesson} />
-
-            
-          </div>
-
-          <div className="ml-auto hidden px-2 w-full lg:block h-full flex-shrink-0">
-            <div className="sticky top-0 w-full pt-2">
-              <div className="pt-10 lg:sticky lg:top-0 lg:pt-4">
-                 <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={lesson.repository_url} link={lesson.links} admin={user.admin} playbackId={lesson.playbackId} /> 
-              </div>
-            </div>
           </div>
         </section>
 
