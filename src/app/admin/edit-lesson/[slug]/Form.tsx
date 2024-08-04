@@ -103,7 +103,6 @@ export default function EditLessonForm({
         },
       });
       const data = await categories.json();
-      console.log(data);
       setCategories(data);
     }
     fetchCategories();

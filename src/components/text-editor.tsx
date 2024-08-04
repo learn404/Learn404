@@ -39,7 +39,6 @@ import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import bash from "highlight.js/lib/languages/bash";
-// load all highlight.js languages
 import { lowlight } from "lowlight/lib/core.js";
 
 lowlight.registerLanguage("css", css);

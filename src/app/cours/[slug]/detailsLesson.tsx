@@ -34,9 +34,7 @@ export default function DetailsLesson({
 }) {
 
   const links = link ? JSON.parse(link) : [];
-  
-  console.log(links, 'links');
-
+    
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
@@ -65,7 +63,7 @@ export default function DetailsLesson({
           </div>
         )}
         {links && links.length > 0 && (
-          <div>
+          <div className="mt-2">
             <ul>
               {links.map((link: any) => (
                 <li
