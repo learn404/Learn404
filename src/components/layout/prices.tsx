@@ -87,9 +87,9 @@ export default function Pricing() {
   ];
 
   return (
-    <section className="mx-auto max-w-5xl max-lg:pt-[6.25rem] pb-[12.5rem] px-6">
-      <div className="flex flex-col gap-y-2">
-        <div className="mx-auto max-w-5xl text-center">
+    <section className="mx-auto max-w-5xl max-lg:mt-[6.25rem] mb-[12.5rem] px-6">
+      <div className="flex flex-col gap-y-8">
+        <div className="mx-auto max-w-5xl text-center mb-8 lg:mb-0">
           <h2 className="text-gray-50 text-3xl sm:text-4xl font-semibold">
             Rejoins Learn404 maintenant.
           </h2>
@@ -99,7 +99,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="mx-auto grid h-full w-full max-w-4xl place-content-center items-center gap-6 my-6 lg:items-start">
+        <div className="mx-auto grid h-full w-full max-w-4xl place-content-center items-center gap-6 lg:items-start">
           {pricingOptions.map((option, index) => (
             <PricingCard key={index} option={option} />
           ))}

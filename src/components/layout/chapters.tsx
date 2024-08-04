@@ -14,18 +14,25 @@ const logo = [
   "/svg/js-logo.svg",
 ]
 
-const ChaptersSection = ({
-  categories,
-  lessons
-}: {
+interface ChapterSectionProps {
   categories: {
     id: string;
     name: string;
     description: string | null;
     level: string | null;
   }[];
-  lessons: { id: string; title: string; categoryId: string, slug: string }[];
-}) => {
+  lessons: { 
+    id: string;
+    title: string; 
+    categoryId: string, 
+    slug: string 
+  }[];
+}
+
+const ChaptersSection = ({
+  categories,
+  lessons
+} : ChapterSectionProps ) => {
   const slider = useRef<HTMLDivElement>(null);
   const component = useRef<HTMLDivElement>(null);
 
@@ -177,9 +184,9 @@ const ChaptersSection = ({
                   {category.level}
                 </span>
                 <div className="mt-8 z-10">
-                  <h1 className="text-3xl lg:text-5xl m-0 text-gray-50">
+                  <h2 className="text-3xl lg:text-5xl m-0 text-gray-50">
                     {category.name}
-                  </h1>
+                  </h2>
                   <p className="mt-2 text-gray-400 max-w-2xl ">
                     {category.description}
                   </p>

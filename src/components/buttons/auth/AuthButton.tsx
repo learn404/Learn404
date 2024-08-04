@@ -1,15 +1,15 @@
 // components/buttons/auth/loginButton.js
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Github, LogOut } from "lucide-react";
 import { signIn, signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 
 export const LoginGithubButton = () => {
   return (
     <Button variant="secondary" onClick={() => signIn("github")}>
       <Github size={20} />
-      with Github
+      avec Github
     </Button>
   );
 };
@@ -18,7 +18,7 @@ export const LoginGoogleButton = () => {
   return (
     <Button variant="secondary" onClick={() => signIn("google")}>
       <img src="/img/google.svg" alt="google icon" />
-      with Google
+      avec Google
     </Button>
   );
 };
