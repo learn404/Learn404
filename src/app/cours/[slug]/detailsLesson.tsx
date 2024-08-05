@@ -1,11 +1,11 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import { Link as LinkIcon, Github } from "lucide-react";
-import FinishLessonButton from "@/components/buttons/FinishLessonButton";
 import ChapterLessonButton from "@/components/buttons/ChapterLessonButton";
+import FinishLessonButton from "@/components/buttons/FinishLessonButton";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Github, Link as LinkIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function DetailsLesson({
   title,
@@ -70,7 +70,7 @@ export default function DetailsLesson({
                   key={link.url}
                   className="hover:bg-torea-50/10 transition-colors p-2 rounded-md cursor-pointer duration-300 "
                 >
-                  <Link href={link.url} className="underline">
+                  <Link href={link.url} target="_blank" className="underline">
                     <div className="flex items-center gap-2">
                       <LinkIcon className="w-4 h-4" />
                       {link.label}

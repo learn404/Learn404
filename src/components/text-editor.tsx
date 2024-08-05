@@ -2,15 +2,10 @@
 
 import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
-import Blockquote from '@tiptap/extension-blockquote';
 import CharacterCount from "@tiptap/extension-character-count";
-import { Code as CodeSyntax } from '@tiptap/extension-code';
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import HardBreak from "@tiptap/extension-hard-break";
-import Heading from "@tiptap/extension-heading";
 import Highlight from '@tiptap/extension-highlight';
 import Image from "@tiptap/extension-image";
-import Paragraph from "@tiptap/extension-paragraph";
 import Underline from '@tiptap/extension-underline';
 import {
   EditorContent,
@@ -73,6 +68,7 @@ const RichTextEditor = ({
           "h-[50vh] lg:h-[80vh] w-full rounded-md rounded-br-none rounded-bl-none border border-input bg-transparent px-3 py-2 border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
       },
     },
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         orderedList: {
@@ -85,29 +81,34 @@ const RichTextEditor = ({
             class: "list-disc pl-4",
           },
         },
-        
-      }),
-      Paragraph.configure({
-        HTMLAttributes: {
-          class: "mb-3 text-base text-gray-50 leading-7",
+        paragraph: {
+          HTMLAttributes: {
+            class: "mb-3 text-base text-gray-50 leading-7",
+          },
         },
+        hardBreak: {
+          HTMLAttributes: {
+            class: "mb-0",
+          },
+        },
+        blockquote: {
+          HTMLAttributes: {
+            class: "border-l-4 border-gray-300 pl-4",
+          },
+        },
+        codeBlock: false
       }),
       Underline,
       Highlight,
-      CodeSyntax,
       CodeBlockLowlight.extend({
         addNodeView() {
           return ReactNodeViewRenderer(CodeBlockComponent);
         },
       }).configure({ lowlight }),
-      HardBreak.configure({
-        HTMLAttributes: {
-          class: "mb-0",
-        },
-      }),
       Link.configure({
         HTMLAttributes: {
           class: "text-blue-500",
+          target: "_blank",
         },
         openOnClick: false,
         autolink: true,
@@ -118,14 +119,7 @@ const RichTextEditor = ({
           class: "rounded-md",
         },
       }),
-      CharacterCount.configure(),
-      Heading, 
-      Blockquote.configure({
-        HTMLAttributes: {
-          class: "border-l-4 border-gray-300 pl-4",
-        },
-      }),
-      
+      CharacterCount.configure(), 
     ],
     content: value,
     onUpdate: ({ editor }) => {

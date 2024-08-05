@@ -202,8 +202,8 @@ export default async function LessonPage({
             </div>
 
             <div className="ml-auto hidden px-2 w-full lg:block h-full flex-shrink-0">
-              <div className="sticky top-0 w-full pt-2">
-                <div className="pt-10 lg:sticky lg:top-0 lg:pt-4">
+              <div className="pt-10 sticky top-0 w-full lg:pt-4">
+                <div className="lg:sticky lg:top-0">
                   <DetailsLesson title={lesson.title} description={lesson.description} completed={statusLesson?.completed ?? false} slug={params.slug} userId={user.id} lessonId={lesson.id} duration={lesson.duration} repo={lesson.repository_url} link={lesson.links} admin={user.admin} playbackId={lesson.playbackId} /> 
                 </div>
               </div>
