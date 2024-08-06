@@ -120,8 +120,6 @@ export default function EditLessonForm({
       video_lesson,
       repository_lesson,
       links,
-
-
     } = values;
 
     try {
