@@ -206,7 +206,214 @@ pre ::selection {
   color: #000;
 }
 
-.tiptap,
+.tiptap {
+  :first-child {
+    margin-top: 0;
+  }
+
+  h2:not(:first-child), 
+  h3, 
+  h4, 
+  h5, 
+  h6 {
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    text-wrap: pretty;
+  }
+
+  h1, 
+  h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 { 
+    font-size: 1.9rem; 
+  }
+
+  h2 { 
+    font-weight: 700;
+    font-size: 1.6rem; 
+  }
+
+  h3 { 
+    font-size: 1.3rem; 
+  }
+
+  h4, 
+  h5, 
+  h6 { 
+    font-size: 1rem; 
+  }
+
+  code {
+    background-color:  #312d82;
+    border-radius: 0.3rem;
+    color: var(--black);
+    font-size: 0.85rem;
+    padding: 0.2em 0.5em;
+  }
+
+  pre {
+    background: #ffffff0a;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
+    font-size: 1rem;
+    margin: .5rem 0 3rem 0;
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+    border: 1px solid white/10;
+  
+    code {
+      background: none;
+      color: inherit;
+      font-size: 1rem;
+      padding: 0;
+    }
+  
+    /* Code styling */
+    .hljs-comment,
+    .hljs-quote {
+      color: #616161;
+    }
+  
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-attribute,
+    .hljs-tag,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-link,
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: #f98181;
+    }
+  
+    .hljs-number,
+    .hljs-meta,
+    .hljs-built_in,
+    .hljs-builtin-name,
+    .hljs-literal,
+    .hljs-type,
+    .hljs-params {
+      color: #fbbc88;
+    }
+  
+    .hljs-string,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: #b9f18d;
+    }
+  
+    .hljs-title,
+    .hljs-section {
+      color: #faf594;
+    }
+  
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #70cff8;
+    }
+  
+    .hljs-emphasis {
+      font-style: italic;
+    }
+  
+    .hljs-strong {
+      font-weight: 700;
+    }
+  }
+
+  mark {
+    background-color: hsl(var(--chart-2));
+    border-radius: 0.2rem;
+    box-decoration-break: clone;
+    padding: 0.1rem 0.3rem;
+  }
+
+  code {
+    background-color:  #1e1b4b;
+    border-radius: 0.4rem;
+    font-size: 0.85rem;
+    padding: 0.5em 0.5em;
+  }
+  
+  pre {
+    background: #ffffff0a;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+    border: 1px solid white/10;
+  
+    code {
+      background: none;
+      color: inherit;
+      font-size: 1rem;
+      padding: 0;
+    }
+  
+    /* Code styling */
+    .hljs-comment,
+    .hljs-quote {
+      color: #616161;
+    }
+  
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-attribute,
+    .hljs-tag,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-link,
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: #f98181;
+    }
+  
+    .hljs-number,
+    .hljs-meta,
+    .hljs-built_in,
+    .hljs-builtin-name,
+    .hljs-literal,
+    .hljs-type,
+    .hljs-params {
+      color: #fbbc88;
+    }
+  
+    .hljs-string,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: #b9f18d;
+    }
+  
+    .hljs-title,
+    .hljs-section {
+      color: #faf594;
+    }
+  
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #70cff8;
+    }
+  
+    .hljs-emphasis {
+      font-style: italic;
+    }
+  
+    .hljs-strong {
+      font-weight: 700;
+    }
+
+  }
+}
+
 article {
   :first-child {
     margin-top: 0;
