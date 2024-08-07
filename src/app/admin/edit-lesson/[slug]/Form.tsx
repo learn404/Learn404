@@ -3,15 +3,16 @@
 import { editLesson } from "@/app/actions/editLesson";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { currentUserType } from "@/lib/current-user";
-import { ChevronLeft, Loader2, Minus, Plus } from "lucide-react";
+import { ChevronLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import EditDescriptionBloc from "@/components/dashboard/admin/edit-lessons/edit-description-bloc";
+import EditDetailsBloc from "@/components/dashboard/admin/edit-lessons/edit-details-bloc";
+import EditLinksBloc from "@/components/dashboard/admin/edit-lessons/edit-links-bloc";
 import RichTextEditor from "@/components/text-editor";
 import {
   Form,
@@ -21,15 +22,7 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -203,17 +196,6 @@ export default function EditLessonForm({
     }
   };
 
-  const difficulties = [
-    { id: "1", name: "Débutant" },
-    { id: "2", name: "Intermédiaire" },
-    { id: "3", name: "Avancé" },
-  ];
-
-  const status = [
-    { id: "1", name: "Brouillon" },
-    { id: "2", name: "En ligne" },
-  ];
-
   if (lesson.draft === false) {
     lesson.draft = "En ligne";
   } else if (lesson.draft === true) {
@@ -224,8 +206,7 @@ export default function EditLessonForm({
     lesson.level = "Débutant";
   } else if (lesson.level === "INTERMEDIATE") {
     lesson.level = "Intermédiaire";
-  }
-  if (lesson.level === "ADVANCED") {
+  } else if (lesson.level === "ADVANCED") {
     lesson.level = "Avancé";
   }
 
@@ -267,7 +248,14 @@ export default function EditLessonForm({
                   "Enregistrer"
                 )}
               </Button>
-              <Button variant={"destructive"} onClick={handleDelete} type="button">Supprimer le cours</Button>
+              <Button 
+                variant="ghost" 
+                onClick={handleDelete} 
+                type="button" 
+                className={cn("text-red-500 hover:text-red-600 hover:bg-red-500/10", isLoading && "cursor-not-allowed")}
+              >
+                Supprimer
+              </Button>
             </div>
           </div>
           <div className="grid grid-cols-12 items-start gap-4 mt-4">
@@ -295,299 +283,25 @@ export default function EditLessonForm({
               </div>
             </div>
             <div className="flex flex-col gap-4 w-full col-span-12 lg:col-span-4">
-              <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6 h-full">
-                <div>
-                  <h2 className="font-semibold text-2xl">Détails du cours</h2>
-                  <p className="text-sm text-gray-400 my-2">
-                    Les détails du cours seront publiques
-                  </p>
-                </div>
-                <div className="mt-4">
-                  <div className="flex flex-col gap-4 my-4">
-                    <div className="gap-2 flex flex-col">
-                      <FormField
-                        control={form.control}
-                        name="name_lesson"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel htmlFor="name_lesson">
-                              Nom du cours
-                            </FormLabel>
-
-                            <FormControl>
-                              <Input
-                                placeholder={lesson.title}
-                                {...field}
-                                className="bg-gray-950"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="gap-2 flex flex-col mt-2">
-                      <FormField
-                        control={form.control}
-                        name="slug_lesson"
-                        render={({ field }) => (
-                          <FormItem>
-                            <Label htmlFor="slug_lesson">Slug du cours</Label>
-
-                            <FormControl>
-                              <div className="flex items-center">
-                                <span className="mr-2">
-                                  https://learn404.com/
-                                </span>
-                                <Input
-                                  id="slug_lesson"
-                                  className="bg-gray-950"
-                                  placeholder={slugLesson}
-                                  {...field}
-                                />
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <div className="gap-2 flex flex-col mt-2">
-                        <FormField
-                          control={form.control}
-                          name="category"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Catégorie</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="bg-gray-950">
-                                    <SelectValue
-                                      placeholder={categoryLesson?.name}
-                                    />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    <SelectLabel>
-                                      Catégories disponibles
-                                    </SelectLabel>
-                                    {categories.map((category) => (
-                                      <SelectItem
-                                        key={category.id}
-                                        value={category.id}
-                                      >
-                                        {category.name}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="gap-2 flex flex-col mt-2">
-                        <FormField
-                          control={form.control}
-                          name="level"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Niveau</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="bg-gray-950">
-                                    <SelectValue placeholder={lesson.level} />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    <SelectLabel>Niveau</SelectLabel>
-                                    {difficulties.map((difficulty) => (
-                                      <SelectItem
-                                        key={difficulty.id}
-                                        value={difficulty.id}
-                                      >
-                                        {difficulty.name}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="gap-2 flex flex-col mt-2">
-                        <FormField
-                          control={form.control}
-                          name="status"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Statut</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="bg-gray-950">
-                                    <SelectValue placeholder={lesson.draft} />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    <SelectLabel>Statut</SelectLabel>
-                                    {status.map((s) => (
-                                      <SelectItem key={s.id} value={s.id}>
-                                        {s.name}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="gap-2 flex flex-col mt-2">
-                        <FormField
-                          control={form.control}
-                          name="repository_lesson"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Repository</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder={
-                                    lesson.repository_url || "Repository URL"
-                                  }
-                                  {...field}
-                                  className="bg-gray-950"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="gap-2 flex flex-col mt-2">
-                        <FormField
-                          control={form.control}
-                          name="video_lesson"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Lien de la vidéo</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder={
-                                    lesson.videoId || "Lien de la vidéo"
-                                  }
-                                  {...field}
-                                  className="bg-gray-950"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6">
-                <h2 className="font-semibold text-2xl">
-                  Liens supplémentaires
-                </h2>
-                {fields.map((field, index) => (
-                  <div key={field.id} className="flex flex-col">
-                    <div className="flex gap-2 items-center">
-                      <FormField
-                        control={form.control}
-                        name={`links.${index}.label`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Label du lien</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Label"
-                                {...field}
-                                className="bg-gray-950"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name={`links.${index}.url`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>URL</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="URL"
-                                {...field}
-                                className="bg-gray-950"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={() => remove(index)}
-                        className="self-end"
-                      >
-                        <Minus />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => append({ label: "", url: "" })}
-                  className="mt-4"
-                >
-                  <Plus />
-                  Ajouter un lien
-                </Button>
-              </div>
+              <EditDetailsBloc 
+                form={form} 
+                lesson={lesson} 
+                slugLesson={slugLesson} 
+                categories={categories} 
+                categoryLesson={categoryLesson}
+              /> 
+              <EditLinksBloc 
+                fields={fields} 
+                form={form} 
+                remove={remove} 
+                append={append} 
+              />
             </div>
             <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6 h-full col-span-12 block lg:hidden">
               <h2 className="font-semibold text-2xl">Contenu</h2>
               <div className="mt-4">
                 <RichTextEditor value={content} onChange={setContent} />
-                <FormField
-                  control={form.control}
-                  name="description_lesson"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description du cours</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Description"
-                          {...field}
-                          className="bg-gray-950"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <EditDescriptionBloc form={form} />
               </div>
             </div>
           </div>
