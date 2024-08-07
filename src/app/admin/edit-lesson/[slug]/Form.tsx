@@ -3,7 +3,6 @@
 import { editLesson } from "@/app/actions/editLesson";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { currentUserType } from "@/lib/current-user";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -15,12 +14,7 @@ import EditDetailsBloc from "@/components/dashboard/admin/edit-lessons/edit-deta
 import EditLinksBloc from "@/components/dashboard/admin/edit-lessons/edit-links-bloc";
 import RichTextEditor from "@/components/text-editor";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
+  Form
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -263,23 +257,7 @@ export default function EditLessonForm({
               <h2 className="font-semibold text-2xl">Contenu</h2>
               <div className="mt-4">
                 <RichTextEditor value={content} onChange={setContent} />
-                <FormField
-                  control={form.control}
-                  name="description_lesson"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description du cours</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder={lesson.description}
-                          {...field}
-                          className="bg-gray-950"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <EditDescriptionBloc form={form} />
               </div>
             </div>
             <div className="flex flex-col gap-4 w-full col-span-12 lg:col-span-4">
