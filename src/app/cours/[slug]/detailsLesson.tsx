@@ -51,12 +51,14 @@ export default function DetailsLesson({
               
                 <li
                   key={repo}
-                  className="hover:bg-torea-50/10 transition-colors p-2 rounded-md cursor-pointer duration-300 "
+                  className="hover:bg-torea-50/10 transition-colors p-2 rounded-md cursor-pointer duration-300 flex items-center gap-2 mt-2"
                 >
-                  <div className="flex items-center gap-2 mt-2">
-                    <Github className="w-4 h-4" />
-                    {repo}
+                  <Link href={repo} target="_blank" className="underline">
+                    <div className="flex items-center gap-2">
+                      <Github className="w-4 h-4" />
+                    Repo GitHub du cours
                   </div>
+                </Link>
                 </li>
               
             </ul>

@@ -135,8 +135,9 @@ const config = {
           "60%": { transform: "translate3D(60%, -60%, 0)scale(1)", easing: "ease-in-out" }, 
           "65%": { transform: "translate3D(60%, -60%, 0)scale(0.9)", easing: "ease-in-out" },
           "70%": { transform: "translate3D(60%, -60%, 0)scale(1)", easing: "ease-in-out" },
-          "90%": { transform: "translate3D(100%, 100%, 0)", easing: "ease-in"  },
-          "100%": { transform: "translate3D(100%, 100%, 0)", easing: "ease-in"  },
+          "85%": { transform: "translate3D(100%, 100%, 0) scale(1)", easing: "ease-in-out" },
+          "90%": { transform: "translate3D(100%, 100%, 0) scale(0.9)", easing: "ease-in"  },
+          "100%": { transform: "translate3D(100%, 100%, 0) scale(1)", easing: "ease-in"  },
         },
       },
       animation: {
