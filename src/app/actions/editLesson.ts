@@ -1,5 +1,6 @@
 "use server";
 
+import { currentUser } from "@/lib/current-user";
 import prisma from "@/lib/prisma";
 import Mux from "@mux/mux-node";
 import { redirect } from "next/navigation";
@@ -18,6 +19,12 @@ export async function editLesson(
   links: { label: string; url: string }[],
   contentLesson: string
 ) {
+
+  const user = await currentUser();
+  if (!user || !user.admin) {
+    throw new Error("Accès refusé");
+  }
+
   const existingLesson = await prisma.lessons.findFirst({
     where: {
       slug: params.slug,

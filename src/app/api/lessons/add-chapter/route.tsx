@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import  prisma  from "@/lib/prisma";
 import { currentUser } from "@/lib/current-user";
+import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const { name, start, slug } = await request.json();
@@ -29,19 +29,19 @@ export async function POST(request: NextRequest) {
   }
 
 
-    const chapter = await prisma.lessonChapter.create({
-        data: {
-        name,
-        start: start_in_seconds,
-        Lessons: {
-            connect: {
-            id: id_lesson.id,
-            },
+  const chapter = await prisma.lessonChapter.create({
+    data: {
+      name,
+      start: start_in_seconds,
+      Lessons: {
+        connect: {
+        id: id_lesson.id,
         },
-        },
-    });
+      },
+    },
+  });
 
-    console.log(chapter);
+  console.log(chapter);
 
 
   return NextResponse.json({ message: 'Chapter added' });

@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 
 export async function getBillingInformations(userId: string) {
   try {
+
     const billingInformation = await prisma.billingInformations.findUnique({
       where: {
         userId: userId
@@ -10,6 +11,6 @@ export async function getBillingInformations(userId: string) {
 
     return billingInformation;
   } catch (error) {
-    return null;
+    return { error: "Une erreur est survenue" };
   }
 }

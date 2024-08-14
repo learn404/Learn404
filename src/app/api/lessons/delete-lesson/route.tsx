@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
 import { currentUser } from "@/lib/current-user";
+import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(reponse: NextRequest) {
-  const { slug, userId } = await reponse.json();
+  const { slug } = await reponse.json();
 
   const user = await currentUser();
 
@@ -17,18 +17,6 @@ export async function DELETE(reponse: NextRequest) {
     );
   }
 
-  const checkAdmin = await prisma.user.findFirst({
-    where: { id: userId },
-    select: {
-      admin: true,
-    },
-  });
-  if (!checkAdmin) {
-    return NextResponse.json(
-      { message: "Vous n'êtes pas admin" },
-      { status: 401 }
-    );
-  }
   const lesson = await prisma.lessons.findFirst({
     where: { slug: slug },
     select: {

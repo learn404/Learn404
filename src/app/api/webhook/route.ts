@@ -10,9 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 export async function POST(req: NextRequest) {
 
   const payload = await req.text();
-  const res = JSON.parse(payload);
   const sig = req.headers.get("Stripe-Signature") as string;
-  const datetime =  new Date(res?.created * 1000).toLocaleString();
 
   try {
     

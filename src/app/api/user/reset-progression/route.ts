@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
 import { currentUser } from "@/lib/current-user";
+import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
 
     const user = await currentUser();
 
-    if (!user || !user.admin) {
+    if (!user || (!user.admin && user.id !== userId)) {
       return NextResponse.json(
         {
           message:

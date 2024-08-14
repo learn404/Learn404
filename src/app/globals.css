@@ -330,7 +330,8 @@ pre ::selection {
   }
 
   mark {
-    background-color: hsl(var(--chart-2));
+    background-color: hsl(45, 93%, 47%, 0.7);
+    color: #f9fafb ; /* text-gray-50 */
     border-radius: 0.2rem;
     box-decoration-break: clone;
     padding: 0.1rem 0.3rem;
@@ -541,7 +542,8 @@ article {
   }
 
   mark {
-    background-color: hsl(var(--chart-2));
+    background-color: hsl(45, 93%, 47%, 0.7);
+    color: #f9fafb ; /* text-gray-50 */
     border-radius: 0.2rem;
     box-decoration-break: clone;
     padding: 0.1rem 0.3rem;

@@ -1,3 +1,4 @@
+import { currentUser } from "@/lib/current-user";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -29,6 +30,12 @@ export async function POST(req: NextRequest) {
     };
 
     const { email, code } = await req.json();
+
+    const user = await currentUser();
+
+    if (!user || user.email !== email) {
+      return NextResponse.json({ success: false, error: "Access refusé" }, { status: 403 });
+    }
     
     // If the code is not empty, check if it is valid
     if (code && code !== "") {
