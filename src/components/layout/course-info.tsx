@@ -1,6 +1,7 @@
+
+import NumberTicker from "../magicui/number-ticker";
 import prisma from "@/lib/prisma";
 import { getLessonNumber, getLessonType } from "@/lib/utils";
-import NumberTicker from "../magicui/number-ticker";
 const convertDurationToSeconds = (duration: string) => {
   const [hours, minutes, seconds] = duration.split(":").map(Number);
   return hours * 3600 + minutes * 60 + seconds;
@@ -69,9 +70,9 @@ const CoursesInfos = async () => {
             </span>
           </div>
           <div className="flex flex-col items-center justify-center flex-1">
-            <p className="font-extrabold text-6xl sm:text-7xl lg:text-8xl textLinear">
+            <span className="font-extrabold text-6xl sm:text-7xl lg:text-8xl textLinear">
               <NumberTicker value={durationTotalNumber} />
-            </p>
+            </span>
             <span className="mt-2 text-center text-lg sm:text-2xl lg:text-3xl font-medium text-gray-300">
               heures de cours
             </span>
