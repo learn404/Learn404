@@ -38,8 +38,9 @@ export default async function Header() {
           {session ? (
             <DropdownLanding session={session} isAdmin={isAdmin} />
           ) : (
+            
             <>
-              <PrimaryButton redirectTo="/join" type="button">
+              <PrimaryButton redirectTo="/wishlist" type="button">
                 <Image src="/img/Logo_icon_blanc.svg" alt="logo icon" width={20} height={20} sizes="10vw" />
                 <span className="md:block font-medium">Rejoindre Learn404</span>
               </PrimaryButton>

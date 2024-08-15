@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Resend } from "resend";
-import wishlistEmail from "@/components/email/wishlistEmail";
+import { WishlistEmail } from "../../../../components/email/wishlistEmail";
 
 const resend = new Resend(process.env.RESEND_SECRET_KEY);
 
@@ -22,31 +22,24 @@ export async function POST(request: Request) {
       );
     }
 
-    
+    await prisma.wishlist.create({
+      data: {
+        email: email,
+      },
+    });
 
     await resend.emails.send({
       from: "Learn404 <noreply@learn404.com>",
       to: [email],
-
-      subject: "Confirmation d'inscription à la Wishlist Learn404",
-      react: wishlistEmail({ name: "Cher(e) Membre" }),
-      text: "Bienvenue sur la Wishlist de Learn404 !",
-      headers: {
-        'List-Unsubscribe': '<https://learn404.com/unsubscribe>',
-      },
+      subject: "Bienvenue sur la wishlist !",
+      text: `Bienvenue sur notre plateforme Learn404, ${email}!`,
+      react: WishlistEmail({ name: email }),
     });
 
-     const contact = await resend.contacts.create({
+    await resend.contacts.create({
       email: email,
       unsubscribed: false,
-      audienceId: process.env.RESEND_AUDIENCE_ID || "",
-    });
-
-    await prisma.wishlist.create({
-      data: {
-        email: email,
-       
-      },
+      audienceId: `${process.env.RESEND_AUDIENCE_ID}`,
     });
 
     return NextResponse.json(
