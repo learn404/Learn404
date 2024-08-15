@@ -90,9 +90,7 @@ export const WelcomeEmail = ({
             <Section className="text-center">
               <Button
                 className="bg-brand text-white rounded-lg py-3 px-[18px]"
-                onClick={() => {
-                  window.location.href = `${baseUrl}/subscribe`;
-                }}
+                href={`${baseUrl}`}
               >
                 Découvrir la formation
               </Button>

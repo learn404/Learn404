@@ -87,9 +87,7 @@ export const WishlistEmail = ({
             <Section className="text-center">
               <Button
                 className="bg-brand text-white rounded-lg py-3 px-[18px]"
-                onClick={() => {
-                  window.location.href = `https://discord.gg/w3mKH2e2Jt`;
-                }}
+                href="https://discord.gg/w3mKH2e2Jt"
               >
                 Explorer le discord
               </Button>
