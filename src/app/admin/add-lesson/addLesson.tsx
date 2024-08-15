@@ -4,46 +4,45 @@ import prisma from "@/lib/prisma";
 import { getLastSortNumber, lessonCheckExist } from "@/lib/utils";
 import Mux from "@mux/mux-node";
 import { redirect } from "next/navigation";
+import { Lessons_level } from ".prisma/client";
 
-export async function addLesson(formData: FormData) {
+export async function addLesson(nameLesson: string, slugLesson: string, contentLesson: string, category: string, descriptionLesson: string, videoLesson: string, repositoryLesson: string, draft: boolean, level: string, links: { label: string; url: string; }[]) {
+
   const last_sort_number = await getLastSortNumber();
+
+  const lessonCheckExist = await prisma.lessons.findFirst({
+    where: {
+      slug: slugLesson,
+    },
+  });
+
+  if (lessonCheckExist) {
+    throw new Error("Lesson already exists");
+  }
+
 
   const sort_number = last_sort_number?.sort_number
     ? last_sort_number?.sort_number + 1
     : 1;
 
-  const title = formData.get("title")?.toString();
-  const slug_title = formData
-    .get("slug_title")
-    ?.toString()
-    .replace(/\s+/g, "-");
-  const categoryId = formData.get("category")?.toString();
-  const about = formData.get("about")?.toString() || undefined;
-  const video_url = formData.get("video_url")?.toString() || undefined;
-  const repository_url =
-    formData.get("repository_url")?.toString() || undefined;
-  const draft = formData.get("draft") === "on";
-  const newLesson = formData.get("newLesson") === "on";
-
-  if (!title || !categoryId) {
-    throw new Error("Title and category are required");
-  }
   let assetId: string | undefined;
   let playbackIdFromMux: string | undefined;
   let videoId: string | undefined;
   let duration: undefined | number;
 
-  if (video_url) {
+  if (videoLesson) {
     const mux = new Mux({
       tokenId: process.env.MUX_TOKEN_ID!,
       tokenSecret: process.env.MUX_SECRET_KEY!,
     });
 
     const asset = await mux.video.assets.create({
-      input: [{ url: video_url }],
-      playback_policy: ["public"],
+      input: [{ url: videoLesson }],
+      playback_policy: ["signed"],
       max_resolution_tier: "1080p",
       encoding_tier: "baseline",
+
+
     });
 
     assetId = asset.id;
@@ -68,6 +67,14 @@ export async function addLesson(formData: FormData) {
     duration = inputInfo.duration;
   }
 
+  if (links && links[0].url !== "" && links[0].label !== "") {
+    links = [...links];
+  }
+  else {
+    links = [];
+  }
+
+
   let durationVideo: string = "00:00:00";
   if (duration) {
     const hours = Math.floor(duration / 3600).toString().padStart(2, "0");
@@ -76,25 +83,21 @@ export async function addLesson(formData: FormData) {
     durationVideo = `${hours}:${minutes}:${seconds}`;
   }
 
-  const checkLessonExist = await lessonCheckExist(slug_title as string);
-
-  if (checkLessonExist) {
-    throw new Error("Lesson already exists");
-  }
-
   await prisma.lessons.create({
     data: {
-      title: title ?? "",
-      slug: slug_title ?? "",
-      categoryId: categoryId ?? "",
-      description: about ?? "",
+      title: nameLesson ?? "",
+      slug: slugLesson ?? "",
+      categoryId: category ?? "",
+      description: descriptionLesson ?? "",
       playbackId: playbackIdFromMux ?? "",
-      repository_url: repository_url ?? "",
+      repository_url: repositoryLesson ?? "",
       draft: draft ?? false,
-      newLesson: newLesson ?? false,
       sort_number: sort_number,
+      contentLesson: contentLesson ?? "",
       videoId: videoId,
+      links: links ? JSON.stringify(links) : "",
       duration: durationVideo as string,
+      level: level as Lessons_level,
     },
   });
 

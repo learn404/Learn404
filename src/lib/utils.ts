@@ -82,15 +82,14 @@ export async function getLessonsStartedAndCompleted(user: UserBase) {
         select: {
           lessonProgress: {
             where: {
-              completed: true
-            }
+              completed: true,
+            },
           },
         },
       },
-      lessonProgress: true      
-    }
-  })
-
+      lessonProgress: true,
+    },
+  });
 
   if (lessonsStartedAndCompleted === null) {
     return {
@@ -109,63 +108,75 @@ export async function getCategoriesWithLessons() {
     include: {
       Lessons: {
         orderBy: {
-          sort_number: 'asc'
-        }
-      }
+          sort_number: "asc",
+        },
+      },
     },
     orderBy: {
-      sort_number: 'asc'
-    }
-  })
+      sort_number: "asc",
+    },
+  });
 
-  const categories = res.filter(category => category.Lessons.length > 0);
+
+
+  const categories = res.filter((category) => category.Lessons.length > 0);
   const lessons = await prisma.lessons.findMany({
     orderBy: {
-      sort_number: 'asc'
-    }
-  })
+      sort_number: "asc",
+    },
+  });
 
   return { categories, lessons };
+}
+
+export async function getCategories() {
+  const res = await prisma.categories.findMany({
+    orderBy: {
+      sort_number: "asc",
+    },
+  });
+  return res;
 }
 
 export async function getChangelogData() {
   const res = await prisma.changeLog.findMany({
     orderBy: {
-      createdAt: 'desc'
-    }
-  })
+      createdAt: "desc",
+    },
+  });
   return res;
 }
 
 export async function getLessons() {
   const res = await prisma.lessons.findMany({
     orderBy: {
-      sort_number: 'asc'
-    }
-  })
+      sort_number: "asc",
+    },
+  });
   return res;
 }
 
 export async function getTransactions() {
-  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-  const fifteenDaysAgo = Math.floor(Date.now() / 1000) - (15 * 24 * 60 * 60);
+  const fifteenDaysAgo = Math.floor(Date.now() / 1000) - 15 * 24 * 60 * 60;
 
   const transactions = await stripe.charges.list({
     limit: 100,
     created: {
-      gte: fifteenDaysAgo
-    }
+      gte: fifteenDaysAgo,
+    },
   });
-  
+
   const transationLength = transactions.data.length;
 
   return transationLength;
-
 }
-
-
 
 export const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', year: 'numeric' });
-}
+  return new Date(date).toLocaleDateString("fr-FR", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+};

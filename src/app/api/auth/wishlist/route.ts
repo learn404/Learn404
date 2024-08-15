@@ -27,6 +27,7 @@ export async function POST(request: Request) {
     await resend.emails.send({
       from: "Learn404 <noreply@learn404.com>",
       to: [email],
+
       subject: "Confirmation d'inscription à la Wishlist Learn404",
       react: wishlistEmail({ name: "Cher(e) Membre" }),
       text: "Bienvenue sur la Wishlist de Learn404 !",

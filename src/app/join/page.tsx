@@ -10,11 +10,7 @@ import { redirect } from "next/navigation";
 
 export default async function Join() {
   const session = await auth();
-
-if (!session){
-  redirect("/wishlist");
-}
-
+  
   if (session) {
     redirect("/dashboard");
   }
@@ -34,23 +30,25 @@ if (!session){
           alt="background"
         />
       </div>
-      <main className="flex flex-col-reverse justify-center items-start lg:flex-row lg:items-center px-12 lg:px-20 py-16 relative z-50 ">
+      <main className="flex flex-col-reverse justify-center items-center gap-8 lg:flex-row lg:items-center px-6 lg:px-20 py-16 relative z-50 overflow-x-hidden ">
         <div>
           <Image
-            src="/img/Card_img.webp"
+            src="/img/hero.png"
             alt="card"
             width={750}
             height={750}
-            className="-ml-6 min-w-80 lg:ml-0"
+            className="min-w-80 lg:ml-0 rounded-xl"
           />
         </div>
 
-        <div className="flex flex-col items-start max-w-80 lg:max-w-md">
+        <div className="flex flex-col items-center lg:items-start gap-y-5 lg:gap-y-8 max-w-md max-lg:text-center lg:max-w-md">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium">
-            <span className="text-torea-300">Sign in</span> or{" "}
-            <span className="text-torea-300">Sign up</span> to continue
+            <span className="text-torea-300">
+              Connecte-toi
+              </span> ou{" "}
+            <span className="text-torea-300">Crée un compte</span> pour continuer
           </h2>
-          <div className="flex items-center justify-center gap-3 mt-5 lg:mt-8">
+          <div className="flex items-center justify-center gap-3">
             <LoginGoogleButton />
             <LoginGithubButton />
           </div>

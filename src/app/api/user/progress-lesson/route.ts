@@ -1,8 +1,15 @@
+import { currentUser } from "@/lib/current-user";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const { userId, lessonId, hasWatchedOneMinute } = await req.json();
+
+    const user = await currentUser();
+
+    if (!user || user.id !== userId) {
+      return NextResponse.json({ message: "Accès refusé" }, { status: 403 })
+    };
 
     const checkProgress = await prisma.lessonProgress.findFirst({
       where: {

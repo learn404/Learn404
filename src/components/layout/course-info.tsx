@@ -1,3 +1,4 @@
+
 import NumberTicker from "../magicui/number-ticker";
 import prisma from "@/lib/prisma";
 import { getLessonNumber, getLessonType } from "@/lib/utils";
@@ -43,11 +44,11 @@ const CoursesInfos = async () => {
         </h2>
         <div className="text-gray-300 text-lg max-w-screen-md sm:text-center">
           <p>
-            Learn404 est <span className="text-gray-50 font-semibold ">concentré de connaissances</span> que nous avons acquises 
+            Learn404 est un <span className="text-gray-50 font-semibold ">concentré de connaissances</span> que nous avons acquises 
             tout le long de notre apprentissage du développement web.
           </p>
           <p className="mt-5">
-            Vous apprendrez donc tout ce que l'on sait, en partant de la prise en main d’un environnement de travail jusqu’à nos 
+            Tu apprendra donc tout ce que l'on sait, en partant de la prise en main d'un environnement de travail jusqu'à nos 
           <span className="text-gray-50 font-semibold "> connaissances actuelles</span>. La plateforme sera mise à jour tous les mois pour y ajouter de nouveaux cours. 
           </p>
         </div>

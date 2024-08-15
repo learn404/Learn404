@@ -1,22 +1,44 @@
 "use client";
 
+import { editLesson } from "@/app/actions/editLesson";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { currentUserType } from "@/lib/current-user";
-import { Loader2 } from "lucide-react";
+import { ChevronLeft, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { editLesson } from "./editLesson";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectGroup,
-  SelectLabel,
-} from "@/components/ui/select";
 
+import EditDescriptionBloc from "@/components/dashboard/admin/edit-lessons/edit-description-bloc";
+import EditDetailsBloc from "@/components/dashboard/admin/edit-lessons/edit-details-bloc";
+import EditLinksBloc from "@/components/dashboard/admin/edit-lessons/edit-links-bloc";
+import RichTextEditor from "@/components/text-editor";
+import {
+  Form
+} from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useFieldArray, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+
+const formSchema = z.object({
+  name_lesson: z.string().optional(),
+  slug_lesson: z.string().optional(),
+  links: z.array(
+    z.object({
+      label: z.string().optional(),
+      url: z.string().optional(),
+    })
+  ),
+  category: z.string().optional(),
+  level: z.string().optional(),
+  status: z.string().optional(),
+  repository_lesson: z.string().optional(),
+  video_lesson: z.string().optional(),
+  description_lesson: z.string().optional(),
+  content_lesson: z.string().optional(),
+});
 interface EditLessonFormProps {
   isAdmin: boolean;
   user: currentUserType;
@@ -35,6 +57,29 @@ export default function EditLessonForm({
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     []
   );
+  const [nameLesson, setNameLesson] = useState(lesson.title);
+  const [slugLesson, setSlugLesson] = useState(lesson.slug);
+  const [content, setContent] = useState(lesson.contentLesson);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name_lesson: "",
+      slug_lesson: "",
+      links: [{ label: "", url: "" }],
+      category: "",
+      level: "",
+      status: "",
+      repository_lesson: "",
+      video_lesson: "",
+      description_lesson: "",
+      content_lesson: "",
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "links",
+  });
 
   useEffect(() => {
     async function fetchCategories() {
@@ -45,273 +90,201 @@ export default function EditLessonForm({
         },
       });
       const data = await categories.json();
-      console.log(data);
       setCategories(data);
     }
     fetchCategories();
   }, []);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    const {
+      category,
+      level,
+      status,
+      name_lesson,
+      slug_lesson,
+      description_lesson,
+      video_lesson,
+      repository_lesson,
+      links,
+    } = values;
+
     try {
-      const formData = new FormData(event.currentTarget);
-      const response = await editLesson(formData, params);
+      const nameLesson = name_lesson;
+      const slugLesson = slug_lesson;
+      const contentLesson = content;
+      const categoryLesson = category;
+      const descriptionLesson = description_lesson || "";
+      const videoLesson = video_lesson || "";
+      const repositoryLesson = repository_lesson || "";
+      const draft = status === "1" ? true : false;
+
+      let levelLesson = "BEGINNER";
+
+      if (level === "1") {
+        levelLesson = "BEGINNER";
+      } else if (level === "2") {
+        levelLesson = "INTERMEDIATE";
+      } else if (level === "3") {
+        levelLesson = "ADVANCED";
+      }
+
+      const editFormLesson = () => {
+        return editLesson(
+          nameLesson || lesson.title,
+          slugLesson || lesson.slug,
+          categoryLesson || lesson.category,
+          descriptionLesson,
+          videoLesson,
+          repositoryLesson,
+          draft,
+          levelLesson,
+          params,
+          links.map((link) => ({
+            label: link.label || "",
+            url: link.url || "",
+          })) as { label: string; url: string }[],
+          contentLesson
+        );
+      };
+
+      toast.promise(editFormLesson(), {
+        loading: "Ajout des modifications...",
+        success: "Le cours a été modifié avec succès",
+        error: "Le cours n'a pas été modifié",
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
       setIsLoading(false);
+      router.push(`/cours/${slugLesson}`);
+      router.refresh();
     }
-  };
+  }
 
-  const handleDelete = async () => {
-    const response = await fetch("/api/lessons/delete-lesson", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ slug: params.slug, userId: user.id }),
-    });
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
+    try {
+      const deleteFormLesson = () => {
+        return fetch("/api/lessons/delete-lesson", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ slug: params.slug, userId: user.id }),
+        });
+      };
+
+      toast.promise(deleteFormLesson(), {
+        loading: "Suppression du cours...",
+        success: "Le cours a été supprimé avec succès",
+        error: "Le cours n'a pas été supprimé",
+      });
+    } catch (error) {
+      console.error("Error deleting lesson:", error);
+    } finally {
+      setIsLoading(false);
       router.push("/admin");
       router.refresh();
-      toast.success("Le cours a été supprimé avec succès");
-    } else {
-      toast.error("Le cours n'a pas été supprimé");
     }
   };
+
+  if (lesson.draft === false) {
+    lesson.draft = "En ligne";
+  } else if (lesson.draft === true) {
+    lesson.draft = "Brouillon";
+  }
+
+  if (lesson.level === "BEGINNER") {
+    lesson.level = "Débutant";
+  } else if (lesson.level === "INTERMEDIATE") {
+    lesson.level = "Intermédiaire";
+  } else if (lesson.level === "ADVANCED") {
+    lesson.level = "Avancé";
+  }
 
   return (
     <>
-      <form className="p-8" onSubmit={handleSubmit}>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-100">
-              MODIFICATION DU COURS
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-400">
-              Ces informations seront modifiées dans la base de données et
-              seront visibles par les étudiants.
-            </p>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="category"
-                  className="block text-sm font-medium leading-6 text-gray-100"
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 p-8 max-w-[80vw] m-auto flex-shrink-0 relative"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Link href="/admin">
+                <Button
+                  variant={"secondary"}
+                  className="rounded-md w-fit h-fit"
                 >
-                  Catégorie
-                </label>
-                <div className="mt-2">
-                  
-                  <Select name="category">
-                    <SelectTrigger id="category" className="w-[180px] rounded-md border-0 py-1.5 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                      <SelectValue placeholder={categoryLesson?.name} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Catégories</SelectLabel>
-                        {categories.map((category: any) => (
-                          <SelectItem value={category.id} key={category.id}>{category.name}</SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
+                  <ChevronLeft className="w-4 h-4 " />
+                </Button>
+              </Link>
+              <div>
+                <h1 className="text-2xl">
+                  Modification du cours : {nameLesson}
+                </h1>
               </div>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Titre
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="title"
-                      id="title"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder={lesson?.title}
-                    />
-                  </div>
-                </div>
+              <Badge
+                className={
+                  lesson.draft === "En ligne" ? "bg-green-500" : "bg-yellow-500"
+                }
+              >
+                {lesson.draft}
+              </Badge>
+            </div>
+            <div className="flex items-center gap-4">
+              <Button variant={"default"} disabled={isLoading} type="submit">
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  "Enregistrer"
+                )}
+              </Button>
+              <Button 
+                variant="ghost" 
+                onClick={handleDelete} 
+                type="button" 
+                className={cn("text-red-500 hover:text-red-600 hover:bg-red-500/10", isLoading && "cursor-not-allowed")}
+              >
+                Supprimer
+              </Button>
+            </div>
+          </div>
+          <div className="grid grid-cols-12 items-start gap-4 mt-4">
+            <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6 h-full hidden lg:block lg:col-span-8">
+              <h2 className="font-semibold text-2xl">Contenu</h2>
+              <div className="mt-4">
+                <RichTextEditor value={content} onChange={setContent} />
+                <EditDescriptionBloc form={form} />
               </div>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="slug_title"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Slug
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <span className="flex select-none items-center pl-3 text-gray-400 sm:text-sm">
-                      learn404.com/cours/categorie/
-                    </span>
-                    <input
-                      type="text"
-                      name="slug_title"
-                      id="slug_title"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-0.5 text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder={lesson?.slug}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-span-full">
-                <label
-                  htmlFor="about"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Description
-                </label>
-                <div className="mt-2">
-                  <textarea
-                    id="about"
-                    name="about"
-                    rows={3}
-                    className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={lesson?.description || ""}
-                  />
-                </div>
-                <p className="mt-3 text-sm leading-6 text-gray-400">
-                  Ecris une description du cours en quelques lignes.
-                </p>
+            </div>
+            <div className="flex flex-col gap-4 w-full col-span-12 lg:col-span-4">
+              <EditDetailsBloc 
+                form={form} 
+                lesson={lesson} 
+                slugLesson={slugLesson} 
+                categories={categories} 
+                categoryLesson={categoryLesson}
+              /> 
+              <EditLinksBloc 
+                fields={fields} 
+                form={form} 
+                remove={remove} 
+                append={append} 
+              />
+            </div>
+            <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6 h-full col-span-12 block lg:hidden">
+              <h2 className="font-semibold text-2xl">Contenu</h2>
+              <div className="mt-4">
+                <RichTextEditor value={content} onChange={setContent} />
+                <EditDescriptionBloc form={form} />
               </div>
             </div>
           </div>
-
-          <div className="border-b border-gray-100/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-100">
-              DÉTAILS DU COURS
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-400">
-              Ces informations peuvent être modifiées plus tard.
-            </p>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="repository_url"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Repository URL
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="url"
-                    name="repository_url"
-                    id="repository_url"
-                    placeholder={lesson?.repository_url || ""}
-                    className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="video_url"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Lien de la vidéo
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="url"
-                    name="video_url"
-                    id="video_url"
-                    className="block w-full rounded-md border-0 py-1.5 pl-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="https://drive.google.com/uc?id=ID_DU_FICHIER"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-100">
-              Paramètres du cours
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-400">
-              Les paramètres du cours peuvent être modifiés plus tard.
-            </p>
-
-            <div className="mt-10 space-y-10">
-              <fieldset>
-                <legend className="text-sm font-semibold leading-6 text-gray-100">
-                  Visibilité
-                </legend>
-                <div className="mt-6 space-y-6">
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="draft"
-                        name="draft"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        defaultChecked={lesson?.draft || false}
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="draft"
-                        className="font-medium text-gray-100"
-                      >
-                        Brouillon
-                      </label>
-                      <p className="text-gray-400">
-                        Les cours en brouillon ne sont pas visibles par les
-                        étudiants.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="newLesson"
-                        name="newLesson"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        defaultChecked={lesson?.newLesson || false}
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="newLesson"
-                        className="font-medium text-gray-100"
-                      >
-                        Nouveau
-                      </label>
-                      <p className="text-gray-400">
-                        Les nouveaux cours ont un badge spécial.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-x-6">
-          <Button variant="outline" type="button" onClick={handleDelete}>
-            Supprimer le cours
-          </Button>
-          <Button variant="default" type="submit" disabled={isLoading}>
-            {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              "Modifier le cours"
-            )}
-          </Button>
-        </div>
-      </form>
+        </form>
+      </Form>
     </>
   );
 }

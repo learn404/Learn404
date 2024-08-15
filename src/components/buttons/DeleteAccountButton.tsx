@@ -14,20 +14,25 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
 import { useState } from "react";
+import { toast } from "sonner";
 
 interface PropsDeleteAccountButton {
   user?: {
-    id: string | null; 
+    id: string | null;
   };
   userSearch?: {
     id: string | null;
     name: string | null;
   };
+  className?: string;
 }
 
-export function DeleteAccountButton({ user, userSearch }: PropsDeleteAccountButton) {
+export function DeleteAccountButton({
+  user,
+  userSearch,
+  className,
+}: PropsDeleteAccountButton) {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
 
@@ -36,57 +41,62 @@ export function DeleteAccountButton({ user, userSearch }: PropsDeleteAccountButt
   };
 
   const handleDeleteAccount = async () => {
-    let response;
-    if (userSearch) {
-      response = await fetch("/api/user/delete-account", {
-        method: "POST",
-        body: JSON.stringify({ userId: userSearch?.id }),
-      });
-    } else {
-      response = await fetch("/api/user/delete-account", {
-        method: "POST",
-        body: JSON.stringify({ userId: user?.id }),
-      });
-    }
+    const userId = userSearch?.id || user?.id;
+  
 
-    if (!response.ok) {
-      const data = await response.json();
-      console.log(data);
-      console.log("Erreur lors de la suppression du compte");
-    } else {
-      console.log("Compte supprimé avec succès");
-      const data = await response.json();
-      toast.success(data.message);
-      if (userSearch) {
-        router.push("/admin");
-        router.refresh();
-      } else {
-        router.push("/");
-        
+    toast.promise(
+      fetch("/api/user/delete-account", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      }),
+      {
+        loading: "Suppression du compte en cours...",
+        success: "Compte supprimé avec succès",
+        error: "Une erreur est survenue lors de la suppression du compte",
       }
+    );
+    if (userSearch) {
+      router.push("/admin");
+      router.refresh();
+    } else {
+      router.push("/");
     }
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">Supprimer le compte</Button>
+        <Button 
+          variant="destructive"
+          className={className}
+        >
+          Supprimer le compte
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {userSearch ? "Voulez-vous vraiment supprimer ce compte ?" : "Voulez-vous vraiment supprimer votre compte ?"}
+            {userSearch
+              ? "Veux-tu vraiment supprimer ce compte ?"
+              : "Veux-tu vraiment supprimer ton compte ?"}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {userSearch ? `Cette action est irréversible. Cela supprimera le compte de ${userSearch?.name} et supprimera toutes les données de notre serveur.` : "Cette action est irréversible. Cela supprimera votre compte et supprimera toutes vos données de notre serveur."}
+            {userSearch
+              ? `Cette action est irréversible. Cela supprimera le compte de ${userSearch?.name} et toutes ses données de notre serveur.`
+              : "Cette action est irréversible. Cela supprimera ton compte et toutes tes données de notre serveur."}
 
-            <div className="flex items-center space-x-2 mt-2">
+            <div className="flex items-center space-x-2 mt-4">
               <Checkbox id="terms" onCheckedChange={handleChecked} />
               <label
                 htmlFor="terms"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                {userSearch ? "Je confirme la suppression de ce compte" : "Je confirme la suppression de mon compte"}
+                {userSearch
+                  ? "Je confirme la suppression de ce compte"
+                  : "Je confirme la suppression de mon compte"}
               </label>
             </div>
           </AlertDialogDescription>

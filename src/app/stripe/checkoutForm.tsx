@@ -1,9 +1,11 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
+  AddressElement,
   PaymentElement,
   useElements,
-  useStripe,
+  useStripe
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementChangeEvent } from "@stripe/stripe-js";
 import { FormEvent, useContext, useState } from "react";
@@ -45,17 +47,32 @@ export default function CheckoutForm(paymentInformations: PaymentInformations) {
       },
     });
 
+    console.log(paymentIntent);
+    
     if (error) {
       setLoading(false);
-      setResponsePayment({ error: error.message, type: "Error" });
+      setResponsePayment({ error: "Une erreur est survenue, si celle-ci persiste vous pouvez nous contacter à l'addresse suivante : contact.learn404@gmail.com", type: "Erreur" });
     } else {
       setLoading(false);
-      console.log(paymentIntent);
+
       setResponsePayment({
         success:
-          "Votre paiement a été traité avec succès. Vous pouvez maintenant accéder à votre tableau de bord.",
-        type: "Success",
+          "Merci pour votre achat ! Vous pouvez maintenant accéder à votre tableau de bord.",
+        type: "Paiement accepté",
       });
+      
+      try {
+        await fetch("/api/email/subscription-mail", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: userEmail }),
+        });
+      
+      } catch (error) {
+        console.error("Error sending email", error);
+      }
     }
   };
 
@@ -77,12 +94,31 @@ export default function CheckoutForm(paymentInformations: PaymentInformations) {
           <div className="fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-screen h-screen bg-black/25 z-40"></div>
         </>
       )}
+
+
       <form id="payment-form" onSubmit={handleSubmit}>
+        <AddressElement className='my-6' options={{ mode: 'shipping' }} />
         <PaymentElement onChange={handleStripeChange} />
-        {paymentInformations.code && (
-          <div className="mt-2 text-sm text-gray-400 text-right">Code : "{paymentInformations.code}" | -{paymentInformations.promo}%</div>
-        )}
-        <div className="mt-6 flex items-center justify-end gap-2 ">
+          <div className="w-full mt-8">
+            <div className={cn(
+              "flex items-center justify-between pb-2 text-gray-300",
+              !paymentInformations.code && " border-b border-gray-800 pb-4"
+              )}>
+              <span>Prix</span>
+              <span>{paymentInformations.basePrice}€</span>
+            </div>
+            {paymentInformations.code && (
+              <div className="flex items-center justify-between pb-4 border-b border-gray-800 text-gray-300">
+                <span>Code : "{paymentInformations.code}"</span>
+                <span>-{paymentInformations.promo}%</span>
+              </div>
+            )}
+            <div className="flex items-center justify-between pt-4 text-xl text-gray-50">
+              <span>Montant Total :</span>
+              <span>{paymentInformations.finalPrice}€</span>
+            </div>
+          </div>
+        <div className="mt-8 flex items-center justify-end gap-2 ">
           <button
             disabled={isLoading || !isFormCompleted || !!responsePayment}
             id="submit"
@@ -95,11 +131,8 @@ export default function CheckoutForm(paymentInformations: PaymentInformations) {
                 ? "Chargement..."
                 : responsePayment
                   ? responsePayment?.type
-                  : (<span>Confimer l'achat <span className={paymentInformations.code ? "line-through" : ""}>{paymentInformations.basePriceFormated}</span></span>)}
+                  : (<span>Confimer l'achat</span>)}
             </span>
-            {(paymentInformations.promo > 0) && !isLoading && !responsePayment && (
-              <span className={"absolute right-8 bottom-0 text-sm " + (isFormCompleted && "text-torea-300")}>~{paymentInformations.finalPriceFormated}</span>
-            )}
           </button>
         </div>
       </form>

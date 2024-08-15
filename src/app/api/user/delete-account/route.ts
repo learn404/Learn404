@@ -1,46 +1,44 @@
-import { NextRequest, NextResponse } from "next/server";
+import { currentUser } from "@/lib/current-user";
 import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
-  const { userId } = await request.json();
-  
+export async function POST(req: NextRequest) {
+  const { userId }: { userId: string } = await req.json();
+
   try {
-    if (!userId) {
+    const user = await currentUser();
+    
+    if (!user || (user?.id !== userId && !user.admin)) {
       return NextResponse.json(
-        { message: "Aucun utilisateur trouvé" },
-        { status: 400 }
+        {
+          message: "Accès refusé, vous ne pouvez pas supprimer ce profil",
+        },
+        { status: 403 }
       );
     }
-    
-     await prisma.account.delete({
-      where: {
-        userId: userId,
-      },
-    });
 
     await prisma.session.deleteMany({
-      where: {
-        userId: userId,
-      },
+      where: { userId },
     });
 
-    await prisma.lessonProgress.deleteMany({
-      where: {
-        userId: userId,
-      },
+    await prisma.account.deleteMany({
+      where: { userId },
     });
 
     await prisma.user.delete({
-      where: {
-        id: userId,
-      },
+      where: { id: userId },
     });
-
-    return NextResponse.json({ message: "Compte supprimé avec succès" });
+    return NextResponse.json({
+      message: "L'utilisateur a été supprimé avec succès",
+      userId,
+    });
   } catch (error) {
-    console.log(error);
+    console.error(
+      "Erreur dans le processus de suppression de l'utilisateur :",
+      error
+    );
     return NextResponse.json(
-      { message: "Erreur lors de la suppression du compte" },
+      { message: "Echec de la suppression de l'utilisateur" },
       { status: 500 }
     );
   }

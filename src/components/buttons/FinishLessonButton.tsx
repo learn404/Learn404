@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import { CheckCircleIcon, CircleIcon } from "lucide-react";
+
 
 interface FinishLessonButtonProps {
   userId: string;
@@ -20,43 +22,57 @@ const FinishLessonButton = ({
 }: FinishLessonButtonProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(completed);
+
 
   const finishLesson = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/user/progress-lesson", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          lessonId,
-        }),
+      const sendFinishLessonRequest = () => {
+        return fetch ("/api/user/progress-lesson", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            lessonId,
+          }),
+        });
+      };
+      toast.promise(sendFinishLessonRequest, {
+        success: "L'état du cours a été mis à jour",
+        error: "La mise à jour de l'état du cours a échoué",
+        loading: "Mise à jour de l'état du cours en cours...",
       });
-      if (!response.ok) {
-        throw new Error("La mise à jour de l'état du cours a échoué");
-      }
-      toast.success("L'état du cours a été mis à jour");
-      router.push(`/cours/${slug}`);
-      router.refresh();
     } catch (error) {
       console.error(error);
-      toast.error("La mise à jour de l'état du cours a échoué");
+    } finally {
+      setIsLoading(false);
+      setIsCompleted(!isCompleted);
+      router.refresh();
+      
     }
-    setIsLoading(false);
   };
 
   return (
-    <Button
-      type="button"
-      onClick={finishLesson}
-      className="bg-white text-indigo-800 px-4 py-2 rounded-md"
-      disabled={isLoading}
-      variant="outline"
-    >
-      {isLoading ? "En cours" : completed ? "Terminé" : "Terminer le cours"}
-    </Button>
+    <div> 
+    {isCompleted ? (
+      <>
+        <Button variant="secondary" onClick={finishLesson}>
+          <CheckCircleIcon className="w-4 h-4 text-green-500" />
+          <p className="text-green-500">Terminé</p>
+        </Button>
+      </>
+    ) : (
+      <>
+        <Button variant="secondary" onClick={finishLesson}  >
+          <CircleIcon className="w-4 h-4 text-gray-100" />
+          <p className="text-gray-100">Terminer le cours</p>
+        </Button>
+      </>
+    )}
+  </div>
   );
 };
 

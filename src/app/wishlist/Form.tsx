@@ -1,10 +1,10 @@
-'use client';
-
+"use client";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import  {AnimatedSubscribeButton} from "@/components/magicui/animated-subscribe-button";
+import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
 import { useState } from "react";
+
 import { toast } from "react-toastify";
 
 
@@ -28,7 +28,6 @@ export default function FormWishlist (){
                 return;
             }
 
-
             if (!email.includes("@") || !email.includes(".")) {
                 toast.error("Veuillez entrer une adresse email valide");
                 setSubscribeStatus(false);
@@ -36,7 +35,6 @@ export default function FormWishlist (){
                 setIsLoading(false);
                 return;
             }
-
 
             if (email.length < 5) {
 
@@ -69,19 +67,35 @@ export default function FormWishlist (){
           console.error("Error submitting form:", error);
         } finally {
         
-          setIsLoading(false);
-          setSubscribeStatus(false);
-        }
-      };
+      } else {
+        setSubscribeStatus(true);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    return (
-        <>
-        <form onSubmit={handleSubmit}>
-            <Label htmlFor="email">Email</Label>
-            <Input type="email" placeholder="Email" name="email" className="text-gray-800 max-w-lg"/>
-            <p className="text-sm text-gray-400 font-medium py-2 max-w-lg">Tu t'inscris à la newsletter de Learn404 ainsi qu'à la wishlist qui te donnera un avantage considérable...</p>
-            <AnimatedSubscribeButton initialText="S'abonner" changeText={'Abonné'} buttonColor="white" buttonTextColor={'text-gray-800'} subscribeStatus={subscribeStatus}  />
-        </form>
-        </>
-    )
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <Label htmlFor="email">Email</Label>
+        <Input
+          placeholder="Email"
+          name="email"
+          className="text-gray-800 max-w-lg"
+        />
+        <p className="text-sm text-gray-400 font-medium py-2 max-w-lg">
+          Tu t'inscris à la newsletter de Learn404 ainsi qu'à la wishlist qui te
+          donnera un avantage considérable...
+        </p>
+        <AnimatedSubscribeButton
+          initialText="S'abonner"
+          changeText={"Abonné"}
+          buttonColor="white"
+          buttonTextColor={"text-gray-800"}
+          subscribeStatus={subscribeStatus}
+        />
+      </form>
+    </>
+  );
 }

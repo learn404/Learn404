@@ -5,7 +5,7 @@ const FaqSection = () => {
     <div id="faq" className="px-6 lg:px-20 pb-[12.5rem]">
       <div className="mx-auto max-w-[1436px] flex flex-col items-center">
         <h2 className="text-center text-gray-50 text-3xl sm:text-4xl font-semibold text-balance max-w-xl">
-          Vous pourriez vous poser une de ces questions
+          Tu pourrais te poser une de ces questions
         </h2>
         <div className="flex flex-col max-lg:items-center lg:flex-row lg:justify-between lg:gap-4 mt-16 w-full">
           <div className="max-w-[648px] space-y-16">
@@ -89,8 +89,8 @@ const FaqSection = () => {
                   Et si j'ai besoin d'aide ?
                 </h3>
                 <p className="text-gray-400 mt-4">
-                Pour nous contacter, vous avez 2 choix qui s'offrent à vous : le premier est d'ouvrir un ticket support sur le
-                serveur discord et le second est de nous envoyer un mail à <span className="font-semibold">contact@learn404.com</span>
+                Pour nous contacter, 2 choix s'offrent à toi : le premier est d'ouvrir un ticket support sur le
+                serveur discord et le second est de nous envoyer un mail à l'adresse <span className="font-semibold">contact@learn404.com</span>.
                 </p>
               </div>
             </div>

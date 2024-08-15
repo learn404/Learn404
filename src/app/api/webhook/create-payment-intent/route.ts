@@ -1,3 +1,4 @@
+import { currentUser } from "@/lib/current-user";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -20,15 +21,21 @@ export async function POST(req: NextRequest) {
   try {
 
     let paymentInformations: PaymentInformations = {
-      basePrice: 5.99,
-      basePriceFormated: "EUR 5.99",
-      finalPrice: 5.99,
-      finalPriceFormated: "EUR 5.99",
+      basePrice: 19.99,
+      basePriceFormated: "EUR 19.99",
+      finalPrice: 19.99,
+      finalPriceFormated: "EUR 19.99",
       promo: 0,
       currency: "eur",
     };
 
     const { email, code } = await req.json();
+
+    const user = await currentUser();
+
+    if (!user || user.email !== email) {
+      return NextResponse.json({ success: false, error: "Access refusé" }, { status: 403 });
+    }
     
     // If the code is not empty, check if it is valid
     if (code && code !== "") {
@@ -50,12 +57,11 @@ export async function POST(req: NextRequest) {
 
       // Set the promotion code
       paymentInformations.code = code;
-    }
-    
+    }    
     
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: paymentInformations.finalPrice * 100,
+      amount: Math.round(paymentInformations.finalPrice * 100),
       currency: paymentInformations.currency,
       receipt_email: email,
       // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional

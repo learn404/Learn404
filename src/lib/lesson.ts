@@ -5,6 +5,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import rehypeHighlight from "rehype-highlight";
+import rehypeHighlightLines from "rehype-highlight-code-lines";
 import { unified } from "unified";
 
 type Metadata = {
@@ -22,8 +24,11 @@ export async function markdownToHTML(markdown: string) {
   const p = await unified()
     .use(remarkParse)
     .use(remarkRehype)
+    .use(rehypeHighlight)
+    .use(rehypeHighlightLines, {
+      showLineNumbers: true,
+    })
     .use(rehypePrettyCode, {
-      // https://rehype-pretty.pages.dev/#usage
       theme: {
         light: "min-light",
         dark: "min-dark",
@@ -32,12 +37,18 @@ export async function markdownToHTML(markdown: string) {
     })
     .use(rehypeStringify)
     .process(markdown);
-
   return p.toString();
 }
 
 export async function getLesson(slug: string) {
-  const filePath = path.join(process.cwd(), "src", "app", "content", "lessons", `${slug}.mdx`);
+  const filePath = path.join(
+    process.cwd(),
+    "src",
+    "app",
+    "content",
+    "lessons",
+    `${slug}.mdx`
+  );
   let source = fs.readFileSync(filePath, "utf-8");
   const { content: rawContent, data: metadata } = matter(source);
   const content = await markdownToHTML(rawContent);
@@ -64,5 +75,7 @@ async function getAllLessons(dir: string) {
 }
 
 export async function getLessonPosts() {
-  return getAllLessons(path.join(process.cwd(), "src", "app", "content", "lessons")); 
+  return getAllLessons(
+    path.join(process.cwd(), "src", "app", "content", "lessons")
+  );
 }

@@ -10,16 +10,16 @@ interface AccountLayoutProps {
 }
 
 export default async function AccountLayout({ children, title, user }: AccountLayoutProps) {
-
+  
   return (
     <>
       <HeaderDashboard
         user={user}
         title={title}
       />
-      <main className="max-w-screen-md w-full mx-auto py-12 mb-10 px-4 md:px-8 flex justify-center">
+      <main className="max-w-screen-md w-full mx-auto py-12 mb-10 px-4 md:px-8 sm:flex justify-center">
         <AccountMenu />
-        <div className="mt-2 w-full">
+        <div className="mt-7 md:mt-2 w-full">
           {children}
         </div>
       </main>

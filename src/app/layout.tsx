@@ -1,15 +1,15 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from 'sonner';
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://learn404.com'),
-  keywords: ['Next.js', 'React', 'JavaScript', 'Développement', 'Web', 'Formation', 'Learn404', 'Formation en Développement Web', 'Formation en Développement Web avec Next.js', 'Formation en Développement Web avec React', 'Formation en Développement Web avec JavaScript', 'Formation en Développement Web avec Git', 'Formation en ligne'],
+  keywords: ['Next.js', 'React', 'JavaScript', 'Développement', 'Web', 'Formation', 'Learn404', 'Formation en Développement Web', 'Formation en Développement Web avec Next.js', 'Formation en Développement Web avec React', 'Formation en Développement Web avec JavaScript', 'Formation en Développement Web avec Git', 'Formation en ligne', "formation en ligne","formation developpeur web", "formation informatique","developpeur web full stack studi","site web","visual studio code","developpeur web","développeur","développeur web salaire","formation developpeur"],
   title: "Learn404 - Formation en Développement Web",
   description:
     "Devenez expert en création et optimisation de sites web avec notre formation complète en Développement Web. Apprenez les bases du HTML, CSS, et JavaScript, maîtrisez des frameworks comme React, Angular et plus encore, et les outils de développement web comme Git,...",
@@ -25,20 +25,10 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={inter.className}>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar={true}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable={true}
-          theme="light"
-        />
+        <Toaster position="bottom-right" expand={false} closeButton richColors/>
         <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >

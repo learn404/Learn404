@@ -1,16 +1,15 @@
 "use client";
 
 import {
-  CreditCard,
-  Book,
+  LayoutDashboard,
   Loader,
   Settings,
-  LayoutDashboard,
-  User,
+  User
 } from "lucide-react";
 
 import {
   Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -18,11 +17,10 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-  CommandDialog,
 } from "@/components/ui/command";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 interface Lesson {
@@ -31,17 +29,12 @@ interface Lesson {
   slug: string;
 }
 
-interface Blog {
-  metadata: { title: string; slug: string; publishAt: string; image: string };
-  slug: string;
-  source: string;
-}
 export default function SearchInput({
   lessons,
-  blog,
+ 
 }: {
   lessons: Lesson[];
-  blog: Blog[];
+
 }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -56,10 +49,6 @@ export default function SearchInput({
         e.preventDefault();
         router.push("/dashboard");
       }
-      if (e.key === "b" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        router.push("/blog");
-      }
       if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         router.push("/changelog");
@@ -73,21 +62,22 @@ export default function SearchInput({
   return (
     <>
       <Button
-        variant={"outline"}
-        className="border-2 rounded-md p-2"
+        variant={"outline"} 
+        className="flex items-center border-2 text-gray-200 hover:bg-gray-800"
         onClick={() => setOpen(true)}
       >
-        <p className="text-sm text-muted-foreground">
-          {" "}
-          <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 cursor-pointer">
-            <span className="text-xs">⌘</span>K
-          </kbd>
-        </p>
+        <kbd 
+          className="pointer-events-none inline-flex h-3 w-3 select-none items-center justify-center gap-1
+          rounded font-mono font-medium text-gray-400
+          cursor-pointer text-[0.7rem]"
+        >
+          <span>⌘</span>K
+        </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command className="bg-bg-primary text-white">
           <CommandInput placeholder="Rechercher ..." />
-          <CommandList>
+          <CommandList className="no-scrollbar">
             <CommandEmpty>Pas de résultat trouvé</CommandEmpty>
             <CommandGroup heading="Suggestions">
               <Link href="/dashboard">
@@ -98,17 +88,6 @@ export default function SearchInput({
                   </div>
                   <div className="">
                     <CommandShortcut>⌘O</CommandShortcut>
-                  </div>
-                </CommandItem>
-              </Link>
-              <Link href="/blog">
-                <CommandItem className="flex items-center justify-between w-full cursor-pointer">
-                  <div className="flex items-center">
-                    <Book className="mr-2 h-4 w-4" />
-                    <span>Blog</span>
-                  </div>
-                  <div className="">
-                    <CommandShortcut>⌘B</CommandShortcut>
                   </div>
                 </CommandItem>
               </Link>
@@ -155,16 +134,7 @@ export default function SearchInput({
                 </Link>
               ))}
             </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup heading="Blog">
-              {blog.map((post) => (
-                <Link href={`/blog/${post.slug}`} key={post.slug}>
-                  <CommandItem className="text-white">
-                    {post.metadata.title}
-                  </CommandItem>
-                </Link>
-              ))}
-            </CommandGroup>
+
           </CommandList>
         </Command>
       </CommandDialog>

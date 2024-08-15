@@ -1,5 +1,5 @@
-'use client'
-import { Button } from "@/components/ui/button"
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,95 +8,103 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
-import { toast } from "react-toastify"
-import { useRouter } from "next/navigation"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-export default function ChapterLessonButton({ params }: { params: { slug: string } }) {
-
+export default function ChapterLessonButton({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     setIsLoading(true);
     try {
-     const formData = new FormData(event?.currentTarget);
-     console.log(params.slug);
-     console.log(formData.get('name'));
-     console.log(formData.get('start'));
-    const response = await fetch("/api/lessons/add-chapter", {
-      method: 'POST',
-      body: JSON.stringify({
-        name: formData.get('name'),
-        start: formData.get('start'),
-        slug: params.slug,
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to add chapter');
-    }
-    toast.success('Chapitre ajouté avec succès');
-    router.push(`/cours/${params.slug}`);
-    router.refresh()
+      const formData = new FormData(event?.currentTarget);
+
+      const addChapter = () => {
+        return fetch("/api/lessons/add-chapter", {
+          method: "POST",
+          body: JSON.stringify({
+            name: formData.get("name"),
+            start: formData.get("start"),
+            slug: params.slug,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      }
+      toast.promise(
+        addChapter(),
+        {
+          success: "Chapitre ajouté avec succès",
+          error: "Une erreur est survenue lors de l'ajout du chapitre",
+          loading: "Ajout du chapitre en cours...",
+        }
+      );
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
+      setOpen(false);
+      router.refresh();
     }
-  }
-
+  };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" size={"lg"}>Ajouter un chapitre</Button>
+        <Button variant="secondary">
+          Ajouter un chapitre
+        </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-black">
+      <DialogContent className="bg-black">
         <DialogHeader>
           <DialogTitle>Ajouter un chapitre</DialogTitle>
-          <DialogDescription>
-            Ajoute un chapitre à la Vidéo
-          </DialogDescription>
+          <DialogDescription>Ajoute un chapitre à la Vidéo</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Nom du chapitre
-            </Label>
-            <Input
-              id="name"
-              name="name"
-              defaultValue="Chapitre 1"
-              className="col-span-3 block flex-1 border bg-transparent py-1.5  text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-            />
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Nom du chapitre
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                defaultValue="Chapitre 1"
+                className="col-span-3 block flex-1 border bg-transparent py-1.5  text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Début du chapitre
+              </Label>
+              <Input
+                id="start"
+                name="start"
+                defaultValue="00:00:00"
+                className="col-span-3 block flex-1 border  bg-transparent py-1.5  text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Début du chapitre
-            </Label>
-            <Input
-              id="start"
-              name="start"
-              defaultValue="00:00:00"
-              className="col-span-3 block flex-1 border  bg-transparent py-1.5  text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-            />
-          </div>
-        </div>
-        
-        <DialogFooter>
-          <Button type="submit" disabled={isLoading}>Ajouter</Button>
-        </DialogFooter>
+
+          <DialogFooter>
+            <Button type="submit" disabled={isLoading}>
+              Ajouter
+            </Button>
+          </DialogFooter>
         </form>
       </DialogContent>
-      
     </Dialog>
-  )
+  );
 }

@@ -1,21 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
+import { currentUser } from "@/lib/current-user";
 import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(reponse: NextRequest) {
-  const { slug, userId } = await reponse.json();
+  const { slug } = await reponse.json();
 
-  const checkAdmin = await prisma.user.findFirst({
-    where: { id: userId },
-    select: {
-      admin: true,
-    },
-  });
-  if (!checkAdmin) {
+  const user = await currentUser();
+
+  if (!user || !user.admin) {
     return NextResponse.json(
-      { message: "Vous n'êtes pas admin" },
-      { status: 401 }
+      {
+        message:
+          "Accès refusé, vous n'êtes pas admin, merci de ne pas tenter de faire des requêtes illégales",
+      },
+      { status: 403 }
     );
   }
+
   const lesson = await prisma.lessons.findFirst({
     where: { slug: slug },
     select: {

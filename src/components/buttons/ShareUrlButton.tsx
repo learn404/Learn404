@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { toast } from "react-toastify"
+import { toast } from "sonner"
 
 export default function ShareUrlButton() {
 
@@ -24,7 +24,9 @@ export default function ShareUrlButton() {
 
     const handleClick = () => {
         navigator.clipboard.writeText(`https://learn404.com${pathname}`);
-        toast.success('Copié !')
+        toast.message('URL copié', {
+          description: 'Le lien a été copié dans le presse-papier',
+        });
     }
   return (
     <Dialog>

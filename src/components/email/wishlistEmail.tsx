@@ -51,6 +51,7 @@ export const WishlistEmail = ({
             src={`${baseUrl}/img/logo.png`}
             width="184"
             height="184"
+
             alt="Learn404"
             className="mx-auto my-20"
           />

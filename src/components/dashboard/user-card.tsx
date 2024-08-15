@@ -25,7 +25,7 @@ const UserCard = async ({ user, numberOfLessons, lessonsCompleted }: UserCardPro
               {user.id}
             </p>
           </div> 
-          <p className="font-semibold text-sm text-gray-500">Membre</p> 
+          <p className="font-semibold text-sm text-gray-500 max-md:mt-1">Membre</p> 
           <Link 
             href="/account/details" 
             className="z-50 mt-4 inline-flex border border-white/10 rounded-md px-3.5 py-2.5 text-xs md:text-sm

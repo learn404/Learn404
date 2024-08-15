@@ -2,12 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { currentUserType } from "@/lib/current-user";
-import { Loader2 } from "lucide-react";
-import Image from "next/image";
+import { ChevronLeft, Loader2, Plus, Minus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { addLesson } from "./addLesson";
-import CreateCategoryButton from "@/components/buttons/AddCategoryButton";
+import RichTextEditor from "@/components/text-editor";
 import {
   Select,
   SelectContent,
@@ -17,307 +16,516 @@ import {
   SelectGroup,
   SelectLabel,
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import Link from "next/link";
+import { toast } from "sonner";
+import AddCategoryButton from "@/components/buttons/AddCategoryButton";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, useFieldArray } from "react-hook-form";
+import { z } from "zod";
+
+const formSchema = z.object({
+  name_lesson: z.string().min(2).max(50),
+  slug_lesson: z.string().min(2).max(50),
+  links: z.array(
+    z.object({
+      label: z.string().optional(),
+      url: z.string().optional(),
+    })
+  ),
+  category: z.string(),
+  level: z.string(),
+  status: z.string(),
+  repository_lesson: z.string().optional(),
+  video_lesson: z.string().optional(),
+  description_lesson: z.string().optional(),
+  content_lesson: z.string().optional(),
+});
 
 interface AddLessonFormProps {
   isAdmin: boolean;
   isAvatar: boolean;
-  user: currentUserType;
+  categories: { id: string; name: string }[];
 }
 
-export default function AddLessonForm({ user, isAvatar }: AddLessonFormProps) {
-  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
-    []
-  );
+export default function AddLessonForm({ categories }: AddLessonFormProps) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name_lesson: "",
+      slug_lesson: "",
+      links: [{ label: "", url: "" }],
+      category: "",
+      level: "",
+      status: "",
+      repository_lesson: "",
+      video_lesson: "",
+      description_lesson: "",
+      content_lesson: "",
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "links",
+  });
+
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [nameLesson, setNameLesson] = useState("");
+  const [slugLesson, setSlugLesson] = useState("");
+  const [content, setContent] = useState("");
+
+  const difficulties = [
+    { id: "1", name: "Débutant" },
+    { id: "2", name: "Intermédiaire" },
+    { id: "3", name: "Avancé" },
+  ];
+  const status = [
+    { id: "1", name: "Brouillon", value: true },
+    { id: "2", name: "En ligne", value: false },
+  ];
+
 
   useEffect(() => {
-    async function fetchCategories() {
-      const categories = await fetch("/api/lessons/get-categories", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await categories.json();
-      console.log(data);
-      setCategories(data);
-    }
-    fetchCategories();
-  }, []);
+    setSlugLesson(
+      nameLesson
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "")
+    );
+  }, [nameLesson]);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
+    const {
+      category,
+      level,
+      status,
+      name_lesson,
+      slug_lesson,
+      description_lesson,
+      video_lesson,
+      repository_lesson,
+      
+      links,
+    } = values;
+
+
+
+
     try {
-      const formData = new FormData(event.currentTarget);
-      const response = await addLesson(formData);
-      console.log(response);
+      const nameLesson = name_lesson;
+      const slugLesson = slug_lesson;
+      const contentLesson = content;
+      const categoryLesson = category;
+      const descriptionLesson = description_lesson || "";
+      const videoLesson = video_lesson || "";
+      const repositoryLesson = repository_lesson || "";
+      const draft = status === "1" ? true : false;
+
+      let levelLesson = "BEGINNER";
+
+      if (level === "1") {
+        levelLesson = "BEGINNER";
+      } else if (level === "2") {
+        levelLesson = "INTERMEDIATE";
+      } else if (level === "3") {
+        levelLesson = "ADVANCED";
+      }
+
+      const addFormLesson = () => {
+        return addLesson(
+          nameLesson,
+          slugLesson,
+          contentLesson,
+          categoryLesson,
+          descriptionLesson,
+          videoLesson,
+          repositoryLesson,
+          draft,
+          levelLesson,
+          links.map(link => ({
+            label: link.label || "",
+            url: link.url || "",
+          })) as { label: string; url: string; }[],
+        );
+      };
+
+      toast.promise(addFormLesson(), {
+        loading: "Ajout du cours...",
+        success: `Le cours a été ajouté avec succès !`,
+        error: "Erreur lors de l'ajout du cours",
+      });
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error(error);
+      toast.error("Erreur lors de l'ajout du cours");
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <>
-      <form className="p-8" onSubmit={handleSubmit}>
-        <div className="space-y-12">
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-100">
-              NOUVEAU COURS
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-400">
-              Ces informations seront affichées publiquement donc soyez sûr de
-              ce que vous écrivez.
-            </p>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3 lg:flex items-end gap-5">
-                <div>
-                  <label
-                    htmlFor="category"
-                    className="block text-sm font-medium leading-6 text-gray-100"
-                  >
-                    Catégorie
-                  </label>
-                  <div className="mt-2">
-                    <Select name="category">
-                      <SelectTrigger
-                        id="category"
-                        className="w-fit rounded-md border-0 py-1.5 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                      >
-                        <SelectValue placeholder="Choisir une catégorie" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Catégories</SelectLabel>
-                          {categories.map((category: any) => (
-                            <SelectItem value={category.id} key={category.id}>
-                              {category.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                
-              </div>
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium leading-6 text-gray-100"
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 p-8 max-w-[80vw] m-auto flex-shrink-0 relative"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Link href="/admin">
+                <Button
+                  variant={"secondary"}
+                  className="rounded-md w-fit h-fit"
                 >
-                  Titre
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="title"
-                      id="title"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Nom du cours"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-4">
-                  <label
-                    htmlFor="slug_title"
-                    className="block text-sm font-medium leading-6 text-gray-100"
-                  >
-                    Slug
-                  </label>
-                  <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                      <span className="flex select-none items-center pl-3 text-gray-400 sm:text-sm">
-                        learn404.com/cours/categorie/
-                      </span>
-                      <input
-                        type="text"
-                        name="slug_title"
-                        id="slug_title"
-                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder="slug du cours"
-                      />
-                    </div>
-                  </div>
-                </div>
+                  <ChevronLeft className="w-4 h-4 " />
+                </Button>
+              </Link>
+              <div>
+                <h1 className="text-2xl">Ajout du cours {nameLesson}</h1>
               </div>
-
-              <div className="col-span-full">
-                <label
-                  htmlFor="about"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Description
-                </label>
-                <div className="mt-2">
-                  <textarea
-                    id="about"
-                    name="about"
-                    rows={3}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={""}
-                  />
-                </div>
-                <p className="mt-3 text-sm leading-6 text-gray-400">
-                  Ecris une description du cours en quelques lignes.
-                </p>
-              </div>
+              <Badge className="bg-red-800">Non Enregistrer</Badge>
+            </div>
+            <div className="flex items-center gap-4">
+              <Button variant={"default"} disabled={isLoading}>
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  "Enregistrer"
+                )}
+              </Button>
             </div>
           </div>
-
-          <div className="border-b border-gray-100/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-100">
-              DÉTAILS DU COURS
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-400">
-              Ces informations peuvent être modifiées plus tard.
-            </p>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="repository_url"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Repository URL
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="url"
-                    name="repository_url"
-                    id="repository_url"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="video_url"
-                  className="block text-sm font-medium leading-6 text-gray-100"
-                >
-                  Lien de la vidéo
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="url"
-                    name="video_url"
-                    id="video_url"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="https://drive.google.com/uc?id=ID_DU_FICHIER"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-100">
-              Paramètres du cours
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-400">
-              Les paramètres du cours peuvent être modifiés plus tard.
-            </p>
-
-            <div className="mt-10 space-y-10">
-              <fieldset>
-                <legend className="text-sm font-semibold leading-6 text-gray-100">
-                  Visibilité
-                </legend>
-                <div className="mt-6 space-y-6">
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="draft"
-                        name="draft"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="draft"
-                        className="font-medium text-gray-100"
-                      >
-                        Brouillon
-                      </label>
-                      <p className="text-gray-400">
-                        Les cours en brouillon ne sont pas visibles par les
-                        étudiants.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="newLesson"
-                        name="newLesson"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="newLesson"
-                        className="font-medium text-gray-100"
-                      >
-                        Nouveau
-                      </label>
-                      <p className="text-gray-400">
-                        Les nouveaux cours ont un badge spécial.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label
-                      htmlFor="author"
-                      className="font-medium text-gray-100"
-                    >
-                      Le cours est créé par
-                    </label>
-                    <div className="text-gray-400 flex items-center mt-2">
-                      {isAvatar ? (
-                        <Image
-                          src={user?.image || ""}
-                          alt="profile"
-                          width={40}
-                          height={40}
-                          className="rounded-full"
+          <div className="grid grid-cols-12 items-start gap-4 mt-4">
+            <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6 h-full hidden lg:block lg:col-span-8">
+              <h2 className="font-semibold text-2xl">Contenu</h2>
+              <div className="mt-4">
+                <RichTextEditor value={content} onChange={setContent} />
+                <FormField
+                  control={form.control}
+                  name="description_lesson"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description du cours</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Description"
+                          {...field}
+                          className="bg-gray-950"
                         />
-                      ) : (
-                        <div className="rounded-full bg-white w-10 h-10"></div>
-                      )}
-                      <label className="ml-2" htmlFor="author">
-                        {user?.name}
-                      </label>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 w-full col-span-12 lg:col-span-4">
+              <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6 h-full">
+                <div>
+                  <h2 className="font-semibold text-2xl">Détails du cours</h2>
+                  <p className="text-sm text-gray-400 my-2">
+                    Les détails du cours seront publiques
+                  </p>
+                </div>
+                <div className="mt-4">
+                  <div className="flex flex-col gap-4 my-4">
+                    <div className="gap-2 flex flex-col">
+                      <FormField
+                        control={form.control}
+                        name="name_lesson"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel htmlFor="name_lesson">
+                              Nom du cours
+                            </FormLabel>
+
+                            <FormControl>
+                              <Input
+                                placeholder="Nom du cours"
+                                {...field}
+                                className="bg-gray-950"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="gap-2 flex flex-col mt-2">
+                      <FormField
+                        control={form.control}
+                        name="slug_lesson"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Label htmlFor="slug_lesson">Slug du cours</Label>
+
+                            <FormControl>
+                              <div className="flex items-center">
+                                <span className="mr-2">
+                                  https://learn404.com/
+                                </span>
+                                <Input
+                                  id="slug_lesson"
+                                  className="bg-gray-950"
+                                  placeholder={slugLesson}
+                                  {...field}
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <div className="gap-2 flex flex-col mt-2">
+                        <div className="flex items-end justify-between">
+                        <FormField
+                          control={form.control}
+                          name="category"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Catégorie</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger className="bg-gray-950">
+                                    <SelectValue placeholder="Choisir une catégorie" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>
+                                      Catégories disponibles
+                                    </SelectLabel>
+                                    {categories.map((category) => (
+                                      <SelectItem
+                                        key={category.id}
+                                        value={category.id}
+                                      >
+                                        {category.name}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <AddCategoryButton />
+                        </div>
+                      </div>
+                      <div className="gap-2 flex flex-col mt-2">
+                        <FormField
+                          control={form.control}
+                          name="level"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Niveau</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger className="bg-gray-950">
+                                    <SelectValue placeholder="Choisir un niveau" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>Niveau</SelectLabel>
+                                    {difficulties.map((difficulty) => (
+                                      <SelectItem
+                                        key={difficulty.id}
+                                        value={difficulty.id}
+                                      >
+                                        {difficulty.name}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="gap-2 flex flex-col mt-2">
+                        <FormField
+                          control={form.control}
+                          name="status"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Statut</FormLabel>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger className="bg-gray-950">
+                                    <SelectValue placeholder="Choisir un statut" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>Statut</SelectLabel>
+                                    {status.map((s) => (
+                                      <SelectItem key={s.id} value={s.id}>
+                                        {s.name}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="gap-2 flex flex-col mt-2">
+                        <FormField
+                          control={form.control}
+                          name="repository_lesson"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Repository</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="Lien du repository"
+                                  {...field}
+                                  className="bg-gray-950"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="gap-2 flex flex-col mt-2">
+                        <FormField
+                          control={form.control}
+                          name="video_lesson"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Lien de la vidéo</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="Lien de la vidéo"
+                                  {...field}
+                                  className="bg-gray-950"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </fieldset>
+              </div>
+              <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6 mt-4">
+                <h2 className="font-semibold text-2xl">
+                  Liens supplémentaires
+                </h2>
+                {fields.map((field, index) => (
+                  <div key={field.id} className="flex flex-col gap-4 mt-4">
+                    <div className="flex gap-2 items-center">
+                      <FormField
+                        control={form.control}
+                        name={`links.${index}.label`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Label du lien</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Label"
+                                {...field}
+                                className="bg-gray-950"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`links.${index}.url`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>URL</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="URL"
+                                {...field}
+                                className="bg-gray-950"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={() => remove(index)}
+                        className="self-end"
+                      >
+                        <Minus />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => append({ label: "", url: "" })}
+                  className="mt-4"
+                >
+                  <Plus />
+                  Ajouter un lien
+                </Button>
+              </div>
+            </div>
+            <div className="border-2 border-gray-800 bg-gray-950 rounded-md p-6 h-full col-span-12 block lg:hidden">
+              <h2 className="font-semibold text-2xl">Contenu</h2>
+              <div className="mt-4">
+                <RichTextEditor value={content} onChange={setContent} />
+                <FormField
+                  control={form.control}
+                  name="description_lesson"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description du cours</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Description"
+                          {...field}
+                          className="bg-gray-950"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex items-center  gap-x-6">
-          <Button
-            variant="secondary"
-            type="button"
-            onClick={() => router.push("/admin")}
-          >
-            Annuler
-          </Button>
-          <Button variant="default" type="submit" disabled={isLoading}>
-            {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              "Créer le cours"
-            )}
-          </Button>
-        </div>
-      </form>
+        </form>
+      </Form>
     </>
   );
 }

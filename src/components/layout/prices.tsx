@@ -70,7 +70,7 @@ export default function Pricing() {
   const pricingOptions: PricingOption[] = [
     {
       name: "Offre",
-      price: "5.99€",
+      price: "19,99€",
 
       description:
         "Tu veux devenir un développeur web professionnel ? C'est le bon endroit pour commencer.",
@@ -87,7 +87,7 @@ export default function Pricing() {
   ];
 
   return (
-    <section className="mx-auto max-w-5xl pb-[12.5rem] px-6">
+    <section className="mx-auto max-w-5xl max-lg:pt-[6.25rem] pb-[12.5rem] px-6">
       <div className="flex flex-col gap-y-2">
         <div className="mx-auto max-w-5xl text-center">
           <h2 className="text-gray-50 text-3xl sm:text-4xl font-semibold">
@@ -99,7 +99,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="mx-auto grid h-full w-full max-w-4xl place-content-center items-center gap-6 my-6 lg:items-start">
+        <div className="mx-auto grid h-full w-full max-w-4xl place-content-center items-center gap-6 lg:items-start">
           {pricingOptions.map((option, index) => (
             <PricingCard key={index} option={option} />
           ))}
