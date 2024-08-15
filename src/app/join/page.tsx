@@ -9,7 +9,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 export default async function Join() {
-
+  redirect("/wishlist");
   const session = await auth();
   
   if (session) {
