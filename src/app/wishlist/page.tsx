@@ -1,9 +1,8 @@
-
-  import Footer from "@/components/layout/footer";
-  import Header from "@/components/layout/header";
-  import { auth } from "@/lib/auth";
-  import Image from "next/image";
-  import { redirect } from "next/navigation";
+import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+import { auth } from "@/lib/auth";
+import Image from "next/image";
+import { redirect } from "next/navigation";
 import FormWishlist from "./Form";
   
   export default async function Wishlist() {

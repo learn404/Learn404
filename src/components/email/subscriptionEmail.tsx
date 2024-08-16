@@ -93,9 +93,7 @@ export const SubscriptionEmail = ({
             <Section className="text-center">
               <Button
                 className="bg-brand text-white rounded-lg py-3 px-[18px]"
-                onClick={() => {
-                  window.location.href = `${baseUrl}dashboard`;
-                }}
+                href={`${baseUrl}dashboard`}
               >
                 Accéder à ton tableau de bord
               </Button>

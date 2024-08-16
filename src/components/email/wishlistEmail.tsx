@@ -50,7 +50,8 @@ export const WishlistEmail = ({
           <Img
             src={`${baseUrl}/img/logo.png`}
             width="184"
-            height="75"
+            height="184"
+
             alt="Learn404"
             className="mx-auto my-20"
           />
@@ -86,19 +87,22 @@ export const WishlistEmail = ({
 
             <Section className="text-center">
               <Button
-                className="bg-brand text-white rounded-lg py-3 px-[18px]"
+                className="bg-brand text-white rounded-lg py-3 px-[18px] cursor-pointer"
                 onClick={() => {
                   window.location.href = `https://discord.gg/w3mKH2e2Jt`;
                 }}
               >
                 Explorer le discord
               </Button>
+              <Text className="text-xs mt-4">
+                https://discord.gg/w3mKH2e2Jt
+              </Text>
             </Section>
 
             <Section className="mt-45">
               <Row>
                 <Column className="text-center">
-                  <Link className="text-black underline font-bold">
+                  <Link className="text-black underline font-bold" href={'mailto:contact@learn404.com'}>
                     Besoin d'aide ? Contacte-nous
                   </Link>
                 </Column>
@@ -110,10 +114,7 @@ export const WishlistEmail = ({
             <Section>
               <Row>
                 <Column className="text-right px-20">
-                  <Link href={`${baseUrl}/api/email/unsubscribe`}>Se désabonner</Link>
-                </Column>
-                <Column className="text-left">
-                  <Link href={`${baseUrl}/settings`}>Gérer les préférences</Link>
+                  <Link href={`${baseUrl}/unsubscribe`}>Se désabonner</Link>
                 </Column>
               </Row>
             </Section>

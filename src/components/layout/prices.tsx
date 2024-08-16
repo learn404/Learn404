@@ -87,19 +87,18 @@ export default function Pricing() {
   ];
 
   return (
-    <section className="mx-auto max-w-5xl max-lg:pt-[6.25rem] pb-[12.5rem] px-6">
-      <div className="flex flex-col gap-y-2">
+    <section className="mx-auto max-w-5xl pt-10 pb-20 px-6 max-lg:pt-40 max-lg:pb-[12.5rem]">
+      <div className="flex flex-col gap-y-6">
         <div className="mx-auto max-w-5xl text-center">
           <h2 className="text-gray-50 text-3xl sm:text-4xl font-semibold">
             Rejoins Learn404 maintenant.
           </h2>
-
           <p className="mt-6 text-lg text-gray-400">
-            Accède à la plateforme <span className="uppercase text-gray-50 font-medium">à vie</span>
+            Accède à la plateforme{" "}
+            <span className="uppercase text-gray-50 font-medium">à vie</span>
           </p>
         </div>
-
-        <div className="mx-auto grid h-full w-full max-w-4xl place-content-center items-center gap-6 lg:items-start">
+        <div className="mx-auto grid h-full w-full max-w-4xl gap-6">
           {pricingOptions.map((option, index) => (
             <PricingCard key={index} option={option} />
           ))}

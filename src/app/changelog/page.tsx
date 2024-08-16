@@ -7,27 +7,25 @@ import AddChangeLogButton from "@/components/buttons/AddChangeLogButton";
 
 import ChangeLogSection from "./changeLogSection";
 
-
-
 export default async function Changelog() {
-
-  const session = await auth()
+  const session = await auth();
 
   const user = await prisma.user.findFirst({
     where: {
-      email: session?.user?.email
-    }
-  })
+      email: session?.user?.email,
+    },
+  });
   const ChangelogData = await getChangelogData();
-  const isAdminData = await adminCheckAre(user?.email || '');
+  const isAdminData = await adminCheckAre(user?.email || "");
 
   return (
     <div>
-      {(
-        <Header />
-      )}
-      {user?.admin ? <AddChangeLogButton /> : null}
-      <ChangeLogSection ChangelogData={ChangelogData} isAdmin={isAdminData?.admin ?? false} />
+      <Header />
+      {user && user.admin ? <AddChangeLogButton /> : null}{" "}
+      <ChangeLogSection
+        ChangelogData={ChangelogData}
+        isAdmin={isAdminData?.admin ?? false}
+      />
       <Footer />
     </div>
   );
