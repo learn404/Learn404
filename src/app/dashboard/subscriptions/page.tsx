@@ -24,7 +24,7 @@ export default async function Subscriptions() {
         <div className="sticky top-0 w-full max-w-md">
           <ProductCard />
         </div>
-  
+
       </main>
       <Footer />
     </>
