@@ -91,7 +91,7 @@ export default function FormWishlist() {
         <Input
           placeholder="Email"
           name="email"
-          className="text-gray-800 max-w-lg"
+          className="text-gray-200 max-w-lg"
         />
         <p className="text-sm text-gray-400 font-medium py-2 max-w-lg">
           Tu t'inscris à la newsletter de Learn404 ainsi qu'à la wishlist qui te
