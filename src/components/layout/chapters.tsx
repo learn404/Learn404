@@ -12,7 +12,8 @@ const logo = [
   "/svg/vscode-logo.svg",
   "/svg/html-logo.svg",
   "/svg/js-logo.svg",
-]
+  "/svg/nodejsexpress-logo.svg",
+];
 
 interface ChapterSectionProps {
   categories: {
@@ -21,18 +22,15 @@ interface ChapterSectionProps {
     description: string | null;
     level: string | null;
   }[];
-  lessons: { 
+  lessons: {
     id: string;
-    title: string; 
-    categoryId: string, 
-    slug: string 
+    title: string;
+    categoryId: string;
+    slug: string;
   }[];
 }
 
-const ChaptersSection = ({
-  categories,
-  lessons
-} : ChapterSectionProps ) => {
+const ChaptersSection = ({ categories, lessons }: ChapterSectionProps) => {
   const slider = useRef<HTMLDivElement>(null);
   const component = useRef<HTMLDivElement>(null);
 
@@ -99,34 +97,18 @@ const ChaptersSection = ({
     }
     return results;
   };
-  const generatePath = (categoriesCount: number) => {
-    const segmentWidth = 430;
-    const totalWidth = segmentWidth * categoriesCount;
-    let d = `M19.9506 11C19.4489 16.0533 15.1853 20 10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.1853 0 19.4489 3.94668 19.9506 9H`;
 
-    for (let i = 0; i < categoriesCount; i++) {
-        const x = segmentWidth * (0 + 1);
-        d += `${x}C${x}.551 3.94668 ${x + 4.815} 0 ${x + 10} 0C${x + 15.185} 0 ${x + 19.449} 3.94668 ${x + 20.951} 9H`;
-    }
-    d += ` ${totalWidth - 10}C${totalWidth - 10}.551 3.94668 ${totalWidth - 5.815} 0 ${totalWidth} 0C${totalWidth + 5.523} 0 ${totalWidth + 10} 4.47715 ${totalWidth + 10} 10C${totalWidth + 10} 15.5228 ${totalWidth + 5.523} 20 ${totalWidth} 20C${totalWidth - 5.815} 20 ${totalWidth - 10.551} 16.0533 ${totalWidth - 10.049} 11H${totalWidth - 10}Z`;
+  let level = "Débutant";
 
-    return d;
-};
-
-  const svgPath = generatePath(categories.length -1);
-
-  let level = 'Débutant';
-
-  
   categories.forEach((category) => {
-    if (category.level === 'BEGINNER'){
-      level = 'Débutant';
+    if (category.level === "BEGINNER") {
+      level = "Débutant";
     }
-    if (category.level === 'INTERMEDIATE'){
-      level = 'Intermédiaire';
+    if (category.level === "INTERMEDIATE") {
+      level = "Intermédiaire";
     }
-    if (category.level === 'ADVANCED'){
-      level = 'Avancé';
+    if (category.level === "ADVANCED") {
+      level = "Avancé";
     }
   });
 
@@ -142,18 +124,15 @@ const ChaptersSection = ({
         <svg
           width="870"
           height="20"
-          viewBox={`0 0 870 20`}
+          viewBox="0 0 870 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="hidden lg:block absolute top-24 left-[10vw] z-20"
         >
-          <path
-            id="Union"
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d={svgPath}
-            fill="#6B7280"
-          />
+          <circle cx="10" cy="10" r="10" fill="#6B7280" />
+          <circle cx="860" cy="10" r="10" fill="#6B7280" />
+          <rect x="19" y="9" width="832" height="2" fill="#6B7280" />
+
           <mask
             id="mask0_3918_93"
             className="mask-type:alpha"
@@ -163,13 +142,9 @@ const ChaptersSection = ({
             width="870"
             height="20"
           >
-            <path
-              id="Union"
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d={svgPath + " 0 0"}
-              fill="#6B7280"
-            />
+            <circle cx="10" cy="10" r="10" fill="#6B7280" />
+            <circle cx="860" cy="10" r="10" fill="#6B7280" />
+            <rect x="19" y="9" width="832" height="2" fill="#6B7280" />
           </mask>
           <g mask="url(#mask0_3918_93)">
             <rect
@@ -195,49 +170,52 @@ const ChaptersSection = ({
               key={index}
               className="relative w-screen pt-16 lg:pt-52 px-6 lg:px-[10vw] lg:h-svh"
             >
-                <span className="bg-torea-950 border border-torea-800 rounded-full px-4 py-2 text-gray-50 max-sm:text-sm">
-                  {level}
-                </span>
-                <div className="mt-8 z-10">
-                  <h2 className="text-3xl lg:text-5xl m-0 text-gray-50">
-                    {category.name}
-                  </h2>
-                  <p className="mt-2 text-gray-400 max-w-2xl ">
-                    {category.description}
-                  </p>
-                  <div className="flex flex-wrap gap-x-16 mt-8">
-                    {chunkedLessons.map((lessonGroup, groupIndex) => (
-                      <div
-                        key={groupIndex}
-                        className={cn(
-                          "flex flex-col gap-y-4",
-                          groupIndex > 0 && "max-lg:mt-4"
-                        )}
-                      >
-                        {lessonGroup.map((lesson, lessonIndex) => (
-                          <div key={lesson.id} className="flex items-center gap-4">
-                            <span className="text-gray-50 font-semibold text-lg sm:text-xl lg:text-2xl tabular-nums">
-                              {lessonIndex + 1 + groupIndex * chunkSize}
-                            </span>
-                            <span className="text-gray-400 font-semibold text-lg sm:text-xl lg:text-2xl">
-                              {lesson.title}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
+              <span className="bg-torea-950 border border-torea-800 rounded-full px-4 py-2 text-gray-50 max-sm:text-sm">
+                {level}
+              </span>
+              <div className="mt-8 z-10">
+                <h2 className="text-3xl lg:text-5xl m-0 text-gray-50">
+                  {category.name}
+                </h2>
+                <p className="mt-2 text-gray-400 max-w-2xl ">
+                  {category.description}
+                </p>
+                <div className="flex flex-wrap gap-x-16 mt-8">
+                  {chunkedLessons.map((lessonGroup, groupIndex) => (
+                    <div
+                      key={groupIndex}
+                      className={cn(
+                        "flex flex-col gap-y-4",
+                        groupIndex > 0 && "max-lg:mt-4"
+                      )}
+                    >
+                      {lessonGroup.map((lesson, lessonIndex) => (
+                        <div
+                          key={lesson.id}
+                          className="flex items-center gap-4"
+                        >
+                          <span className="text-gray-50 font-semibold text-lg sm:text-xl lg:text-2xl tabular-nums">
+                            {lessonIndex + 1 + groupIndex * chunkSize}
+                          </span>
+                          <span className="text-gray-400 font-semibold text-lg sm:text-xl lg:text-2xl">
+                            {lesson.title}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
                 </div>
-                <div className="hidden lg:block w-1/4 max-w-96 aspect-square absolute bottom-2/4 right-28 2xl:right-1/4 z-0">
-                  <Image
-                    src={logo[index]}
-                    alt="arrow"
-                    width={0}
-                    height={0}
-                    sizes="20vw"
-                    className="w-full h-full"
-                  />
-                </div>
+              </div>
+              <div className="hidden lg:block w-1/4 max-w-96 aspect-square absolute bottom-2/4 right-28 2xl:right-1/4 z-0">
+                <Image
+                  src={logo[index]}
+                  alt="arrow"
+                  width={0}
+                  height={0}
+                  sizes="20vw"
+                  className="w-full h-full"
+                />
+              </div>
             </section>
           );
         })}

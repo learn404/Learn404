@@ -18,8 +18,6 @@ export default async function Changelog() {
   const ChangelogData = await getChangelogData();
   const isAdminData = await adminCheckAre(user?.email || "");
 
-  console.log(user);
-
   return (
     <div>
       <Header />

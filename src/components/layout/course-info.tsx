@@ -48,7 +48,7 @@ const CoursesInfos = async () => {
             tout le long de notre apprentissage du développement web.
           </p>
           <p className="mt-5">
-            Tu apprendra donc tout ce que l'on sait, en partant de la prise en main d'un environnement de travail jusqu'à nos 
+            Tu apprendras donc tout ce que l'on sait, en partant de la prise en main d'un environnement de travail jusqu'à nos 
           <span className="text-gray-50 font-semibold "> connaissances actuelles</span>. La plateforme sera mise à jour tous les mois pour y ajouter de nouveaux cours. 
           </p>
         </div>

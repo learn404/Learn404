@@ -31,6 +31,11 @@ const nextConfig = {
         destination: '/account/details',
         permanent: true,
       },
+      {
+        source: '/admin/edit-lesson',
+        destination: '/admin',
+        permanent: true,
+      }
     ];
   },
 };

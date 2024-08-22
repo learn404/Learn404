@@ -130,7 +130,7 @@ export function FeatureCard8() {
               <div className="w-[calc(100%-3rem)]">
                 <h3 className="text-base font-semibold">Nicolas</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Pourquoi pas, tu peux nous en dire plus sur le projet ?
+                  Pourquoi pas, quel est ton idée de projet ?
                 </p>
               </div>
               <motion.p
@@ -145,7 +145,7 @@ export function FeatureCard8() {
         <div className="flex w-full flex-col items-start border-t border-gray-200 p-4 dark:border-gray-800">
           {/* <h2 className="text-xl font-semibold">Communauté</h2> */}
           <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-            Découvre des personnes partageant les mêmes passions que vous.
+            Découvre des personnes partageant la même passion que toi.
           </p>
         </div>
       </motion.div>

@@ -40,7 +40,7 @@ export default async function Header() {
           ) : (
             
             <>
-              <PrimaryButton redirectTo="/wishlist" type="button">
+              <PrimaryButton redirectTo="/join" type="button">
                 <Image src="/img/Logo_icon_blanc.svg" alt="logo icon" width={20} height={20} sizes="10vw" />
                 <span className="md:block font-medium">Rejoindre Learn404</span>
               </PrimaryButton>

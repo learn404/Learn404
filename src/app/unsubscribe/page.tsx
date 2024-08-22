@@ -60,7 +60,7 @@ export default function Unsubscribe() {
                     <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                        <Input placeholder="email@example.com" {...field} className="w-full text-gray-950"/>
+                        <Input placeholder="email@example.com" {...field} className="w-full text-gray-200"/>
                     </FormControl>
                     <FormDescription>
                         Veuillez entrer votre email pour vous désabonner.
