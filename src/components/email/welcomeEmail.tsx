@@ -50,9 +50,9 @@ export const WelcomeEmail = ({
       >
         <Body className="bg-offwhite text-base font-sans">
           <Img
-            src={`${baseUrl}img/logo.png`}
+           src={`/static/logo.png`}
             width="184"
-            height="75"
+            height="184"
             alt="Learn404"
             className="mx-auto my-20"
           />
