@@ -9,12 +9,15 @@ export async function POST(request: Request) {
   try {
     const { email } = await request.json();
 
+    console.log(email);
+
     const user = await prisma.wishlist.findFirst({
       where: {
         email: email,
       },
     });
 
+    console.log(user);
     if (user) {
       return NextResponse.json(
         { message: "Tu es déjà inscris à la wishlist" },
@@ -41,6 +44,8 @@ export async function POST(request: Request) {
       unsubscribed: false,
       audienceId: `${process.env.RESEND_AUDIENCE_ID}`,
     });
+
+    console.log(email);
 
     return NextResponse.json(
       { message: "Tu es ajouté à la Wishlist" },
