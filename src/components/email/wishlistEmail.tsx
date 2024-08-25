@@ -48,12 +48,12 @@ export const WishlistEmail = ({
       >
         <Body className="bg-offwhite text-base font-sans">
           <Img
-            src={`${baseUrl}/img/logo.png`}
+            src={`/static/logo.png`}
             width="184"
             height="184"
 
             alt="Learn404"
-            className="mx-auto my-20"
+            className="mx-auto my-20 z-10"
           />
           <Container className="bg-white p-45">
             <Heading className="text-center my-0 leading-8">
@@ -88,9 +88,8 @@ export const WishlistEmail = ({
             <Section className="text-center">
               <Button
                 className="bg-brand text-white rounded-lg py-3 px-[18px] cursor-pointer"
-                onClick={() => {
-                  window.location.href = `https://discord.gg/w3mKH2e2Jt`;
-                }}
+                target="_blank"
+                href="https://discord.gg/w3mKH2e2Jt"
               >
                 Explorer le discord
               </Button>

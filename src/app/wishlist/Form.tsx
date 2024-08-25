@@ -17,72 +17,46 @@ export default function FormWishlist() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
+  
     try {
       const formData = new FormData(event.target as HTMLFormElement);
-
       const email = formData.get("email")?.toString().toLowerCase().trim();
-
-      if (!email) {
+  
+      if (!email || !email.includes("@") || !email.includes(".") || email.length < 5) {
         toast.error("Adresse email invalide");
         setSubscribeStatus(false);
-        setIsLoading(false);
         return;
       }
-
-      if (!email.includes("@") || !email.includes(".")) {
-        toast.error("Adresse email invalide");
-        setSubscribeStatus(false);
-        setIsLoading(false);
-        return;
-      }
-
-      if (email.length < 5) {
-        toast.error("Adresse email invalide");
-        setSubscribeStatus(false);
-        setIsLoading(false);
-        return;
-      }
-
-      toast.promise(fetch("/api/auth/wishlist", {
+  
+      const res = await fetch("/api/auth/wishlist", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: email,
-        }),
-      }),
-      {
-        loading: "Chargement...",
-        success: "Inscription réussie",
-        error: "Une erreur est survenue lors de l'inscription",
-      })
-      toast.promise(fetch("/api/auth/wishlist", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-        }),
-      }),
-      {
-        loading: "Chargement...",
-        success: "Inscription réussie",
-        error: "Une erreur est survenue lors de l'inscription",
-      })
+        body: JSON.stringify({ email }),
+      });
+  
+      const data = await res.json();
+  
+      if (res.ok) {
+        toast.success("Inscription réussie");
+        setSubscribeStatus(true);
+      } else {
+        toast.error("Une erreur est survenue lors de l'inscription: " + data.message);
+        setSubscribeStatus(false);
+      }
+  
     } catch (error) {
       console.error("Error submitting form:", error);
-      if (error) {
-        setSubscribeStatus(false);
-        
-      } else {
-        setSubscribeStatus(true);
-      }
+      toast.error("Une erreur est survenue. Veuillez réessayer plus tard.");
+      setSubscribeStatus(false);
+  
     } finally {
       setIsLoading(false);
+      router.push("/");
     }
   };
+  
 
   return (
     <>

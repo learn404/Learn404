@@ -21,7 +21,7 @@ export default async function Changelog() {
   return (
     <div>
       <Header />
-      {user && user.admin ? <AddChangeLogButton /> : null}{" "}
+      {user && user?.admin ? <AddChangeLogButton /> : null}{" "}
       <ChangeLogSection
         ChangelogData={ChangelogData}
         isAdmin={isAdminData?.admin ?? false}
