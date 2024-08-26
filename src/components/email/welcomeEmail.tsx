@@ -20,9 +20,7 @@ interface Learn404WelcomeEmailProps {
   name?: string;
 }
 
-const baseUrl = `https://${process.env.AUTH_URL}`
-  ? `https://${process.env.AUTH_URL}`
-  : "";
+const baseUrl = process.env.AUTH_URL ? `${process.env.AUTH_URL}` : "";
 
 export const WelcomeEmail = ({
   name = "Cher Membre",
