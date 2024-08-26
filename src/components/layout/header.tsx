@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PrimaryButton from "../buttons/PrimaryButton";
 import DropdownLanding from "../dropdown-landing";
+import JoinButton from "../buttons/JoinButton";
 
 export default async function Header() {
   const session = await auth();
@@ -39,12 +40,7 @@ export default async function Header() {
             <DropdownLanding session={session} isAdmin={isAdmin} />
           ) : (
             
-            <>
-              <PrimaryButton redirectTo="/join" type="button">
-                <Image src="/img/Logo_icon_blanc.svg" alt="logo icon" width={20} height={20} sizes="10vw" />
-                <span className="md:block font-medium">Rejoindre Learn404</span>
-              </PrimaryButton>
-            </>
+            <JoinButton />
           )}
         </div>
       </nav>

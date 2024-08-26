@@ -1,8 +1,6 @@
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
-import { auth } from "@/lib/auth";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 import FormWishlist from "./Form";
   
   export default async function Wishlist() {
@@ -33,15 +31,14 @@ import FormWishlist from "./Form";
             />
           </div>
   
-          <div className="flex flex-col items-start max-w-full lg:max-w-md">
+          <div className="flex flex-col items-start w-full md:max-w-md">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium">
-            Rejoins la{" "}
-              <span className="text-torea-300">wishlist</span> pour être informé de la sortie de notre{" "}
-              <span className="text-torea-300">application</span> 
+              Rejoins la{" "} <span className="text-torea-300">wishlist</span>.
             </h2>
-            <div className="flex items-center justify-center gap-3 mt-5 lg:mt-8">
-              <FormWishlist />
-            </div>
+            <p className="text-gray-400 mt-3">
+              Sois informé lors de l'ouverture de la plateforme et de ses nouveautés ! 
+            </p>
+            <FormWishlist />
           </div>
         </main>
         <Footer />
