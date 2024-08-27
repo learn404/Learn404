@@ -5,14 +5,12 @@ import Link from "next/link";
 type FooterLink = { id: number; title: string; url: string };
 
 const footerLinks: FooterLink[][] = [
-  
   [
     { id: 1, title: "Condition d'utilisation", url: "/legal/condition-general-utilisation" },
     { id: 2, title: "Mentions légales", url: "#" },
     { id: 3, title: "Journal des modifications", url: "/changelog" }, 
     { id: 4, title: "Contact", url: "mailto:contact@learn404.com" },
   ],
-
 ];
 export default function Footer() {
   return (
@@ -72,7 +70,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
       </div>
     </footer>
   );

@@ -60,11 +60,19 @@ interface AddLessonFormProps {
 }
 
 export default function AddLessonForm({ categories }: AddLessonFormProps) {
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [nameLesson, setNameLesson] = useState("");
+  const [slugLesson, setSlugLesson] = useState("");
+  const [content, setContent] = useState("");
+
+  console.log(slugLesson);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name_lesson: "",
-      slug_lesson: "",
+      slug_lesson: slugLesson,
       links: [{ label: "", url: "" }],
       category: "",
       level: "",
@@ -81,10 +89,7 @@ export default function AddLessonForm({ categories }: AddLessonFormProps) {
     name: "links",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [nameLesson, setNameLesson] = useState("");
-  const [slugLesson, setSlugLesson] = useState("");
-  const [content, setContent] = useState("");
+
 
   const difficulties = [
     { id: "1", name: "Débutant" },
@@ -117,7 +122,6 @@ export default function AddLessonForm({ categories }: AddLessonFormProps) {
       description_lesson,
       video_lesson,
       repository_lesson,
-      
       links,
     } = values;
 
@@ -280,6 +284,8 @@ export default function AddLessonForm({ categories }: AddLessonFormProps) {
                                   id="slug_lesson"
                                   className="bg-gray-950"
                                   placeholder={slugLesson}
+                                  defaultValue={slugLesson}
+
                                   {...field}
                                 />
                               </div>

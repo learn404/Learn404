@@ -18,6 +18,8 @@ import bash from "highlight.js/lib/languages/bash";
 import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
+import sql from "highlight.js/lib/languages/sql";
+
 import html from "highlight.js/lib/languages/xml";
 import {
   ArrowBigLeft,
@@ -47,6 +49,7 @@ lowlight.registerLanguage("javascript", js);
 lowlight.registerLanguage("typescript", ts);
 lowlight.registerLanguage("html", html);
 lowlight.registerLanguage("bash", bash);
+lowlight.registerLanguage("sql", sql);
 
 import Link from "@tiptap/extension-link";
 import { useCallback } from "react";

@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { toast } from "react-toastify"
-import { redirect } from "next/navigation"
-
+import { useRouter } from 'next/navigation'
 const formSchema = z.object({
     email: z.string().email(),
   })
@@ -23,6 +22,7 @@ const formSchema = z.object({
 
 
 export default function Unsubscribe() {
+    const router = useRouter()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -39,7 +39,7 @@ export default function Unsubscribe() {
                 })
                 if (response.ok) {
                     toast.success("Vous avez été désabonné avec succès")
-                    redirect('/')
+                    router.push('/')
                 }
                 else {
                     toast.error('Une erreur est survenue')
@@ -60,7 +60,7 @@ export default function Unsubscribe() {
                     <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                        <Input placeholder="email@example.com" {...field} className="w-full text-gray-950"/>
+                        <Input placeholder="email@example.com" {...field} className="w-full text-gray-200"/>
                     </FormControl>
                     <FormDescription>
                         Veuillez entrer votre email pour vous désabonner.

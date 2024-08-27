@@ -17,6 +17,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
+
+
     await prisma.session.deleteMany({
       where: { userId },
     });
@@ -28,6 +30,16 @@ export async function POST(req: NextRequest) {
     await prisma.user.delete({
       where: { id: userId },
     });
+
+    await prisma.lessonProgress.deleteMany({
+      where: { userId },
+    });
+
+    await prisma.billingInformations.deleteMany({
+      where: { userId },
+    });
+
+
     return NextResponse.json({
       message: "L'utilisateur a été supprimé avec succès",
       userId,
