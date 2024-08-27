@@ -3,14 +3,14 @@ import {
   SheetContent,
   SheetDescription,
   SheetHeader,
-  SheetTrigger,
   SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
-import { CheckCheck, CircleDashed, List } from "lucide-react";
-import Link from "next/link";
+import { currentUser } from "@/lib/current-user";
 import prisma from "@/lib/prisma";
 import { getLessonsStartedAndCompleted } from "@/lib/utils";
-import { currentUser } from "@/lib/current-user";
+import { CheckCheck, CircleDashed, List } from "lucide-react";
+import Link from "next/link";
 
 type userIdProps = {
   userId: string;
@@ -73,7 +73,7 @@ export default async function SheetLessons({ userId }: userIdProps) {
     });
   });
 
-  const user = await currentUser();
+  const { user } = await currentUser();
 
   const lessonsStartedAndCompleted = await getLessonsStartedAndCompleted(user!);
 

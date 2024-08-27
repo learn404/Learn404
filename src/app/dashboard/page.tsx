@@ -27,7 +27,16 @@ export const metadata: Metadata = {
 
 export default async function Dashboard() {
 
-  const user = await currentUser();
+  const { user, error } = await currentUser();
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!user) {
+    redirect("/join");
+  }
+
   if (!user?.isMember) {
     redirect("/dashboard/subscriptions");
   }

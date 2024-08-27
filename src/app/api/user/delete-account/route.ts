@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const { userId }: { userId: string } = await req.json();
 
   try {
-    const user = await currentUser();
+    const { user } = await currentUser();
     
     if (!user || (user?.id !== userId && !user.admin)) {
       return NextResponse.json(

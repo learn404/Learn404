@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     const { email, code } = await req.json();
 
-    const user = await currentUser();
+    const { user } = await currentUser();
 
     if (!user || user.email !== email) {
       return NextResponse.json({ success: false, error: "Access refusé" }, { status: 403 });

@@ -20,7 +20,12 @@ export async function editLesson(
   contentLesson: string
 ) {
 
-  const user = await currentUser();
+  const { user, error } = await currentUser();
+
+  if (error) {
+    console.error(error);
+  }
+  
   if (!user || !user.admin) {
     throw new Error("Accès refusé");
   }

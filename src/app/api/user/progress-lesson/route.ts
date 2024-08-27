@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   try {
     const { userId, lessonId, hasWatchedOneMinute } = await req.json();
 
-    const user = await currentUser();
+    const { user } = await currentUser();
 
     if (!user || user.id !== userId) {
       return NextResponse.json({ message: "Accès refusé" }, { status: 403 })

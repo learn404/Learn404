@@ -2,9 +2,18 @@ import ResetProgressionButton from "@/components/account/reset-progression-butto
 import { DeleteAccountButton } from "@/components/buttons/DeleteAccountButton";
 import { currentUser } from "@/lib/current-user";
 import AccountLayout from "../account-layout";
+import { redirect } from "next/navigation";
 
 export default async function Settings() {
-  const user = await currentUser();
+  const { user, error } = await currentUser();
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!user) {
+    redirect("/join");
+  }
   
   return (
     <AccountLayout title="Paramètres" user={user!}>

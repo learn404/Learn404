@@ -8,7 +8,11 @@ import FormDetails from "./form-details";
 
 const Details = async () => {
 
-  const user = await currentUser();
+  const { user, error } = await currentUser();
+
+  if (error) {
+    console.error(error);
+  }
 
   if (!user?.isMember) {
     redirect("/account/settings");

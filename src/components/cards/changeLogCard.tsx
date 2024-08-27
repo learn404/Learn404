@@ -1,11 +1,9 @@
 "use client";
 
 import { formatDate } from "@/lib/utils";
-import { RefreshCcw, Trash, Loader2 } from "lucide-react";
-import { Button } from "../ui/button";
+import { Loader2, Trash } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 interface ChangelogProps {
   id: string;
@@ -13,6 +11,7 @@ interface ChangelogProps {
   version: string;
   createdAt: Date;
   content: string;
+  deleteChangelog: (id: string) => void;
 }
 
 export default function ChangeLogCard({
@@ -22,74 +21,53 @@ export default function ChangeLogCard({
   content,
   createdAt,
   isAdmin,
+  deleteChangelog,
 }: ChangelogProps & { isAdmin: boolean }) {
-  const router = useRouter();
-
+  
   const [isLoading, setIsLoading] = useState(false);
 
-  const deleteChangelog = async (id: string) => {
+  const handleOnClick = async () => {
     setIsLoading(true);
-    toast.promise(
-      fetch(`/api/changelog/delete-changelog/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: id,
-        }),
-      }).then((res) => {
-        if (res.ok) {
-          router.push("/changelog");
-          router.refresh(), setIsLoading(false);
-        }
-      }),
-      {
-        success: "Changelog supprimé avec succès",
-        error: "Une erreur est survenue lors de la suppression du changelog",
-        loading: "Suppression du changelog en cours...",
-      }
-    );
-  };
+    deleteChangelog(id);
+  }
+
 
   return (
-    <>
-      <li key={id} className="p-4 flex gap-4">
-        <div className="text-gray-400 text-xs mb-2 w-fit flex-0 mt-1">
+
+    <div className="flex-1 flex items-center ">
+      <div key={id} className="flex flex-col gap-3 flex-1">
+        <div className="flex flex-col flex-1">
+          <div className="flex items-center justify-between mb-3">
+            <span className="inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-50 
+            text-gray-300 ring-1 ring-inset ring-torea-900 bg-torea-950 ">
+              {version}
+            </span>
+            {isAdmin && (
+              <Button
+                disabled={isLoading}
+                variant="ghost"
+                onClick={handleOnClick}
+                className="hover:bg-red-500/10"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Trash className="w-4 h-4" />
+                )}
+              </Button>
+            )}
+          </div>
+          <h2 className="text-gray-50 font-semibold text-xl mb-1">
+            {title}
+          </h2>
+          <p className="text-gray-400">
+            {content}
+          </p>
+        </div>
+        <p className="text-gray-400 text-sm mt-4">
           {formatDate(createdAt.toString())}
-        </div>
-        <div className="flex-1 flex flex-col gap-5 p-4 rounded-md border-2 border-gray-800 bg-gray-950 w-5xl ">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold flex items-center">
-              <RefreshCcw className="w-4 h-4 mr-2" />
-              {title}
-            </h2>
-            <div className="flex items-center gap-2">
-              <p className="text-sm text-gray-400">version {version}</p>
-              {isAdmin && (
-                <p className="text-sm text-gray-400">
-                  <Button
-                    disabled={isLoading}
-                    variant="destructive"
-                    onClick={() => {
-                      deleteChangelog(id);
-                    }}
-                  >
-                    {isLoading ? (
-                      <Loader2 className="w-4 h-4" />
-                    ) : (
-                      <Trash className="w-4 h-4" />
-                    )}
-                  </Button>
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <p className="text-gray-400">{content}</p>
-          </div>
-        </div>
-      </li>
-    </>
+        </p>
+      </div>
+    </div>
   );
 }

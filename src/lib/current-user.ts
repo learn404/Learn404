@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { auth } from "./auth";
 import prisma from "./prisma";
 
@@ -14,27 +13,33 @@ export type currentUserType = {
 
 export const currentUser = async () => {
 
-  const session = await auth();
+  try {
+    const session = await auth();
+    
+    if (!session?.user?.email) {
+      return { user: null, error: "No session found" };
+    }
   
-  if (!session) {
-    redirect("/join");
+    const user = await prisma.user.findUnique({
+      where: {
+        email: session?.user?.email,
+      },
+      select: {
+        id: true,
+        image: true,
+        name: true,
+        email: true,
+        isMember: true,
+        admin: true,
+        createdAt: true,
+      },
+    });
+    
+    return { user, error: null} ;
+  } catch (error) {
+    return { user: null, error: "Une erreur est survenue dans la récupération de votre compte." };
   }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      email: session?.user?.email as string,
-    },
-    select: {
-      id: true,
-      image: true,
-      name: true,
-      email: true,
-      isMember: true,
-      admin: true,
-      createdAt: true,
-    },
-  });
 
 
-  return user ;
 }

@@ -38,10 +38,17 @@ export async function generateMetadata({
   }
 }
 
-export default async function LessonPage({
-  params,
-}: Params): Promise<JSX.Element> {
-  const user = await currentUser();
+export default async function LessonPage({ params }: Params): Promise<JSX.Element> {
+  const { user, error } = await currentUser();
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!user) {
+    redirect("/join");
+  }
+
   if (!user?.isMember) {
     redirect("/dashboard/subscriptions");
   }

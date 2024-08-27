@@ -8,16 +8,19 @@ import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default async function UserProfile({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const user = await currentUser();
-  
-  
+export default async function UserProfile({ params }: { params: { id: string } }) {
+  const { user, error } = await currentUser();
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!user) {
+    redirect("/join");
+  }
+
   if (!user?.admin) {
-    redirect("/");
+    redirect("/dashboard");
   }
 
   const userSearch = await prisma.user.findUnique({

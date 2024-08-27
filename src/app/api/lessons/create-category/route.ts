@@ -1,12 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
 import { currentUser } from "@/lib/current-user";
+import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   const { categoryName, level, description } = await request.json();
 
-  const user = await currentUser();
+  const { user } = await currentUser();
 
   if (!user || !user.admin) {
     return NextResponse.json(
