@@ -9,7 +9,7 @@ import { getBillingInformations } from "./get-billing-informations";
 export async function updateDetailsAccount(values: z.infer<typeof formSchema>) {
 
   try {
-    const user = await currentUser();
+    const { user } = await currentUser();
     
     if (!user) {
       return { error: "Utilisateur non trouvé." };

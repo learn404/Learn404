@@ -17,10 +17,18 @@ async function getServerSideProps() {
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
-  const user = await currentUser();
+  const { user, error } = await currentUser();
 
-  if (!user!.admin || !user) {
-    return redirect("/");
+  if (error) {
+    console.error(error);
+  }
+
+  if (!user) {
+    redirect("/join");
+  }
+
+  if (!user?.admin) {
+    redirect("/dashboard");
   }
 
   const lesson = await prisma.lessons.findMany({

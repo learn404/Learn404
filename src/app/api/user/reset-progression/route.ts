@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
   try {
     const { userId } = await request.json();
 
-    const user = await currentUser();
+    const { user } = await currentUser();
 
     if (!user || (!user.admin && user.id !== userId)) {
       return NextResponse.json(

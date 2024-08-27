@@ -5,9 +5,17 @@ import AddLessonForm from "./Form";
 import { getCategories } from "@/lib/utils";
 
 export default async function AddLesson() {
-  const user = await currentUser();
+  const { user, error } = await currentUser();
 
-  if (!user!.admin) {
+  if (error) {
+    console.error(error);
+  }
+
+  if (!user) {
+    redirect("/join");
+  }
+
+  if (!user?.admin) {
     redirect("/dashboard");
   }
 

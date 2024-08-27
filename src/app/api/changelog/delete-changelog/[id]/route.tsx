@@ -5,7 +5,7 @@ import { currentUser } from "@/lib/current-user";
 export async function DELETE(request: NextRequest) {
   const { id } = await request.json();
 
-  const user = await currentUser();
+  const { user } = await currentUser();
 
   if (!user || !user.admin) {
     return NextResponse.json(

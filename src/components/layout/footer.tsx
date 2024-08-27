@@ -6,17 +6,9 @@ type FooterLink = { id: number; title: string; url: string };
 
 const footerLinks: FooterLink[][] = [
   [
-    {
-      id: 1,
-      title: "Condition d'utilisation",
-      url: "/legal/condition-general-utilisation",
-    },
-    {
-      id: 2,
-      title: "Mentions légales",
-      url: "/legal/mentions-legales",
-    },
-    { id: 3, title: "Journal des modifications", url: "/changelog" },
+    { id: 1, title: "Condition d'utilisation", url: "/legal/condition-general-utilisation" },
+    { id: 2, title: "Mentions légales", url: "#" },
+    { id: 3, title: "Journal des modifications", url: "/changelog" }, 
     { id: 4, title: "Contact", url: "mailto:contact@learn404.com" },
   ],
 ];
@@ -42,7 +34,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-col py-10 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col items-start justify-start gap-y-5">
-            <Link href="#" className="flex items-center gap-x-2.5">
+            <Link href="/" className="flex items-center gap-x-2.5">
               <Image
                 className="h-8 w-8 rounded-md"
                 src="/img/logo.png"
@@ -66,7 +58,7 @@ export default function Footer() {
                 <ul key={columnIndex} className="flex flex-col gap-y-2">
                   {column.map((link) => (
                     <li
-                      key={link.id}
+                      key={`flink:${link.id}`}
                       className="group inline-flex cursor-pointer items-center justify-start gap-1 text-[15px]/snug font-medium  duration-200 text-white/50 hover:text-white/30"
                     >
                       <Link href={link.url}>{link.title}</Link>

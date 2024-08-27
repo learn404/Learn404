@@ -4,7 +4,15 @@ import { redirect } from "next/navigation";
 import AccountLayout from "../account-layout";
 
 export default async function Feedback() {
-  const user = await currentUser();
+  const { user, error } = await currentUser();
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (!user) {
+    redirect("/join");
+  }
 
   if (!user?.isMember) {
     redirect("/account/settings");

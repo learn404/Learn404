@@ -7,7 +7,7 @@ export async function createFeedback(feedback: string) {
 
   try {
 
-    const user = await currentUser();
+    const { user } = await currentUser();
 
     if (!user) {
       return { error: "Tu n'as pas la permission pour faire ça." }

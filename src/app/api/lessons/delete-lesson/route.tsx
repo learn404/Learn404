@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(reponse: NextRequest) {
   const { slug } = await reponse.json();
 
-  const user = await currentUser();
+  const { user } = await currentUser();
 
   if (!user || !user.admin) {
     return NextResponse.json(

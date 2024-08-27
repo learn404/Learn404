@@ -8,7 +8,7 @@ const resend = new Resend(process.env.RESEND_SECRET_KEY);
 export async function POST(request: NextRequest) {
   const { email }: { email: string } = await request.json();
 
-  const user = await currentUser();
+  const { user } = await currentUser();
 
   if (!user || user.email !== email) {
     return NextResponse.json({ message: "Accès refusé" }, { status: 403 });

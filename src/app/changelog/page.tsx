@@ -1,31 +1,31 @@
-import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import { getChangelogData, adminCheckAre } from "@/lib/utils";
-import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
-import AddChangeLogButton from "@/components/buttons/AddChangeLogButton";
+import Header from "@/components/layout/header";
+import { getChangelogData } from "@/lib/utils";
 
+import { currentUser } from "@/lib/current-user";
 import ChangeLogSection from "./changeLogSection";
 
 export default async function Changelog() {
-  const session = await auth();
+  const { user, error } = await currentUser();
 
-  const user = await prisma.user.findFirst({
-    where: {
-      email: session?.user?.email,
-    },
-  });
+  if (error) {
+    console.error(error);
+  }
+  
   const ChangelogData = await getChangelogData();
-  const isAdminData = await adminCheckAre(user?.email || "");
-
+  
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      {user && user?.admin ? <AddChangeLogButton /> : null}{" "}
-      <ChangeLogSection
-        ChangelogData={ChangelogData}
-        isAdmin={isAdminData?.admin ?? false}
-      />
+      <div className="px-6 lg:px-20 pt-20 flex-1">
+        <div className="mx-auto max-w-7xl">          
+          <ChangeLogSection
+            ChangelogData={ChangelogData}
+            isAdmin={user?.admin ?? false}
+          />
+
+        </div>
+      </div>
       <Footer />
     </div>
   );
