@@ -23,7 +23,15 @@ export default function HeroSection() {
         </div>
         <div className="relative mx-auto mt-16 flex max-w-3xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none">
           <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none rounded-xl border border-gray-800 bg-gray-950 aspect-video object-cover overflow-hidden">
-            <Image src="/img/hero_screen.png" alt="App screenshot" width="882" height="1200" className="w-[72rem] shadow-2xl border:1px solid rgba(255,255,255,.1)" />
+            <Image 
+              src="/img/hero_screen.png" 
+              alt="App screenshot" 
+              width="0" 
+              height="0" 
+              sizes="100%" 
+              priority 
+              className="w-[72rem] shadow-2xl shadow-torea-600" 
+            />
           </div>
           <div className="hidden lg:block absolute -bottom-16 -left-52 w-44">
             <Image src="/img/arrow.svg" alt="wave" width={0} height={0} sizes="20vw" className="w-full h-auto" />

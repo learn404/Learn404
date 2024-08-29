@@ -1,6 +1,7 @@
 "use client";
 
 import { cubicBezier, motion } from "framer-motion";
+import Image from "next/image";
 
 export function FeatureCard8() {
   const variant1 = {
@@ -101,10 +102,12 @@ export function FeatureCard8() {
               className=" relative flex items-start gap-x-2 rounded-lg border border-gray-400/20 bg-gray-50 p-4 shadow-[0px_0px_40px_-25px_rgba(0,0,0,0.25)] dark:border-gray-800 dark:bg-gray-900"
             >
               <div className="h-6 w-6 rounded-full bg-blue-500">
-                <img
+                <Image
+                  width={24}
+                  height={24} 
                   className="h-full w-full rounded-full object-cover"
                   src="https://avatar.vercel.sh/joshua"
-                  alt="joshua"
+                  alt="unknown"
                 />
               </div>
               <div className="w-[calc(100%-3rem)]">
@@ -120,10 +123,12 @@ export function FeatureCard8() {
             >
               <div className="w-8 ">
                 <div className="h-6 w-6 rounded-full bg-blue-500">
-                  <img
+                  <Image
+                    width={24}
+                    height={24}
                     className="h-full w-full rounded-full object-cover"
                     src="https://avatar.vercel.sh/christina"
-                    alt="christina"
+                    alt="nicolas"
                   />
                 </div>
               </div>
