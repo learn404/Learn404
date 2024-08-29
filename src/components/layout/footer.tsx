@@ -7,7 +7,7 @@ type FooterLink = { id: number; title: string; url: string };
 const footerLinks: FooterLink[][] = [
   [
     { id: 1, title: "Condition d'utilisation", url: "/legal/condition-general-utilisation" },
-    { id: 2, title: "Mentions légales", url: "#" },
+    { id: 2, title: "Mentions légales", url: "mentions-legales" },
     { id: 3, title: "Journal des modifications", url: "/changelog" }, 
     { id: 4, title: "Contact", url: "mailto:contact@learn404.com" },
   ],
@@ -23,7 +23,7 @@ export default function Footer() {
             </h3>
             <div className="flex flex-col items-center justify-center gap-x-5 gap-y-2 py-4 sm:flex-row">
               <Link
-                href="#"
+                href="https://discord.gg/VQvwt7amg2"
                 className="flex h-10 w-56 items-center justify-center rounded-full text-base font-semibold transition ease-out hover:ring-2  hover:ring-offset-2 bg-indigo-800 text-white hover:ring-indigo-900 hover:ring-offset-black lg:h-12 lg:text-base"
               >
                 <span className="tracking-tight">Rejoins le discord</span>
