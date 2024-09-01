@@ -1,10 +1,10 @@
+import { WelcomeEmail } from "@/components/email/welcomeEmail";
 import prisma from "@/lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GooglePovider from "next-auth/providers/google";
 import { Resend } from "resend";
-import { WelcomeEmail } from "@/components/email/welcomeEmail";
 
 const resend = new Resend(process.env.RESEND_SECRET_KEY);
 

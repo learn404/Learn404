@@ -1,9 +1,6 @@
 "use client"
 
-
-import { MoreHorizontal, ArrowUpDown} from "lucide-react";
-import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +8,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import ToggleMemberPermission from "../actions/toggle-member-permission";
 
 export type User = {
     id: string;
@@ -56,8 +58,10 @@ export const userColumns: ColumnDef<User>[] = [
     {
         id: "actions",
         cell: ({ row }) => {
-          const user = row.original
-     
+          const user = row.original     
+
+          const router = useRouter();
+
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -72,6 +76,18 @@ export const userColumns: ColumnDef<User>[] = [
                   onClick={() => navigator.clipboard.writeText(user.id)}
                 >
                   Copier l'ID utilisateur
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={async () => {
+                  //  Server action pour rendre membre ou enlever le rôle
+                  const { error, message } = await ToggleMemberPermission(user.id)
+                  if (error) {
+                    toast.error(error)
+                    return;
+                  }
+                  toast.success(message)
+                  router.refresh()
+                }}>
+                  {user.isMember ? "Enlever le rôle de membre" : "Promouvoir membre"}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <Link href={`/admin/user/${user.id}`}>

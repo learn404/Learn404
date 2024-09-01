@@ -37,7 +37,7 @@ export const currentUser = async () => {
     
     return { user, error: null} ;
   } catch (error) {
-    return { user: null, error: "Une erreur est survenue dans la récupération de votre compte." };
+    return { user: null, error: "Vous n'êtes pas connecté." };
   }
 
 
