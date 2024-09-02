@@ -39,10 +39,7 @@ const FeedbackMenu = () => {
       form.setValue("feedback", "")
     }
   }
-
-  console.log("SUBMITTING FORM:", form.formState.isSubmitting);
   
-
   return ( 
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

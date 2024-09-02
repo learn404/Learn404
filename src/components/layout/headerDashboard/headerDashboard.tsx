@@ -20,8 +20,7 @@ export default async function HeaderDashboard({
   const isAvatar = user?.image ? true : false;
   const isAdmin = user?.admin;
 
-  const lesson = await getLessons()
-
+  const lesson = await getLessons();
 
   return (
     <header className="z-10 bg-bg-primary shadow backdrop-blur border-b-2 border-gray-900 py-2 mb-5 px-6 md:px-8">
