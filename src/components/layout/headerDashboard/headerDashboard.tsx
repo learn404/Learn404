@@ -1,3 +1,4 @@
+import FeedbackMenu from "@/components/dashboard/feedback-menu";
 import { currentUserType } from "@/lib/current-user";
 import { getLessons } from "@/lib/utils";
 import Image from "next/image";
@@ -19,8 +20,7 @@ export default async function HeaderDashboard({
   const isAvatar = user?.image ? true : false;
   const isAdmin = user?.admin;
 
-  const lesson = await getLessons()
-
+  const lesson = await getLessons();
 
   return (
     <header className="z-10 bg-bg-primary shadow backdrop-blur border-b-2 border-gray-900 py-2 mb-5 px-6 md:px-8">
@@ -35,7 +35,10 @@ export default async function HeaderDashboard({
           <h1 className="hidden md:block text-xl font-medium text-torea-50">{title}</h1>
         </div>
         <div className="flex flex-1 items-center space-x-2 justify-end gap-4">
-          <SearchInput lessons={lesson}/>
+          <div className="hidden lg:flex items-center gap-2">
+            <FeedbackMenu />
+            <SearchInput lessons={lesson}/>
+          </div>
           <UserDropdown user={user} isAdmin={isAdmin} isAvatar={isAvatar} />
         </div>
       </div>
