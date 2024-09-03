@@ -1,6 +1,6 @@
+import getCategoriesWithLessons from "@/app/actions/get-categories-and-lessons";
 import FeedbackMenu from "@/components/dashboard/feedback-menu";
 import { currentUserType } from "@/lib/current-user";
-import { getLessons } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import SearchInput from "../searchInput";
@@ -9,7 +9,6 @@ import UserDropdown from "./userDropDown";
 interface HeaderDashboardProps {
   user: currentUserType;
   title: string;
-
 }
 
 export default async function HeaderDashboard({
@@ -20,8 +19,8 @@ export default async function HeaderDashboard({
   const isAvatar = user?.image ? true : false;
   const isAdmin = user?.admin;
 
-  const lesson = await getLessons();
-
+  const categories = await getCategoriesWithLessons();
+  
   return (
     <header className="z-10 bg-bg-primary shadow backdrop-blur border-b-2 border-gray-900 py-2 mb-5 px-6 md:px-8">
       <div className="max-w-[1436px] w-full mx-auto flex h-14 items-center">
@@ -37,7 +36,7 @@ export default async function HeaderDashboard({
         <div className="flex flex-1 items-center space-x-2 justify-end gap-4">
           <div className="hidden lg:flex items-center gap-2">
             <FeedbackMenu />
-            <SearchInput lessons={lesson}/>
+            <SearchInput categories={categories}/>
           </div>
           <UserDropdown user={user} isAdmin={isAdmin} isAvatar={isAvatar} />
         </div>

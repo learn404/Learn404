@@ -28,9 +28,9 @@ const UserCard = async ({ user, numberOfLessons, lessonsCompleted }: UserCardPro
           <p className="font-semibold text-sm text-gray-500 max-md:mt-1">Membre</p> 
           <Link 
             href="/account/details" 
-            className="z-50 mt-4 inline-flex border border-white/10 rounded-md px-3.5 py-2.5 text-xs md:text-sm
-            text-gray-200 shadow-sm hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 
-            focus-visible:outline-indigo-500"
+            className="z-50 mt-4 inline-flex border-gray-800 rounded-md px-3.5 py-2.5 text-xs md:text-sm
+             shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 
+            focus-visible:outline-indigo-500 border text-gray-300 bg-gray-950 hover:bg-black hover:border-gray-800 transition-none"
             >
             Compte
           </Link>

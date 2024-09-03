@@ -1,13 +1,6 @@
 "use client";
 
 import {
-  LayoutDashboard,
-  Loader,
-  Settings,
-  User
-} from "lucide-react";
-
-import {
   Command,
   CommandDialog,
   CommandEmpty,
@@ -15,29 +8,39 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
+  CommandSeparator
 } from "@/components/ui/command";
+import { Lessons_level } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 
-interface Lesson {
-  id: string;
-  title: string;
-  slug: string;
+type Lesson = {
+  id: string, 
+  title: string,
+  slug: string,
 }
 
-export default function SearchInput({
-  lessons,
- 
-}: {
-  lessons: Lesson[];
+interface SearchInputProps {
+  categories: {
+    id: string;
+    name: string;
+    createdAt: Date;
+    sort_number: number | null;
+    level: Lessons_level | null;
+    description: string | null;
+    Lessons: Lesson[];
+  }[];
+}
 
-}) {
+export default function SearchInput( { categories } : SearchInputProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+
+  console.log(categories);
+  
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -75,65 +78,24 @@ export default function SearchInput({
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command className="bg-bg-primary text-white">
-          <CommandInput placeholder="Rechercher ..." />
+          <CommandInput placeholder="Rechercher un cours..." />
           <CommandList className="no-scrollbar">
             <CommandEmpty>Pas de résultat trouvé</CommandEmpty>
-            <CommandGroup heading="Suggestions">
-              <Link href="/dashboard">
-                <CommandItem className="flex items-center justify-between w-full cursor-pointer">
-                  <div className="flex items-center">
-                    <LayoutDashboard className="mr-2 h-4 w-4" />
-                    <span>Tableau de bord</span>
-                  </div>
-                  <div className="">
-                    <CommandShortcut>⌘O</CommandShortcut>
-                  </div>
-                </CommandItem>
-              </Link>
-              <Link href="/changelog">
-                <CommandItem className="flex items-center justify-between w-full cursor-pointer">
-                  <div className="flex items-center">
-                    <Loader className="mr-2 h-4 w-4" />
-                    <span>Journal des modifications</span>
-                  </div>
-                  <div className="">
-                    <CommandShortcut>⌘J</CommandShortcut>
-                  </div>
-                </CommandItem>
-              </Link>
-            </CommandGroup>
             <CommandSeparator />
-            <CommandGroup heading="Settings">
-              <Link href="/profile">
-                <CommandItem className="flex items-center w-full cursor-pointer">
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profil</span>
-                </CommandItem>
-              </Link>
-              <Link href="/settings">
-                <CommandItem className="flex items-center w-full cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Paramètres</span>
-                </CommandItem>
-              </Link>
-              <Link href="/changelog">
-                <CommandItem className="flex items-center w-full cursor-pointer">
-                  <Loader className="mr-2 h-4 w-4" />
-                  <span>Journal des modifications</span>
-                </CommandItem>
-              </Link>
-            </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup heading="Cours">
-              {lessons.map((lesson) => (
-                <Link href={`/cours/${lesson.slug}`} key={lesson.id}>
-                  <CommandItem className="text-white">
-                    {lesson.title}
-                  </CommandItem>
-                </Link>
+              {categories.map((category, index) => (
+                <>
+                  { index !== 0 && <Separator /> }
+                  <CommandGroup key={`shortcut:cat:${category.id}`} heading={`${index + 1}. ${category.name}`}>
+                    {category.Lessons.map(lesson => (
+                      <Link key={`shortcut:lesson:${lesson.id}`} href={`/cours/${lesson.slug}`}>
+                        <CommandItem className="text-gray-50">
+                          {lesson.title}
+                        </CommandItem>
+                      </Link>
+                    ))}
+                  </CommandGroup>
+                </>
               ))}
-            </CommandGroup>
-
           </CommandList>
         </Command>
       </CommandDialog>
