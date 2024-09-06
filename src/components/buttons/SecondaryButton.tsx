@@ -5,6 +5,7 @@ import React from "react";
 interface Props {
   children?: React.ReactNode;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
   redirectTo?: string;
   onClick?: () => void;
 }
@@ -12,6 +13,7 @@ interface Props {
 export default function SecondaryButton({
   children,
   type = "submit",
+  disabled,
   redirectTo,
   onClick,
 }: Props) {
@@ -25,6 +27,7 @@ export default function SecondaryButton({
 
   return (
     <button
+      disabled={disabled}
       type={type}
       onClick={handleClick}
       className="z-50 flex items-center gap-4 border border-white/10 rounded-md px-3.5 py-2.5 text-xs

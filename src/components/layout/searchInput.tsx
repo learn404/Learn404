@@ -63,16 +63,15 @@ export default function SearchInput({
     <>
       <Button
         variant={"outline"} 
-        className="flex items-center border-2 text-gray-200 hover:bg-gray-800"
+        className="flex items-center gap-4 border text-gray-300 bg-gray-950 hover:bg-black hover:border-gray-800 transition-none"
         onClick={() => setOpen(true)}
       >
-        <kbd 
-          className="pointer-events-none inline-flex h-3 w-3 select-none items-center justify-center gap-1
-          rounded font-mono font-medium text-gray-400
-          cursor-pointer text-[0.7rem]"
-        >
-          <span>⌘</span>K
-        </kbd>
+        <span>
+          Cherche un cours
+        </span>
+        <span className="text-xs text-gray-400 p-1 rounded-sm border border-gray-800 bg-gray-950">
+          Ctrl K            
+        </span>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command className="bg-bg-primary text-white">

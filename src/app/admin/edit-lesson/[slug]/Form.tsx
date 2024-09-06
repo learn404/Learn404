@@ -14,6 +14,17 @@ import EditDetailsBloc from "@/components/dashboard/admin/edit-lessons/edit-deta
 import EditLinksBloc from "@/components/dashboard/admin/edit-lessons/edit-links-bloc";
 import RichTextEditor from "@/components/text-editor";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import {
   Form
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
@@ -242,14 +253,31 @@ export default function EditLessonForm({
                   "Enregistrer"
                 )}
               </Button>
-              <Button 
-                variant="ghost" 
-                onClick={handleDelete} 
-                type="button" 
-                className={cn("text-red-500 hover:text-red-600 hover:bg-red-500/10", isLoading && "cursor-not-allowed")}
-              >
-                Supprimer
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="ghost"
+                    className={cn("text-red-500 hover:text-red-600 hover:bg-red-500/10", isLoading && "cursor-not-allowed")}
+                  >
+                    Supprimer
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Es-tu sûr de supprimer le cours?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Tu ne pourras pas revenir en arrière et tu perdras tout ce que tu as écrit. 
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDelete}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
           <div className="grid grid-cols-12 items-start gap-4 mt-4">
