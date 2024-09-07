@@ -59,7 +59,7 @@ const FeedbackMenu = () => {
                     <FormControl>
                       <Textarea
                         placeholder="Ton feedback..."
-                        className="w-full h-24 resize-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-gray-200"
+                        className="w-full h-24 resize-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-gray-400"
                         autoFocus
                         {...field}
                       >

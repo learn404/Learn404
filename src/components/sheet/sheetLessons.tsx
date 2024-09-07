@@ -16,6 +16,24 @@ type userIdProps = {
   userId: string;
 };
 
+type LessonWithFormattedSortNumber = {
+  id: string;
+  title: string;
+  slug: string;
+  categoryId: string;
+  description: string | null;
+  playbackId: string | null;
+  duration: string | null;
+  repository_url: string | null;
+  sort_number: number;
+  draft: boolean;
+  newLesson: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  formatted_sort_number?: string;
+  status?: number;
+};
+
 export default async function SheetLessons({ userId }: userIdProps) {
   const categories = await prisma.categories.findMany({
     where: {
@@ -43,23 +61,6 @@ export default async function SheetLessons({ userId }: userIdProps) {
     },
   });
 
-  type LessonWithFormattedSortNumber = {
-    id: string;
-    title: string;
-    slug: string;
-    categoryId: string;
-    description: string | null;
-    playbackId: string | null;
-    duration: string | null;
-    repository_url: string | null;
-    sort_number: number;
-    draft: boolean;
-    newLesson: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    formatted_sort_number?: string;
-    status?: number;
-  };
 
   categories.sort((a, b) => (a.sort_number ?? 0) - (b.sort_number ?? 0));
 
