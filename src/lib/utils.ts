@@ -180,3 +180,20 @@ export const formatDate = (date: string) => {
     year: "numeric",
   });
 };
+
+
+export const getBillInformation = async (id : string) => {
+  return await prisma.billingInformations.findFirst({
+    where : {
+      userId : id
+    }
+  })
+}
+
+export const getCouponInformation = async (id : string) => {
+  return await prisma.coupon.findFirst({
+    where : {
+      userId : id
+    }
+  })
+}
