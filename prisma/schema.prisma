@@ -8,36 +8,50 @@ datasource db {
 }
 
 model User {
-  id             String           @id @default(cuid())
-  name           String?
-  email          String?          @unique
-  emailVerified  DateTime?
-  image          String?
-  isMember       Boolean          @default(false)
-  admin          Boolean          @default(false)
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  welcomeEmailSent  Boolean  @default(false)
-  Account        Account?
+  id                  String               @id @default(cuid())
+  name                String?
+  email               String?              @unique
+  emailVerified       DateTime?
+  image               String?
+  isMember            Boolean              @default(false)
+  admin               Boolean              @default(false)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  welcomeEmailSent    Boolean              @default(false)
+  Account             Account?
   BillingInformations BillingInformations?
-  lessonProgress LessonProgress[]
-  Session        Session[]
-  Feedback       Feedback[]
+  Coupon              Coupon?
+  Feedback            Feedback[]
+  lessonProgress      LessonProgress[]
+  Session             Session[]
+
 }
 
 model BillingInformations {
-  id             String   @id @default(cuid())
-  userId         String   @unique
-  firstName      String
-  lastName       String
-  address        String
-  address2       String?
-  city           String
-  state          String?
-  zip            String
-  country        String
+  id         String   @id @default(cuid())
+  userId     String   @unique // Ajout de @unique ici
+  firstName  String
+  lastName   String
+  address    String
+  address2   String?
+  city       String
+  state      String?
+  zip        String
+  country    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Coupon {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  code      String   
+  discount  Int
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  
   user      User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
@@ -61,10 +75,8 @@ model Account {
   updatedAt                DateTime @updatedAt
   user                     User     @relation(fields: [userId], references: [id])
 
-
   @@unique([provider, providerAccountId])
   @@index([userId])
-
 }
 
 model Session {
@@ -86,12 +98,12 @@ model Wishlist {
 }
 
 model Categories {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  createdAt   DateTime  @default(now())
-  sort_number Int?      @default(0)
-  level          Lessons_level?   @default(BEGINNER)
-  description    String?
+  id          String         @id @default(cuid())
+  name        String         @unique
+  createdAt   DateTime       @default(now())
+  sort_number Int?           @default(0)
+  level       Lessons_level? @default(BEGINNER)
+  description String?
   Lessons     Lessons[]
 }
 
@@ -100,7 +112,6 @@ model Lessons {
   title          String
   slug           String
   categoryId     String
-  contentLesson  String          @db.LongText
   description    String?
   playbackId     String?
   repository_url String?
@@ -110,9 +121,10 @@ model Lessons {
   updatedAt      DateTime         @updatedAt
   sort_number    Int              @default(0)
   duration       String?
-  links          String?  @db.LongText
   videoId        String?
   level          Lessons_level?   @default(BEGINNER)
+  contentLesson  String           @db.LongText
+  links          String?          @db.LongText
   LessonChapter  LessonChapter[]
   LessonProgress LessonProgress[]
   Categories     Categories       @relation(fields: [categoryId], references: [id])
@@ -162,8 +174,6 @@ model Feedback {
 
   @@index([userId])
 }
-
-
 
 enum Lessons_level {
   BEGINNER
