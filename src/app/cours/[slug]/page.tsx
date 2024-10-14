@@ -155,7 +155,7 @@ export default async function LessonPage({ params }: Params): Promise<JSX.Elemen
       </div>
 
       <main className="relative flex grow flex-col">
-        <section className="relative ">
+        {/* <section className="relative ">
           {lesson.playbackId ? (
             <div className="z-50">
               <VideoPlayerWithChapters
@@ -172,7 +172,7 @@ export default async function LessonPage({ params }: Params): Promise<JSX.Elemen
           ) : (
             <p className="m-auto w-fit">Vidéo pas disponible</p>
           )}
-        </section>
+        </section> */}
 
         <section className="mt-6 pb-16 sm:mt-12 px-6 lg:mt-12  lg:px-24 ">
           <div className="mx-auto w-full max-w-[1436px] flex lg:grid lg:grid-cols-3 lg:gap-7 ">

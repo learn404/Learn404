@@ -39,7 +39,7 @@ export default function DetailsLesson({
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">{title}</h2>
-        <Badge variant="secondary">{duration}</Badge>
+       {/*  <Badge variant="secondary">{duration}</Badge> */}
       </div>
       <div className="flex flex-col">
         {description && <p className="text-gray-500">{description}</p>}

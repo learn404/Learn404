@@ -152,13 +152,13 @@ export default async function SheetLessons({ userId }: userIdProps) {
                                   {lesson.title}
                                 </div>
                               </div>
-                              <div className="ml-auto">
+                              {/* <div className="ml-auto">
                                 {lesson.duration && (
                                   <span className="text-xs text-black bg-torea-50 px-1.5 rounded-md py-0.5 group-hover:text-black/80 group-hover:bg-torea-50/80 transition-all duration-300 h-fit">
                                     {lesson.duration}
                                   </span>
                                 )}
-                              </div>
+                              </div> */}
                             </Link>
                           </li>
                         )
