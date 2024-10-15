@@ -7,11 +7,16 @@ export default function HeroSection() {
       <div className="mx-auto max-w-[1436px] w-full lg:flex">
         <div className="mx-auto max-w-3xl md:flex-shrink-0 mt-16">
           <div>
-            <h1 className="text-4xl sm:text-6xl font-bold text-gray-50" >
-              Apprends le développement web
+            <h1 className="text-4xl sm:text-6xl font-bold text-gray-50 text-balance leading-[125%] md:leading-[125%]" >
+              Fais de développeur web ton 
+              <span className="z-50 ml-3 px-3 relative before:content-[''] before:absolute before:h-full 
+                before:bg-torea-600 before:w-full before:top-0 before:left-0 before:-z-10 before:rounded-md"
+              >
+                métier
+              </span>
             </h1>
             <p className="mt-4 text-base sm:text-xl font-medium text-gray-300">
-              Rejoins le programme Learn404 et commence l'aventure pour devenir développeur web.  
+              Apprends le développement web et signe tes premiers clients.  
             </p>
           </div>
           <div className="mt-8">

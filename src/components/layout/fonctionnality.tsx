@@ -14,7 +14,7 @@ export default async function FonctionnalitySection() {
             Suis ta progression.
           </h3>
           <p className="mt-3 lg:text-lg text-gray-300 lg:leading-8">
-            Suis ton avancé dans les cours avec nos fonctionnalités de suivi de progression.
+            Organise tes sessions de cours et apprends plus vite grâce à un suivi interactif.
           </p>
         </div>
         <div className="w-full max-w-xl aspect-video mt-6 rounded-xl">
@@ -23,11 +23,11 @@ export default async function FonctionnalitySection() {
       </div>
       <div className="mx-auto w-full max-w-[1436px] flex lg:flex-row-reverse flex-wrap items-center justify-between gap-x-8">
         <div className="max-w-lg">
-          <h3 className=" text-2xl sm:text-4xl text-gray-50 font-semibold">
-            Pratique avec des maquettes.
+          <h3 className=" text-2xl sm:text-4xl text-gray-50 font-semibold text-balance">
+            Pratique avec des maquettes modernes.
           </h3>
           <p className="mt-3 lg:text-lg text-gray-300 lg:leading-8">
-            Apprends en pratiquant grâce à des exercices de reproduction avec maquettes Figma.   
+            Développe des designs à travers des projets concrets.   
           </p>
         </div>
 
@@ -39,11 +39,11 @@ export default async function FonctionnalitySection() {
       <div className="mx-auto w-full max-w-[1436px] flex flex-wrap items-center justify-between gap-x-8">
         <div className="max-w-lg">
           <h3 className=" text-2xl sm:text-4xl text-gray-50 font-semibold">
-            Le même objectif.
+            Ne te perds plus.
           </h3>
           <p className="mt-3 lg:text-lg text-gray-300 lg:leading-8">
-            Entoure toi de personnes qui ont la même passion que toi et grandis dans un environnement 
-            propice à l'évolution en rejoignant le discord privé.
+            Rejoins la communauté Discord et grandis dans un environnement 
+            de développeurs passionnés.
           </p>
         </div>
         <div className="w-full max-w-xl aspect-video mt-6">

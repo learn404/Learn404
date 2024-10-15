@@ -1,7 +1,7 @@
 
-import NumberTicker from "../magicui/number-ticker";
 import prisma from "@/lib/prisma";
 import { getLessonNumber, getLessonType } from "@/lib/utils";
+import NumberTicker from "../magicui/number-ticker";
 const convertDurationToSeconds = (duration: string) => {
   const [hours, minutes, seconds] = duration.split(":").map(Number);
   return hours * 3600 + minutes * 60 + seconds;
@@ -44,12 +44,13 @@ const CoursesInfos = async () => {
         </h2>
         <div className="text-gray-300 text-lg max-w-screen-md sm:text-center">
           <p>
-            Learn404 est un <span className="text-gray-50 font-semibold ">concentré de connaissances</span> que nous avons acquises 
-            tout le long de notre apprentissage du développement web.
+            Learn404 est l'endroit pour <span className="text-gray-100 font-semibold ">apprendre le développement web </span> 
+            et vivre de ta passion.
           </p>
           <p className="mt-5">
-            Tu apprendras donc tout ce que l'on sait, en partant de la prise en main d'un environnement de travail jusqu'à nos 
-          <span className="text-gray-50 font-semibold "> connaissances actuelles</span>. La plateforme sera mise à jour tous les mois pour y ajouter de nouveaux cours. 
+            Dans cette formation, tu verras tout en partant de la prise en main d'un environnement de travail jusqu'à la 
+            <span className="font-semibold text-gray-100"> réalisation de réelles applications web</span>. 
+            De nouveaux cours devraient arriver prochainement. 
           </p>
         </div>
         <div className="flex items-start flex-wrap gap-y-4 max-w-4xl w-full">

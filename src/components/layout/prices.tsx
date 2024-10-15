@@ -73,7 +73,7 @@ export default function Pricing() {
       price: "19,99€",
 
       description:
-        "Tu veux devenir un développeur web professionnel ? C'est le bon endroit pour commencer.",
+        "Gagne tes premiers euros en partant d'ici.",
       features: [
         "Salons discord privés",
         "+10h de cours vidéos et écrits",
@@ -82,7 +82,7 @@ export default function Pricing() {
         "Paiement en 1 fois",
         "Accès à vie",
       ],
-      extraBenefits: "Abonnement à vie avec fonctionnalités futures.",
+      extraBenefits: "Abonnement à vie avec futures fonctionnalités.",
     },
   ];
 
